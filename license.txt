@@ -1,0 +1,9 @@
+Simple windows game framework license
+
+Copyright © 2016–2017, Popov Evgeniy Alekseyevich
+
+This software provide without any warranty.
+Any person or company can redistribute original distributive of this software.
+Any person or company can use source code of this software for making third–party product.
+Documentation or interface of third–party product must contain this remark:
+<Software> built on top Simple windows game framework from Popov Evgeniy Alekseyevich.
