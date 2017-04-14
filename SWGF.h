@@ -19,11 +19,29 @@ Documentation or interface of third–party product must contain this remark:
 #include <unknwn.h>
 #include <d2d1.h>
 #include <dshow.h>
+#include <xinput.h>
 
 #define SWGF_MOUSE_NONE 0
 #define SWGF_MOUSE_LEFT 1
 #define SWGF_MOUSE_RIGHT 2
 #define SWGF_MOUSE_MIDDLE 3
+
+#define SWGF_GAMEPAD_UP XINPUT_GAMEPAD_DPAD_UP
+#define SWGF_GAMEPAD_DOWN XINPUT_GAMEPAD_DPAD_DOWN
+#define SWGF_GAMEPAD_LEFT XINPUT_GAMEPAD_DPAD_LEFT
+#define SWGF_GAMEPAD_RIGHT XINPUT_GAMEPAD_DPAD_RIGHT
+#define SWGF_GAMEPAD_A XINPUT_GAMEPAD_A
+#define SWGF_GAMEPAD_B XINPUT_GAMEPAD_B
+#define SWGF_GAMEPAD_X XINPUT_GAMEPAD_X
+#define SWGF_GAMEPAD_Y XINPUT_GAMEPAD_Y
+#define SWGF_GAMEPAD_LEFT_BUMPER XINPUT_GAMEPAD_LEFT_SHOULDER
+#define SWGF_GAMEPAD_RIGHT_BUMPER XINPUT_GAMEPAD_RIGHT_SHOULDER
+#define SWGF_GAMEPAD_START XINPUT_GAMEPAD_START
+#define SWGF_GAMEPAD_BACK XINPUT_GAMEPAD_BACK
+#define SWGF_GAMEPAD_LEFT_TRIGGER 0
+#define SWGF_GAMEPAD_RIGHT_TRIGGER 1
+#define SWGF_GAMEPAD_LEFT_STICK 2
+#define SWGF_GAMEPAD_RIGHT_STICK 3
 
 struct SWGF_Color
 {
@@ -91,6 +109,34 @@ LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPA
 {
  if(Message==WM_DESTROY) PostQuitMessage(0);
  return DefWindowProc(window,Message,wParam,lParam);
+}
+
+class SWGF_Base
+{
+ public:
+ SWGF_Base();
+ ~SWGF_Base();
+};
+
+SWGF_Base::SWGF_Base()
+{
+ HRESULT status;
+ status=CoInitialize(NULL);
+ if(status!=S_OK)
+ {
+  if(status!=S_FALSE)
+  {
+   puts("Can't initialize COM");
+   exit(EXIT_FAILURE);
+  }
+
+ }
+
+}
+
+SWGF_Base::~SWGF_Base()
+{
+ CoUninitialize();
 }
 
 class SWGF_Engine
@@ -374,7 +420,7 @@ void SWGF_Draw::clear_screen()
 
 }
 
-class SWGF_Screen:public SWGF_Engine, public SWGF_Draw
+class SWGF_Screen:public SWGF_Base, public SWGF_Engine, public SWGF_Draw
 {
  private:
  ID2D1Factory *render;
@@ -393,6 +439,7 @@ class SWGF_Screen:public SWGF_Engine, public SWGF_Draw
  void destroy_render();
  void prepare_surface();
  void create_render();
+ void update_surface();
  void refresh();
  public:
  SWGF_Screen();
@@ -503,9 +550,13 @@ void SWGF_Screen::create_render()
  this->create_render_buffer();
 }
 
-void SWGF_Screen::refresh()
+void SWGF_Screen::update_surface()
 {
  surface->CopyFromMemory(&source,buffer,frame_line);
+}
+
+void SWGF_Screen::refresh()
+{
  target->BeginDraw();
  target->DrawBitmap(surface,destanation,1.0,D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,texture);
  target->EndDraw();
@@ -535,6 +586,7 @@ void SWGF_Screen::set_mode(const unsigned long int new_width,const unsigned long
 
 bool SWGF_Screen::begin_sync()
 {
+ this->update_surface();
  this->set_timer();
  this->refresh();
  return this->process_message();
@@ -668,7 +720,101 @@ unsigned long int SWGF_Mouse::get_y()
  return position.y;
 }
 
-class SWGF_Multimedia
+class SWGF_Gamepad
+{
+ private:
+ XINPUT_STATE state;
+ XINPUT_VIBRATION vibration;
+ unsigned long int active;
+ bool read_state();
+ bool write_state();
+ void set_motor(unsigned short int left,unsigned short int right);
+ public:
+ SWGF_Gamepad();
+ ~SWGF_Gamepad();
+ void set_active(unsigned long int gamepad);
+ bool check_connection();
+ bool check_button(unsigned short int button);
+ bool check_trigger(unsigned char trigger);
+ bool set_vibration(unsigned short int left,unsigned short int right);
+};
+
+SWGF_Gamepad::SWGF_Gamepad()
+{
+ XInputEnable(TRUE);
+ memset(&state,0,sizeof(XINPUT_STATE));
+ memset(&vibration,0,sizeof(XINPUT_VIBRATION));
+ active=0;
+}
+
+SWGF_Gamepad::~SWGF_Gamepad()
+{
+ XInputEnable(FALSE);
+}
+
+bool SWGF_Gamepad::read_state()
+{
+ bool result;
+ result=false;
+ if(XInputGetState(active,&state)==ERROR_SUCCESS) result=true;
+ return result;
+}
+
+bool SWGF_Gamepad::write_state()
+{
+ bool result;
+ result=false;
+ if(XInputSetState(active,&vibration)==ERROR_SUCCESS) result=true;
+ return result;
+}
+
+void SWGF_Gamepad::set_motor(unsigned short int left,unsigned short int right)
+{
+ vibration.wLeftMotorSpeed=left;
+ vibration.wRightMotorSpeed=right;
+}
+
+void SWGF_Gamepad::set_active(unsigned long int gamepad)
+{
+ active=gamepad;
+}
+
+bool SWGF_Gamepad::check_connection()
+{
+ return this->read_state();
+}
+
+bool SWGF_Gamepad::check_button(unsigned short int button)
+{
+ bool result;
+ result=false;
+ if(this->read_state()==true)
+ {
+  if(state.Gamepad.wButtons&button) result=true;
+ }
+ return result;
+}
+
+bool SWGF_Gamepad::check_trigger(unsigned char trigger)
+{
+ bool result;
+ result=false;
+ if(this->read_state()==true)
+ {
+  if((trigger==SWGF_GAMEPAD_LEFT_TRIGGER)&&(state.Gamepad.bLeftTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD)) result=true;
+  if((trigger==SWGF_GAMEPAD_RIGHT_TRIGGER)&&(state.Gamepad.bRightTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD)) result=true;
+ }
+ return result;
+
+}
+
+bool SWGF_Gamepad::set_vibration(unsigned short int left,unsigned short int right)
+{
+ this->set_motor(left,right);
+ return this->write_state();
+}
+
+class SWGF_Multimedia: public SWGF_Base
 {
  private:
  IGraphBuilder *loader;
@@ -687,17 +833,6 @@ class SWGF_Multimedia
 
 SWGF_Multimedia::SWGF_Multimedia()
 {
- HRESULT status;
- status=CoInitialize(NULL);
- if(status!=S_OK)
- {
-  if(status!=S_FALSE)
-  {
-   puts("Can't initialize COM");
-   exit(EXIT_FAILURE);
-  }
-
- }
  if(CoCreateInstance(CLSID_FilterGraph,NULL,CLSCTX_INPROC_SERVER,IID_IGraphBuilder,(void**)&loader)!=S_OK)
  {
   puts("Can't create a multimedia loader");
@@ -729,7 +864,6 @@ SWGF_Multimedia::~SWGF_Multimedia()
  controler->Release();
  player->Release();
  loader->Release();
- CoUninitialize();
 }
 
 wchar_t *SWGF_Multimedia::convert_file_name(const char *target)

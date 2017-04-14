@@ -41,6 +41,7 @@
 			<Add library="ole32" />
 			<Add library="d2d1" />
 			<Add library="strmiids" />
+			<Add library="xinput" />
 		</Linker>
 		<Unit filename="SWGF.h" />
 		<Unit filename="demo.cpp" />
