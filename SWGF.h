@@ -1412,7 +1412,7 @@ bool SWGF_Collision::check_horizontal_collision(SWGF_Canvas &first,SWGF_Canvas &
  result=false;
  if((first.get_x()+first.get_width())>=second.get_x())
  {
-  if(first.get_x()<=(second.get_y()+second.get_width())) result=true;
+  if(first.get_x()<=(second.get_x()+second.get_width())) result=true;
  }
  return result;
 }
@@ -1446,34 +1446,89 @@ class SWGF_Image
 void SWGF_Image::load_tga(const char *name,SWGF_Canvas &Canvas)
 {
  FILE *target;
+ unsigned long int index,position,amount,compressed_length,uncompressed_length;
+ unsigned char *compressed;
+ unsigned char *uncompressed;
  TGA_head head;
  TGA_map color_map;
  TGA_image image;
- unsigned char *buffer;
  target=fopen(name,"rb");
  if(target==NULL)
  {
   puts("Can't open a image file");
   exit(EXIT_FAILURE);
  }
+ fseek(target,0,SEEK_END);
+ compressed_length=ftell(target)-18;
+ rewind(target);
  fread(&head,3,1,target);
  fread(&color_map,5,1,target);
  fread(&image,10,1,target);
- if(((head.type!=2)||(head.color_map!=0))||(image.color!=24))
+ if((head.color_map!=0)||(image.color!=24))
  {
-  puts("Incorrect image format");
+  puts("Invalid image format");
   exit(EXIT_FAILURE);
  }
- buffer=(unsigned char*)calloc(image.width*image.height,3);
- if(buffer==NULL)
+ if(head.type!=2)
+ {
+  if(head.type!=10)
+  {
+   puts("Invalid image format");
+   exit(EXIT_FAILURE);
+  }
+
+ }
+ index=0;
+ position=0;
+ uncompressed_length=3*(unsigned long int)image.width*(unsigned long int)image.height;
+ uncompressed=(unsigned char*)calloc(uncompressed_length,1);
+ if(uncompressed==NULL)
  {
   puts("Can't allocate memory for image buffer");
   exit(EXIT_FAILURE);
  }
- fread(buffer,3,image.width*image.height,target);
- Canvas.load_image(buffer,image.width,image.height);
- free(buffer);
- fclose(target);
+ if(head.type==2)
+ {
+  fread(uncompressed,uncompressed_length,1,target);
+  fclose(target);
+ }
+ if(head.type==10)
+ {
+  compressed=(unsigned char*)calloc(compressed_length,1);
+  if(compressed==NULL)
+  {
+   puts("Can't allocate memory for image buffer");
+   exit(EXIT_FAILURE);
+  }
+  fread(compressed,compressed_length,1,target);
+  fclose(target);
+  while(index<uncompressed_length)
+  {
+   if(compressed[position]<128)
+   {
+    amount=compressed[position]+1;
+    amount*=3;
+    memmove(uncompressed+index,compressed+(position+1),amount);
+    index+=amount;
+    position+=1+amount;
+   }
+   else
+   {
+    for(amount=compressed[position]-127;amount>0;amount--)
+    {
+     uncompressed[index]=compressed[position+1];
+     uncompressed[index+1]=compressed[position+2];
+     uncompressed[index+2]=compressed[position+3];
+     index+=3;
+    }
+    position+=4;
+   }
+
+  }
+  free(compressed);
+ }
+ Canvas.load_image(uncompressed,image.width,image.height);
+ free(uncompressed);
 }
 
 void SWGF_Image::load_pcx(const char *name,SWGF_Canvas &Canvas)

@@ -21,9 +21,9 @@ int main(void)
  screen_height=screen.get_frame_height();
  x=screen_width/2;
  y=screen_height/2;
- image.load_pcx("space.pcx",space);
- image.load_pcx("ship.pcx",ship);
- image.load_pcx("font.pcx",font);
+ image.load_tga("space.tga",space);
+ image.load_tga("ship.tga",ship);
+ image.load_tga("font.tga",font);
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);
  frame=1;
