@@ -46,6 +46,10 @@ int main(void)
   if(gamepad.check_button(SWGF_GAMEPAD_DOWN)==true) y+=2;
   if(gamepad.check_button(SWGF_GAMEPAD_LEFT)==true) x-=2;
   if(gamepad.check_button(SWGF_GAMEPAD_RIGHT)==true) x+=2;
+  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==1) x+=2;
+  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==-1) x-=2;
+  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==1) y-=2;
+  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==-1) y+=2;
   if(gamepad.check_trigger(SWGF_GAMEPAD_LEFT_TRIGGER)==true) gamepad.set_vibration(65535,65535);
   if(gamepad.check_trigger(SWGF_GAMEPAD_RIGHT_TRIGGER)==true) gamepad.set_vibration(0,0);
   if(gamepad.check_button(SWGF_GAMEPAD_A)==true) ship.mirror_image(0);

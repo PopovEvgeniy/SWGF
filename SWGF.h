@@ -312,8 +312,8 @@ void SWGF_Engine::check_video_mode()
  mode=this->get_video_mode();
  if (mode.dmBitsPerPel<32)
  {
-  puts("Invalid color depth");
-  exit(EXIT_FAILURE);
+  mode.dmBitsPerPel=32;
+  this->set_video_mode(mode);
  }
  width=mode.dmPelsWidth;
  height=mode.dmPelsHeight;
@@ -737,6 +737,8 @@ class SWGF_Gamepad
  bool check_button(unsigned short int button);
  bool check_trigger(unsigned char trigger);
  bool set_vibration(unsigned short int left,unsigned short int right);
+ char get_stick_x(unsigned char stick);
+ char get_stick_y(unsigned char stick);
 };
 
 SWGF_Gamepad::SWGF_Gamepad()
@@ -812,6 +814,54 @@ bool SWGF_Gamepad::set_vibration(unsigned short int left,unsigned short int righ
 {
  this->set_motor(left,right);
  return this->write_state();
+}
+
+char SWGF_Gamepad::get_stick_x(unsigned char stick)
+{
+ char result;
+ short int control;
+ result=0;
+ if(this->read_state()==true)
+ {
+  if(stick==SWGF_GAMEPAD_LEFT_STICK)
+  {
+   control=32767-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+   if(state.Gamepad.sThumbLX>=control) result=1;
+   if(state.Gamepad.sThumbLX<=-1*control) result=-1;
+  }
+  if(stick==SWGF_GAMEPAD_RIGHT_STICK)
+  {
+   control=32767-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+   if(state.Gamepad.sThumbRX>=control) result=1;
+   if(state.Gamepad.sThumbRX<=-1*control) result=-1;
+  }
+
+ }
+ return result;
+}
+
+char SWGF_Gamepad::get_stick_y(unsigned char stick)
+{
+ char result;
+ short int control;
+ result=0;
+ if(this->read_state()==true)
+ {
+  if(stick==SWGF_GAMEPAD_LEFT_STICK)
+  {
+   control=32767-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+   if(state.Gamepad.sThumbLY>=control) result=1;
+   if(state.Gamepad.sThumbLY<=-1*control) result=-1;
+  }
+  if(stick==SWGF_GAMEPAD_RIGHT_STICK)
+  {
+   control=32767-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+   if(state.Gamepad.sThumbRY>=control) result=1;
+   if(state.Gamepad.sThumbRY<=-1*control) result=-1;
+  }
+
+ }
+ return result;
 }
 
 class SWGF_Multimedia: public SWGF_Base
