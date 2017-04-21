@@ -1566,9 +1566,7 @@ void SWGF_Image::load_tga(const char *name,SWGF_Canvas &Canvas)
    {
     for(amount=compressed[position]-127;amount>0;amount--)
     {
-     uncompressed[index]=compressed[position+1];
-     uncompressed[index+1]=compressed[position+2];
-     uncompressed[index+2]=compressed[position+3];
+     memmove(uncompressed+index,compressed+(position+1),3);
      index+=3;
     }
     position+=4;
