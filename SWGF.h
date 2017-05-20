@@ -150,22 +150,16 @@ class SWGF_Engine
  WNDCLASS window_class;
  unsigned long int width;
  unsigned long int height;
- unsigned char color;
- void destroy_window();
  void create_window();
  void capture_mouse();
  bool process_message();
  void set_timer();
  void wait_timer();
- void set_video_mode(DEVMODE mode);
- DEVMODE get_video_mode();
- void check_video_mode();
  public:
  SWGF_Engine();
  ~SWGF_Engine();
  unsigned long int get_width();
  unsigned long int get_height();
- unsigned char get_color();
 };
 
 SWGF_Engine::SWGF_Engine()
@@ -176,7 +170,7 @@ SWGF_Engine::SWGF_Engine()
  window_class.style=CS_NOCLOSE;
  window_class.lpfnWndProc=(WNDPROC)SWGF_Process_Message;
  window_class.hbrBackground=NULL;
- window_class.hIcon=NULL;
+ window_class.hIcon=LoadIcon(NULL,IDI_APPLICATION);
  window_class.hCursor=NULL;
  window_class.cbClsExtra=0;
  window_class.cbWndExtra=0;
@@ -186,6 +180,11 @@ SWGF_Engine::SWGF_Engine()
  if (window_class.hCursor==NULL)
  {
   puts("Can't create a cursor");
+  exit(EXIT_FAILURE);
+ }
+ if (window_class.hIcon==NULL)
+ {
+  puts("Can't load the standart program icon");
   exit(EXIT_FAILURE);
  }
  if (RegisterClass(&window_class)==0)
@@ -199,9 +198,8 @@ SWGF_Engine::SWGF_Engine()
   puts("Can't create synchronization timer");
   exit(EXIT_FAILURE);
  }
- width=0;
- height=0;
- color=0;
+ width=GetSystemMetrics(SM_CXSCREEN);
+ height=GetSystemMetrics(SM_CYSCREEN);
 }
 
 SWGF_Engine::~SWGF_Engine()
@@ -214,19 +212,9 @@ SWGF_Engine::~SWGF_Engine()
  CloseHandle(timer);
 }
 
-void SWGF_Engine::destroy_window()
-{
- if(window!=NULL)
- {
-  CloseWindow(window);
-  window=NULL;
- }
-
-}
-
 void SWGF_Engine::create_window()
 {
- window=CreateWindow(window_class.lpszClassName,NULL,WS_MAXIMIZE|WS_VISIBLE|WS_POPUP,0,0,width,height,NULL,NULL,window_class.hInstance,NULL);
+ window=CreateWindow(window_class.lpszClassName,NULL,WS_MAXIMIZE|WS_VISIBLE|WS_POPUP,0,0,0,0,NULL,NULL,window_class.hInstance,NULL);
  if (window==NULL)
  {
   puts("Can't create window");
@@ -286,43 +274,6 @@ void SWGF_Engine::wait_timer()
  WaitForSingleObject(timer,INFINITE);
 }
 
-void SWGF_Engine::set_video_mode(DEVMODE mode)
-{
- if (ChangeDisplaySettings(&mode,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)
- {
-  puts("Can't change video mode");
-  exit(EXIT_FAILURE);
- }
-
-}
-
-DEVMODE SWGF_Engine::get_video_mode()
-{
- DEVMODE mode;
- memset(&mode,0,sizeof(DEVMODE));
- mode.dmSize=sizeof(DEVMODE);
- if (EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS,&mode)==FALSE)
- {
-  puts("Can't get display setting");
-  exit(EXIT_FAILURE);
- }
- return mode;
-}
-
-void SWGF_Engine::check_video_mode()
-{
- DEVMODE mode;
- mode=this->get_video_mode();
- if (mode.dmBitsPerPel<32)
- {
-  mode.dmBitsPerPel=32;
-  this->set_video_mode(mode);
- }
- width=mode.dmPelsWidth;
- height=mode.dmPelsHeight;
- color=mode.dmBitsPerPel;
-}
-
 unsigned long int SWGF_Engine::get_width()
 {
  return width;
@@ -333,11 +284,6 @@ unsigned long int SWGF_Engine::get_height()
  return height;
 }
 
-unsigned char SWGF_Engine::get_color()
-{
- return color;
-}
-
 class SWGF_Screen:public SWGF_Base, public SWGF_Engine
 {
  private:
@@ -345,12 +291,14 @@ class SWGF_Screen:public SWGF_Base, public SWGF_Engine
  IDirect3DDevice9 *device;
  IDirect3DTexture9 *texture;
  D3DCOLOR *buffer;
+ D3DDISPLAYMODE display;
  SWGF_Vertex surface[4];
  D3DPRESENT_PARAMETERS present;
  unsigned long int frame_width;
  unsigned long int frame_height;
  unsigned long int length;
  void initialize_backend();
+ void get_display_setting();
  void set_render_setting();
  void configure_video();
  void check_videocard();
@@ -373,7 +321,6 @@ class SWGF_Screen:public SWGF_Base, public SWGF_Engine
  SWGF_Screen();
  ~SWGF_Screen();
  void initialize();
- void set_mode(unsigned long int width,unsigned long int height);
  void draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue);
  void clear_screen();
  bool begin_sync();
@@ -412,14 +359,24 @@ void SWGF_Screen::initialize_backend()
 
 }
 
+void SWGF_Screen::get_display_setting()
+{
+ if(backend->GetAdapterDisplayMode(D3DADAPTER_DEFAULT,&display)!=D3D_OK)
+ {
+  puts("Can't get display setting");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
 void SWGF_Screen::set_render_setting()
 {
  memset(&present,0,sizeof(D3DPRESENT_PARAMETERS));
- present.BackBufferWidth=width;
- present.BackBufferHeight=height;
+ present.BackBufferWidth=display.Width;
+ present.BackBufferHeight=display.Height;
+ present.BackBufferFormat=display.Format;
  present.BackBufferCount=1;
  present.PresentationInterval=D3DPRESENT_INTERVAL_IMMEDIATE;
- present.BackBufferFormat=D3DFMT_A8R8G8B8;
  present.MultiSampleType=D3DMULTISAMPLE_NONE;
  present.SwapEffect=D3DSWAPEFFECT_COPY;
  present.hDeviceWindow=window;
@@ -466,6 +423,7 @@ void SWGF_Screen::set_format()
 void SWGF_Screen::set_render()
 {
  this->initialize_backend();
+ this->get_display_setting();
  this->set_render_setting();
  this->configure_video();
  this->check_videocard();
@@ -508,7 +466,7 @@ void SWGF_Screen::set_viewport()
  port.Width=width;
  port.Height=height;
  port.MinZ=0;
- port.MaxZ=1;
+ port.MaxZ=0;
  if(device->SetViewport(&port)!=D3D_OK)
  {
   puts("Can't set viewport");
@@ -543,6 +501,11 @@ void SWGF_Screen::prepare_surface()
 
 void SWGF_Screen::create_texture()
 {
+ if(texture!=NULL)
+ {
+  texture->Release();
+  texture=NULL;
+ }
  if(device->CreateTexture(frame_width,frame_height,1,0,D3DFMT_X8R8G8B8,D3DPOOL_MANAGED,&texture,NULL)!=D3D_OK)
  {
   puts("Can't create texture for render surface");
@@ -634,24 +597,9 @@ void SWGF_Screen::refresh()
 
 void SWGF_Screen::initialize()
 {
- this->check_video_mode();
- this->destroy_render();
  this->create_window();
  this->create_render();
  this->capture_mouse();
-}
-
-void SWGF_Screen::set_mode(const unsigned long int new_width,const unsigned long int new_height)
-{
-
- DEVMODE mode;
- mode=this->get_video_mode();
- mode.dmPelsWidth=new_width;
- mode.dmPelsHeight=new_height;
- this->destroy_render();
- this->destroy_window();
- this->set_video_mode(mode);
- this->initialize();
 }
 
 void SWGF_Screen::draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue)

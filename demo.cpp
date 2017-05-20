@@ -16,7 +16,6 @@ int main(void)
  space.initialize(screen.get_handle());
  ship.initialize(screen.get_handle());
  font.initialize(screen.get_handle());
- screen.set_mode(800,600);
  screen_width=screen.get_frame_width();
  screen_height=screen.get_frame_height();
  x=screen_width/2;
