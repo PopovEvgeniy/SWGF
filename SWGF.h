@@ -17,7 +17,9 @@ Documentation or interface of third–party product must contain this remark:
 #include <wchar.h>
 #include <windows.h>
 #include <unknwn.h>
-#include <d2d1.h>
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <d3dx9math.h>
 #include <dshow.h>
 #include <xinput.h>
 
@@ -97,12 +99,13 @@ struct PCX_head
  unsigned char filled[54];
 };
 
-struct SWGF_Pixel
+struct SWGF_Vertex
 {
- unsigned char blue:8;
- unsigned char green:8;
- unsigned char red:8;
- unsigned char alpha:8;
+ float x;
+ float y;
+ float z;
+ float u;
+ float v;
 };
 
 LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam)
@@ -335,161 +338,75 @@ unsigned char SWGF_Engine::get_color()
  return color;
 }
 
-class SWGF_Draw
-{
- protected:
- unsigned long int frame_width;
- unsigned long int frame_height;
- unsigned long int frame_line;
- SWGF_Pixel *buffer;
- void create_render_buffer();
- public:
- SWGF_Draw();
- ~SWGF_Draw();
- unsigned long int get_frame_width();
- unsigned long int get_frame_height();
- void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
- void clear_screen();
-};
-
-SWGF_Draw::SWGF_Draw()
-{
- frame_width=640;
- frame_height=480;
- frame_line=0;
- buffer=NULL;
-}
-
-SWGF_Draw::~SWGF_Draw()
-{
- free(buffer);
-}
-
-void SWGF_Draw::create_render_buffer()
-{
- if(buffer!=NULL)
- {
-  free(buffer);
-  buffer=NULL;
- }
- frame_line=frame_width*sizeof(SWGF_Pixel);
- buffer=(SWGF_Pixel*)calloc(frame_height*frame_line,1);
- if (buffer==NULL)
- {
-  puts("Can't create render buffer");
-  exit(EXIT_FAILURE);
- }
-
-}
-
-unsigned long int SWGF_Draw::get_frame_width()
-{
- return frame_width;
-}
-
-unsigned long int SWGF_Draw::get_frame_height()
-{
- return frame_height;
-}
-
-void SWGF_Draw::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
-{
- unsigned long int offset;
- if ((x<frame_width)&&(y<frame_height))
- {
-  offset=x+y*frame_width;
-  buffer[offset].red=red;
-  buffer[offset].green=green;
-  buffer[offset].blue=blue;
-  buffer[offset].alpha=0;
- }
-
-}
-
-void SWGF_Draw::clear_screen()
-{
- unsigned long int x,y;
- for (x=0;x<frame_width;x++)
- {
-  for (y=0;y<frame_height;y++)
-  {
-   this->draw_pixel(x,y,0,0,0);
-  }
-
- }
-
-}
-
-class SWGF_Screen:public SWGF_Base, public SWGF_Engine, public SWGF_Draw
+class SWGF_Screen:public SWGF_Base, public SWGF_Engine
 {
  private:
- ID2D1Factory *render;
- ID2D1HwndRenderTarget *target;
- ID2D1Bitmap *surface;
- D2D1_RENDER_TARGET_PROPERTIES setting;
- D2D1_HWND_RENDER_TARGET_PROPERTIES configuration;
- D2D1_RECT_U source;
- D2D1_RECT_F destanation;
- D2D1_RECT_F texture;
- void create_factory();
- void create_target();
- void create_surface();
+ IDirect3D9 *backend;
+ IDirect3DDevice9 *device;
+ IDirect3DTexture9 *texture;
+ D3DCOLOR *buffer;
+ SWGF_Vertex surface[4];
+ D3DPRESENT_PARAMETERS present;
+ unsigned long int frame_width;
+ unsigned long int frame_height;
+ unsigned long int length;
+ void initialize_backend();
  void set_render_setting();
+ void configure_video();
+ void check_videocard();
+ void set_format();
  void set_render();
- void destroy_render();
+ void set_perfomance();
+ void set_transform(D3DTRANSFORMSTATETYPE target,D3DXMATRIX *matrix);
+ void set_perspective();
+ void set_viewport();
  void prepare_surface();
+ void create_texture();
+ void set_texture_setting();
+ void update_texture();
+ void create_render_buffer();
  void create_render();
+ void destroy_render();
  void update_surface();
  void refresh();
  public:
  SWGF_Screen();
  ~SWGF_Screen();
  void initialize();
- void set_mode(const unsigned long int new_width,const unsigned long int new_height);
+ void set_mode(unsigned long int width,unsigned long int height);
+ void draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue);
+ void clear_screen();
  bool begin_sync();
  void end_sync();
+ unsigned long int get_frame_width();
+ unsigned long int get_frame_height();
  SWGF_Screen* get_handle();
 };
 
 SWGF_Screen::SWGF_Screen()
 {
- render=NULL;
- target=NULL;
- surface=NULL;
+ backend=NULL;
+ device=NULL;
+ buffer=NULL;
+ texture=NULL;
+ frame_width=512;
+ frame_height=512;
 }
 
 SWGF_Screen::~SWGF_Screen()
 {
- if(surface!=NULL) surface->Release();
- if(target!=NULL) target->Release();
- if(render!=NULL) render->Release();
+ texture->Release();
+ device->Release();
+ backend->Release();
+ free(buffer);
 }
 
-void SWGF_Screen::create_factory()
+void SWGF_Screen::initialize_backend()
 {
- if(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED,&render)!=S_OK)
+ backend=Direct3DCreate9(D3D_SDK_VERSION);
+ if(backend==NULL)
  {
-  puts("Can't create render");
-  exit(EXIT_FAILURE);
- }
-
-}
-
-void SWGF_Screen::create_target()
-{
- if(render->CreateHwndRenderTarget(setting,configuration,&target)!=S_OK)
- {
-  puts("Can't create render target");
-  exit(EXIT_FAILURE);
- }
- target->SetAntialiasMode(D2D1_ANTIALIAS_MODE_ALIASED);
-}
-
-void SWGF_Screen::create_surface()
-{
- if(target->CreateBitmap(D2D1::SizeU(frame_width,frame_height),D2D1::BitmapProperties(setting.pixelFormat,96.0,96.0),&surface)!=S_OK)
- {
-  puts("Can't create render surface");
+  puts("Can't initialize render back-end");
   exit(EXIT_FAILURE);
  }
 
@@ -497,69 +414,222 @@ void SWGF_Screen::create_surface()
 
 void SWGF_Screen::set_render_setting()
 {
- setting=D2D1::RenderTargetProperties();
- setting.type=D2D1_RENDER_TARGET_TYPE_HARDWARE;
- setting.pixelFormat=D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM,D2D1_ALPHA_MODE_IGNORE);
- setting.usage=D2D1_RENDER_TARGET_USAGE_NONE;
- setting.minLevel=D2D1_FEATURE_LEVEL_9;
- configuration.hwnd=window;
- configuration.pixelSize=D2D1::SizeU(width,height);
- configuration.presentOptions=D2D1_PRESENT_OPTIONS_IMMEDIATELY;
+ memset(&present,0,sizeof(D3DPRESENT_PARAMETERS));
+ present.BackBufferWidth=width;
+ present.BackBufferHeight=height;
+ present.BackBufferCount=1;
+ present.PresentationInterval=D3DPRESENT_INTERVAL_IMMEDIATE;
+ present.BackBufferFormat=D3DFMT_A8R8G8B8;
+ present.MultiSampleType=D3DMULTISAMPLE_NONE;
+ present.SwapEffect=D3DSWAPEFFECT_COPY;
+ present.hDeviceWindow=window;
+ present.Windowed=TRUE;
+ present.EnableAutoDepthStencil=FALSE;
+}
+
+void SWGF_Screen::configure_video()
+{
+ if(backend->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,window,D3DCREATE_HARDWARE_VERTEXPROCESSING,&present,&device)!=D3D_OK)
+ {
+  puts("Can't configure the video card");
+  exit(EXIT_FAILURE);
+ }
+ device->Clear(0,NULL,D3DCLEAR_TARGET,D3DCOLOR_ARGB(0,0,0,0),0,0);
+}
+
+void SWGF_Screen::check_videocard()
+{
+ D3DCAPS9 configuration;
+ if(device->GetDeviceCaps(&configuration)!=D3D_OK)
+ {
+  puts("Can't get configuration of video card");
+  exit(EXIT_FAILURE);
+ }
+ if((configuration.MaxTextureWidth<frame_width)||(configuration.MaxTextureHeight<frame_height))
+ {
+  puts("This video card don't support request texture size");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+void SWGF_Screen::set_format()
+{
+ if(device->SetFVF(D3DFVF_XYZ|D3DFVF_TEX1)!=D3D_OK)
+ {
+  puts("Can't set vertex format");
+  exit(EXIT_FAILURE);
+ }
+
 }
 
 void SWGF_Screen::set_render()
 {
- this->create_factory();
- this->create_target();
- this->create_surface();
+ this->initialize_backend();
+ this->set_render_setting();
+ this->configure_video();
+ this->check_videocard();
+ this->set_format();
 }
 
-void SWGF_Screen::destroy_render()
+void SWGF_Screen::set_perfomance()
 {
- if(surface!=NULL)
+ device->SetRenderState(D3DRS_ZENABLE,FALSE);
+ device->SetRenderState(D3DRS_ZWRITEENABLE,FALSE);
+ device->SetRenderState(D3DRS_LIGHTING,FALSE);
+ device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
+}
+
+void SWGF_Screen::set_transform(D3DTRANSFORMSTATETYPE target,D3DXMATRIX *matrix)
+{
+ if(device->SetTransform(target,matrix)!=D3D_OK)
  {
-  surface->Release();
-  surface=NULL;
+  puts("Can't transform a matrix");
+  exit(EXIT_FAILURE);
  }
- if(target!=NULL)
+
+}
+
+void SWGF_Screen::set_perspective()
+{
+ D3DXMATRIX identity,projection;
+ D3DXMatrixOrthoLH(&projection,width,height,0,1);
+ D3DXMatrixIdentity(&identity);
+ this->set_transform(D3DTS_WORLD,&identity);
+ this->set_transform(D3DTS_VIEW,&identity);
+ this->set_transform(D3DTS_PROJECTION,&projection);
+}
+
+void SWGF_Screen::set_viewport()
+{
+ D3DVIEWPORT9 port;
+ port.X=0;
+ port.Y=0;
+ port.Width=width;
+ port.Height=height;
+ port.MinZ=0;
+ port.MaxZ=1;
+ if(device->SetViewport(&port)!=D3D_OK)
  {
-  target->Release();
-  target=NULL;
- }
- if(render!=NULL)
- {
-  render->Release();
-  render=NULL;
+  puts("Can't set viewport");
+  exit(EXIT_FAILURE);
  }
 
 }
 
 void SWGF_Screen::prepare_surface()
 {
- source=D2D1::RectU(0,0,frame_width,frame_height);
- destanation=D2D1::RectF(0,0,width,height);
- texture=D2D1::RectF(0,0,frame_width,frame_height);
+ surface[0].x=(float)width/-2.0;
+ surface[0].y=(float)height/2.0;
+ surface[0].z=0;
+ surface[0].u=0;
+ surface[0].v=0;
+ surface[1].x=(float)width/2.0;
+ surface[1].y=(float)height/2.0;
+ surface[1].z=0;
+ surface[1].u=1;
+ surface[1].v=0;
+ surface[2].x=(float)width/-2.0;
+ surface[2].y=(float)height/-2.0;
+ surface[2].z=0;
+ surface[2].u=0;
+ surface[2].v=1;
+ surface[3].x=(float)width/2.0;
+ surface[3].y=(float)height/-2.0;
+ surface[3].z=0;
+ surface[3].u=1;
+ surface[3].v=1;
+}
+
+void SWGF_Screen::create_texture()
+{
+ if(device->CreateTexture(frame_width,frame_height,1,0,D3DFMT_X8R8G8B8,D3DPOOL_MANAGED,&texture,NULL)!=D3D_OK)
+ {
+  puts("Can't create texture for render surface");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+void SWGF_Screen::set_texture_setting()
+{
+ device->SetTexture(0,texture);
+ device->SetTextureStageState(0,D3DTSS_COLOROP,D3DTOP_MODULATE);
+ device->SetTextureStageState(0,D3DTSS_COLORARG1,D3DTA_TEXTURE);
+ device->SetTextureStageState(0,D3DTSS_COLORARG2,D3DTA_DIFFUSE);
+ device->SetTextureStageState(0,D3DTSS_ALPHAOP,D3DTOP_DISABLE);
+ device->SetSamplerState(0,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);
+ device->SetSamplerState(0,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
+ device->SetSamplerState(0,D3DSAMP_MIPFILTER,D3DTEXF_NONE);
+}
+
+void SWGF_Screen::update_texture()
+{
+ D3DLOCKED_RECT lock;
+ if(texture->LockRect(0,&lock,NULL,0)!=D3D_OK)
+ {
+  puts("Can't lock texture");
+  exit(EXIT_FAILURE);
+ }
+ memmove(lock.pBits,buffer,length);
+ texture->UnlockRect(0);
+}
+
+void SWGF_Screen::create_render_buffer()
+{
+ if(buffer!=NULL) free(buffer);
+ length=frame_width*frame_height*sizeof(D3DCOLOR);
+ buffer=(D3DCOLOR*)calloc(length,1);
+ if(buffer==NULL)
+ {
+  puts("Can't allocate memory for render buffer");
+  exit(EXIT_FAILURE);
+ }
+
 }
 
 void SWGF_Screen::create_render()
 {
- this->destroy_render();
- this->set_render_setting();
  this->set_render();
+ this->set_perfomance();
+ this->set_perspective();
+ this->set_viewport();
  this->prepare_surface();
+ this->create_texture();
+ this->set_texture_setting();
  this->create_render_buffer();
+}
+
+void SWGF_Screen::destroy_render()
+{
+ if(texture!=NULL)
+ {
+  texture->Release();
+  texture=NULL;
+ }
+ if(device!=NULL)
+ {
+  device->Release();
+  device=NULL;
+ }
+ if(backend!=NULL)
+ {
+  backend->Release();
+  backend=NULL;
+ }
+
 }
 
 void SWGF_Screen::update_surface()
 {
- surface->CopyFromMemory(&source,buffer,frame_line);
+ device->BeginScene();
+ device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,surface,20);
+ device->EndScene();
 }
 
 void SWGF_Screen::refresh()
 {
- target->BeginDraw();
- target->DrawBitmap(surface,destanation,1.0,D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,texture);
- target->EndDraw();
+ device->Present(NULL,NULL,window,NULL);
 }
 
 void SWGF_Screen::initialize()
@@ -584,17 +654,44 @@ void SWGF_Screen::set_mode(const unsigned long int new_width,const unsigned long
  this->initialize();
 }
 
+void SWGF_Screen::draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue)
+{
+ if((x<frame_width)&&(y<frame_height))
+ {
+  buffer[x+y*frame_width]=D3DCOLOR_ARGB(0,red,green,blue);
+ }
+
+}
+
+void SWGF_Screen::clear_screen()
+{
+ memset(buffer,0,length);
+}
+
 bool SWGF_Screen::begin_sync()
 {
- this->update_surface();
+ bool quit;
+ quit=this->process_message();
  this->set_timer();
  this->refresh();
- return this->process_message();
+ this->wait_timer();
+ return quit;
 }
 
 void SWGF_Screen::end_sync()
 {
- this->wait_timer();
+ this->update_texture();
+ this->update_surface();
+}
+
+unsigned long int SWGF_Screen::get_frame_width()
+{
+ return frame_width;
+}
+
+unsigned long int SWGF_Screen::get_frame_height()
+{
+ return frame_height;
 }
 
 SWGF_Screen* SWGF_Screen::get_handle()
