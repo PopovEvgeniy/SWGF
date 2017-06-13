@@ -26,20 +26,21 @@ int main(void)
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);
  frame=1;
+ mouse.hide();
  timer.set_timer(1);
  media.load("space.mp3");
  media.play();
- while(screen.begin_sync()==false)
+ while(screen.sync()==false)
  {
   if(media.check_playing()==false) media.play();
-  if(mouse.get_pushed_button()==SWGF_MOUSE_LEFT) break;
-  if(keyboard.check_push(57)==true) break;
-  if(keyboard.check_push(72)==true) y-=2;
-  if(keyboard.check_push(80)==true) y+=2;
-  if(keyboard.check_push(75)==true) x-=2;
-  if(keyboard.check_push(77)==true) x+=2;
-  if(keyboard.check_push(71)==true) ship.mirror_image(0);
-  if(keyboard.check_push(79)==true) ship.mirror_image(1);
+  if(mouse.get_pressed_button()==SWGF_MOUSE_LEFT) break;
+  if(keyboard.check_press(57)==true) break;
+  if(keyboard.check_press(72)==true) y-=2;
+  if(keyboard.check_press(80)==true) y+=2;
+  if(keyboard.check_press(75)==true) x-=2;
+  if(keyboard.check_press(77)==true) x+=2;
+  if(keyboard.check_press(71)==true) ship.mirror_image(0);
+  if(keyboard.check_press(79)==true) ship.mirror_image(1);
   if(gamepad.check_button(SWGF_GAMEPAD_X)==true) break;
   if(gamepad.check_button(SWGF_GAMEPAD_UP)==true) y-=2;
   if(gamepad.check_button(SWGF_GAMEPAD_DOWN)==true) y+=2;
@@ -63,7 +64,7 @@ int main(void)
    frame++;
    if (frame>2) frame=1;
   }
-  screen.end_sync();
+
  }
  return 0;
 }

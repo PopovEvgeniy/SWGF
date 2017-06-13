@@ -1,13 +1,18 @@
 /*
-Simple windows game framework license
-
 Copyright © 2016–2017, Popov Evgeniy Alekseyevich
 
-This software provide without any warranty.
-Any person or company can redistribute original distributive of this software.
-Any person or company can use source code of this software for making third–party product.
-Documentation or interface of third–party product must contain this remark:
-<Software> built on top Simple windows game framework from Popov Evgeniy Alekseyevich.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <stdio.h>
@@ -99,6 +104,14 @@ struct PCX_head
  unsigned char filled[54];
 };
 
+struct SWGF_Pixel
+{
+ unsigned char blue:8;
+ unsigned char green:8;
+ unsigned char red:8;
+ unsigned char alpha:8;
+};
+
 struct SWGF_Vertex
 {
  float x;
@@ -107,12 +120,6 @@ struct SWGF_Vertex
  float u;
  float v;
 };
-
-LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam)
-{
- if(Message==WM_DESTROY) PostQuitMessage(0);
- return DefWindowProc(window,Message,wParam,lParam);
-}
 
 class SWGF_Base
 {
@@ -142,10 +149,55 @@ SWGF_Base::~SWGF_Base()
  CoUninitialize();
 }
 
-class SWGF_Engine
+class SWGF_Synchronization
+{
+ private:
+ HANDLE timer;
+ protected:
+ void set_timer(unsigned long int interval);
+ void wait_timer();
+ public:
+ SWGF_Synchronization();
+ ~SWGF_Synchronization();
+};
+
+SWGF_Synchronization::SWGF_Synchronization()
+{
+ timer=CreateWaitableTimer(NULL,FALSE,NULL);
+ if (timer==NULL)
+ {
+  puts("Can't create synchronization timer");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+SWGF_Synchronization::~SWGF_Synchronization()
+{
+ CancelWaitableTimer(timer);
+ CloseHandle(timer);
+}
+
+void SWGF_Synchronization::set_timer(unsigned long int interval)
+{
+ LARGE_INTEGER start;
+ start.QuadPart=0;
+ if(SetWaitableTimer(timer,&start,interval,NULL,NULL,FALSE)==FALSE)
+ {
+  puts("Can't set timer");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+void SWGF_Synchronization::wait_timer()
+{
+ WaitForSingleObject(timer,INFINITE);
+}
+
+class SWGF_Engine: public SWGF_Synchronization
 {
  protected:
- HANDLE timer;
  HWND window;
  WNDCLASS window_class;
  unsigned long int width;
@@ -153,8 +205,6 @@ class SWGF_Engine
  void create_window();
  void capture_mouse();
  bool process_message();
- void set_timer();
- void wait_timer();
  public:
  SWGF_Engine();
  ~SWGF_Engine();
@@ -164,22 +214,18 @@ class SWGF_Engine
 
 SWGF_Engine::SWGF_Engine()
 {
- unsigned char cursor[2];
  window_class.lpszClassName=TEXT("SWGF");
  window_class.hInstance=GetModuleHandle(NULL);
- window_class.style=CS_NOCLOSE;
- window_class.lpfnWndProc=(WNDPROC)SWGF_Process_Message;
- window_class.hbrBackground=NULL;
+ window_class.style=CS_HREDRAW|CS_VREDRAW;
+ window_class.lpfnWndProc=(WNDPROC)DefWindowProc;
+ window_class.hbrBackground=(HBRUSH)GetStockObject(BLACK_BRUSH);
  window_class.hIcon=LoadIcon(NULL,IDI_APPLICATION);
- window_class.hCursor=NULL;
+ window_class.hCursor=LoadCursor(NULL,IDC_ARROW);
  window_class.cbClsExtra=0;
  window_class.cbWndExtra=0;
- cursor[0]=0;
- cursor[1]=0;
- window_class.hCursor=CreateCursor(window_class.hInstance,0,0,1,1,cursor,cursor);
  if (window_class.hCursor==NULL)
  {
-  puts("Can't create a cursor");
+  puts("Can't load the standart cursor");
   exit(EXIT_FAILURE);
  }
  if (window_class.hIcon==NULL)
@@ -192,12 +238,6 @@ SWGF_Engine::SWGF_Engine()
   puts("Can't register window class");
   exit(EXIT_FAILURE);
  }
- timer=CreateWaitableTimer(NULL,TRUE,NULL);
- if (timer==NULL)
- {
-  puts("Can't create synchronization timer");
-  exit(EXIT_FAILURE);
- }
  width=GetSystemMetrics(SM_CXSCREEN);
  height=GetSystemMetrics(SM_CYSCREEN);
 }
@@ -205,16 +245,12 @@ SWGF_Engine::SWGF_Engine()
 SWGF_Engine::~SWGF_Engine()
 {
  if(window!=NULL) CloseWindow(window);
- DestroyCursor(window_class.hCursor);
  UnregisterClass(window_class.lpszClassName,window_class.hInstance);
- ChangeDisplaySettings(NULL,0);
- CancelWaitableTimer(timer);
- CloseHandle(timer);
 }
 
 void SWGF_Engine::create_window()
 {
- window=CreateWindow(window_class.lpszClassName,NULL,WS_MAXIMIZE|WS_VISIBLE|WS_POPUP,0,0,0,0,NULL,NULL,window_class.hInstance,NULL);
+ window=CreateWindowEx(WS_EX_TOPMOST,window_class.lpszClassName,NULL,WS_VISIBLE|WS_POPUP,0,0,width,height,NULL,NULL,window_class.hInstance,NULL);
  if (window==NULL)
  {
   puts("Can't create window");
@@ -247,31 +283,19 @@ bool SWGF_Engine::process_message()
  quit=false;
  while(PeekMessage(&Message,window,0,0,PM_NOREMOVE)==TRUE)
  {
-  if(Message.message==WM_QUIT)
+  if(GetMessage(&Message,window,0,0)==TRUE)
+  {
+   TranslateMessage(&Message);
+   DispatchMessage(&Message);
+  }
+  else
   {
    quit=true;
    break;
   }
-  if(GetMessage(&Message,window,0,0)==TRUE) DispatchMessage(&Message);
+
  }
  return quit;
-}
-
-void SWGF_Engine::set_timer()
-{
- LARGE_INTEGER interval;
- interval.QuadPart=-166666;
- if(SetWaitableTimer(timer,&interval,17,NULL,NULL,FALSE)==FALSE)
- {
-  puts("Can't set timer");
-  exit(EXIT_FAILURE);
- }
-
-}
-
-void SWGF_Engine::wait_timer()
-{
- WaitForSingleObject(timer,INFINITE);
 }
 
 unsigned long int SWGF_Engine::get_width()
@@ -284,49 +308,126 @@ unsigned long int SWGF_Engine::get_height()
  return height;
 }
 
-class SWGF_Screen:public SWGF_Base, public SWGF_Engine
+class SWGF_Frame
+{
+ protected:
+ unsigned long int frame_width;
+ unsigned long int frame_height;
+ unsigned long int length;
+ SWGF_Pixel *buffer;
+ void create_render_buffer();
+ public:
+ SWGF_Frame();
+ ~SWGF_Frame();
+ void draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue);
+ void clear_screen();
+ unsigned long int get_frame_width();
+ unsigned long int get_frame_height();
+};
+
+SWGF_Frame::SWGF_Frame()
+{
+ frame_width=512;
+ frame_height=512;
+ buffer=NULL;
+}
+
+SWGF_Frame::~SWGF_Frame()
+{
+ if(buffer!=NULL)
+ {
+  buffer=NULL;
+  free(buffer);
+ }
+
+}
+
+void SWGF_Frame::create_render_buffer()
+{
+ if(buffer!=NULL)
+ {
+  buffer=NULL;
+  free(buffer);
+ }
+ length=frame_width*frame_height*sizeof(SWGF_Pixel);
+ buffer=(SWGF_Pixel*)calloc(length,1);
+ if(buffer==NULL)
+ {
+  puts("Can't allocate memory for render buffer");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+void SWGF_Frame::draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue)
+{
+ unsigned long int offset;
+ if((x<frame_width)&&(y<frame_height))
+ {
+  offset=x+y*frame_width;
+  buffer[offset].red=red;
+  buffer[offset].green=green;
+  buffer[offset].blue=blue;
+  buffer[offset].alpha=red;
+ }
+
+}
+
+void SWGF_Frame::clear_screen()
+{
+ memset(buffer,0,length);
+}
+
+unsigned long int SWGF_Frame::get_frame_width()
+{
+ return frame_width;
+}
+
+unsigned long int SWGF_Frame::get_frame_height()
+{
+ return frame_height;
+}
+
+class SWGF_Screen:public SWGF_Base, public SWGF_Engine, public SWGF_Frame
 {
  private:
  IDirect3D9 *backend;
  IDirect3DDevice9 *device;
+ IDirect3DVertexBuffer9 *vertex;
  IDirect3DTexture9 *texture;
- D3DCOLOR *buffer;
+ D3DPRESENT_PARAMETERS present;
  D3DDISPLAYMODE display;
  SWGF_Vertex surface[4];
- D3DPRESENT_PARAMETERS present;
- unsigned long int frame_width;
- unsigned long int frame_height;
- unsigned long int length;
  void initialize_backend();
+ void reinitialize_backend();
  void get_display_setting();
  void set_render_setting();
  void configure_video();
+ void clear_target();
  void check_videocard();
- void set_format();
  void set_render();
  void set_perfomance();
  void set_transform(D3DTRANSFORMSTATETYPE target,D3DXMATRIX *matrix);
  void set_perspective();
  void set_viewport();
  void prepare_surface();
+ void create_vertex_buffer();
+ void load_vertex_data();
+ void set_source();
+ void set_format();
  void create_texture();
  void set_texture_setting();
  void update_texture();
- void create_render_buffer();
+ void destroy_resources();
  void create_render();
- void destroy_render();
+ void recreate_render();
  void update_surface();
  void refresh();
  public:
  SWGF_Screen();
  ~SWGF_Screen();
  void initialize();
- void draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue);
- void clear_screen();
- bool begin_sync();
- void end_sync();
- unsigned long int get_frame_width();
- unsigned long int get_frame_height();
+ bool sync();
  SWGF_Screen* get_handle();
 };
 
@@ -334,18 +435,16 @@ SWGF_Screen::SWGF_Screen()
 {
  backend=NULL;
  device=NULL;
- buffer=NULL;
+ vertex=NULL;
  texture=NULL;
- frame_width=512;
- frame_height=512;
 }
 
 SWGF_Screen::~SWGF_Screen()
 {
+ vertex->Release();
  texture->Release();
  device->Release();
  backend->Release();
- free(buffer);
 }
 
 void SWGF_Screen::initialize_backend()
@@ -354,6 +453,16 @@ void SWGF_Screen::initialize_backend()
  if(backend==NULL)
  {
   puts("Can't initialize render back-end");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+void SWGF_Screen::reinitialize_backend()
+{
+ if(device->Reset(&present)!=D3D_OK)
+ {
+  puts("Can't reinitialize back-end");
   exit(EXIT_FAILURE);
  }
 
@@ -375,12 +484,13 @@ void SWGF_Screen::set_render_setting()
  present.BackBufferWidth=display.Width;
  present.BackBufferHeight=display.Height;
  present.BackBufferFormat=display.Format;
+ present.FullScreen_RefreshRateInHz=display.RefreshRate;
  present.BackBufferCount=1;
  present.PresentationInterval=D3DPRESENT_INTERVAL_IMMEDIATE;
  present.MultiSampleType=D3DMULTISAMPLE_NONE;
  present.SwapEffect=D3DSWAPEFFECT_COPY;
  present.hDeviceWindow=window;
- present.Windowed=TRUE;
+ present.Windowed=FALSE;
  present.EnableAutoDepthStencil=FALSE;
 }
 
@@ -391,6 +501,11 @@ void SWGF_Screen::configure_video()
   puts("Can't configure the video card");
   exit(EXIT_FAILURE);
  }
+
+}
+
+void SWGF_Screen::clear_target()
+{
  device->Clear(0,NULL,D3DCLEAR_TARGET,D3DCOLOR_ARGB(0,0,0,0),0,0);
 }
 
@@ -410,16 +525,6 @@ void SWGF_Screen::check_videocard()
 
 }
 
-void SWGF_Screen::set_format()
-{
- if(device->SetFVF(D3DFVF_XYZ|D3DFVF_TEX1)!=D3D_OK)
- {
-  puts("Can't set vertex format");
-  exit(EXIT_FAILURE);
- }
-
-}
-
 void SWGF_Screen::set_render()
 {
  this->initialize_backend();
@@ -427,7 +532,6 @@ void SWGF_Screen::set_render()
  this->set_render_setting();
  this->configure_video();
  this->check_videocard();
- this->set_format();
 }
 
 void SWGF_Screen::set_perfomance()
@@ -435,6 +539,11 @@ void SWGF_Screen::set_perfomance()
  device->SetRenderState(D3DRS_ZENABLE,FALSE);
  device->SetRenderState(D3DRS_ZWRITEENABLE,FALSE);
  device->SetRenderState(D3DRS_LIGHTING,FALSE);
+ device->SetRenderState(D3DRS_FOGENABLE,FALSE);
+ device->SetRenderState(D3DRS_ALPHATESTENABLE,FALSE);
+ device->SetRenderState(D3DRS_ALPHABLENDENABLE,FALSE);
+ device->SetRenderState(D3DRS_MULTISAMPLEANTIALIAS,FALSE);
+ device->SetRenderState(D3DRS_LOCALVIEWER,FALSE);
  device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
 }
 
@@ -499,14 +608,51 @@ void SWGF_Screen::prepare_surface()
  surface[3].v=1;
 }
 
+void SWGF_Screen::create_vertex_buffer()
+{
+ if(device->CreateVertexBuffer(80,D3DUSAGE_DYNAMIC,D3DFVF_XYZ|D3DFVF_TEX1,D3DPOOL_DEFAULT,&vertex,NULL)!=D3D_OK)
+ {
+  puts("Can't create vertex buffer");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+void SWGF_Screen::load_vertex_data()
+{
+ void *data;
+ if(vertex->Lock(0,0,&data,D3DLOCK_DISCARD)!=D3D_OK)
+ {
+  puts("Can't lock vertex buffer");
+  exit(EXIT_FAILURE);
+ }
+ memmove(data,surface,80);
+ vertex->Unlock();
+}
+
+void SWGF_Screen::set_source()
+{
+ if(device->SetStreamSource(0,vertex,0,20)!=D3D_OK)
+ {
+  puts("Can't bind a vertex buffer to a device data stream");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+void SWGF_Screen::set_format()
+{
+ if(device->SetFVF(D3DFVF_XYZ|D3DFVF_TEX1)!=D3D_OK)
+ {
+  puts("Can't set vertex format");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
 void SWGF_Screen::create_texture()
 {
- if(texture!=NULL)
- {
-  texture->Release();
-  texture=NULL;
- }
- if(device->CreateTexture(frame_width,frame_height,1,0,D3DFMT_X8R8G8B8,D3DPOOL_MANAGED,&texture,NULL)!=D3D_OK)
+ if(device->CreateTexture(frame_width,frame_height,1,D3DUSAGE_DYNAMIC,D3DFMT_A8R8G8B8,D3DPOOL_DEFAULT,&texture,NULL)!=D3D_OK)
  {
   puts("Can't create texture for render surface");
   exit(EXIT_FAILURE);
@@ -529,7 +675,7 @@ void SWGF_Screen::set_texture_setting()
 void SWGF_Screen::update_texture()
 {
  D3DLOCKED_RECT lock;
- if(texture->LockRect(0,&lock,NULL,0)!=D3D_OK)
+ if(texture->LockRect(0,&lock,NULL,D3DLOCK_DISCARD)!=D3D_OK)
  {
   puts("Can't lock texture");
   exit(EXIT_FAILURE);
@@ -538,108 +684,88 @@ void SWGF_Screen::update_texture()
  texture->UnlockRect(0);
 }
 
-void SWGF_Screen::create_render_buffer()
+void SWGF_Screen::destroy_resources()
 {
- if(buffer!=NULL) free(buffer);
- length=frame_width*frame_height*sizeof(D3DCOLOR);
- buffer=(D3DCOLOR*)calloc(length,1);
- if(buffer==NULL)
+ if(vertex!=NULL)
  {
-  puts("Can't allocate memory for render buffer");
-  exit(EXIT_FAILURE);
+  vertex->Release();
+  vertex=NULL;
+ }
+ if(texture!=NULL)
+ {
+  texture->Release();
+  texture=NULL;
  }
 
 }
 
 void SWGF_Screen::create_render()
 {
- this->set_render();
  this->set_perfomance();
  this->set_perspective();
  this->set_viewport();
  this->prepare_surface();
+ this->create_vertex_buffer();
+ this->load_vertex_data();
+ this->set_source();
+ this->set_format();
  this->create_texture();
  this->set_texture_setting();
- this->create_render_buffer();
+ this->clear_target();
 }
 
-void SWGF_Screen::destroy_render()
+void SWGF_Screen::recreate_render()
 {
- if(texture!=NULL)
- {
-  texture->Release();
-  texture=NULL;
- }
- if(device!=NULL)
- {
-  device->Release();
-  device=NULL;
- }
- if(backend!=NULL)
- {
-  backend->Release();
-  backend=NULL;
- }
-
+ this->destroy_resources();
+ this->reinitialize_backend();
+ this->create_render();
 }
 
 void SWGF_Screen::update_surface()
 {
  device->BeginScene();
- device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,surface,20);
+ device->DrawPrimitive(D3DPT_TRIANGLESTRIP,0,2);
  device->EndScene();
+ device->Present(NULL,NULL,NULL,NULL);
 }
 
 void SWGF_Screen::refresh()
 {
- device->Present(NULL,NULL,window,NULL);
+ switch (device->TestCooperativeLevel())
+ {
+  case D3D_OK:
+  this->update_texture();
+  this->update_surface();
+  break;
+  case D3DERR_DEVICENOTRESET:
+  this->recreate_render();
+  break;
+  case D3DERR_DRIVERINTERNALERROR:
+  puts("Internal driver error");
+  exit(EXIT_FAILURE);
+  break;
+ }
+
+
 }
 
 void SWGF_Screen::initialize()
 {
+ this->create_render_buffer();
  this->create_window();
- this->create_render();
  this->capture_mouse();
+ this->set_render();
+ this->create_render();
+ this->set_timer(17);
 }
 
-void SWGF_Screen::draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue)
-{
- if((x<frame_width)&&(y<frame_height))
- {
-  buffer[x+y*frame_width]=D3DCOLOR_ARGB(0,red,green,blue);
- }
-
-}
-
-void SWGF_Screen::clear_screen()
-{
- memset(buffer,0,length);
-}
-
-bool SWGF_Screen::begin_sync()
+bool SWGF_Screen::sync()
 {
  bool quit;
- quit=this->process_message();
- this->set_timer();
  this->refresh();
+ quit=this->process_message();
  this->wait_timer();
  return quit;
-}
-
-void SWGF_Screen::end_sync()
-{
- this->update_texture();
- this->update_surface();
-}
-
-unsigned long int SWGF_Screen::get_frame_width()
-{
- return frame_width;
-}
-
-unsigned long int SWGF_Screen::get_frame_height()
-{
- return frame_height;
 }
 
 SWGF_Screen* SWGF_Screen::get_handle()
@@ -650,33 +776,27 @@ SWGF_Screen* SWGF_Screen::get_handle()
 class SWGF_Keyboard
 {
  public:
- bool check_press(const unsigned char code);
- bool check_release(const unsigned char code);
- bool check_push(const unsigned char code);
+ bool check_press(const unsigned int code);
+ unsigned int get_virtual_code(const unsigned int code);
+ unsigned int get_scan_code(const unsigned int code);
 };
 
-bool SWGF_Keyboard::check_press(const unsigned char code)
+bool SWGF_Keyboard::check_press(const unsigned int code)
 {
  bool result;
  result=false;
- if(GetAsyncKeyState(MapVirtualKey(code,MAPVK_VSC_TO_VK))>0) result=true;
+ if(GetAsyncKeyState(MapVirtualKey(code,MAPVK_VSC_TO_VK))==-32767) result=true;
  return result;
 }
 
-bool SWGF_Keyboard::check_release(const unsigned char code)
+unsigned int SWGF_Keyboard::get_virtual_code(const unsigned int code)
 {
- bool result;
- result=false;
- if(GetAsyncKeyState(MapVirtualKey(code,MAPVK_VSC_TO_VK))<0) result=true;
- return result;
+ return MapVirtualKey(code,MAPVK_VSC_TO_VK);
 }
 
-bool SWGF_Keyboard::check_push(const unsigned char code)
+unsigned int SWGF_Keyboard::get_scan_code(const unsigned int code)
 {
- bool result;
- result=false;
- if(GetAsyncKeyState(MapVirtualKey(code,MAPVK_VSC_TO_VK))!=0) result=true;
- return result;
+ return MapVirtualKey(code,MAPVK_VK_TO_VSC);
 }
 
 class SWGF_Mouse
@@ -686,9 +806,9 @@ class SWGF_Mouse
  public:
  SWGF_Mouse();
  ~SWGF_Mouse();
+ void show();
+ void hide();
  unsigned char get_pressed_button();
- unsigned char get_released_button();
- unsigned char get_pushed_button();
  void set_position(const unsigned long int x,const unsigned long int y);
  unsigned long int get_x();
  unsigned long int get_y();
@@ -702,36 +822,26 @@ SWGF_Mouse::SWGF_Mouse()
 
 SWGF_Mouse::~SWGF_Mouse()
 {
+ while(ShowCursor(TRUE)<1) ;
+}
 
+void SWGF_Mouse::show()
+{
+ while(ShowCursor(TRUE)<1) ;
+}
+
+void SWGF_Mouse::hide()
+{
+ while(ShowCursor(FALSE)>-2) ;
 }
 
 unsigned char SWGF_Mouse::get_pressed_button()
 {
  unsigned char result;
  result=SWGF_MOUSE_NONE;
- if(GetAsyncKeyState(VK_LBUTTON)<0) result=SWGF_MOUSE_LEFT;
- if(GetAsyncKeyState(VK_RBUTTON)<0) result=SWGF_MOUSE_RIGHT;
- if(GetAsyncKeyState(VK_MBUTTON)<0) result=SWGF_MOUSE_MIDDLE;
- return result;
-}
-
-unsigned char SWGF_Mouse::get_released_button()
-{
- unsigned char result;
- result=SWGF_MOUSE_NONE;
- if(GetAsyncKeyState(VK_LBUTTON)>0) result=SWGF_MOUSE_LEFT;
- if(GetAsyncKeyState(VK_RBUTTON)>0) result=SWGF_MOUSE_RIGHT;
- if(GetAsyncKeyState(VK_MBUTTON)>0) result=SWGF_MOUSE_MIDDLE;
- return result;
-}
-
-unsigned char SWGF_Mouse::get_pushed_button()
-{
- unsigned char result;
- result=SWGF_MOUSE_NONE;
- if(GetAsyncKeyState(VK_LBUTTON)!=0) result=SWGF_MOUSE_LEFT;
- if(GetAsyncKeyState(VK_RBUTTON)!=0) result=SWGF_MOUSE_RIGHT;
- if(GetAsyncKeyState(VK_MBUTTON)!=0) result=SWGF_MOUSE_MIDDLE;
+ if(GetAsyncKeyState(VK_LBUTTON)==-32767) result=SWGF_MOUSE_LEFT;
+ if(GetAsyncKeyState(VK_RBUTTON)==-32767) result=SWGF_MOUSE_RIGHT;
+ if(GetAsyncKeyState(VK_MBUTTON)==-32767) result=SWGF_MOUSE_MIDDLE;
  return result;
 }
 
@@ -923,6 +1033,7 @@ class SWGF_Multimedia: public SWGF_Base
  ~SWGF_Multimedia();
  void load(const char *target);
  void play();
+ void stop();
  bool check_playing();
 };
 
@@ -1011,6 +1122,11 @@ void SWGF_Multimedia::play()
   exit(EXIT_FAILURE);
  }
  player->Run();
+}
+
+void SWGF_Multimedia::stop()
+{
+ player->Stop();
 }
 
 bool SWGF_Multimedia::check_playing()
