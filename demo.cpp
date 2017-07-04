@@ -11,7 +11,9 @@ int main(void)
  SWGF_Gamepad gamepad;
  SWGF_Multimedia media;
  SWGF_Image image;
- SWGF_Canvas space,ship,font;
+ SWGF_Background space;
+ SWGF_Sprite ship,font;
+ SWGF_Text text;
  screen.initialize();
  space.initialize(screen.get_handle());
  ship.initialize(screen.get_handle());
@@ -20,9 +22,15 @@ int main(void)
  screen_height=screen.get_frame_height();
  x=screen_width/2;
  y=screen_height/2;
- image.load_tga("space.tga",space);
- image.load_tga("ship.tga",ship);
- image.load_tga("font.tga",font);
+ image.load_tga("space.tga");
+ space.load_image(image);
+ image.load_tga("ship.tga");
+ ship.load_image(image);
+ image.load_tga("font.tga");
+ font.load_image(image);
+ text.load_font(font.get_handle());
+ text.set_position(font.get_sprite_width(),font.get_sprite_width());
+ ship.set_frames(2);
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);
  frame=1;
@@ -57,12 +65,12 @@ int main(void)
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();
-  font.draw_text(screen_width/2,font.get_height(),"Technical demonstration");
-  ship.draw_sprite_frame(x,y,frame,2);
+  text.draw_text("Technical demonstration");
+  ship.draw_sprite_frame(x,y,frame);
   if (timer.check_timer()==true)
   {
    frame++;
-   if (frame>2) frame=1;
+   if (frame>ship.get_frames()) frame=1;
   }
 
  }

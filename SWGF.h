@@ -195,7 +195,7 @@ void SWGF_Synchronization::wait_timer()
  WaitForSingleObject(timer,INFINITE);
 }
 
-class SWGF_Engine: public SWGF_Synchronization
+class SWGF_Engine
 {
  protected:
  HWND window;
@@ -388,9 +388,9 @@ unsigned long int SWGF_Frame::get_frame_height()
  return frame_height;
 }
 
-class SWGF_Screen:public SWGF_Base, public SWGF_Engine, public SWGF_Frame
+class SWGF_Render:public SWGF_Base, public SWGF_Engine, public SWGF_Frame
 {
- private:
+ protected:
  IDirect3D9 *backend;
  IDirect3DDevice9 *device;
  IDirect3DVertexBuffer9 *vertex;
@@ -424,14 +424,11 @@ class SWGF_Screen:public SWGF_Base, public SWGF_Engine, public SWGF_Frame
  void update_surface();
  void refresh();
  public:
- SWGF_Screen();
- ~SWGF_Screen();
- void initialize();
- bool sync();
- SWGF_Screen* get_handle();
+ SWGF_Render();
+ ~SWGF_Render();
 };
 
-SWGF_Screen::SWGF_Screen()
+SWGF_Render::SWGF_Render()
 {
  backend=NULL;
  device=NULL;
@@ -439,7 +436,7 @@ SWGF_Screen::SWGF_Screen()
  texture=NULL;
 }
 
-SWGF_Screen::~SWGF_Screen()
+SWGF_Render::~SWGF_Render()
 {
  vertex->Release();
  texture->Release();
@@ -447,7 +444,7 @@ SWGF_Screen::~SWGF_Screen()
  backend->Release();
 }
 
-void SWGF_Screen::initialize_backend()
+void SWGF_Render::initialize_backend()
 {
  backend=Direct3DCreate9(D3D_SDK_VERSION);
  if(backend==NULL)
@@ -458,7 +455,7 @@ void SWGF_Screen::initialize_backend()
 
 }
 
-void SWGF_Screen::reinitialize_backend()
+void SWGF_Render::reinitialize_backend()
 {
  if(device->Reset(&present)!=D3D_OK)
  {
@@ -468,7 +465,7 @@ void SWGF_Screen::reinitialize_backend()
 
 }
 
-void SWGF_Screen::get_display_setting()
+void SWGF_Render::get_display_setting()
 {
  if(backend->GetAdapterDisplayMode(D3DADAPTER_DEFAULT,&display)!=D3D_OK)
  {
@@ -478,7 +475,7 @@ void SWGF_Screen::get_display_setting()
 
 }
 
-void SWGF_Screen::set_render_setting()
+void SWGF_Render::set_render_setting()
 {
  memset(&present,0,sizeof(D3DPRESENT_PARAMETERS));
  present.BackBufferWidth=display.Width;
@@ -494,7 +491,7 @@ void SWGF_Screen::set_render_setting()
  present.EnableAutoDepthStencil=FALSE;
 }
 
-void SWGF_Screen::configure_video()
+void SWGF_Render::configure_video()
 {
  if(backend->CreateDevice(D3DADAPTER_DEFAULT,D3DDEVTYPE_HAL,window,D3DCREATE_HARDWARE_VERTEXPROCESSING,&present,&device)!=D3D_OK)
  {
@@ -504,12 +501,12 @@ void SWGF_Screen::configure_video()
 
 }
 
-void SWGF_Screen::clear_target()
+void SWGF_Render::clear_target()
 {
  device->Clear(0,NULL,D3DCLEAR_TARGET,D3DCOLOR_ARGB(0,0,0,0),0,0);
 }
 
-void SWGF_Screen::check_videocard()
+void SWGF_Render::check_videocard()
 {
  D3DCAPS9 configuration;
  if(device->GetDeviceCaps(&configuration)!=D3D_OK)
@@ -525,7 +522,7 @@ void SWGF_Screen::check_videocard()
 
 }
 
-void SWGF_Screen::set_render()
+void SWGF_Render::set_render()
 {
  this->initialize_backend();
  this->get_display_setting();
@@ -534,7 +531,7 @@ void SWGF_Screen::set_render()
  this->check_videocard();
 }
 
-void SWGF_Screen::set_perfomance()
+void SWGF_Render::set_perfomance()
 {
  device->SetRenderState(D3DRS_ZENABLE,FALSE);
  device->SetRenderState(D3DRS_ZWRITEENABLE,FALSE);
@@ -547,7 +544,7 @@ void SWGF_Screen::set_perfomance()
  device->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
 }
 
-void SWGF_Screen::set_transform(D3DTRANSFORMSTATETYPE target,D3DXMATRIX *matrix)
+void SWGF_Render::set_transform(D3DTRANSFORMSTATETYPE target,D3DXMATRIX *matrix)
 {
  if(device->SetTransform(target,matrix)!=D3D_OK)
  {
@@ -557,7 +554,7 @@ void SWGF_Screen::set_transform(D3DTRANSFORMSTATETYPE target,D3DXMATRIX *matrix)
 
 }
 
-void SWGF_Screen::set_perspective()
+void SWGF_Render::set_perspective()
 {
  D3DXMATRIX identity,projection;
  D3DXMatrixOrthoLH(&projection,width,height,0,1);
@@ -567,7 +564,7 @@ void SWGF_Screen::set_perspective()
  this->set_transform(D3DTS_PROJECTION,&projection);
 }
 
-void SWGF_Screen::set_viewport()
+void SWGF_Render::set_viewport()
 {
  D3DVIEWPORT9 port;
  port.X=0;
@@ -584,7 +581,7 @@ void SWGF_Screen::set_viewport()
 
 }
 
-void SWGF_Screen::prepare_surface()
+void SWGF_Render::prepare_surface()
 {
  surface[0].x=(float)width/-2.0;
  surface[0].y=(float)height/2.0;
@@ -608,7 +605,7 @@ void SWGF_Screen::prepare_surface()
  surface[3].v=1;
 }
 
-void SWGF_Screen::create_vertex_buffer()
+void SWGF_Render::create_vertex_buffer()
 {
  if(device->CreateVertexBuffer(80,D3DUSAGE_DYNAMIC,D3DFVF_XYZ|D3DFVF_TEX1,D3DPOOL_DEFAULT,&vertex,NULL)!=D3D_OK)
  {
@@ -618,7 +615,7 @@ void SWGF_Screen::create_vertex_buffer()
 
 }
 
-void SWGF_Screen::load_vertex_data()
+void SWGF_Render::load_vertex_data()
 {
  void *data;
  if(vertex->Lock(0,0,&data,D3DLOCK_DISCARD)!=D3D_OK)
@@ -630,7 +627,7 @@ void SWGF_Screen::load_vertex_data()
  vertex->Unlock();
 }
 
-void SWGF_Screen::set_source()
+void SWGF_Render::set_source()
 {
  if(device->SetStreamSource(0,vertex,0,20)!=D3D_OK)
  {
@@ -640,7 +637,7 @@ void SWGF_Screen::set_source()
 
 }
 
-void SWGF_Screen::set_format()
+void SWGF_Render::set_format()
 {
  if(device->SetFVF(D3DFVF_XYZ|D3DFVF_TEX1)!=D3D_OK)
  {
@@ -650,7 +647,7 @@ void SWGF_Screen::set_format()
 
 }
 
-void SWGF_Screen::create_texture()
+void SWGF_Render::create_texture()
 {
  if(device->CreateTexture(frame_width,frame_height,1,D3DUSAGE_DYNAMIC,D3DFMT_A8R8G8B8,D3DPOOL_DEFAULT,&texture,NULL)!=D3D_OK)
  {
@@ -660,7 +657,7 @@ void SWGF_Screen::create_texture()
 
 }
 
-void SWGF_Screen::set_texture_setting()
+void SWGF_Render::set_texture_setting()
 {
  device->SetTexture(0,texture);
  device->SetTextureStageState(0,D3DTSS_COLOROP,D3DTOP_MODULATE);
@@ -672,7 +669,7 @@ void SWGF_Screen::set_texture_setting()
  device->SetSamplerState(0,D3DSAMP_MIPFILTER,D3DTEXF_NONE);
 }
 
-void SWGF_Screen::update_texture()
+void SWGF_Render::update_texture()
 {
  D3DLOCKED_RECT lock;
  if(texture->LockRect(0,&lock,NULL,D3DLOCK_DISCARD)!=D3D_OK)
@@ -684,7 +681,7 @@ void SWGF_Screen::update_texture()
  texture->UnlockRect(0);
 }
 
-void SWGF_Screen::destroy_resources()
+void SWGF_Render::destroy_resources()
 {
  if(vertex!=NULL)
  {
@@ -699,7 +696,7 @@ void SWGF_Screen::destroy_resources()
 
 }
 
-void SWGF_Screen::create_render()
+void SWGF_Render::create_render()
 {
  this->set_perfomance();
  this->set_perspective();
@@ -714,14 +711,14 @@ void SWGF_Screen::create_render()
  this->clear_target();
 }
 
-void SWGF_Screen::recreate_render()
+void SWGF_Render::recreate_render()
 {
  this->destroy_resources();
  this->reinitialize_backend();
  this->create_render();
 }
 
-void SWGF_Screen::update_surface()
+void SWGF_Render::update_surface()
 {
  device->BeginScene();
  device->DrawPrimitive(D3DPT_TRIANGLESTRIP,0,2);
@@ -729,7 +726,7 @@ void SWGF_Screen::update_surface()
  device->Present(NULL,NULL,NULL,NULL);
 }
 
-void SWGF_Screen::refresh()
+void SWGF_Render::refresh()
 {
  switch (device->TestCooperativeLevel())
  {
@@ -748,6 +745,14 @@ void SWGF_Screen::refresh()
 
 
 }
+
+class SWGF_Screen:public SWGF_Synchronization, public SWGF_Render
+{
+ public:
+ void initialize();
+ bool sync();
+ SWGF_Screen* get_handle();
+};
 
 void SWGF_Screen::initialize()
 {
@@ -1279,10 +1284,8 @@ class SWGF_Primitive
  ~SWGF_Primitive();
  void initialize(SWGF_Screen *Screen);
  void draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2,const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_rectangle(const unsigned long int *vertex,const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_filled_rectangle(const unsigned long int *vertex,const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_trianlge(const unsigned long int *vertex,const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_filled_trianlge(const unsigned long int *vertex,const unsigned char red,const unsigned char green,const unsigned char blue);
+ void draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height,const unsigned char red,const unsigned char green,const unsigned char blue);
+ void draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height,const unsigned char red,const unsigned char green,const unsigned char blue);
 };
 
 SWGF_Primitive::SWGF_Primitive()
@@ -1335,73 +1338,283 @@ void SWGF_Primitive::draw_line(const unsigned long int x1,const unsigned long in
 
 }
 
-void SWGF_Primitive::draw_rectangle(const unsigned long int *vertex,const unsigned char red,const unsigned char green,const unsigned char blue)
+void SWGF_Primitive::draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
- this->draw_line(vertex[0],vertex[1],vertex[2],vertex[3],red,green,blue);
- this->draw_line(vertex[0],vertex[3],vertex[2],vertex[3],red,green,blue);
- this->draw_line(vertex[0],vertex[1],vertex[0],vertex[3],red,green,blue);
- this->draw_line(vertex[2],vertex[1],vertex[2],vertex[3],red,green,blue);
+ unsigned long int stop_x,stop_y;
+ stop_x=x+width;
+ stop_y=y+height;
+ this->draw_line(x,y,stop_x,y,red,green,blue);
+ this->draw_line(x,stop_y,stop_x,stop_y,red,green,blue);
+ this->draw_line(x,y,x,stop_y,red,green,blue);
+ this->draw_line(stop_x,y,stop_x,stop_y,red,green,blue);
 }
 
-void SWGF_Primitive::draw_filled_rectangle(const unsigned long int *vertex,const unsigned char red,const unsigned char green,const unsigned char blue)
+void SWGF_Primitive::draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
- unsigned long int x,y,stop_x,stop_y;
- if (vertex[0]>vertex[2])
+ unsigned long int step_x,step_y,stop_x,stop_y;
+ stop_x=x+width;
+ stop_y=y+height;
+ for(step_x=x;step_x<stop_x;step_x++)
  {
-  stop_x=vertex[0]+(vertex[0]-vertex[2]);
- }
- else
- {
-  stop_x=vertex[0]+(vertex[2]-vertex[0]);
- }
- if (vertex[1]>vertex[3])
- {
-  stop_y=vertex[1]+(vertex[1]-vertex[3]);
- }
- else
- {
-  stop_y=vertex[1]+(vertex[3]-vertex[1]);
- }
- for (x=vertex[0];x<=stop_x;x++)
- {
-  for (y=vertex[1];y<=stop_y;y++)
+  for(step_y=y;step_y<stop_y;step_y++)
   {
-   surface->draw_pixel(x,y,red,green,blue);
+   surface->draw_pixel(step_x,step_y,red,green,blue);
   }
 
  }
 
 }
 
-void SWGF_Primitive::draw_trianlge(const unsigned long int *vertex,const unsigned char red,const unsigned char green,const unsigned char blue)
+class SWGF_Image
 {
- this->draw_line(vertex[0],vertex[1],vertex[2],vertex[3],red,green,blue);
- this->draw_line(vertex[2],vertex[3],vertex[4],vertex[5],red,green,blue);
- this->draw_line(vertex[0],vertex[1],vertex[4],vertex[5],red,green,blue);
+ private:
+ unsigned long int width;
+ unsigned long int height;
+ unsigned char *data;
+ public:
+ SWGF_Image();
+ ~SWGF_Image();
+ void load_tga(const char *name);
+ void load_pcx(const char *name);
+ unsigned long int get_width();
+ unsigned long int get_height();
+ unsigned long int get_data_length();
+ unsigned char *get_data();
+ void destroy_image();
+};
+
+SWGF_Image::SWGF_Image()
+{
+ width=0;
+ height=0;
+ data=NULL;
 }
 
-void SWGF_Primitive::draw_filled_trianlge(const unsigned long int *vertex,const unsigned char red,const unsigned char green,const unsigned char blue)
+SWGF_Image::~SWGF_Image()
 {
- unsigned long int x,y;
- this->draw_trianlge(vertex,red,green,blue);
- for (x=vertex[0];x<vertex[4];x++)
+ if(data!=NULL) free(data);
+}
+
+void SWGF_Image::load_tga(const char *name)
+{
+ FILE *target;
+ unsigned long int index,position,amount,compressed_length,uncompressed_length;
+ unsigned char *compressed;
+ unsigned char *uncompressed;
+ TGA_head head;
+ TGA_map color_map;
+ TGA_image image;
+ target=fopen(name,"rb");
+ if(target==NULL)
  {
-  for (y=vertex[2];y<=vertex[5];y++)
+  puts("Can't open a image file");
+  exit(EXIT_FAILURE);
+ }
+ if(data!=NULL)
+ {
+  free(data);
+  data=NULL;
+ }
+ fseek(target,0,SEEK_END);
+ compressed_length=ftell(target)-18;
+ rewind(target);
+ fread(&head,3,1,target);
+ fread(&color_map,5,1,target);
+ fread(&image,10,1,target);
+ if((head.color_map!=0)||(image.color!=24))
+ {
+  puts("Invalid image format");
+  exit(EXIT_FAILURE);
+ }
+ if(head.type!=2)
+ {
+  if(head.type!=10)
   {
-   this->draw_line(vertex[0],vertex[1],x,y,red,green,blue);
+   puts("Invalid image format");
+   exit(EXIT_FAILURE);
   }
 
+ }
+ index=0;
+ position=0;
+ uncompressed_length=3*(unsigned long int)image.width*(unsigned long int)image.height;
+ uncompressed=(unsigned char*)calloc(uncompressed_length,1);
+ if(uncompressed==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ if(head.type==2)
+ {
+  fread(uncompressed,uncompressed_length,1,target);
+ }
+ if(head.type==10)
+ {
+  compressed=(unsigned char*)calloc(compressed_length,1);
+  if(compressed==NULL)
+  {
+   puts("Can't allocate memory for image buffer");
+   exit(EXIT_FAILURE);
+  }
+  fread(compressed,compressed_length,1,target);
+  while(index<uncompressed_length)
+  {
+   if(compressed[position]<128)
+   {
+    amount=compressed[position]+1;
+    amount*=3;
+    memmove(uncompressed+index,compressed+(position+1),amount);
+    index+=amount;
+    position+=1+amount;
+   }
+   else
+   {
+    for(amount=compressed[position]-127;amount>0;amount--)
+    {
+     memmove(uncompressed+index,compressed+(position+1),3);
+     index+=3;
+    }
+    position+=4;
+   }
+
+  }
+  free(compressed);
+ }
+ fclose(target);
+ width=image.width;
+ height=image.height;
+ data=uncompressed;
+}
+
+void SWGF_Image::load_pcx(const char *name)
+{
+ FILE *target;
+ unsigned long int x,y,index,position,line,row,length,uncompressed_length;
+ unsigned char repeat;
+ unsigned char *original;
+ unsigned char *uncompressed;
+ PCX_head head;
+ target=fopen(name,"rb");
+ if(target==NULL)
+ {
+  puts("Can't open a image file");
+  exit(EXIT_FAILURE);
+ }
+ if(data!=NULL)
+ {
+  free(data);
+  data=NULL;
+ }
+ fseek(target,0,SEEK_END);
+ length=ftell(target)-128;
+ rewind(target);
+ fread(&head,128,1,target);
+ if((head.color*head.planes!=24)&&(head.compress!=1))
+ {
+  puts("Incorrect image format");
+  exit(EXIT_FAILURE);
+ }
+ width=head.max_x-head.min_x+1;
+ height=head.max_y-head.min_y+1;
+ row=3*width;
+ line=head.planes*head.plane_length;
+ uncompressed_length=row*height;
+ index=0;
+ position=0;
+ original=(unsigned char*)calloc(length,1);
+ if(original==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ uncompressed=(unsigned char*)calloc(uncompressed_length,1);
+ if(uncompressed==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ fread(original,length,1,target);
+ fclose(target);
+ while (index<length)
+ {
+  if (original[index]<192)
+  {
+   uncompressed[position]=original[index];
+   position++;
+   index++;
+  }
+  else
+  {
+   for (repeat=original[index]-192;repeat>0;repeat--)
+   {
+    uncompressed[position]=original[index+1];
+    position++;
+   }
+   index+=2;
+  }
+
+ }
+ free(original);
+ original=(unsigned char*)calloc(uncompressed_length,1);
+ if(original==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ for(x=0;x<width;x++)
+ {
+  for(y=0;y<height;y++)
+  {
+   index=x*3+y*row;
+   position=x+y*line;
+   original[index]=uncompressed[position+2*head.plane_length];
+   original[index+1]=uncompressed[position+head.plane_length];
+   original[index+2]=uncompressed[position];
+  }
+
+ }
+ free(uncompressed);
+ data=original;
+}
+
+unsigned long int SWGF_Image::get_width()
+{
+ return width;
+}
+
+unsigned long int SWGF_Image::get_height()
+{
+ return height;
+}
+
+unsigned long int SWGF_Image::get_data_length()
+{
+ return width*height*3;
+}
+
+unsigned char *SWGF_Image::get_data()
+{
+ return data;
+}
+
+void SWGF_Image::destroy_image()
+{
+ if(data!=NULL)
+ {
+  width=0;
+  height=0;
+  free(data);
+  data=NULL;
  }
 
 }
 
 class SWGF_Canvas
 {
- private:
+ protected:
  unsigned long int width;
  unsigned long int height;
- unsigned long int current_x;
- unsigned long int current_y;
+ unsigned long int frames;
  SWGF_Screen *surface;
  SWGF_Color *image;
  public:
@@ -1409,16 +1622,12 @@ class SWGF_Canvas
  ~SWGF_Canvas();
  unsigned long int get_width();
  unsigned long int get_height();
- unsigned long int get_x();
- unsigned long int get_y();
+ void set_frames(const unsigned long int amount);
+ unsigned long int get_frames();
  void initialize(SWGF_Screen *Screen);
- void load_image(const unsigned char *buffer,const unsigned long int image_width,const unsigned long int image_height);
+ void load_image(SWGF_Image &buffer);
  void mirror_image(const unsigned char kind);
  void resize_image(const unsigned long int new_width,const unsigned long int new_height);
- void draw_background();
- void draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame,const unsigned long int amount);
- void draw_sprite(const unsigned long int x,const unsigned long int y);
- unsigned long int draw_text(const unsigned long int x,const unsigned long int y,const char *text);
 };
 
 SWGF_Canvas::SWGF_Canvas()
@@ -1427,8 +1636,7 @@ SWGF_Canvas::SWGF_Canvas()
  surface=NULL;
  width=0;
  height=0;
- current_x=0;
- current_y=0;
+ frames=1;
 }
 
 SWGF_Canvas::~SWGF_Canvas()
@@ -1447,14 +1655,14 @@ unsigned long int SWGF_Canvas::get_height()
  return height;
 }
 
-unsigned long int SWGF_Canvas::get_x()
+void SWGF_Canvas::set_frames(const unsigned long int amount)
 {
- return current_x;
+ if(amount>1) frames=amount;
 }
 
-unsigned long int SWGF_Canvas::get_y()
+unsigned long int SWGF_Canvas::get_frames()
 {
- return current_y;
+ return frames;
 }
 
 void SWGF_Canvas::initialize(SWGF_Screen *Screen)
@@ -1462,12 +1670,12 @@ void SWGF_Canvas::initialize(SWGF_Screen *Screen)
  surface=Screen;
 }
 
-void SWGF_Canvas::load_image(const unsigned char *buffer,const unsigned long int image_width,const unsigned long int image_height)
+void SWGF_Canvas::load_image(SWGF_Image &buffer)
 {
  unsigned long int length;
- length=image_width*image_height*3;
- width=image_width;
- height=image_height;
+ width=buffer.get_width();
+ height=buffer.get_height();
+ length=buffer.get_data_length();
  if(image!=NULL) free(image);
  image=(SWGF_Color*)calloc(length,1);
  if (image==NULL)
@@ -1475,7 +1683,8 @@ void SWGF_Canvas::load_image(const unsigned char *buffer,const unsigned long int
   puts("Can't allocate memory for image buffer");
   exit(EXIT_FAILURE);
  }
- memmove(image,buffer,length);
+ memmove(image,buffer.get_data(),length);
+ buffer.destroy_image();
 }
 
 void SWGF_Canvas::mirror_image(const unsigned char kind)
@@ -1549,7 +1758,15 @@ void SWGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
  height=new_height;
 }
 
-void SWGF_Canvas::draw_background()
+class SWGF_Background:public SWGF_Canvas
+{
+ public:
+ void draw_background();
+ void draw_horizontal_background(const unsigned long int frame);
+ void draw_vertical_background(const unsigned long int frame);
+};
+
+void SWGF_Background::draw_background()
 {
  unsigned long int x,y,offset;
  for (x=0;x<width;x++)
@@ -1564,265 +1781,209 @@ void SWGF_Canvas::draw_background()
 
 }
 
-void SWGF_Canvas::draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame,const unsigned long int amount)
+void SWGF_Background::draw_horizontal_background(const unsigned long int frame)
 {
- unsigned long int image_x,image_y,offset,start,frame_width;
- current_x=x;
- current_y=y;
- frame_width=width/amount;
+ unsigned long int x,y,offset,start,frame_width;
+ frame_width=width/frames;
  start=(frame-1)*frame_width;
- for(image_x=0;image_x<frame_width;image_x++)
+ for (x=0;x<frame_width;x++)
  {
-  for(image_y=0;image_y<height;image_y++)
+  for (y=0;y<height;y++)
   {
-   offset=start+image_x+(image_y*width);
-   if(memcmp(&image[0],&image[offset],3)!=0) surface->draw_pixel(x+image_x,y+image_y,image[offset].red,image[offset].green,image[offset].blue);
+   offset=start+x+(width*y);
+   surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
   }
 
  }
 
 }
 
-void SWGF_Canvas::draw_sprite(const unsigned long int x,const unsigned long int y)
+void SWGF_Background::draw_vertical_background(const unsigned long int frame)
 {
- current_x=x;
- current_y=y;
- this->draw_sprite_frame(x,y,1,1);
+ unsigned long int x,y,offset,start,frame_height;
+ frame_height=height/frames;
+ start=(frame-1)*frame_height;
+ for (x=0;x<width;x++)
+ {
+  for (y=0;y<frame_height;y++)
+  {
+   offset=start+x+(width*y);
+   surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
+  }
+
+ }
+
 }
 
-unsigned long int SWGF_Canvas::draw_text(const unsigned long int x,const unsigned long int y,const char *text)
+class SWGF_Sprite:public SWGF_Canvas
 {
- unsigned long int index,length,font_width;
+ private:
+ unsigned long int current_x;
+ unsigned long int current_y;
+ public:
+ SWGF_Sprite();
+ ~SWGF_Sprite();
+ void draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame);
+ void draw_sprite(const unsigned long int x,const unsigned long int y);
+ unsigned long int get_x();
+ unsigned long int get_y();
+ unsigned long int get_sprite_width();
+ unsigned long int get_sprite_height();
+ SWGF_Sprite* get_handle();
+};
+
+SWGF_Sprite::SWGF_Sprite()
+{
+ current_x=0;
+ current_y=0;
+}
+
+SWGF_Sprite::~SWGF_Sprite()
+{
+
+}
+
+void SWGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame)
+{
+ unsigned long int sprite_x,sprite_y,offset,start,frame_width;
  current_x=x;
  current_y=y;
- font_width=width/128;
+ frame_width=width/frames;
+ start=(frame-1)*frame_width;
+ for(sprite_x=0;sprite_x<frame_width;sprite_x++)
+ {
+  for(sprite_y=0;sprite_y<height;sprite_y++)
+  {
+   offset=start+sprite_x+(sprite_y*width);
+   if(memcmp(&image[0],&image[offset],3)!=0) surface->draw_pixel(x+sprite_x,y+sprite_y,image[offset].red,image[offset].green,image[offset].blue);
+  }
+
+ }
+
+}
+
+void SWGF_Sprite::draw_sprite(const unsigned long int x,const unsigned long int y)
+{
+ current_x=x;
+ current_y=y;
+ this->draw_sprite_frame(x,y,1);
+}
+
+unsigned long int SWGF_Sprite::get_x()
+{
+ return current_x;
+}
+
+unsigned long int SWGF_Sprite::get_y()
+{
+ return current_y;
+}
+
+unsigned long int SWGF_Sprite::get_sprite_width()
+{
+ return width/frames;
+}
+
+unsigned long int SWGF_Sprite::get_sprite_height()
+{
+ return height;
+}
+
+SWGF_Sprite* SWGF_Sprite::get_handle()
+{
+ return this;
+}
+
+class SWGF_Text
+{
+ private:
+ unsigned long int current_x;
+ unsigned long int current_y;
+ SWGF_Sprite *sprite;
+ public:
+ SWGF_Text();
+ ~SWGF_Text();
+ void set_position(const unsigned long int x,const unsigned long int y);
+ void load_font(SWGF_Sprite *font);
+ void draw_text(const char *text);
+};
+
+SWGF_Text::SWGF_Text()
+{
+ current_x=0;
+ current_y=0;
+ sprite=NULL;
+}
+
+SWGF_Text::~SWGF_Text()
+{
+ sprite=NULL;
+}
+
+void SWGF_Text::set_position(const unsigned long int x,const unsigned long int y)
+{
+ current_x=x;
+ current_y=y;
+}
+
+void SWGF_Text::load_font(SWGF_Sprite *font)
+{
+ sprite=font;
+ sprite->set_frames(128);
+}
+
+void SWGF_Text::draw_text(const char *text)
+{
+ unsigned long int index,length,step_x,step_y;
  length=strlen(text);
+ step_x=current_x;
+ step_y=current_y;
  for (index=0;index<length;index++)
  {
   if (text[index]>31)
   {
-   this->draw_sprite_frame(current_x,current_y,text[index]+1,128);
-   current_x+=font_width;
+   sprite->draw_sprite_frame(step_x,step_y,text[index]+1);
+   step_x+=sprite->get_sprite_width();
   }
 
  }
- return current_x;
+
 }
 
 class SWGF_Collision
 {
  public:
- bool check_horizontal_collision(SWGF_Canvas &first,SWGF_Canvas &second);
- bool check_vertical_collision(SWGF_Canvas &first,SWGF_Canvas &second);
- bool check_collision(SWGF_Canvas &first,SWGF_Canvas &second);
+ bool check_horizontal_collision(SWGF_Sprite &first,SWGF_Sprite &second);
+ bool check_vertical_collision(SWGF_Sprite &first,SWGF_Sprite &second);
+ bool check_collision(SWGF_Sprite &first,SWGF_Sprite &second);
 };
 
-bool SWGF_Collision::check_horizontal_collision(SWGF_Canvas &first,SWGF_Canvas &second)
+bool SWGF_Collision::check_horizontal_collision(SWGF_Sprite &first,SWGF_Sprite &second)
 {
  bool result;
  result=false;
- if((first.get_x()+first.get_width())>=second.get_x())
+ if((first.get_x()+first.get_sprite_width())>=second.get_x())
  {
-  if(first.get_x()<=(second.get_x()+second.get_width())) result=true;
+  if(first.get_x()<=(second.get_x()+second.get_sprite_width())) result=true;
  }
  return result;
 }
 
-bool SWGF_Collision::check_vertical_collision(SWGF_Canvas &first,SWGF_Canvas &second)
+bool SWGF_Collision::check_vertical_collision(SWGF_Sprite &first,SWGF_Sprite &second)
 {
  bool result;
  result=false;
- if((first.get_y()+first.get_height())>=second.get_y())
+ if((first.get_y()+first.get_sprite_height())>=second.get_y())
  {
-  if(first.get_y()<=(second.get_y()+second.get_height())) result=true;
+  if(first.get_y()<=(second.get_y()+second.get_sprite_height())) result=true;
  }
  return result;
 }
 
-bool SWGF_Collision::check_collision(SWGF_Canvas &first,SWGF_Canvas &second)
+bool SWGF_Collision::check_collision(SWGF_Sprite &first,SWGF_Sprite &second)
 {
  bool result;
  result=false;
- if((this->check_horizontal_collision(first,second)==true)&&(this->check_vertical_collision(first,second)==true)) result=true;
+ if((this->check_horizontal_collision(first,second)==true)||(this->check_vertical_collision(first,second)==true)) result=true;
  return result;
-}
-
-class SWGF_Image
-{
- public:
- void load_tga(const char *name,SWGF_Canvas &Canvas);
- void load_pcx(const char *name,SWGF_Canvas &Canvas);
-};
-
-void SWGF_Image::load_tga(const char *name,SWGF_Canvas &Canvas)
-{
- FILE *target;
- unsigned long int index,position,amount,compressed_length,uncompressed_length;
- unsigned char *compressed;
- unsigned char *uncompressed;
- TGA_head head;
- TGA_map color_map;
- TGA_image image;
- target=fopen(name,"rb");
- if(target==NULL)
- {
-  puts("Can't open a image file");
-  exit(EXIT_FAILURE);
- }
- fseek(target,0,SEEK_END);
- compressed_length=ftell(target)-18;
- rewind(target);
- fread(&head,3,1,target);
- fread(&color_map,5,1,target);
- fread(&image,10,1,target);
- if((head.color_map!=0)||(image.color!=24))
- {
-  puts("Invalid image format");
-  exit(EXIT_FAILURE);
- }
- if(head.type!=2)
- {
-  if(head.type!=10)
-  {
-   puts("Invalid image format");
-   exit(EXIT_FAILURE);
-  }
-
- }
- index=0;
- position=0;
- uncompressed_length=3*(unsigned long int)image.width*(unsigned long int)image.height;
- uncompressed=(unsigned char*)calloc(uncompressed_length,1);
- if(uncompressed==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
- if(head.type==2)
- {
-  fread(uncompressed,uncompressed_length,1,target);
-  fclose(target);
- }
- if(head.type==10)
- {
-  compressed=(unsigned char*)calloc(compressed_length,1);
-  if(compressed==NULL)
-  {
-   puts("Can't allocate memory for image buffer");
-   exit(EXIT_FAILURE);
-  }
-  fread(compressed,compressed_length,1,target);
-  fclose(target);
-  while(index<uncompressed_length)
-  {
-   if(compressed[position]<128)
-   {
-    amount=compressed[position]+1;
-    amount*=3;
-    memmove(uncompressed+index,compressed+(position+1),amount);
-    index+=amount;
-    position+=1+amount;
-   }
-   else
-   {
-    for(amount=compressed[position]-127;amount>0;amount--)
-    {
-     memmove(uncompressed+index,compressed+(position+1),3);
-     index+=3;
-    }
-    position+=4;
-   }
-
-  }
-  free(compressed);
- }
- Canvas.load_image(uncompressed,image.width,image.height);
- free(uncompressed);
-}
-
-void SWGF_Image::load_pcx(const char *name,SWGF_Canvas &Canvas)
-{
- FILE *target;
- unsigned long int width,heigth,x,y,index,position,line,row,length,uncompressed_length;
- unsigned char repeat;
- unsigned char *original;
- unsigned char *uncompressed;
- PCX_head head;
- target=fopen(name,"rb");
- if(target==NULL)
- {
-  puts("Can't open a image file");
-  exit(EXIT_FAILURE);
- }
- fseek(target,0,SEEK_END);
- length=ftell(target)-128;
- rewind(target);
- fread(&head,128,1,target);
- if((head.color*head.planes!=24)&&(head.compress!=1))
- {
-  puts("Incorrect image format");
-  exit(EXIT_FAILURE);
- }
- width=head.max_x-head.min_x+1;
- heigth=head.max_y-head.min_y+1;
- row=3*width;
- line=head.planes*head.plane_length;
- uncompressed_length=row*heigth;
- index=0;
- position=0;
- original=(unsigned char*)calloc(length,1);
- if(original==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
- uncompressed=(unsigned char*)calloc(uncompressed_length,1);
- if(uncompressed==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
- fread(original,length,1,target);
- fclose(target);
- while (index<length)
- {
-  if (original[index]<192)
-  {
-   uncompressed[position]=original[index];
-   position++;
-   index++;
-  }
-  else
-  {
-   for (repeat=original[index]-192;repeat>0;repeat--)
-   {
-    uncompressed[position]=original[index+1];
-    position++;
-   }
-   index+=2;
-  }
-
- }
- free(original);
- original=(unsigned char*)calloc(uncompressed_length,1);
- if(original==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
- for(x=0;x<width;x++)
- {
-  for(y=0;y<heigth;y++)
-  {
-   index=x*3+y*row;
-   position=x+y*line;
-   original[index]=uncompressed[position+2*head.plane_length];
-   original[index+1]=uncompressed[position+head.plane_length];
-   original[index+2]=uncompressed[position];
-  }
-
- }
- free(uncompressed);
- Canvas.load_image(original,width,heigth);
- free(original);
 }
