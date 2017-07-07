@@ -8,7 +8,6 @@ int main(void)
  SWGF_Screen screen;
  SWGF_Keyboard keyboard;
  SWGF_Mouse mouse;
- SWGF_Gamepad gamepad;
  SWGF_Multimedia media;
  SWGF_Image image;
  SWGF_Background space;
@@ -41,27 +40,14 @@ int main(void)
  while(screen.sync()==false)
  {
   if(media.check_playing()==false) media.play();
-  if(mouse.get_pressed_button()==SWGF_MOUSE_LEFT) break;
-  if(keyboard.check_press(57)==true) break;
-  if(keyboard.check_press(72)==true) y-=2;
-  if(keyboard.check_press(80)==true) y+=2;
-  if(keyboard.check_press(75)==true) x-=2;
-  if(keyboard.check_press(77)==true) x+=2;
-  if(keyboard.check_press(71)==true) ship.mirror_image(0);
-  if(keyboard.check_press(79)==true) ship.mirror_image(1);
-  if(gamepad.check_button(SWGF_GAMEPAD_X)==true) break;
-  if(gamepad.check_button(SWGF_GAMEPAD_UP)==true) y-=2;
-  if(gamepad.check_button(SWGF_GAMEPAD_DOWN)==true) y+=2;
-  if(gamepad.check_button(SWGF_GAMEPAD_LEFT)==true) x-=2;
-  if(gamepad.check_button(SWGF_GAMEPAD_RIGHT)==true) x+=2;
-  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==1) x+=2;
-  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==-1) x-=2;
-  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==1) y-=2;
-  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==-1) y+=2;
-  if(gamepad.check_trigger(SWGF_GAMEPAD_LEFT_TRIGGER)==true) gamepad.set_vibration(65535,65535);
-  if(gamepad.check_trigger(SWGF_GAMEPAD_RIGHT_TRIGGER)==true) gamepad.set_vibration(0,0);
-  if(gamepad.check_button(SWGF_GAMEPAD_A)==true) ship.mirror_image(0);
-  if(gamepad.check_button(SWGF_GAMEPAD_B)==true) ship.mirror_image(1);
+  if(mouse.get_hold()==SWGF_MOUSE_LEFT) break;
+  if(keyboard.check_hold(57)==true) break;
+  if(keyboard.check_hold(72)==true) y-=2;
+  if(keyboard.check_hold(80)==true) y+=2;
+  if(keyboard.check_hold(75)==true) x-=2;
+  if(keyboard.check_hold(77)==true) x+=2;
+  if(keyboard.check_hold(71)==true) ship.mirror_image(0);
+  if(keyboard.check_hold(79)==true) ship.mirror_image(1);
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();

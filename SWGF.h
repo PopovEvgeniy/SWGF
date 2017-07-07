@@ -33,23 +33,6 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 #define SWGF_MOUSE_RIGHT 2
 #define SWGF_MOUSE_MIDDLE 3
 
-#define SWGF_GAMEPAD_UP XINPUT_GAMEPAD_DPAD_UP
-#define SWGF_GAMEPAD_DOWN XINPUT_GAMEPAD_DPAD_DOWN
-#define SWGF_GAMEPAD_LEFT XINPUT_GAMEPAD_DPAD_LEFT
-#define SWGF_GAMEPAD_RIGHT XINPUT_GAMEPAD_DPAD_RIGHT
-#define SWGF_GAMEPAD_A XINPUT_GAMEPAD_A
-#define SWGF_GAMEPAD_B XINPUT_GAMEPAD_B
-#define SWGF_GAMEPAD_X XINPUT_GAMEPAD_X
-#define SWGF_GAMEPAD_Y XINPUT_GAMEPAD_Y
-#define SWGF_GAMEPAD_LEFT_BUMPER XINPUT_GAMEPAD_LEFT_SHOULDER
-#define SWGF_GAMEPAD_RIGHT_BUMPER XINPUT_GAMEPAD_RIGHT_SHOULDER
-#define SWGF_GAMEPAD_START XINPUT_GAMEPAD_START
-#define SWGF_GAMEPAD_BACK XINPUT_GAMEPAD_BACK
-#define SWGF_GAMEPAD_LEFT_TRIGGER 0
-#define SWGF_GAMEPAD_RIGHT_TRIGGER 1
-#define SWGF_GAMEPAD_LEFT_STICK 2
-#define SWGF_GAMEPAD_RIGHT_STICK 3
-
 struct SWGF_Color
 {
  unsigned char blue:8;
@@ -781,12 +764,12 @@ SWGF_Screen* SWGF_Screen::get_handle()
 class SWGF_Keyboard
 {
  public:
- bool check_press(const unsigned int code);
+ bool check_hold(const unsigned int code);
  unsigned int get_virtual_code(const unsigned int code);
  unsigned int get_scan_code(const unsigned int code);
 };
 
-bool SWGF_Keyboard::check_press(const unsigned int code)
+bool SWGF_Keyboard::check_hold(const unsigned int code)
 {
  bool result;
  result=false;
@@ -813,7 +796,7 @@ class SWGF_Mouse
  ~SWGF_Mouse();
  void show();
  void hide();
- unsigned char get_pressed_button();
+ unsigned char get_hold();
  void set_position(const unsigned long int x,const unsigned long int y);
  unsigned long int get_x();
  unsigned long int get_y();
@@ -840,7 +823,7 @@ void SWGF_Mouse::hide()
  while(ShowCursor(FALSE)>-2) ;
 }
 
-unsigned char SWGF_Mouse::get_pressed_button()
+unsigned char SWGF_Mouse::get_hold()
 {
  unsigned char result;
  result=SWGF_MOUSE_NONE;
@@ -878,150 +861,6 @@ unsigned long int SWGF_Mouse::get_y()
   exit(EXIT_FAILURE);
  }
  return position.y;
-}
-
-class SWGF_Gamepad
-{
- private:
- XINPUT_STATE state;
- XINPUT_VIBRATION vibration;
- unsigned long int active;
- bool read_state();
- bool write_state();
- void set_motor(unsigned short int left,unsigned short int right);
- public:
- SWGF_Gamepad();
- ~SWGF_Gamepad();
- void set_active(unsigned long int gamepad);
- bool check_connection();
- bool check_button(unsigned short int button);
- bool check_trigger(unsigned char trigger);
- bool set_vibration(unsigned short int left,unsigned short int right);
- char get_stick_x(unsigned char stick);
- char get_stick_y(unsigned char stick);
-};
-
-SWGF_Gamepad::SWGF_Gamepad()
-{
- XInputEnable(TRUE);
- memset(&state,0,sizeof(XINPUT_STATE));
- memset(&vibration,0,sizeof(XINPUT_VIBRATION));
- active=0;
-}
-
-SWGF_Gamepad::~SWGF_Gamepad()
-{
- XInputEnable(FALSE);
-}
-
-bool SWGF_Gamepad::read_state()
-{
- bool result;
- result=false;
- if(XInputGetState(active,&state)==ERROR_SUCCESS) result=true;
- return result;
-}
-
-bool SWGF_Gamepad::write_state()
-{
- bool result;
- result=false;
- if(XInputSetState(active,&vibration)==ERROR_SUCCESS) result=true;
- return result;
-}
-
-void SWGF_Gamepad::set_motor(unsigned short int left,unsigned short int right)
-{
- vibration.wLeftMotorSpeed=left;
- vibration.wRightMotorSpeed=right;
-}
-
-void SWGF_Gamepad::set_active(unsigned long int gamepad)
-{
- active=gamepad;
-}
-
-bool SWGF_Gamepad::check_connection()
-{
- return this->read_state();
-}
-
-bool SWGF_Gamepad::check_button(unsigned short int button)
-{
- bool result;
- result=false;
- if(this->read_state()==true)
- {
-  if(state.Gamepad.wButtons&button) result=true;
- }
- return result;
-}
-
-bool SWGF_Gamepad::check_trigger(unsigned char trigger)
-{
- bool result;
- result=false;
- if(this->read_state()==true)
- {
-  if((trigger==SWGF_GAMEPAD_LEFT_TRIGGER)&&(state.Gamepad.bLeftTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD)) result=true;
-  if((trigger==SWGF_GAMEPAD_RIGHT_TRIGGER)&&(state.Gamepad.bRightTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD)) result=true;
- }
- return result;
-
-}
-
-bool SWGF_Gamepad::set_vibration(unsigned short int left,unsigned short int right)
-{
- this->set_motor(left,right);
- return this->write_state();
-}
-
-char SWGF_Gamepad::get_stick_x(unsigned char stick)
-{
- char result;
- short int control;
- result=0;
- if(this->read_state()==true)
- {
-  if(stick==SWGF_GAMEPAD_LEFT_STICK)
-  {
-   control=32767-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-   if(state.Gamepad.sThumbLX>=control) result=1;
-   if(state.Gamepad.sThumbLX<=-1*control) result=-1;
-  }
-  if(stick==SWGF_GAMEPAD_RIGHT_STICK)
-  {
-   control=32767-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
-   if(state.Gamepad.sThumbRX>=control) result=1;
-   if(state.Gamepad.sThumbRX<=-1*control) result=-1;
-  }
-
- }
- return result;
-}
-
-char SWGF_Gamepad::get_stick_y(unsigned char stick)
-{
- char result;
- short int control;
- result=0;
- if(this->read_state()==true)
- {
-  if(stick==SWGF_GAMEPAD_LEFT_STICK)
-  {
-   control=32767-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-   if(state.Gamepad.sThumbLY>=control) result=1;
-   if(state.Gamepad.sThumbLY<=-1*control) result=-1;
-  }
-  if(stick==SWGF_GAMEPAD_RIGHT_STICK)
-  {
-   control=32767-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
-   if(state.Gamepad.sThumbRY>=control) result=1;
-   if(state.Gamepad.sThumbRY<=-1*control) result=-1;
-  }
-
- }
- return result;
 }
 
 class SWGF_Multimedia: public SWGF_Base

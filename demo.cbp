@@ -41,7 +41,6 @@
 			<Add library="gdi32" />
 			<Add library="ole32" />
 			<Add library="strmiids" />
-			<Add library="xinput" />
 			<Add library="d3d9" />
 			<Add library="d3dx9" />
 		</Linker>
