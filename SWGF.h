@@ -26,12 +26,14 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 #include <d3dx9.h>
 #include <d3dx9math.h>
 #include <dshow.h>
-#include <xinput.h>
 
-#define SWGF_MOUSE_NONE 0
-#define SWGF_MOUSE_LEFT 1
-#define SWGF_MOUSE_RIGHT 2
-#define SWGF_MOUSE_MIDDLE 3
+#define SWGFKEY_NONE 0
+#define SWGFKEY_PRESS 1
+#define SWGFKEY_RELEASE 2
+
+#define SWGF_MOUSE_LEFT 0
+#define SWGF_MOUSE_RIGHT 1
+#define SWGF_MOUSE_MIDDLE 2
 
 struct SWGF_Color
 {
@@ -103,6 +105,9 @@ struct SWGF_Vertex
  float u;
  float v;
 };
+
+unsigned char SWGF_Keys[222]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+unsigned char SWGF_Buttons[3]={0,0,0};
 
 class SWGF_Base
 {
@@ -266,6 +271,14 @@ bool SWGF_Engine::process_message()
  quit=false;
  while(PeekMessage(&Message,window,0,0,PM_NOREMOVE)==TRUE)
  {
+  if(Message.message==WM_LBUTTONDOWN) SWGF_Buttons[SWGF_MOUSE_LEFT]=SWGFKEY_PRESS;
+  if(Message.message==WM_LBUTTONUP) SWGF_Buttons[SWGF_MOUSE_LEFT]=SWGFKEY_RELEASE;
+  if(Message.message==WM_RBUTTONDOWN) SWGF_Buttons[SWGF_MOUSE_RIGHT]=SWGFKEY_PRESS;
+  if(Message.message==WM_RBUTTONUP) SWGF_Buttons[SWGF_MOUSE_RIGHT]=SWGFKEY_RELEASE;
+  if(Message.message==WM_MBUTTONDOWN) SWGF_Buttons[SWGF_MOUSE_MIDDLE]=SWGFKEY_PRESS;
+  if(Message.message==WM_MBUTTONUP) SWGF_Buttons[SWGF_MOUSE_MIDDLE]=SWGFKEY_RELEASE;
+  if(Message.message==WM_KEYDOWN) SWGF_Keys[(Message.lParam >> 16)&0x7f]=SWGFKEY_PRESS;
+  if(Message.message==WM_KEYUP) SWGF_Keys[(Message.lParam >> 16)&0x7f]=SWGFKEY_RELEASE;
   if(GetMessage(&Message,window,0,0)==TRUE)
   {
    TranslateMessage(&Message);
@@ -764,27 +777,28 @@ SWGF_Screen* SWGF_Screen::get_handle()
 class SWGF_Keyboard
 {
  public:
- bool check_hold(const unsigned int code);
- unsigned int get_virtual_code(const unsigned int code);
- unsigned int get_scan_code(const unsigned int code);
+ bool check_press(const unsigned char code);
+ bool check_release(const unsigned char code);
 };
 
-bool SWGF_Keyboard::check_hold(const unsigned int code)
+bool SWGF_Keyboard::check_press(const unsigned char code)
 {
  bool result;
  result=false;
- if(GetAsyncKeyState(MapVirtualKey(code,MAPVK_VSC_TO_VK))==-32767) result=true;
+ if(SWGF_Keys[code]==SWGFKEY_PRESS) result=true;
  return result;
 }
 
-unsigned int SWGF_Keyboard::get_virtual_code(const unsigned int code)
+bool SWGF_Keyboard::check_release(const unsigned char code)
 {
- return MapVirtualKey(code,MAPVK_VSC_TO_VK);
-}
-
-unsigned int SWGF_Keyboard::get_scan_code(const unsigned int code)
-{
- return MapVirtualKey(code,MAPVK_VK_TO_VSC);
+ bool result;
+ result=false;
+ if(SWGF_Keys[code]==SWGFKEY_RELEASE)
+ {
+  result=true;
+  SWGF_Keys[code]=SWGFKEY_NONE;
+ }
+ return result;
 }
 
 class SWGF_Mouse
@@ -796,10 +810,11 @@ class SWGF_Mouse
  ~SWGF_Mouse();
  void show();
  void hide();
- unsigned char get_hold();
  void set_position(const unsigned long int x,const unsigned long int y);
  unsigned long int get_x();
  unsigned long int get_y();
+ bool check_press(const unsigned char button);
+ bool check_release(const unsigned char button);
 };
 
 SWGF_Mouse::SWGF_Mouse()
@@ -821,16 +836,6 @@ void SWGF_Mouse::show()
 void SWGF_Mouse::hide()
 {
  while(ShowCursor(FALSE)>-2) ;
-}
-
-unsigned char SWGF_Mouse::get_hold()
-{
- unsigned char result;
- result=SWGF_MOUSE_NONE;
- if(GetAsyncKeyState(VK_LBUTTON)==-32767) result=SWGF_MOUSE_LEFT;
- if(GetAsyncKeyState(VK_RBUTTON)==-32767) result=SWGF_MOUSE_RIGHT;
- if(GetAsyncKeyState(VK_MBUTTON)==-32767) result=SWGF_MOUSE_MIDDLE;
- return result;
 }
 
 void SWGF_Mouse::set_position(const unsigned long int x,const unsigned long int y)
@@ -861,6 +866,33 @@ unsigned long int SWGF_Mouse::get_y()
   exit(EXIT_FAILURE);
  }
  return position.y;
+}
+
+bool SWGF_Mouse::check_press(const unsigned char button)
+{
+ bool result;
+ result=false;
+ if(button<=SWGF_MOUSE_MIDDLE)
+ {
+  if(SWGF_Buttons[button]==SWGFKEY_PRESS) result=true;
+ }
+ return result;
+}
+
+bool SWGF_Mouse::check_release(const unsigned char button)
+{
+ bool result;
+ result=false;
+ if(button<=SWGF_MOUSE_MIDDLE)
+ {
+  if(SWGF_Buttons[button]==SWGFKEY_RELEASE)
+  {
+   result=true;
+   SWGF_Buttons[button]=SWGFKEY_NONE;
+  }
+
+ }
+ return result;
 }
 
 class SWGF_Multimedia: public SWGF_Base
