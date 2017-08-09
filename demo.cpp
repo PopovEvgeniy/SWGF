@@ -40,12 +40,12 @@ int main(void)
  while(screen.sync()==false)
  {
   if(media.check_playing()==false) media.play();
-  if(mouse.check_press(SWGF_MOUSE_LEFT)==true) break;
-  if(keyboard.check_press(57)==true) break;
-  if(keyboard.check_press(72)==true) y-=2;
-  if(keyboard.check_press(80)==true) y+=2;
-  if(keyboard.check_press(75)==true) x-=2;
-  if(keyboard.check_press(77)==true) x+=2;
+  if(mouse.check_hold(SWGF_MOUSE_LEFT)==true) break;
+  if(keyboard.check_hold(57)==true) break;
+  if(keyboard.check_hold(72)==true) y-=2;
+  if(keyboard.check_hold(80)==true) y+=2;
+  if(keyboard.check_hold(75)==true) x-=2;
+  if(keyboard.check_hold(77)==true) x+=2;
   if(keyboard.check_release(71)==true) ship.mirror_image(0);
   if(keyboard.check_release(79)==true) ship.mirror_image(1);
   if((x<=0)||(x>=screen_width)) x=screen_width/2;

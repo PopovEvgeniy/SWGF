@@ -106,8 +106,50 @@ struct SWGF_Vertex
  float v;
 };
 
-unsigned char SWGF_Keys[222]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-unsigned char SWGF_Buttons[3]={0,0,0};
+unsigned char SWGF_Keys[256];
+unsigned char SWGF_Buttons[3];
+
+LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam)
+{
+ switch (Message)
+ {
+  case WM_CLOSE:
+  DestroyWindow(window);
+  break;
+  case WM_DESTROY:
+  PostQuitMessage(0);
+  break;
+  case WM_CREATE:
+  memset(SWGF_Keys,SWGFKEY_NONE,256);
+  memset(SWGF_Buttons,SWGFKEY_NONE,3);
+  break;
+  case WM_LBUTTONDOWN:
+  SWGF_Buttons[SWGF_MOUSE_LEFT]=SWGFKEY_PRESS;
+  break;
+  case WM_LBUTTONUP:
+  SWGF_Buttons[SWGF_MOUSE_LEFT]=SWGFKEY_RELEASE;
+  break;
+  case WM_RBUTTONDOWN:
+  SWGF_Buttons[SWGF_MOUSE_RIGHT]=SWGFKEY_PRESS;
+  break;
+  case WM_RBUTTONUP:
+  SWGF_Buttons[SWGF_MOUSE_RIGHT]=SWGFKEY_RELEASE;
+  break;
+  case WM_MBUTTONDOWN:
+  SWGF_Buttons[SWGF_MOUSE_MIDDLE]=SWGFKEY_PRESS;
+  break;
+  case WM_MBUTTONUP:
+  SWGF_Buttons[SWGF_MOUSE_MIDDLE]=SWGFKEY_RELEASE;
+  break;
+  case WM_KEYDOWN:
+  SWGF_Keys[(lParam >> 16)&0x7f]=SWGFKEY_PRESS;
+  break;
+  case WM_KEYUP:
+  SWGF_Keys[(lParam >> 16)&0x7f]=SWGFKEY_RELEASE;
+  break;
+ }
+ return DefWindowProc(window,Message,wParam,lParam);
+}
 
 class SWGF_Base
 {
@@ -205,7 +247,7 @@ SWGF_Engine::SWGF_Engine()
  window_class.lpszClassName=TEXT("SWGF");
  window_class.hInstance=GetModuleHandle(NULL);
  window_class.style=CS_HREDRAW|CS_VREDRAW;
- window_class.lpfnWndProc=(WNDPROC)DefWindowProc;
+ window_class.lpfnWndProc=(WNDPROC)SWGF_Process_Message;
  window_class.hbrBackground=(HBRUSH)GetStockObject(BLACK_BRUSH);
  window_class.hIcon=LoadIcon(NULL,IDI_APPLICATION);
  window_class.hCursor=LoadCursor(NULL,IDC_ARROW);
@@ -271,14 +313,6 @@ bool SWGF_Engine::process_message()
  quit=false;
  while(PeekMessage(&Message,window,0,0,PM_NOREMOVE)==TRUE)
  {
-  if(Message.message==WM_LBUTTONDOWN) SWGF_Buttons[SWGF_MOUSE_LEFT]=SWGFKEY_PRESS;
-  if(Message.message==WM_LBUTTONUP) SWGF_Buttons[SWGF_MOUSE_LEFT]=SWGFKEY_RELEASE;
-  if(Message.message==WM_RBUTTONDOWN) SWGF_Buttons[SWGF_MOUSE_RIGHT]=SWGFKEY_PRESS;
-  if(Message.message==WM_RBUTTONUP) SWGF_Buttons[SWGF_MOUSE_RIGHT]=SWGFKEY_RELEASE;
-  if(Message.message==WM_MBUTTONDOWN) SWGF_Buttons[SWGF_MOUSE_MIDDLE]=SWGFKEY_PRESS;
-  if(Message.message==WM_MBUTTONUP) SWGF_Buttons[SWGF_MOUSE_MIDDLE]=SWGFKEY_RELEASE;
-  if(Message.message==WM_KEYDOWN) SWGF_Keys[(Message.lParam >> 16)&0x7f]=SWGFKEY_PRESS;
-  if(Message.message==WM_KEYUP) SWGF_Keys[(Message.lParam >> 16)&0x7f]=SWGFKEY_RELEASE;
   if(GetMessage(&Message,window,0,0)==TRUE)
   {
    TranslateMessage(&Message);
@@ -777,11 +811,11 @@ SWGF_Screen* SWGF_Screen::get_handle()
 class SWGF_Keyboard
 {
  public:
- bool check_press(const unsigned char code);
+ bool check_hold(const unsigned char code);
  bool check_release(const unsigned char code);
 };
 
-bool SWGF_Keyboard::check_press(const unsigned char code)
+bool SWGF_Keyboard::check_hold(const unsigned char code)
 {
  bool result;
  result=false;
@@ -813,7 +847,7 @@ class SWGF_Mouse
  void set_position(const unsigned long int x,const unsigned long int y);
  unsigned long int get_x();
  unsigned long int get_y();
- bool check_press(const unsigned char button);
+ bool check_hold(const unsigned char button);
  bool check_release(const unsigned char button);
 };
 
@@ -868,7 +902,7 @@ unsigned long int SWGF_Mouse::get_y()
  return position.y;
 }
 
-bool SWGF_Mouse::check_press(const unsigned char button)
+bool SWGF_Mouse::check_hold(const unsigned char button)
 {
  bool result;
  result=false;
