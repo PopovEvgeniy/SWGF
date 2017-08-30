@@ -27,6 +27,9 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 #include <d3dx9math.h>
 #include <dshow.h>
 
+#define SWGF_KEYBOARD 256
+#define SWGF_MOUSE 3
+
 #define SWGFKEY_NONE 0
 #define SWGFKEY_PRESS 1
 #define SWGFKEY_RELEASE 2
@@ -106,8 +109,8 @@ struct SWGF_Vertex
  float v;
 };
 
-unsigned char SWGF_Keys[256];
-unsigned char SWGF_Buttons[3];
+unsigned char SWGF_Keys[SWGF_KEYBOARD];
+unsigned char SWGF_Buttons[SWGF_MOUSE];
 
 LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam)
 {
@@ -120,8 +123,8 @@ LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPA
   PostQuitMessage(0);
   break;
   case WM_CREATE:
-  memset(SWGF_Keys,SWGFKEY_NONE,256);
-  memset(SWGF_Buttons,SWGFKEY_NONE,3);
+  memset(SWGF_Keys,SWGFKEY_NONE,SWGF_KEYBOARD);
+  memset(SWGF_Buttons,SWGFKEY_NONE,SWGF_MOUSE);
   break;
   case WM_LBUTTONDOWN:
   SWGF_Buttons[SWGF_MOUSE_LEFT]=SWGFKEY_PRESS;
@@ -810,16 +813,49 @@ SWGF_Screen* SWGF_Screen::get_handle()
 
 class SWGF_Keyboard
 {
+ private:
+ unsigned char *preversion;
  public:
+ SWGF_Keyboard();
+ ~SWGF_Keyboard();
  bool check_hold(const unsigned char code);
+ bool check_press(const unsigned char code);
  bool check_release(const unsigned char code);
 };
+
+SWGF_Keyboard::SWGF_Keyboard()
+{
+ preversion=(unsigned char*)calloc(SWGF_KEYBOARD,1);
+ if(preversion==NULL)
+ {
+  puts("Can't allocate memory for keyboard state buffer");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
+SWGF_Keyboard::~SWGF_Keyboard()
+{
+ if(preversion!=NULL) free(preversion);
+}
 
 bool SWGF_Keyboard::check_hold(const unsigned char code)
 {
  bool result;
  result=false;
  if(SWGF_Keys[code]==SWGFKEY_PRESS) result=true;
+ return result;
+}
+
+bool SWGF_Keyboard::check_press(const unsigned char code)
+{
+ bool result;
+ result=false;
+ if(SWGF_Keys[code]==SWGFKEY_PRESS)
+ {
+  if(preversion[code]!=SWGFKEY_PRESS) result=true;
+ }
+ preversion[code]=SWGF_Keys[code];
  return result;
 }
 
@@ -838,7 +874,7 @@ bool SWGF_Keyboard::check_release(const unsigned char code)
 class SWGF_Mouse
 {
  private:
- POINT position;
+ unsigned char preversion[SWGF_MOUSE];
  public:
  SWGF_Mouse();
  ~SWGF_Mouse();
@@ -848,13 +884,13 @@ class SWGF_Mouse
  unsigned long int get_x();
  unsigned long int get_y();
  bool check_hold(const unsigned char button);
+ bool check_press(const unsigned char button);
  bool check_release(const unsigned char button);
 };
 
 SWGF_Mouse::SWGF_Mouse()
 {
- position.x=0;
- position.y=0;
+ memset(preversion,SWGFKEY_NONE,SWGF_MOUSE);
 }
 
 SWGF_Mouse::~SWGF_Mouse()
@@ -884,6 +920,7 @@ void SWGF_Mouse::set_position(const unsigned long int x,const unsigned long int 
 
 unsigned long int SWGF_Mouse::get_x()
 {
+ POINT position;
  if(GetCursorPos(&position)==FALSE)
  {
   puts("Can't get the mouse cursor position");
@@ -894,6 +931,7 @@ unsigned long int SWGF_Mouse::get_x()
 
 unsigned long int SWGF_Mouse::get_y()
 {
+ POINT position;
  if(GetCursorPos(&position)==FALSE)
  {
   puts("Can't get the mouse cursor position");
@@ -910,6 +948,22 @@ bool SWGF_Mouse::check_hold(const unsigned char button)
  {
   if(SWGF_Buttons[button]==SWGFKEY_PRESS) result=true;
  }
+ return result;
+}
+
+bool SWGF_Mouse::check_press(const unsigned char button)
+{
+ bool result;
+ result=false;
+ if(button<=SWGF_MOUSE_MIDDLE)
+ {
+  if(SWGF_Buttons[button]==SWGFKEY_PRESS)
+  {
+   if(preversion[button]!=SWGFKEY_PRESS) result=true;
+  }
+
+ }
+ preversion[button]=SWGF_Buttons[button];
  return result;
 }
 
