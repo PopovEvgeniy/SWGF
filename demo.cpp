@@ -6,6 +6,7 @@ int main(void)
  unsigned char frame;
  SWGF_Timer timer;
  SWGF_Screen screen;
+ SWGF_System System;
  SWGF_Keyboard keyboard;
  SWGF_Mouse mouse;
  SWGF_Multimedia media;
@@ -13,6 +14,7 @@ int main(void)
  SWGF_Background space;
  SWGF_Sprite ship,font;
  SWGF_Text text;
+ System.enable_logging("log.txt");
  screen.initialize();
  space.initialize(screen.get_handle());
  ship.initialize(screen.get_handle());
@@ -35,6 +37,7 @@ int main(void)
  frame=1;
  mouse.hide();
  timer.set_timer(1);
+ media.initialize();
  media.load("space.mp3");
  media.play();
  while(screen.sync()==false)
