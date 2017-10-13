@@ -1030,7 +1030,7 @@ wchar_t *SWGF_Multimedia::convert_file_name(const char *target)
   puts("Can't allocate memory");
   exit(EXIT_FAILURE);
  }
- for(index=0;index<length;index++) name[index]=target[index];
+ for(index=0;index<length;index++) name[index]=btowc(target[index]);
  return name;
 }
 
@@ -1895,7 +1895,7 @@ void SWGF_Text::set_position(const unsigned long int x,const unsigned long int y
 void SWGF_Text::load_font(SWGF_Sprite *font)
 {
  sprite=font;
- sprite->set_frames(128);
+ sprite->set_frames(256);
 }
 
 void SWGF_Text::draw_text(const char *text)
@@ -1906,9 +1906,9 @@ void SWGF_Text::draw_text(const char *text)
  step_y=current_y;
  for (index=0;index<length;index++)
  {
-  if (text[index]>31)
+  if ((text[index]>31)||(text[index]<0))
   {
-   sprite->draw_sprite_frame(step_x,step_y,text[index]+1);
+   sprite->draw_sprite_frame(step_x,step_y,(unsigned char)text[index]+1);
    step_x+=sprite->get_sprite_width();
   }
 
