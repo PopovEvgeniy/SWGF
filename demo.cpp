@@ -8,6 +8,7 @@ int main(void)
  SWGF_Screen screen;
  SWGF_System System;
  SWGF_Keyboard keyboard;
+ SWGF_Gamepad gamepad;
  SWGF_Mouse mouse;
  SWGF_Multimedia media;
  SWGF_Image image;
@@ -42,6 +43,7 @@ int main(void)
  media.play();
  while(screen.sync()==false)
  {
+  gamepad.update();
   if(media.check_playing()==false) media.play();
   if(mouse.check_press(SWGF_MOUSE_LEFT)==true) break;
   if(keyboard.check_hold(57)==true) break;
@@ -51,6 +53,13 @@ int main(void)
   if(keyboard.check_hold(77)==true) x+=2;
   if(keyboard.check_press(71)==true) ship.mirror_image(0);
   if(keyboard.check_press(79)==true) ship.mirror_image(1);
+  if(gamepad.check_hold(SWGF_GAMEPAD_BUTTON2)==true) break;
+  if(gamepad.get_dpad()==SWGF_GAMEPAD_UP) y-=2;
+  if(gamepad.get_dpad()==SWGF_GAMEPAD_DOWN) y+=2;
+  if(gamepad.get_dpad()==SWGF_GAMEPAD_LEFT) x-=2;
+  if(gamepad.get_dpad()==SWGF_GAMEPAD_RIGHT) x+=2;
+  if(gamepad.check_press(SWGF_GAMEPAD_BUTTON4)==true) ship.mirror_image(0);
+  if(gamepad.check_press(SWGF_GAMEPAD_BUTTON3)==true) ship.mirror_image(1);
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();
