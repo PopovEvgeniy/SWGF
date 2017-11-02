@@ -240,6 +240,7 @@ class SWGF_Render:public SWGF_Engine, public SWGF_Frame
  DEVMODE display;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
  unsigned int texture;
+ unsigned int surface;
  DEVMODE get_video_mode();
  void set_video_mode(DEVMODE mode);
  void check_video_mode();
@@ -253,6 +254,7 @@ class SWGF_Render:public SWGF_Engine, public SWGF_Frame
  void set_perspective();
  void clear_stage();
  void check_videocard();
+ void prepare_surface();
  void create_texture();
  void disable_vsync();
  void create_render();

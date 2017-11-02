@@ -300,10 +300,12 @@ SWGF_Render::SWGF_Render()
  render=NULL;
  wglSwapIntervalEXT=NULL;
  texture=0;
+ surface=0;
 }
 
 SWGF_Render::~SWGF_Render()
 {
+ glDeleteLists(surface,1);
  wglMakeCurrent(NULL,NULL);
  wglDeleteContext(render);
  ReleaseDC(window,context);
@@ -473,7 +475,6 @@ void SWGF_Render::set_perspective()
  glCullFace(GL_BACK);
  glMatrixMode(GL_TEXTURE);
  glLoadIdentity();
- glRotatef(180,1,0,0);
  glViewport(0,0,width,height);
 }
 
@@ -494,6 +495,28 @@ void SWGF_Render::check_videocard()
   exit(EXIT_FAILURE);
  }
 
+}
+
+void SWGF_Render::prepare_surface()
+{
+ surface=glGenLists(1);
+ if(surface==0)
+ {
+  puts("Can't create the display list");
+  exit(EXIT_FAILURE);
+ }
+ glNewList(surface,GL_COMPILE);
+ glBegin(GL_QUADS);
+ glTexCoord2f(0,1);
+ glVertex2i(0,height);
+ glTexCoord2f(1,1);
+ glVertex2i(width,height);
+ glTexCoord2f(1,0);
+ glVertex2i(width,0);
+ glTexCoord2f(0,0);
+ glVertex2i(0,0);
+ glEnd();
+ glEndList();
 }
 
 void SWGF_Render::create_texture()
@@ -524,22 +547,15 @@ void SWGF_Render::create_render()
  this->clear_stage();
  this->check_videocard();
  this->create_texture();
+ this->prepare_surface();
  this->disable_vsync();
 }
 
 void SWGF_Render::refresh()
 {
  glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,frame_width,frame_height,0,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
- glBegin(GL_QUADS);
- glTexCoord2f(0,0);
- glVertex2i(0,height);
- glTexCoord2f(1,0);
- glVertex2i(width,height);
- glTexCoord2f(1,1);
- glVertex2i(width,0);
- glTexCoord2f(0,1);
- glVertex2i(0,0);
- glEnd();
+ glCallList(surface);
+ glFlush();
  SwapBuffers(context);
 }
 
