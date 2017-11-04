@@ -4,6 +4,8 @@ int main(void)
 {
  long int x,y,screen_width,screen_height;
  unsigned char frame;
+ unsigned long int fps;
+ char perfomance[8];
  SWGF_Timer timer;
  SWGF_Screen screen;
  SWGF_System System;
@@ -41,8 +43,11 @@ int main(void)
  media.initialize();
  media.load("space.mp3");
  media.play();
+ fps=0;
+ memset(perfomance,0,8);
  while(screen.sync()==false)
  {
+  fps++;
   gamepad.update();
   if(media.check_playing()==false) media.play();
   if(mouse.check_press(SWGF_MOUSE_LEFT)==true) break;
@@ -63,10 +68,12 @@ int main(void)
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();
-  text.draw_text("Technical demonstration");
+  text.draw_text(perfomance);
   ship.draw_sprite_frame(x,y,frame);
   if (timer.check_timer()==true)
   {
+   itoa(fps,perfomance,10);
+   fps=0;
    frame++;
    if (frame>ship.get_frames()) frame=1;
   }

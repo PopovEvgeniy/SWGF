@@ -255,8 +255,8 @@ SWGF_Frame::~SWGF_Frame()
 
 void SWGF_Frame::create_render_buffer()
 {
- buffer_length=frame_width*frame_height*sizeof(SWGF_Pixel);
- buffer=(SWGF_Pixel*)calloc(buffer_length,1);
+ buffer_length=frame_width*frame_height*sizeof(COLORREF);
+ buffer=(COLORREF*)calloc(buffer_length,1);
  if(buffer==NULL)
  {
   puts("Can't allocate memory for render buffer");
@@ -265,15 +265,11 @@ void SWGF_Frame::create_render_buffer()
 
 }
 
-void SWGF_Frame::draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue)
+void SWGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
- unsigned long int offset;
  if((x<frame_width)&&(y<frame_height))
  {
-  offset=x+y*frame_width;
-  buffer[offset].red=red;
-  buffer[offset].green=green;
-  buffer[offset].blue=blue;
+  buffer[x+y*frame_width]=RGB(red,green,blue);
  }
 
 }
@@ -555,7 +551,6 @@ void SWGF_Render::refresh()
 {
  glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,frame_width,frame_height,0,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
  glCallList(surface);
- glFlush();
  SwapBuffers(context);
 }
 

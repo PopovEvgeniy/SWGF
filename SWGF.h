@@ -169,14 +169,6 @@ struct PCX_head
  unsigned char filled[54];
 };
 
-struct SWGF_Pixel
-{
- unsigned char red:8;
- unsigned char green:8;
- unsigned char blue:8;
- unsigned char alpha:8;
-};
-
 LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
 
 class SWGF_Base
@@ -221,12 +213,12 @@ class SWGF_Frame
  unsigned long int frame_width;
  unsigned long int frame_height;
  unsigned long int buffer_length;
- SWGF_Pixel *buffer;
+ COLORREF *buffer;
  void create_render_buffer();
  public:
  SWGF_Frame();
  ~SWGF_Frame();
- void draw_pixel(unsigned long int x,unsigned long int y,unsigned char red,unsigned char green,unsigned char blue);
+ void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void clear_screen();
  unsigned long int get_frame_width();
  unsigned long int get_frame_height();
