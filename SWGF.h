@@ -169,6 +169,14 @@ struct PCX_head
  unsigned char filled[54];
 };
 
+struct SWGF_Box
+{
+ unsigned long int x:32;
+ unsigned long int y:32;
+ unsigned long int width:32;
+ unsigned long int height:32;
+};
+
 LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
 
 class SWGF_Base
@@ -446,6 +454,7 @@ class SWGF_Sprite:public SWGF_Canvas
  unsigned long int get_sprite_width();
  unsigned long int get_sprite_height();
  SWGF_Sprite* get_handle();
+ SWGF_Box get_box();
 };
 
 class SWGF_Text
@@ -465,7 +474,7 @@ class SWGF_Text
 class SWGF_Collision
 {
  public:
- bool check_horizontal_collision(SWGF_Sprite &first,SWGF_Sprite &second);
- bool check_vertical_collision(SWGF_Sprite &first,SWGF_Sprite &second);
- bool check_collision(SWGF_Sprite &first,SWGF_Sprite &second);
+ bool check_horizontal_collision(SWGF_Box first,SWGF_Box second);
+ bool check_vertical_collision(SWGF_Box first,SWGF_Box second);
+ bool check_collision(SWGF_Box first,SWGF_Box second);
 };

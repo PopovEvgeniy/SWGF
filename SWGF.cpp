@@ -1590,6 +1590,16 @@ SWGF_Sprite* SWGF_Sprite::get_handle()
  return this;
 }
 
+SWGF_Box SWGF_Sprite::get_box()
+{
+ SWGF_Box target;
+ target.x=current_x;
+ target.y=current_y;
+ target.width=width/frames;
+ target.height=height;
+ return target;
+}
+
 SWGF_Text::SWGF_Text()
 {
  current_x=0;
@@ -1632,29 +1642,29 @@ void SWGF_Text::draw_text(const char *text)
 
 }
 
-bool SWGF_Collision::check_horizontal_collision(SWGF_Sprite &first,SWGF_Sprite &second)
+bool SWGF_Collision::check_horizontal_collision(SWGF_Box first,SWGF_Box second)
 {
  bool result;
  result=false;
- if((first.get_x()+first.get_sprite_width())>=second.get_x())
+ if((first.x+first.width)>=second.x)
  {
-  if(first.get_x()<=(second.get_x()+second.get_sprite_width())) result=true;
+  if(first.x<=(second.x+second.width)) result=true;
  }
  return result;
 }
 
-bool SWGF_Collision::check_vertical_collision(SWGF_Sprite &first,SWGF_Sprite &second)
+bool SWGF_Collision::check_vertical_collision(SWGF_Box first,SWGF_Box second)
 {
  bool result;
  result=false;
- if((first.get_y()+first.get_sprite_height())>=second.get_y())
+ if((first.y+first.height)>=second.y)
  {
-  if(first.get_y()<=(second.get_y()+second.get_sprite_height())) result=true;
+  if(first.y<=(second.y+second.height)) result=true;
  }
  return result;
 }
 
-bool SWGF_Collision::check_collision(SWGF_Sprite &first,SWGF_Sprite &second)
+bool SWGF_Collision::check_collision(SWGF_Box first,SWGF_Box second)
 {
  bool result;
  result=false;
