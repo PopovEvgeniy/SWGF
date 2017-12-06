@@ -580,6 +580,16 @@ SWGF_Screen* SWGF_Screen::get_handle()
 
 SWGF_Keyboard::SWGF_Keyboard()
 {
+ preversion=NULL;
+}
+
+SWGF_Keyboard::~SWGF_Keyboard()
+{
+ if(preversion!=NULL) free(preversion);
+}
+
+void SWGF_Keyboard::initialize()
+{
  preversion=(unsigned char*)calloc(SWGF_KEYBOARD,1);
  if(preversion==NULL)
  {
@@ -587,11 +597,6 @@ SWGF_Keyboard::SWGF_Keyboard()
   exit(EXIT_FAILURE);
  }
 
-}
-
-SWGF_Keyboard::~SWGF_Keyboard()
-{
- if(preversion!=NULL) free(preversion);
 }
 
 bool SWGF_Keyboard::check_hold(const unsigned char code)

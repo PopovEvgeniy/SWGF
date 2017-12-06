@@ -279,6 +279,7 @@ class SWGF_Keyboard
  public:
  SWGF_Keyboard();
  ~SWGF_Keyboard();
+ void initialize();
  bool check_hold(const unsigned char code);
  bool check_press(const unsigned char code);
  bool check_release(const unsigned char code);
