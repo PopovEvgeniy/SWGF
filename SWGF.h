@@ -191,6 +191,7 @@ class SWGF_Synchronization
  private:
  HANDLE timer;
  protected:
+ void create_timer();
  void set_timer(unsigned long int interval);
  void wait_timer();
  public:

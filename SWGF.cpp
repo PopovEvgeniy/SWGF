@@ -107,6 +107,21 @@ SWGF_Base::~SWGF_Base()
 
 SWGF_Synchronization::SWGF_Synchronization()
 {
+ timer=NULL;
+}
+
+SWGF_Synchronization::~SWGF_Synchronization()
+{
+ if(timer==NULL)
+ {
+  CancelWaitableTimer(timer);
+  CloseHandle(timer);
+ }
+
+}
+
+void SWGF_Synchronization::create_timer()
+{
  timer=CreateWaitableTimer(NULL,FALSE,NULL);
  if (timer==NULL)
  {
@@ -114,12 +129,6 @@ SWGF_Synchronization::SWGF_Synchronization()
   exit(EXIT_FAILURE);
  }
 
-}
-
-SWGF_Synchronization::~SWGF_Synchronization()
-{
- CancelWaitableTimer(timer);
- CloseHandle(timer);
 }
 
 void SWGF_Synchronization::set_timer(unsigned long int interval)
@@ -558,6 +567,7 @@ void SWGF_Screen::initialize()
 {
  this->check_video_mode();
  this->create_render_buffer();
+ this->create_timer();
  this->create_window();
  this->capture_mouse();
  this->create_render();
