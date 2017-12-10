@@ -60,12 +60,39 @@ int main(void)
   if(keyboard.check_press(71)==true) ship.mirror_image(0);
   if(keyboard.check_press(79)==true) ship.mirror_image(1);
   if(gamepad.check_hold(SWGF_GAMEPAD_BUTTON2)==true) break;
-  if(gamepad.get_dpad()==SWGF_GAMEPAD_UP) y-=2;
-  if(gamepad.get_dpad()==SWGF_GAMEPAD_DOWN) y+=2;
-  if(gamepad.get_dpad()==SWGF_GAMEPAD_LEFT) x-=2;
-  if(gamepad.get_dpad()==SWGF_GAMEPAD_RIGHT) x+=2;
   if(gamepad.check_press(SWGF_GAMEPAD_BUTTON4)==true) ship.mirror_image(0);
   if(gamepad.check_press(SWGF_GAMEPAD_BUTTON3)==true) ship.mirror_image(1);
+  switch (gamepad.get_dpad())
+  {
+   case SWGF_GAMEPAD_UP:
+   y--;
+   break;
+   case SWGF_GAMEPAD_DOWN:
+   y++;
+   break;
+   case SWGF_GAMEPAD_UPLEFT:
+   y--;
+   x--;
+   break;
+   case SWGF_GAMEPAD_UPRIGHT:
+   y--;
+   x++;
+   break;
+   case SWGF_GAMEPAD_DOWNLEFT:
+   y++;
+   x--;
+   break;
+   case SWGF_GAMEPAD_DOWNRIGHT:
+   y++;
+   x++;
+   break;
+   case SWGF_GAMEPAD_LEFT:
+   x--;
+   break;
+   case SWGF_GAMEPAD_RIGHT:
+   x++;
+   break;
+  }
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();

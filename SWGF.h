@@ -59,11 +59,19 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #define SWGF_MOUSE_RIGHT 1
 #define SWGF_MOUSE_MIDDLE 2
 
+#define JOYSTICK_UPLEFT 31500
+#define JOYSTICK_UPRIGHT 4500
+#define JOYSTICK_DOWNLEFT 22500
+#define JOYSTICK_DOWNRIGHT 13500
 #define SWGF_GAMEPAD_NONE 0
 #define SWGF_GAMEPAD_UP 1
 #define SWGF_GAMEPAD_DOWN 2
 #define SWGF_GAMEPAD_LEFT 3
 #define SWGF_GAMEPAD_RIGHT 4
+#define SWGF_GAMEPAD_UPLEFT 5
+#define SWGF_GAMEPAD_UPRIGHT 6
+#define SWGF_GAMEPAD_DOWNLEFT 7
+#define SWGF_GAMEPAD_DOWNRIGHT 8
 #define SWGF_GAMEPAD1 JOYSTICKID1
 #define SWGF_GAMEPAD2 2
 #define SWGF_GAMEPAD3 3
@@ -192,7 +200,7 @@ class SWGF_Synchronization
  HANDLE timer;
  protected:
  void create_timer();
- void set_timer(unsigned long int interval);
+ void set_timer(const unsigned long int interval);
  void wait_timer();
  public:
  SWGF_Synchronization();

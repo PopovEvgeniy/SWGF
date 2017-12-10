@@ -131,7 +131,7 @@ void SWGF_Synchronization::create_timer()
 
 }
 
-void SWGF_Synchronization::set_timer(unsigned long int interval)
+void SWGF_Synchronization::set_timer(const unsigned long int interval)
 {
  LARGE_INTEGER start;
  start.QuadPart=0;
@@ -826,6 +826,18 @@ unsigned char SWGF_Gamepad::get_dpad()
   break;
   case JOY_POVRIGHT:
   result=SWGF_GAMEPAD_RIGHT;
+  break;
+  case JOYSTICK_UPLEFT:
+  result=SWGF_GAMEPAD_UPLEFT;
+  break;
+  case JOYSTICK_UPRIGHT:
+  result=SWGF_GAMEPAD_UPRIGHT;
+  break;
+  case JOYSTICK_DOWNLEFT:
+  result=SWGF_GAMEPAD_DOWNLEFT;
+  break;
+  case JOYSTICK_DOWNRIGHT:
+  result=SWGF_GAMEPAD_DOWNRIGHT;
   break;
  }
  return result;
