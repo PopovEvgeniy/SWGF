@@ -431,6 +431,7 @@ class SWGF_Canvas
  public:
  SWGF_Canvas();
  ~SWGF_Canvas();
+ SWGF_Color *get_image();
  unsigned long int get_width();
  unsigned long int get_height();
  void set_frames(const unsigned long int amount);
@@ -457,6 +458,7 @@ class SWGF_Sprite:public SWGF_Canvas
  public:
  SWGF_Sprite();
  ~SWGF_Sprite();
+ void clone(SWGF_Sprite &target);
  void draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame);
  void draw_sprite(const unsigned long int x,const unsigned long int y);
  unsigned long int get_x();

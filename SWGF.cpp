@@ -310,10 +310,13 @@ SWGF_Render::SWGF_Render()
 
 SWGF_Render::~SWGF_Render()
 {
- glDeleteLists(surface,1);
- wglMakeCurrent(NULL,NULL);
- wglDeleteContext(render);
- ReleaseDC(window,context);
+ if(surface!=0) glDeleteLists(surface,1);
+ if(render!=NULL)
+ {
+  wglMakeCurrent(NULL,NULL);
+  wglDeleteContext(render);
+ }
+ if(context!=NULL) ReleaseDC(window,context);
  ChangeDisplaySettings(NULL,0);
 }
 
@@ -1393,6 +1396,11 @@ SWGF_Canvas::~SWGF_Canvas()
  if(image!=NULL) free(image);
 }
 
+SWGF_Color *SWGF_Canvas::get_image()
+{
+ return image;
+}
+
 unsigned long int SWGF_Canvas::get_width()
 {
  return width;
@@ -1564,6 +1572,22 @@ SWGF_Sprite::SWGF_Sprite()
 SWGF_Sprite::~SWGF_Sprite()
 {
 
+}
+
+void SWGF_Sprite::clone(SWGF_Sprite &target)
+{
+ unsigned long int length;
+ frames=target.get_frames();
+ width=target.get_sprite_width();
+ height=target.get_sprite_height();
+ length=width*height*3;
+ image=(SWGF_Color*)calloc(length,1);
+ if(image==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ memmove(image,target.get_image(),length);
 }
 
 void SWGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame)
