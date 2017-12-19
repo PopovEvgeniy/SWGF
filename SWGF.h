@@ -316,8 +316,10 @@ class SWGF_Gamepad
  private:
  JOYINFOEX current;
  JOYINFOEX preversion;
- unsigned long int length;
+ JOYCAPS configuration;
+ unsigned long int length[2];
  unsigned int active;
+ bool read_configuration();
  bool read_state();
  void clear_state();
  bool check_button(const unsigned long int button,JOYINFOEX &target);
@@ -327,6 +329,7 @@ class SWGF_Gamepad
  void set_active(const unsigned int gamepad);
  unsigned int get_active();
  unsigned int get_amount();
+ unsigned int get_button_amount();
  bool check_connection();
  void update();
  unsigned char get_dpad();
