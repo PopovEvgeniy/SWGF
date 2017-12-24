@@ -93,6 +93,10 @@ int main(void)
    x++;
    break;
   }
+  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==-1) x--;
+  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==1) x++;
+  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==-1) y--;
+  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==1) y++;
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();

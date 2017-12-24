@@ -63,6 +63,8 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #define JOYSTICK_UPRIGHT 4500
 #define JOYSTICK_DOWNLEFT 22500
 #define JOYSTICK_DOWNRIGHT 13500
+#define SWGF_GAMEPAD_LEFT_STICK 0
+#define SWGF_GAMEPAD_RIGHT_STICK 1
 #define SWGF_GAMEPAD_NONE 0
 #define SWGF_GAMEPAD_UP 1
 #define SWGF_GAMEPAD_DOWN 2
@@ -333,6 +335,8 @@ class SWGF_Gamepad
  bool check_connection();
  void update();
  unsigned char get_dpad();
+ char get_stick_x(const unsigned char stick);
+ char get_stick_y(const unsigned char stick);
  bool check_hold(const unsigned long int button);
  bool check_press(const unsigned long int button);
  bool check_release(const unsigned long int button);
@@ -365,7 +369,7 @@ class SWGF_Memory
  SWGF_Memory();
  ~SWGF_Memory();
  unsigned long long int get_total_memory();
- unsigned long int long get_free_memory();
+ unsigned long long int get_free_memory();
 };
 
 class SWGF_System
