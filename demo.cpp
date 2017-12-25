@@ -1,3 +1,4 @@
+#define MINGW_GCC
 #include "SWGF.h"
 
 int main(void)
