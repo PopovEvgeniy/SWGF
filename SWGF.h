@@ -37,7 +37,6 @@ in all copies or substantial portions of the Materials.
 THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
 */
 
-#ifndef MINGW_GCC
 #pragma comment(lib,"kernel32.lib")
 #pragma comment(lib,"user32.lib")
 #pragma comment(lib,"gdi32.lib")
@@ -45,7 +44,6 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #pragma comment(lib,"ole32.lib")
 #pragma comment(lib,"strmiids.lib")
 #pragma comment(lib,"winmm.lib")
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -134,6 +132,18 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 
 extern BOOL WINAPI wglSwapIntervalEXT (int interval); // This code was taken from wglext.h by The Khronos Group Inc
 typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code was taken from wglext.h by The Khronos Group Inc
+
+struct SWGF_Vertex
+{
+ int x:32;
+ int y:32;
+};
+
+struct SWGF_Point
+{
+ float u;
+ float v;
+};
 
 struct SWGF_Color
 {
@@ -260,8 +270,9 @@ class SWGF_Render:public SWGF_Engine, public SWGF_Frame
  HGLRC render;
  DEVMODE display;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
+ SWGF_Vertex vertex[4];
+ SWGF_Point point[4];
  unsigned int texture;
- unsigned int surface;
  DEVMODE get_video_mode();
  void set_video_mode(DEVMODE mode);
  void check_video_mode();
@@ -277,6 +288,7 @@ class SWGF_Render:public SWGF_Engine, public SWGF_Frame
  void check_videocard();
  void prepare_surface();
  void create_texture();
+ void load_surface_data();
  void disable_vsync();
  void create_render();
  void refresh();
