@@ -4,7 +4,7 @@ Some code was taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL
 
 Simple windows game framework license
 
-Copyright © 2016–2017, Popov Evgeniy Alekseyevich
+Copyright © 2016–2018, Popov Evgeniy Alekseyevich
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -972,10 +972,9 @@ SWGF_Multimedia::SWGF_Multimedia()
  video=NULL;
 }
 
-
 SWGF_Multimedia::~SWGF_Multimedia()
 {
- if(player!=NULL) player->Stop();
+ if(player!=NULL) player->StopWhenReady();
  if(video!=NULL) video->Release();
  if(controler!=NULL) controler->Release();
  if(player!=NULL) player->Release();
@@ -999,18 +998,25 @@ wchar_t *SWGF_Multimedia::convert_file_name(const char *target)
 
 void SWGF_Multimedia::open(const wchar_t *target)
 {
- player->Stop();
+ player->StopWhenReady();
  if(loader->RenderFile(target,NULL)!=S_OK)
  {
   puts("Can't load a multimedia file");
   exit(EXIT_FAILURE);
  }
- if(controler->SetRate(1)!=S_OK)
+ video->put_FullScreenMode(OATRUE);
+}
+
+void SWGF_Multimedia::rewind()
+{
+ long long position;
+ position=0;
+ if(controler->SetPositions(&position,AM_SEEKING_AbsolutePositioning,NULL,AM_SEEKING_NoPositioning)!=S_OK)
  {
-  puts("Can't set playing rate");
+  puts("Can't set start position");
   exit(EXIT_FAILURE);
  }
- video->put_FullScreenMode(OATRUE);
+
 }
 
 void SWGF_Multimedia::initialize()
@@ -1046,34 +1052,33 @@ void SWGF_Multimedia::load(const char *target)
  free(name);
 }
 
-void SWGF_Multimedia::play()
-{
- long long position;
- position=0;
- player->Stop();
- if(controler->SetPositions(&position,AM_SEEKING_AbsolutePositioning,NULL,AM_SEEKING_NoPositioning)!=S_OK)
- {
-  puts("Can't set start position");
-  exit(EXIT_FAILURE);
- }
- player->Run();
-}
-
-void SWGF_Multimedia::stop()
-{
- player->Stop();
-}
-
-bool SWGF_Multimedia::check_playing()
+bool SWGF_Multimedia::is_end()
 {
  bool result;
  long long current,stop;
  result=false;
  if(controler->GetPositions(&current,&stop)==S_OK)
  {
-  if(current<stop) result=true;
+  if(current>=stop) result=true;
+ }
+ else
+ {
+  puts("Can't get the current and the end position");
+  exit(EXIT_FAILURE);
  }
  return result;
+}
+
+void SWGF_Multimedia::stop()
+{
+ player->StopWhenReady();
+}
+
+void SWGF_Multimedia::play()
+{
+ this->stop();
+ this->rewind();
+ player->Run();
 }
 
 SWGF_Memory::SWGF_Memory()

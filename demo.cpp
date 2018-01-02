@@ -50,7 +50,7 @@ int main(void)
  {
   fps++;
   gamepad.update();
-  if(media.check_playing()==false) media.play();
+  if(media.is_end()==true) media.play();
   if(mouse.check_press(SWGF_MOUSE_LEFT)==true) break;
   if(keyboard.check_hold(57)==true) break;
   if(keyboard.check_hold(72)==true) y-=2;
