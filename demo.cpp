@@ -43,14 +43,13 @@ int main(void)
  timer.set_timer(1);
  media.initialize();
  media.load("space.mp3");
- media.play();
  fps=0;
  memset(perfomance,0,8);
  while(screen.sync()==false)
  {
   fps++;
   gamepad.update();
-  if(media.is_end()==true) media.play();
+  if(media.check_playing()==false) media.play();
   if(mouse.check_press(SWGF_MOUSE_LEFT)==true) break;
   if(keyboard.check_hold(57)==true) break;
   if(keyboard.check_hold(72)==true) y-=2;
