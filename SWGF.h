@@ -209,13 +209,6 @@ struct SWGF_Box
 
 LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
 
-class SWGF_Base
-{
- public:
- SWGF_Base();
- ~SWGF_Base();
-};
-
 class SWGF_Synchronization
 {
  private:
@@ -236,6 +229,7 @@ class SWGF_Engine
  WNDCLASS window_class;
  unsigned long int width;
  unsigned long int height;
+ void prepare_engine();
  void create_window();
  void capture_mouse();
  bool process_message();
@@ -365,7 +359,7 @@ class SWGF_Gamepad
  bool check_release(const unsigned long int button);
 };
 
-class SWGF_Multimedia: public SWGF_Base
+class SWGF_Multimedia
 {
  private:
  IGraphBuilder *loader;
