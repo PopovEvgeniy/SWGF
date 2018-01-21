@@ -357,6 +357,7 @@ class SWGF_Gamepad
  bool check_connection();
  void update();
  unsigned char get_dpad();
+ unsigned long int get_sticks_amount();
  char get_stick_x(const unsigned char stick);
  char get_stick_y(const unsigned char stick);
  bool check_hold(const unsigned long int button);
