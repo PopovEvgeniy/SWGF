@@ -1153,6 +1153,7 @@ void SWGF_Multimedia::play()
 
 SWGF_Memory::SWGF_Memory()
 {
+ memset(&memory,0,sizeof(MEMORYSTATUSEX));
  memory.dwLength=sizeof(MEMORYSTATUSEX);
 }
 
@@ -1161,15 +1162,25 @@ SWGF_Memory::~SWGF_Memory()
 
 }
 
+void SWGF_Memory::get_status()
+{
+ if(GlobalMemoryStatusEx(&memory)==FALSE)
+ {
+  puts("Can't get the memory status");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
 unsigned long long int SWGF_Memory::get_total_memory()
 {
- GlobalMemoryStatusEx(&memory);
+ this->get_status();
  return memory.ullTotalPhys;
 }
 
 unsigned long long int SWGF_Memory::get_free_memory()
 {
- GlobalMemoryStatusEx(&memory);
+ this->get_status();
  return memory.ullAvailPhys;
 }
 

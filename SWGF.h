@@ -384,6 +384,7 @@ class SWGF_Memory
 {
  private:
  MEMORYSTATUSEX memory;
+ void get_status();
  public:
  SWGF_Memory();
  ~SWGF_Memory();
