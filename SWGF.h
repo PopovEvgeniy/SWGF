@@ -133,18 +133,6 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 extern BOOL WINAPI wglSwapIntervalEXT (int interval); // This code was taken from wglext.h by The Khronos Group Inc
 typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code was taken from wglext.h by The Khronos Group Inc
 
-struct SWGF_Vertex
-{
- int x:32;
- int y:32;
-};
-
-struct SWGF_Point
-{
- float u;
- float v;
-};
-
 struct SWGF_Color
 {
  unsigned char blue:8;
@@ -264,9 +252,8 @@ class SWGF_Render:public SWGF_Engine, public SWGF_Frame
  HGLRC render;
  DEVMODE display;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
- SWGF_Vertex vertex[4];
- SWGF_Point point[4];
  unsigned int texture;
+ unsigned int surface;
  DEVMODE get_video_mode();
  void set_video_mode(DEVMODE mode);
  void check_video_mode();
@@ -282,7 +269,6 @@ class SWGF_Render:public SWGF_Engine, public SWGF_Frame
  void check_videocard();
  void prepare_surface();
  void create_texture();
- void load_surface_data();
  void disable_vsync();
  void create_render();
  void refresh();
