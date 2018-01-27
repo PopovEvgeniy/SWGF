@@ -245,18 +245,26 @@ class SWGF_Frame
  unsigned long int get_frame_height();
 };
 
-class SWGF_Render:public SWGF_Engine, public SWGF_Frame
+class SWGF_Display:public SWGF_Engine
+{
+ protected:
+ DEVMODE display;
+ DEVMODE get_video_mode();
+ void set_video_mode(DEVMODE mode);
+ void check_video_mode();
+ public:
+ SWGF_Display();
+ ~SWGF_Display();
+};
+
+class SWGF_Render:public SWGF_Display, public SWGF_Frame
 {
  protected:
  HDC context;
  HGLRC render;
- DEVMODE display;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
  unsigned int texture;
  unsigned int surface;
- DEVMODE get_video_mode();
- void set_video_mode(DEVMODE mode);
- void check_video_mode();
  bool check_common_setting(PIXELFORMATDESCRIPTOR setting);
  bool check_acceleration(PIXELFORMATDESCRIPTOR setting);
  int get_pixel_format();

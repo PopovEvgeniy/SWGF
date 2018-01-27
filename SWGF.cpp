@@ -296,29 +296,17 @@ unsigned long int SWGF_Frame::get_frame_height()
  return frame_height;
 }
 
-SWGF_Render::SWGF_Render()
+SWGF_Display::SWGF_Display()
 {
  memset(&display,0,sizeof(DEVMODE));
- context=NULL;
- render=NULL;
- wglSwapIntervalEXT=NULL;
- texture=0;
- surface=0;
 }
 
-SWGF_Render::~SWGF_Render()
+SWGF_Display::~SWGF_Display()
 {
- if(surface!=0) glDeleteLists(surface,1);
- if(render!=NULL)
- {
-  wglMakeCurrent(NULL,NULL);
-  wglDeleteContext(render);
- }
- if(context!=NULL) ReleaseDC(window,context);
  ChangeDisplaySettings(NULL,0);
 }
 
-void SWGF_Render::set_video_mode(DEVMODE mode)
+void SWGF_Display::set_video_mode(DEVMODE mode)
 {
  if (ChangeDisplaySettings(&mode,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)
  {
@@ -328,7 +316,7 @@ void SWGF_Render::set_video_mode(DEVMODE mode)
 
 }
 
-DEVMODE SWGF_Render::get_video_mode()
+DEVMODE SWGF_Display::get_video_mode()
 {
  DEVMODE mode;
  memset(&mode,0,sizeof(DEVMODE));
@@ -346,7 +334,7 @@ DEVMODE SWGF_Render::get_video_mode()
  return mode;
 }
 
-void SWGF_Render::check_video_mode()
+void SWGF_Display::check_video_mode()
 {
  display=this->get_video_mode();
  if(display.dmBitsPerPel<16)
@@ -355,6 +343,26 @@ void SWGF_Render::check_video_mode()
   this->set_video_mode(display);
  }
 
+}
+
+SWGF_Render::SWGF_Render()
+{
+ context=NULL;
+ render=NULL;
+ wglSwapIntervalEXT=NULL;
+ texture=0;
+ surface=0;
+}
+
+SWGF_Render::~SWGF_Render()
+{
+ if(surface!=0) glDeleteLists(surface,1);
+ if(render!=NULL)
+ {
+  wglMakeCurrent(NULL,NULL);
+  wglDeleteContext(render);
+ }
+ if(context!=NULL) ReleaseDC(window,context);
 }
 
 bool SWGF_Render::check_common_setting(PIXELFORMATDESCRIPTOR setting)
