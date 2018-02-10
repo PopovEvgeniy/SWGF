@@ -1513,9 +1513,9 @@ void SWGF_Image::load_pcx(const char *name)
   puts("Can't allocate memory for image buffer");
   exit(EXIT_FAILURE);
  }
- for(x=0;x<width;x++)
+ for(x=0;x<width;++x)
  {
-  for(y=0;y<height;y++)
+  for(y=0;y<height;++y)
   {
    index=x*3+y*row;
    position=x+y*line;
