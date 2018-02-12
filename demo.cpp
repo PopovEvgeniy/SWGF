@@ -19,7 +19,6 @@ int main(void)
  SWGF_Text text;
  System.enable_logging("log.txt");
  keyboard.initialize();
- screen.initialize();
  space.initialize(screen.get_handle());
  ship.initialize(screen.get_handle());
  font.initialize(screen.get_handle());
@@ -45,6 +44,7 @@ int main(void)
  media.load("space.mp3");
  fps=0;
  memset(perfomance,0,8);
+ screen.initialize();
  while(screen.sync()==false)
  {
   fps++;
