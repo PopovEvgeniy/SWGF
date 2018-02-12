@@ -523,7 +523,7 @@ void SWGF_Render::set_perspective()
 void SWGF_Render::clear_stage()
 {
  glClearColor(0,0,0,0);
- glClear(GL_COLOR_BUFFER_BIT);
+ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 }
 
 void SWGF_Render::check_videocard()
@@ -548,7 +548,7 @@ void SWGF_Render::prepare_surface()
   exit(EXIT_FAILURE);
  }
  glNewList(surface,GL_COMPILE);
- glBegin(GL_QUADS);
+ glBegin(GL_TRIANGLE_STRIP);
  glTexCoord2f(0,1);
  glVertex2i(0,height);
  glTexCoord2f(1,1);
@@ -557,6 +557,8 @@ void SWGF_Render::prepare_surface()
  glVertex2i(width,0);
  glTexCoord2f(0,0);
  glVertex2i(0,0);
+ glTexCoord2f(0,1);
+ glVertex2i(0,height);
  glEnd();
  glEndList();
 }
@@ -595,6 +597,7 @@ void SWGF_Render::create_render()
 
 void SWGF_Render::refresh()
 {
+ glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
  glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,frame_width,frame_height,0,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
  glCallList(surface);
  SwapBuffers(context);
