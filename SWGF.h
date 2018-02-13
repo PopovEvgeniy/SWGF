@@ -239,12 +239,13 @@ class SWGF_Frame
  unsigned long int frame_width;
  unsigned long int frame_height;
  unsigned long int buffer_length;
- COLORREF *buffer;
+ unsigned long int *buffer;
  void create_render_buffer();
+ unsigned long int get_rgb(const unsigned long int red,const unsigned long int green,const unsigned long int blue);
  public:
  SWGF_Frame();
  ~SWGF_Frame();
- void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
+ void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned long int red,const unsigned long int green,const unsigned long int blue);
  void clear_screen();
  unsigned long int get_frame_width();
  unsigned long int get_frame_height();
