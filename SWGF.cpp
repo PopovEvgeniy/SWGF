@@ -1726,21 +1726,6 @@ void SWGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
  height=new_height;
 }
 
-void SWGF_Background::draw_background()
-{
- unsigned long int x,y,offset;
- for (x=0;x<width;++x)
- {
-  for (y=0;y<height;++y)
-  {
-   offset=x+(width*y);
-   surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
-  }
-
- }
-
-}
-
 void SWGF_Background::draw_horizontal_background(const unsigned long int frame)
 {
  unsigned long int x,y,offset,start,frame_width;
@@ -1775,6 +1760,11 @@ void SWGF_Background::draw_vertical_background(const unsigned long int frame)
 
 }
 
+void SWGF_Background::draw_background()
+{
+ this->draw_horizontal_background(1);
+}
+
 SWGF_Sprite::SWGF_Sprite()
 {
  current_x=0;
@@ -1784,6 +1774,21 @@ SWGF_Sprite::SWGF_Sprite()
 SWGF_Sprite::~SWGF_Sprite()
 {
 
+}
+
+bool SWGF_Sprite::compare_pixels(const SWGF_Color &first,const SWGF_Color &second)
+{
+ bool result;
+ result=false;
+ if ((first.red!=second.red)||(first.green!=second.green))
+ {
+  result=true;
+ }
+ else
+ {
+  if(first.blue!=second.blue) result=true;
+ }
+ return result;
 }
 
 void SWGF_Sprite::clone(SWGF_Sprite &target)
@@ -1814,7 +1819,7 @@ void SWGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned lon
   for(sprite_y=0;sprite_y<height;++sprite_y)
   {
    offset=start+sprite_x+(sprite_y*width);
-   if(memcmp(&image[0],&image[offset],3)!=0) surface->draw_pixel(x+sprite_x,y+sprite_y,image[offset].red,image[offset].green,image[offset].blue);
+   if(this->compare_pixels(image[0],image[offset])==true) surface->draw_pixel(x+sprite_x,y+sprite_y,image[offset].red,image[offset].green,image[offset].blue);
   }
 
  }

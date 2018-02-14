@@ -472,9 +472,9 @@ class SWGF_Canvas
 class SWGF_Background:public SWGF_Canvas
 {
  public:
- void draw_background();
  void draw_horizontal_background(const unsigned long int frame);
  void draw_vertical_background(const unsigned long int frame);
+ void draw_background();
 };
 
 class SWGF_Sprite:public SWGF_Canvas
@@ -482,6 +482,7 @@ class SWGF_Sprite:public SWGF_Canvas
  private:
  unsigned long int current_x;
  unsigned long int current_y;
+ bool compare_pixels(const SWGF_Color &first,const SWGF_Color &second);
  public:
  SWGF_Sprite();
  ~SWGF_Sprite();
