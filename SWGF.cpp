@@ -86,72 +86,45 @@ LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPA
 
 SWGF_Synchronization::SWGF_Synchronization()
 {
- memset(&resolution,0,sizeof(TIMECAPS));
- start=0;
- delay=0;
+ timer=NULL;
 }
 
 SWGF_Synchronization::~SWGF_Synchronization()
 {
+ if(timer==NULL)
+ {
+  CancelWaitableTimer(timer);
+  CloseHandle(timer);
+ }
 
 }
 
 void SWGF_Synchronization::create_timer()
 {
- if(timeGetDevCaps(&resolution,sizeof(TIMECAPS))!=MMSYSERR_NOERROR)
+ timer=CreateWaitableTimer(NULL,FALSE,NULL);
+ if (timer==NULL)
  {
-  puts("Can't get timer resolution");
+  puts("Can't create synchronization timer");
   exit(EXIT_FAILURE);
  }
 
-}
-
-void SWGF_Synchronization::set_timer_resolution()
-{
- if(timeBeginPeriod(resolution.wPeriodMax)!=TIMERR_NOERROR)
- {
-  puts("Can't set timer resolution");
-  exit(EXIT_FAILURE);
- }
-
-}
-
-void SWGF_Synchronization::reset_timer_resolution()
-{
- if(timeEndPeriod(resolution.wPeriodMax)!=TIMERR_NOERROR)
- {
-  puts("Can't reset timer resolution");
-  exit(EXIT_FAILURE);
- }
-
-}
-
-void SWGF_Synchronization::pause(const unsigned long int interval)
-{
- this->set_timer_resolution();
- Sleep(interval);
- this->reset_timer_resolution();
 }
 
 void SWGF_Synchronization::set_timer(const unsigned long int interval)
 {
- delay=interval;
- start=timeGetTime();
+ LARGE_INTEGER start;
+ start.QuadPart=0;
+ if(SetWaitableTimer(timer,&start,interval,NULL,NULL,FALSE)==FALSE)
+ {
+  puts("Can't set timer");
+  exit(EXIT_FAILURE);
+ }
+
 }
 
 void SWGF_Synchronization::wait_timer()
 {
- unsigned long int interval;
- interval=timeGetTime()-start;
- if(interval<=delay)
- {
-  this->pause(delay-interval);
- }
- else
- {
-  this->pause(interval-delay);
- }
- start=timeGetTime();
+ WaitForSingleObject(timer,INFINITE);
 }
 
 SWGF_Engine::SWGF_Engine()
@@ -308,7 +281,7 @@ void SWGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,
 {
  if((x<frame_width)&&(y<frame_height))
  {
-  buffer[x+(y<<9)]=this->get_rgb(red,green,blue);
+  buffer[x+y*frame_width]=this->get_rgb(red,green,blue);
  }
 
 }
@@ -553,7 +526,7 @@ void SWGF_Render::prepare_surface()
   exit(EXIT_FAILURE);
  }
  glNewList(surface,GL_COMPILE);
- glBegin(GL_TRIANGLE_STRIP);
+ glBegin(GL_QUADS);
  glTexCoord2f(0,1);
  glVertex2i(0,height);
  glTexCoord2f(1,1);
@@ -562,8 +535,6 @@ void SWGF_Render::prepare_surface()
  glVertex2i(width,0);
  glTexCoord2f(0,0);
  glVertex2i(0,0);
- glTexCoord2f(0,1);
- glVertex2i(0,height);
  glEnd();
  glEndList();
 }

@@ -200,14 +200,9 @@ LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPA
 class SWGF_Synchronization
 {
  private:
- TIMECAPS resolution;
- unsigned long int start;
- unsigned long int delay;
+ HANDLE timer;
  protected:
  void create_timer();
- void set_timer_resolution();
- void reset_timer_resolution();
- void pause(const unsigned long int interval);
  void set_timer(const unsigned long int interval);
  void wait_timer();
  public:
