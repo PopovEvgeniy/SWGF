@@ -45,6 +45,13 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #pragma comment(lib,"strmiids.lib")
 #pragma comment(lib,"winmm.lib")
 
+//Uncomment follow lines if you will compile the code under Visual C++ 2017
+/*
+#pragma warning(disable : 4995)
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_NONSTDC_NO_WARNINGS
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
