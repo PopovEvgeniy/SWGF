@@ -437,6 +437,7 @@ class SWGF_Image
  unsigned long int width;
  unsigned long int height;
  unsigned char *data;
+ unsigned char *create_buffer(const unsigned long int length);
  public:
  SWGF_Image();
  ~SWGF_Image();
@@ -457,6 +458,7 @@ class SWGF_Canvas
  unsigned long int frames;
  SWGF_Screen *surface;
  SWGF_Color *image;
+ SWGF_Color *create_buffer(const unsigned long int length);
  public:
  SWGF_Canvas();
  ~SWGF_Canvas();
@@ -516,7 +518,7 @@ class SWGF_Text
 class SWGF_Collision
 {
  public:
- bool check_horizontal_collision(SWGF_Box first,SWGF_Box second);
- bool check_vertical_collision(SWGF_Box first,SWGF_Box second);
- bool check_collision(SWGF_Box first,SWGF_Box second);
+ bool check_horizontal_collision(const SWGF_Box &first,const SWGF_Box &second);
+ bool check_vertical_collision(const SWGF_Box &first,const SWGF_Box &second);
+ bool check_collision(const SWGF_Box &first,const SWGF_Box &second);
 };

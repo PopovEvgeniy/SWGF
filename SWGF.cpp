@@ -1,3 +1,7 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 /*
 Simple windows game framework was create by Popov Evgeniy Alekseyevich
 Some code was taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL/wglext.h) by The Khronos Group Inc
@@ -138,6 +142,7 @@ SWGF_Engine::SWGF_Engine()
  window_class.hCursor=NULL;
  window_class.cbClsExtra=0;
  window_class.cbWndExtra=0;
+ window=NULL;
  width=0;
  height=0;
 }
@@ -1350,6 +1355,18 @@ SWGF_Image::~SWGF_Image()
  if(data!=NULL) free(data);
 }
 
+unsigned char *SWGF_Image::create_buffer(const unsigned long int length)
+{
+ unsigned char *result;
+ result=(unsigned char*)calloc(length,1);
+ if(result==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ return result;
+}
+
 void SWGF_Image::load_tga(const char *name)
 {
  FILE *target;
@@ -1393,24 +1410,14 @@ void SWGF_Image::load_tga(const char *name)
  index=0;
  position=0;
  uncompressed_length=3*(unsigned long int)image.width*(unsigned long int)image.height;
- uncompressed=(unsigned char*)calloc(uncompressed_length,1);
- if(uncompressed==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ uncompressed=this->create_buffer(uncompressed_length);
  if(head.type==2)
  {
   fread(uncompressed,uncompressed_length,1,target);
  }
  if(head.type==10)
  {
-  compressed=(unsigned char*)calloc(compressed_length,1);
-  if(compressed==NULL)
-  {
-   puts("Can't allocate memory for image buffer");
-   exit(EXIT_FAILURE);
-  }
+  compressed=this->create_buffer(compressed_length);
   fread(compressed,compressed_length,1,target);
   while(index<uncompressed_length)
   {
@@ -1476,18 +1483,8 @@ void SWGF_Image::load_pcx(const char *name)
  uncompressed_length=row*height;
  index=0;
  position=0;
- original=(unsigned char*)calloc(length,1);
- if(original==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
- uncompressed=(unsigned char*)calloc(uncompressed_length,1);
- if(uncompressed==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ original=this->create_buffer(length);
+ uncompressed=this->create_buffer(uncompressed_length);
  fread(original,length,1,target);
  fclose(target);
  while (index<length)
@@ -1510,12 +1507,7 @@ void SWGF_Image::load_pcx(const char *name)
 
  }
  free(original);
- original=(unsigned char*)calloc(uncompressed_length,1);
- if(original==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ original=this->create_buffer(uncompressed_length);
  for(x=0;x<width;++x)
  {
   for(y=0;y<height;++y)
@@ -1579,6 +1571,18 @@ SWGF_Canvas::~SWGF_Canvas()
  if(image!=NULL) free(image);
 }
 
+SWGF_Color *SWGF_Canvas::create_buffer(const unsigned long int length)
+{
+ SWGF_Color *result;
+ result=(SWGF_Color*)calloc(length,1);
+ if(result==NULL)
+ {
+  puts("Can't allocate memory for image buffer");
+  exit(EXIT_FAILURE);
+ }
+ return result;
+}
+
 SWGF_Color *SWGF_Canvas::get_image()
 {
  return image;
@@ -1616,12 +1620,7 @@ void SWGF_Canvas::load_image(SWGF_Image &buffer)
  height=buffer.get_height();
  length=buffer.get_data_length();
  if(image!=NULL) free(image);
- image=(SWGF_Color*)calloc(length,1);
- if (image==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ image=this->create_buffer(length);
  memmove(image,buffer.get_data(),length);
  buffer.destroy_image();
 }
@@ -1630,12 +1629,7 @@ void SWGF_Canvas::mirror_image(const unsigned char kind)
 {
  unsigned long int x,y,index,index2;
  SWGF_Color *mirrored_image;
- mirrored_image=(SWGF_Color*)calloc(width*height,3);
- if (mirrored_image==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ mirrored_image=image=this->create_buffer(width*height*3);
  if (kind==0)
  {
   for (x=0;x<width;++x)
@@ -1673,12 +1667,7 @@ void SWGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
  float x_ratio,y_ratio;
  unsigned long int x,y,index,index2;
  SWGF_Color *scaled_image;
- scaled_image=(SWGF_Color*)calloc(new_width*new_height,3);
- if (scaled_image==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ scaled_image=this->create_buffer(new_width*new_height*3);
  x_ratio=(float)width/(float)new_width;
  y_ratio=(float)height/(float)new_height;
  for (x=0;x<new_width;++x)
@@ -1769,12 +1758,7 @@ void SWGF_Sprite::clone(SWGF_Sprite &target)
  width=target.get_sprite_width();
  height=target.get_sprite_height();
  length=width*height*3;
- image=(SWGF_Color*)calloc(length,1);
- if(image==NULL)
- {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
- }
+ image=this->create_buffer(length);
  memmove(image,target.get_image(),length);
 }
 
@@ -1880,7 +1864,7 @@ void SWGF_Text::draw_text(const char *text)
 
 }
 
-bool SWGF_Collision::check_horizontal_collision(SWGF_Box first,SWGF_Box second)
+bool SWGF_Collision::check_horizontal_collision(const SWGF_Box &first,const SWGF_Box &second)
 {
  bool result;
  result=false;
@@ -1891,7 +1875,7 @@ bool SWGF_Collision::check_horizontal_collision(SWGF_Box first,SWGF_Box second)
  return result;
 }
 
-bool SWGF_Collision::check_vertical_collision(SWGF_Box first,SWGF_Box second)
+bool SWGF_Collision::check_vertical_collision(const SWGF_Box &first,const SWGF_Box &second)
 {
  bool result;
  result=false;
@@ -1902,7 +1886,7 @@ bool SWGF_Collision::check_vertical_collision(SWGF_Box first,SWGF_Box second)
  return result;
 }
 
-bool SWGF_Collision::check_collision(SWGF_Box first,SWGF_Box second)
+bool SWGF_Collision::check_collision(const SWGF_Box &first,const SWGF_Box &second)
 {
  return this->check_horizontal_collision(first,second) || this->check_vertical_collision(first,second);
 }
