@@ -375,7 +375,7 @@ SWGF_Render::~SWGF_Render()
  if(context!=NULL) ReleaseDC(window,context);
 }
 
-bool SWGF_Render::check_common_setting(PIXELFORMATDESCRIPTOR setting)
+bool SWGF_Render::check_common_setting(const PIXELFORMATDESCRIPTOR &setting)
 {
  bool result;
  result=false;
@@ -394,7 +394,7 @@ bool SWGF_Render::check_common_setting(PIXELFORMATDESCRIPTOR setting)
  return result;
 }
 
-bool SWGF_Render::check_acceleration(PIXELFORMATDESCRIPTOR setting)
+bool SWGF_Render::check_acceleration(const PIXELFORMATDESCRIPTOR &setting)
 {
  bool result;
  result=false;

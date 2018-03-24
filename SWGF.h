@@ -274,8 +274,8 @@ class SWGF_Render:public SWGF_Display, public SWGF_Frame
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
  unsigned int texture;
  unsigned int surface;
- bool check_common_setting(PIXELFORMATDESCRIPTOR setting);
- bool check_acceleration(PIXELFORMATDESCRIPTOR setting);
+ bool check_common_setting(const PIXELFORMATDESCRIPTOR &setting);
+ bool check_acceleration(const PIXELFORMATDESCRIPTOR &setting);
  int get_pixel_format();
  void set_pixel_format(const int format);
  void create_render_context();
