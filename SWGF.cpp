@@ -1383,10 +1383,10 @@ SWGF_Image::~SWGF_Image()
  if(data!=NULL) free(data);
 }
 
-unsigned char *SWGF_Image::create_buffer(const unsigned long int length)
+unsigned char *SWGF_Image::create_buffer(const size_t length)
 {
  unsigned char *result;
- result=(unsigned char*)calloc((size_t)length,sizeof(unsigned char));
+ result=(unsigned char*)calloc(length,sizeof(unsigned char));
  if(result==NULL)
  {
   puts("Can't allocate memory for image buffer");
@@ -1429,7 +1429,7 @@ unsigned long int SWGF_Image::get_file_size(FILE *target)
 void SWGF_Image::load_tga(const char *name)
 {
  FILE *target;
- unsigned long int index,position,amount,compressed_length,uncompressed_length;
+ size_t index,position,amount,compressed_length,uncompressed_length;
  unsigned char *compressed;
  unsigned char *uncompressed;
  TGA_head head;
@@ -1437,7 +1437,7 @@ void SWGF_Image::load_tga(const char *name)
  TGA_image image;
  this->clear_buffer();
  target=this->open_image(name);
- compressed_length=this->get_file_size(target)-18;
+ compressed_length=(size_t)this->get_file_size(target)-18;
  fread(&head,3,1,target);
  fread(&color_map,5,1,target);
  fread(&image,10,1,target);
@@ -1457,31 +1457,33 @@ void SWGF_Image::load_tga(const char *name)
  }
  index=0;
  position=0;
- uncompressed_length=3*image.width*image.height;
+ width=image.width;
+ height=image.height;
+ uncompressed_length=this->get_data_length();
  uncompressed=this->create_buffer(uncompressed_length);
  if(head.type==2)
  {
-  fread(uncompressed,(size_t)uncompressed_length,1,target);
+  fread(uncompressed,uncompressed_length,1,target);
  }
  if(head.type==10)
  {
   compressed=this->create_buffer(compressed_length);
-  fread(compressed,(size_t)compressed_length,1,target);
+  fread(compressed,compressed_length,1,target);
   while(index<uncompressed_length)
   {
-   if(compressed[(size_t)position]<128)
+   if(compressed[position]<128)
    {
-    amount=compressed[(size_t)position]+1;
+    amount=compressed[position]+1;
     amount*=3;
-    memmove(uncompressed+(size_t)index,compressed+(size_t)(position+1),(size_t)amount);
+    memmove(uncompressed+index,compressed+(position+1),amount);
     index+=amount;
     position+=1+amount;
    }
    else
    {
-    for(amount=compressed[(size_t)position]-127;amount>0;--amount)
+    for(amount=compressed[position]-127;amount>0;--amount)
     {
-     memmove(uncompressed+(size_t)index,compressed+(size_t)(position+1),3);
+     memmove(uncompressed+index,compressed+(position+1),3);
      index+=3;
     }
     position+=4;
@@ -1491,22 +1493,21 @@ void SWGF_Image::load_tga(const char *name)
   free(compressed);
  }
  fclose(target);
- width=image.width;
- height=image.height;
  data=uncompressed;
 }
 
 void SWGF_Image::load_pcx(const char *name)
 {
  FILE *target;
- unsigned long int x,y,index,position,line,row,length,uncompressed_length;
+ unsigned long int x,y;
+ size_t index,position,line,row,length,uncompressed_length;
  unsigned char repeat;
  unsigned char *original;
  unsigned char *uncompressed;
  PCX_head head;
  this->clear_buffer();
  target=this->open_image(name);
- length=this->get_file_size(target)-128;
+ length=(size_t)this->get_file_size(target)-128;
  fread(&head,128,1,target);
  if((head.color*head.planes!=24)&&(head.compress!=1))
  {
@@ -1515,28 +1516,28 @@ void SWGF_Image::load_pcx(const char *name)
  }
  width=head.max_x-head.min_x+1;
  height=head.max_y-head.min_y+1;
- row=3*width;
- line=head.planes*head.plane_length;
+ row=3*(size_t)width;
+ line=(size_t)head.planes*(size_t)head.plane_length;
  uncompressed_length=row*height;
  index=0;
  position=0;
  original=this->create_buffer(length);
  uncompressed=this->create_buffer(uncompressed_length);
- fread(original,(size_t)length,1,target);
+ fread(original,length,1,target);
  fclose(target);
  while (index<length)
  {
-  if (original[(size_t)index]<192)
+  if (original[index]<192)
   {
-   uncompressed[(size_t)position]=original[(size_t)index];
+   uncompressed[position]=original[index];
    position++;
    index++;
   }
   else
   {
-   for (repeat=original[(size_t)index]-192;repeat>0;--repeat)
+   for (repeat=original[index]-192;repeat>0;--repeat)
    {
-    uncompressed[(size_t)position]=original[(size_t)index+1];
+    uncompressed[position]=original[index+1];
     position++;
    }
    index+=2;
@@ -1549,11 +1550,11 @@ void SWGF_Image::load_pcx(const char *name)
  {
   for(y=0;y<height;++y)
   {
-   index=x*3+y*row;
-   position=x+y*line;
-   original[(size_t)index]=uncompressed[(size_t)position+2*(size_t)head.plane_length];
-   original[(size_t)index+1]=uncompressed[(size_t)position+(size_t)head.plane_length];
-   original[(size_t)index+2]=uncompressed[(size_t)position];
+   index=(size_t)x*3+(size_t)y*row;
+   position=(size_t)x+(size_t)y*line;
+   original[index]=uncompressed[position+2*(size_t)head.plane_length];
+   original[index+1]=uncompressed[position+(size_t)head.plane_length];
+   original[index+2]=uncompressed[position];
   }
 
  }
@@ -1571,9 +1572,9 @@ unsigned long int SWGF_Image::get_height()
  return height;
 }
 
-unsigned long int SWGF_Image::get_data_length()
+size_t SWGF_Image::get_data_length()
 {
- return width*height*3;
+ return (size_t)width*(size_t)height*3;
 }
 
 unsigned char *SWGF_Image::get_data()
@@ -1603,6 +1604,22 @@ SWGF_Canvas::~SWGF_Canvas()
  if(image!=NULL) free(image);
 }
 
+void SWGF_Canvas::clear_buffer()
+{
+ if(image!=NULL) free(image);
+}
+
+void SWGF_Canvas::check_size()
+{
+ const unsigned long int control=2;
+ if((width<control)&&(height<control))
+ {
+  puts("Invalid image size");
+  exit(EXIT_FAILURE);
+ }
+
+}
+
 SWGF_Color *SWGF_Canvas::create_buffer(const unsigned long int image_width,const unsigned long int image_height)
 {
  SWGF_Color *result;
@@ -1615,6 +1632,16 @@ SWGF_Color *SWGF_Canvas::create_buffer(const unsigned long int image_width,const
   exit(EXIT_FAILURE);
  }
  return result;
+}
+
+void SWGF_Canvas::draw_image_pixel(size_t offset,const unsigned long int x,const unsigned long int y)
+{
+ surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
+}
+
+size_t SWGF_Canvas::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
+{
+ return (size_t)start+(size_t)x+(size_t)y*(size_t)width;
 }
 
 SWGF_Color *SWGF_Canvas::get_image()
@@ -1649,19 +1676,19 @@ void SWGF_Canvas::initialize(SWGF_Screen *Screen)
 
 void SWGF_Canvas::load_image(SWGF_Image &buffer)
 {
- unsigned long int length;
  width=buffer.get_width();
  height=buffer.get_height();
- length=buffer.get_data_length();
- if(image!=NULL) free(image);
+ this->check_size();
+ this->clear_buffer();
  image=this->create_buffer(width,height);
- memmove(image,buffer.get_data(),(size_t)length);
+ memmove(image,buffer.get_data(),buffer.get_data_length());
  buffer.destroy_image();
 }
 
 void SWGF_Canvas::mirror_image(const unsigned char kind)
 {
- unsigned long int x,y,index,index2;
+ unsigned long int x,y;
+ size_t index,index2;
  SWGF_Color *mirrored_image;
  mirrored_image=this->create_buffer(width,height);
  if (kind==0)
@@ -1670,9 +1697,9 @@ void SWGF_Canvas::mirror_image(const unsigned char kind)
   {
    for (y=0;y<height;++y)
    {
-    index=x+(y*width);
-    index2=(width-x-1)+(y*width);
-    mirrored_image[(size_t)index]=image[(size_t)index2];
+    index=(size_t)x+(size_t)y*(size_t)width;
+    index2=(size_t)(width-x-1)+(size_t)y*(size_t)width;
+    mirrored_image[index]=image[index2];
    }
 
   }
@@ -1684,9 +1711,9 @@ void SWGF_Canvas::mirror_image(const unsigned char kind)
   {
    for (y=0;y<height;++y)
    {
-    index=x+(y*width);
-    index2=x+(height-y-1)*width;
-    mirrored_image[(size_t)index]=image[(size_t)index2];
+    index=(size_t)x+(size_t)y*(size_t)width;
+    index2=(size_t)x+(size_t)(height-y-1)*(size_t)width;
+    mirrored_image[index]=image[index2];
    }
 
   }
@@ -1699,7 +1726,8 @@ void SWGF_Canvas::mirror_image(const unsigned char kind)
 void SWGF_Canvas::resize_image(const unsigned long int new_width,const unsigned long int new_height)
 {
  float x_ratio,y_ratio;
- unsigned long int x,y,index,index2;
+ unsigned long int x,y;
+ size_t index,index2;
  SWGF_Color *scaled_image;
  scaled_image=this->create_buffer(new_width,new_height);
  x_ratio=(float)width/(float)new_width;
@@ -1708,9 +1736,9 @@ void SWGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
  {
   for (y=0;y<new_height;++y)
   {
-   index=x+(y*new_width);
-   index2=(unsigned long int)(x_ratio*(float)x)+width*(unsigned long int)(y_ratio*(float)y);
-   scaled_image[(size_t)index]=image[(size_t)index2];
+   index=(size_t)x+(size_t)y*(size_t)new_width;
+   index2=(size_t)(x_ratio*(float)x)+(size_t)width*(size_t)(y_ratio*(float)y);
+   scaled_image[index]=image[index2];
   }
 
  }
@@ -1722,15 +1750,18 @@ void SWGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
 
 void SWGF_Background::draw_horizontal_background(const unsigned long int frame)
 {
- unsigned long int x,y,start,offset,frame_width;
+ unsigned long int x,y,start,frame_width;
+ size_t offset;
  frame_width=width/frames;
  start=(frame-1)*frame_width;
- for (x=0;x<frame_width;++x)
+ for (x=0;x<frame_width;x+=2)
  {
   for (y=0;y<height;++y)
   {
-   offset=(start+x)+(width*y);
-   surface->draw_pixel(x,y,image[(size_t)offset].red,image[(size_t)offset].green,image[(size_t)offset].blue);
+   offset=this->get_offset(start,x,y);
+   this->draw_image_pixel(offset,x,y);
+   offset=this->get_offset(start,x+1,y);
+   this->draw_image_pixel(offset,x+1,y);
   }
 
  }
@@ -1739,15 +1770,18 @@ void SWGF_Background::draw_horizontal_background(const unsigned long int frame)
 
 void SWGF_Background::draw_vertical_background(const unsigned long int frame)
 {
- unsigned long int x,y,start,offset,frame_height;
+ unsigned long int x,y,start,frame_height;
+ size_t offset;
  frame_height=height/frames;
  start=(frame-1)*frame_height*width;
- for (x=0;x<width;++x)
+ for (x=0;x<width;x+=2)
  {
   for (y=0;y<frame_height;++y)
   {
-   offset=(start+x)+(width*y);
-   surface->draw_pixel(x,y,image[(size_t)offset].red,image[(size_t)offset].green,image[(size_t)offset].blue);
+   offset=this->get_offset(start,x,y);
+   draw_image_pixel(offset,x,y);
+   offset=this->get_offset(start,x+1,y);
+   draw_image_pixel(offset,x+1,y);
   }
 
  }
@@ -1785,30 +1819,38 @@ bool SWGF_Sprite::compare_pixels(const SWGF_Color &first,const SWGF_Color &secon
  return result;
 }
 
+void SWGF_Sprite::draw_sprite_pixel(size_t offset,const unsigned long int x,const unsigned long int y)
+{
+ if(this->compare_pixels(image[0],image[offset])==true) this->draw_image_pixel(offset,x,y);
+}
+
 void SWGF_Sprite::clone(SWGF_Sprite &target)
 {
- unsigned long int length;
+ size_t length;
  frames=target.get_frames();
  width=target.get_sprite_width();
  height=target.get_sprite_height();
- length=width*height*3;
+ length=(size_t)width*(size_t)height*3;
  image=this->create_buffer(width,height);
- memmove(image,target.get_image(),(size_t)length);
+ memmove(image,target.get_image(),length);
 }
 
 void SWGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame)
 {
- unsigned long int sprite_x,sprite_y,start,offset,frame_width;
+ unsigned long int sprite_x,sprite_y,start,frame_width;
+ size_t offset;
  current_x=x;
  current_y=y;
  frame_width=width/frames;
  start=(frame-1)*frame_width;
- for(sprite_x=0;sprite_x<frame_width;++sprite_x)
+ for(sprite_x=0;sprite_x<frame_width;sprite_x+=2)
  {
   for(sprite_y=0;sprite_y<height;++sprite_y)
   {
-   offset=(start+sprite_x)+(sprite_y*width);
-   if(this->compare_pixels(image[0],image[(size_t)offset])==true) surface->draw_pixel(x+sprite_x,y+sprite_y,image[(size_t)offset].red,image[(size_t)offset].green,image[(size_t)offset].blue);
+   offset=this->get_offset(start,sprite_x,sprite_y);
+   this->draw_sprite_pixel(offset,x+sprite_x,y+sprite_y);
+   offset=this->get_offset(start,sprite_x+1,sprite_y);
+   this->draw_sprite_pixel(offset,x+sprite_x+1,y+sprite_y);
   }
 
  }
