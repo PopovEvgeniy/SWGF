@@ -1609,17 +1609,6 @@ void SWGF_Canvas::clear_buffer()
  if(image!=NULL) free(image);
 }
 
-void SWGF_Canvas::check_size()
-{
- const unsigned long int control=2;
- if((width<control)&&(height<control))
- {
-  puts("Invalid image size");
-  exit(EXIT_FAILURE);
- }
-
-}
-
 SWGF_Color *SWGF_Canvas::create_buffer(const unsigned long int image_width,const unsigned long int image_height)
 {
  SWGF_Color *result;
@@ -1678,7 +1667,6 @@ void SWGF_Canvas::load_image(SWGF_Image &buffer)
 {
  width=buffer.get_width();
  height=buffer.get_height();
- this->check_size();
  this->clear_buffer();
  image=this->create_buffer(width,height);
  memmove(image,buffer.get_data(),buffer.get_data_length());
@@ -1697,8 +1685,8 @@ void SWGF_Canvas::mirror_image(const unsigned char kind)
   {
    for (y=0;y<height;++y)
    {
-    index=(size_t)x+(size_t)y*(size_t)width;
-    index2=(size_t)(width-x-1)+(size_t)y*(size_t)width;
+    index=this->get_offset(0,x,y);
+    index2=this->get_offset(0,(width-x-1),y);
     mirrored_image[index]=image[index2];
    }
 
@@ -1711,8 +1699,8 @@ void SWGF_Canvas::mirror_image(const unsigned char kind)
   {
    for (y=0;y<height;++y)
    {
-    index=(size_t)x+(size_t)y*(size_t)width;
-    index2=(size_t)x+(size_t)(height-y-1)*(size_t)width;
+    index=this->get_offset(0,x,y);
+    index2=this->get_offset(0,x,(height-y-1));
     mirrored_image[index]=image[index2];
    }
 
@@ -1748,44 +1736,36 @@ void SWGF_Canvas::resize_image(const unsigned long int new_width,const unsigned 
  height=new_height;
 }
 
-void SWGF_Background::draw_horizontal_background(const unsigned long int frame)
+void SWGF_Background::draw_background_image(const unsigned long int start,const unsigned long int frame_width,const unsigned long int frame_height)
 {
- unsigned long int x,y,start,frame_width;
+ unsigned long int x,y;
  size_t offset;
- frame_width=width/frames;
- start=(frame-1)*frame_width;
- for (x=0;x<frame_width;x+=2)
+ for(x=0;x<frame_width;++x)
  {
-  for (y=0;y<height;++y)
+  for(y=0;y<frame_height;++y)
   {
    offset=this->get_offset(start,x,y);
    this->draw_image_pixel(offset,x,y);
-   offset=this->get_offset(start,x+1,y);
-   this->draw_image_pixel(offset,x+1,y);
   }
 
  }
 
 }
 
+void SWGF_Background::draw_horizontal_background(const unsigned long int frame)
+{
+ unsigned long int start,frame_width;
+ frame_width=width/frames;
+ start=(frame-1)*frame_width;
+ this->draw_background_image(start,frame_width,height);
+}
+
 void SWGF_Background::draw_vertical_background(const unsigned long int frame)
 {
- unsigned long int x,y,start,frame_height;
- size_t offset;
+ unsigned long int start,frame_height;
  frame_height=height/frames;
  start=(frame-1)*frame_height*width;
- for (x=0;x<width;x+=2)
- {
-  for (y=0;y<frame_height;++y)
-  {
-   offset=this->get_offset(start,x,y);
-   draw_image_pixel(offset,x,y);
-   offset=this->get_offset(start,x+1,y);
-   draw_image_pixel(offset,x+1,y);
-  }
-
- }
-
+ this->draw_background_image(start,width,frame_height);
 }
 
 void SWGF_Background::draw_background()
@@ -1843,14 +1823,12 @@ void SWGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned lon
  current_y=y;
  frame_width=width/frames;
  start=(frame-1)*frame_width;
- for(sprite_x=0;sprite_x<frame_width;sprite_x+=2)
+ for(sprite_x=0;sprite_x<frame_width;++sprite_x)
  {
   for(sprite_y=0;sprite_y<height;++sprite_y)
   {
    offset=this->get_offset(start,sprite_x,sprite_y);
    this->draw_sprite_pixel(offset,x+sprite_x,y+sprite_y);
-   offset=this->get_offset(start,sprite_x+1,sprite_y);
-   this->draw_sprite_pixel(offset,x+sprite_x+1,y+sprite_y);
   }
 
  }
@@ -1903,12 +1881,23 @@ SWGF_Text::SWGF_Text()
 {
  current_x=0;
  current_y=0;
+ step_x=0;
  sprite=NULL;
 }
 
 SWGF_Text::~SWGF_Text()
 {
  sprite=NULL;
+}
+
+void SWGF_Text::draw_character(const char target)
+{
+ if((target>31)||(target<0))
+ {
+  sprite->draw_sprite_frame(step_x,current_y,(unsigned long int)target+1);
+  step_x+=sprite->get_sprite_width();
+ }
+
 }
 
 void SWGF_Text::set_position(const unsigned long int x,const unsigned long int y)
@@ -1925,17 +1914,12 @@ void SWGF_Text::load_font(SWGF_Sprite *font)
 
 void SWGF_Text::draw_text(const char *text)
 {
- unsigned long int current,step_x,index;
+ size_t index,length;
+ length=strlen(text);
  step_x=current_x;
- for (index=0;text[(size_t)index]!=0;++index)
+ for (index=0;index<length;++index)
  {
-  if ((text[(size_t)index]>31)||(text[(size_t)index]<0))
-  {
-   current=(unsigned long int)text[(size_t)index];
-   sprite->draw_sprite_frame(step_x,current_y,current+1);
-   step_x+=sprite->get_sprite_width();
-  }
-
+  this->draw_character(text[index]);
  }
 
 }

@@ -438,7 +438,6 @@ class SWGF_Canvas
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  private:
  void clear_buffer();
- void check_size();
  public:
  SWGF_Canvas();
  ~SWGF_Canvas();
@@ -455,6 +454,8 @@ class SWGF_Canvas
 
 class SWGF_Background:public SWGF_Canvas
 {
+ private:
+ void draw_background_image(const unsigned long int start,const unsigned long int frame_width,const unsigned long int frame_height);
  public:
  void draw_horizontal_background(const unsigned long int frame);
  void draw_vertical_background(const unsigned long int frame);
@@ -487,7 +488,9 @@ class SWGF_Text
  private:
  unsigned long int current_x;
  unsigned long int current_y;
+ unsigned long int step_x;
  SWGF_Sprite *sprite;
+ void draw_character(const char target);
  public:
  SWGF_Text();
  ~SWGF_Text();
