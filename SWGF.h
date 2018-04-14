@@ -168,6 +168,13 @@ struct SWGF_Box
 
 LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
 
+class SWGF_Base
+{
+ public:
+ SWGF_Base();
+ ~SWGF_Base();
+};
+
 class SWGF_Synchronization
 {
  private:
@@ -333,7 +340,7 @@ class SWGF_Gamepad
  char get_stick_y(const unsigned char stick);
 };
 
-class SWGF_Multimedia
+class SWGF_Multimedia:public SWGF_Base
 {
  private:
  IGraphBuilder *loader;

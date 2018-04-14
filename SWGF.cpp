@@ -88,6 +88,27 @@ LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPA
  return DefWindowProc(window,Message,wParam,lParam);
 }
 
+SWGF_Base::SWGF_Base()
+{
+ HRESULT status;
+ status=CoInitialize(NULL);
+ if(status!=S_OK)
+ {
+  if(status!=S_FALSE)
+  {
+   puts("Can't initialize COM");
+   exit(EXIT_FAILURE);
+  }
+
+ }
+
+}
+
+SWGF_Base::~SWGF_Base()
+{
+ CoUninitialize();
+}
+
 SWGF_Synchronization::SWGF_Synchronization()
 {
  timer=NULL;
@@ -1055,7 +1076,6 @@ SWGF_Multimedia::~SWGF_Multimedia()
  if(controler!=NULL) controler->Release();
  if(player!=NULL) player->Release();
  if(loader!=NULL) loader->Release();
- CoUninitialize();
 }
 
 wchar_t *SWGF_Multimedia::convert_file_name(const char *target)
@@ -1115,17 +1135,6 @@ void SWGF_Multimedia::rewind()
 
 void SWGF_Multimedia::initialize()
 {
- HRESULT status;
- status=CoInitialize(NULL);
- if(status!=S_OK)
- {
-  if(status!=S_FALSE)
-  {
-   puts("Can't initialize COM");
-   exit(EXIT_FAILURE);
-  }
-
- }
  if(CoCreateInstance(CLSID_FilterGraph,NULL,CLSCTX_INPROC_SERVER,IID_IGraphBuilder,(void**)&loader)!=S_OK)
  {
   puts("Can't create a multimedia loader");
