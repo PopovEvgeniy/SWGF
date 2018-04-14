@@ -10,8 +10,8 @@ int main(void)
  SWGF_Screen screen;
  SWGF_System System;
  SWGF_Keyboard keyboard;
- SWGF_Mouse mouse;
  SWGF_Gamepad gamepad;
+ SWGF_Mouse mouse;
  SWGF_Multimedia media;
  SWGF_Image image;
  SWGF_Background space;
@@ -58,19 +58,44 @@ int main(void)
   if(keyboard.check_hold(77)==true) x+=2;
   if(keyboard.check_press(71)==true) ship.mirror_image(0);
   if(keyboard.check_press(79)==true) ship.mirror_image(1);
-  if(gamepad.check_button_press(SWGF_GAMEPAD_X)==true) break;
-  if(gamepad.check_button_hold(SWGF_GAMEPAD_UP)==true) y-=2;
-  if(gamepad.check_button_hold(SWGF_GAMEPAD_DOWN)==true) y+=2;
-  if(gamepad.check_button_hold(SWGF_GAMEPAD_LEFT)==true) x-=2;
-  if(gamepad.check_button_hold(SWGF_GAMEPAD_RIGHT)==true) x+=2;
-  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==1) x+=2;
-  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==-1) x-=2;
-  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==1) y-=2;
-  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==-1) y+=2;
-  if(gamepad.check_trigger_hold(SWGF_GAMEPAD_LEFT_TRIGGER)==true) gamepad.set_vibration(65535,65535);
-  if(gamepad.check_trigger_hold(SWGF_GAMEPAD_RIGHT_TRIGGER)==true) gamepad.set_vibration(0,0);
-  if(gamepad.check_button_press(SWGF_GAMEPAD_A)==true) ship.mirror_image(0);
-  if(gamepad.check_button_press(SWGF_GAMEPAD_B)==true) ship.mirror_image(1);
+  if(gamepad.check_hold(SWGF_GAMEPAD_BUTTON2)==true) break;
+  if(gamepad.check_press(SWGF_GAMEPAD_BUTTON4)==true) ship.mirror_image(0);
+  if(gamepad.check_press(SWGF_GAMEPAD_BUTTON3)==true) ship.mirror_image(1);
+  switch (gamepad.get_dpad())
+  {
+   case SWGF_GAMEPAD_UP:
+   y--;
+   break;
+   case SWGF_GAMEPAD_DOWN:
+   y++;
+   break;
+   case SWGF_GAMEPAD_UPLEFT:
+   y--;
+   x--;
+   break;
+   case SWGF_GAMEPAD_UPRIGHT:
+   y--;
+   x++;
+   break;
+   case SWGF_GAMEPAD_DOWNLEFT:
+   y++;
+   x--;
+   break;
+   case SWGF_GAMEPAD_DOWNRIGHT:
+   y++;
+   x++;
+   break;
+   case SWGF_GAMEPAD_LEFT:
+   x--;
+   break;
+   case SWGF_GAMEPAD_RIGHT:
+   x++;
+   break;
+  }
+  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==-1) x--;
+  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==1) x++;
+  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==-1) y--;
+  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==1) y++;
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();

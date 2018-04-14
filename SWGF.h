@@ -43,7 +43,7 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #pragma comment(lib,"opengl32.lib")
 #pragma comment(lib,"ole32.lib")
 #pragma comment(lib,"strmiids.lib")
-#pragma comment(lib,"xinput.lib")
+#pragma comment(lib,"winmm.lib")
 
 //Uncomment follow lines if you will compile the code under Visual C++ 2017
 /*
@@ -61,7 +61,7 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #include <windows.h>
 #include <unknwn.h>
 #include <dshow.h>
-#include <xinput.h>
+#include <mmsystem.h>
 #include <GL\gl.h>
 
 #define SWGF_KEYBOARD 256
@@ -75,31 +75,68 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #define SWGF_MOUSE_RIGHT 1
 #define SWGF_MOUSE_MIDDLE 2
 
-#define SWGF_GAMEPAD_AMOUNT 4
-#define SWGF_GAMEPAD_BATTERY_ERROR 0
-#define SWGF_GAMEPAD_BATTERY_ALKAINE 1
-#define SWGF_GAMEPAD_BATTERY_NIMH 2
-#define SWGF_GAMEPAD_BATTERY_UNKNOW 3
-#define SWGF_GAMEPAD_BATTERY_EMPTY 4
-#define SWGF_GAMEPAD_BATTERY_LOW 5
-#define SWGF_GAMEPAD_BATTERY_MEDIUM 6
-#define SWGF_GAMEPAD_BATTERY_FULL 7
-#define SWGF_GAMEPAD_UP XINPUT_GAMEPAD_DPAD_UP
-#define SWGF_GAMEPAD_DOWN XINPUT_GAMEPAD_DPAD_DOWN
-#define SWGF_GAMEPAD_LEFT XINPUT_GAMEPAD_DPAD_LEFT
-#define SWGF_GAMEPAD_RIGHT XINPUT_GAMEPAD_DPAD_RIGHT
-#define SWGF_GAMEPAD_A XINPUT_GAMEPAD_A
-#define SWGF_GAMEPAD_B XINPUT_GAMEPAD_B
-#define SWGF_GAMEPAD_X XINPUT_GAMEPAD_X
-#define SWGF_GAMEPAD_Y XINPUT_GAMEPAD_Y
-#define SWGF_GAMEPAD_LEFT_BUMPER XINPUT_GAMEPAD_LEFT_SHOULDER
-#define SWGF_GAMEPAD_RIGHT_BUMPER XINPUT_GAMEPAD_RIGHT_SHOULDER
-#define SWGF_GAMEPAD_START XINPUT_GAMEPAD_START
-#define SWGF_GAMEPAD_BACK XINPUT_GAMEPAD_BACK
-#define SWGF_GAMEPAD_LEFT_TRIGGER 0
-#define SWGF_GAMEPAD_RIGHT_TRIGGER 1
-#define SWGF_GAMEPAD_LEFT_STICK 2
-#define SWGF_GAMEPAD_RIGHT_STICK 3
+#define JOYSTICK_UPLEFT 31500
+#define JOYSTICK_UPRIGHT 4500
+#define JOYSTICK_DOWNLEFT 22500
+#define JOYSTICK_DOWNRIGHT 13500
+#define SWGF_GAMEPAD_LEFT_STICK 0
+#define SWGF_GAMEPAD_RIGHT_STICK 1
+#define SWGF_GAMEPAD_NONE 0
+#define SWGF_GAMEPAD_UP 1
+#define SWGF_GAMEPAD_DOWN 2
+#define SWGF_GAMEPAD_LEFT 3
+#define SWGF_GAMEPAD_RIGHT 4
+#define SWGF_GAMEPAD_UPLEFT 5
+#define SWGF_GAMEPAD_UPRIGHT 6
+#define SWGF_GAMEPAD_DOWNLEFT 7
+#define SWGF_GAMEPAD_DOWNRIGHT 8
+#define SWGF_GAMEPAD1 JOYSTICKID1
+#define SWGF_GAMEPAD2 2
+#define SWGF_GAMEPAD3 3
+#define SWGF_GAMEPAD4 4
+#define SWGF_GAMEPAD5 5
+#define SWGF_GAMEPAD6 6
+#define SWGF_GAMEPAD7 7
+#define SWGF_GAMEPAD8 8
+#define SWGF_GAMEPAD9 9
+#define SWGF_GAMEPAD10 10
+#define SWGF_GAMEPAD11 11
+#define SWGF_GAMEPAD12 12
+#define SWGF_GAMEPAD13 13
+#define SWGF_GAMEPAD14 14
+#define SWGF_GAMEPAD15 15
+#define SWGF_GAMEPAD_BUTTON1 JOY_BUTTON1
+#define SWGF_GAMEPAD_BUTTON2 JOY_BUTTON2
+#define SWGF_GAMEPAD_BUTTON3 JOY_BUTTON3
+#define SWGF_GAMEPAD_BUTTON4 JOY_BUTTON4
+#define SWGF_GAMEPAD_BUTTON5 JOY_BUTTON5
+#define SWGF_GAMEPAD_BUTTON6 JOY_BUTTON6
+#define SWGF_GAMEPAD_BUTTON7 JOY_BUTTON7
+#define SWGF_GAMEPAD_BUTTON8 JOY_BUTTON8
+#define SWGF_GAMEPAD_BUTTON9 JOY_BUTTON9
+#define SWGF_GAMEPAD_BUTTON10 JOY_BUTTON10
+#define SWGF_GAMEPAD_BUTTON11 JOY_BUTTON11
+#define SWGF_GAMEPAD_BUTTON12 JOY_BUTTON12
+#define SWGF_GAMEPAD_BUTTON113 JOY_BUTTON13
+#define SWGF_GAMEPAD_BUTTON14 JOY_BUTTON14
+#define SWGF_GAMEPAD_BUTTON15 JOY_BUTTON15
+#define SWGF_GAMEPAD_BUTTON16 JOY_BUTTON16
+#define SWGF_GAMEPAD_BUTTON17 JOY_BUTTON17
+#define SWGF_GAMEPAD_BUTTON18 JOY_BUTTON18
+#define SWGF_GAMEPAD_BUTTON19 JOY_BUTTON19
+#define SWGF_GAMEPAD_BUTTON20 JOY_BUTTON20
+#define SWGF_GAMEPAD_BUTTON21 JOY_BUTTON21
+#define SWGF_GAMEPAD_BUTTON22 JOY_BUTTON22
+#define SWGF_GAMEPAD_BUTTON23 JOY_BUTTON23
+#define SWGF_GAMEPAD_BUTTON24 JOY_BUTTON24
+#define SWGF_GAMEPAD_BUTTON25 JOY_BUTTON25
+#define SWGF_GAMEPAD_BUTTON26 JOY_BUTTON26
+#define SWGF_GAMEPAD_BUTTON27 JOY_BUTTON27
+#define SWGF_GAMEPAD_BUTTON28 JOY_BUTTON28
+#define SWGF_GAMEPAD_BUTTON29 JOY_BUTTON29
+#define SWGF_GAMEPAD_BUTTON30 JOY_BUTTON30
+#define SWGF_GAMEPAD_BUTTON31 JOY_BUTTON31
+#define SWGF_GAMEPAD_BUTTON32 JOY_BUTTON32
 
 extern BOOL WINAPI wglSwapIntervalEXT (int interval); // This code was taken from wglext.h by The Khronos Group Inc
 typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code was taken from wglext.h by The Khronos Group Inc
@@ -305,39 +342,31 @@ class SWGF_Mouse
 class SWGF_Gamepad
 {
  private:
- XINPUT_BATTERY_INFORMATION battery;
- XINPUT_STATE current;
- XINPUT_STATE preversion;
- XINPUT_VIBRATION vibration;
- unsigned long int active;
- size_t length;
- bool read_battery_status();
- void clear_state();
+ JOYINFOEX current;
+ JOYINFOEX preversion;
+ JOYCAPS configuration;
+ unsigned long int length[2];
+ unsigned int active;
+ bool read_configuration();
  bool read_state();
- bool write_state();
- void set_motor(const unsigned short int left,const unsigned short int right);
- bool check_button(XINPUT_STATE &target,const unsigned short int button);
- bool check_trigger(XINPUT_STATE &target,const unsigned char trigger);
+ void clear_state();
+ bool check_button(const unsigned long int button,const JOYINFOEX &target);
  public:
  SWGF_Gamepad();
  ~SWGF_Gamepad();
- void set_active(const unsigned long int gamepad);
- unsigned long int get_active();
- unsigned long int get_amount();
+ void set_active(const unsigned int gamepad);
+ unsigned int get_active();
+ unsigned int get_amount();
+ unsigned int get_button_amount();
  bool check_connection();
- bool is_wireless();
- unsigned char get_battery_type();
- unsigned char get_battery_level();
  void update();
- bool check_button_hold(const unsigned short int button);
- bool check_button_press(const unsigned short int button);
- bool check_button_release(const unsigned short int button);
- bool check_trigger_hold(const unsigned char trigger);
- bool check_trigger_press(const unsigned char trigger);
- bool check_trigger_release(const unsigned char trigger);
- bool set_vibration(const unsigned short int left,const unsigned short int right);
+ unsigned char get_dpad();
+ unsigned long int get_sticks_amount();
  char get_stick_x(const unsigned char stick);
  char get_stick_y(const unsigned char stick);
+ bool check_hold(const unsigned long int button);
+ bool check_press(const unsigned long int button);
+ bool check_release(const unsigned long int button);
 };
 
 class SWGF_Multimedia:public SWGF_Base

@@ -45,7 +45,7 @@
 			<Add library="opengl32" />
 			<Add library="ole32" />
 			<Add library="strmiids" />
-			<Add library="xinput" />
+			<Add library="winmm" />
 		</Linker>
 		<Unit filename="SWGF.cpp" />
 		<Unit filename="SWGF.h" />
