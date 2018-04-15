@@ -429,14 +429,16 @@ class SWGF_Timer
 class SWGF_Primitive
 {
  private:
+ SWGF_Color color;
  SWGF_Screen *surface;
  public:
  SWGF_Primitive();
  ~SWGF_Primitive();
  void initialize(SWGF_Screen *Screen);
- void draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2,const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height,const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height,const unsigned char red,const unsigned char green,const unsigned char blue);
+ void set_color(const unsigned char red,const unsigned char green,const unsigned char blue);
+ void draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2);
+ void draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
+ void draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
 };
 
 class SWGF_Image
@@ -470,7 +472,7 @@ class SWGF_Canvas
  SWGF_Screen *surface;
  SWGF_Color *image;
  SWGF_Color *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
- void draw_image_pixel(size_t offset,const unsigned long int x,const unsigned long int y);
+ void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  private:
  void clear_buffer();
@@ -504,7 +506,7 @@ class SWGF_Sprite:public SWGF_Canvas
  unsigned long int current_x;
  unsigned long int current_y;
  bool compare_pixels(const SWGF_Color &first,const SWGF_Color &second);
- void draw_sprite_pixel(size_t offset,const unsigned long int x,const unsigned long int y);
+ void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  public:
  SWGF_Sprite();
  ~SWGF_Sprite();
