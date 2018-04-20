@@ -311,6 +311,7 @@ class SWGF_Screen:public SWGF_Synchronization, public SWGF_Render
  public:
  void initialize();
  bool sync();
+ void set_fps_limit(const unsigned long int fps);
  SWGF_Screen* get_handle();
 };
 

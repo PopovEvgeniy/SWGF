@@ -658,6 +658,11 @@ bool SWGF_Screen::sync()
  return quit;
 }
 
+void SWGF_Screen::set_fps_limit(const unsigned long int fps)
+{
+ if(fps>0) this->set_timer(1000/fps);
+}
+
 SWGF_Screen* SWGF_Screen::get_handle()
 {
  return this;
