@@ -239,6 +239,7 @@ class SWGF_Engine
  unsigned long int height;
  void prepare_engine();
  void create_window();
+ void destroy_window();
  void capture_mouse();
  bool process_message();
  public:
@@ -273,6 +274,8 @@ class SWGF_Display:public SWGF_Engine
  DEVMODE get_video_mode();
  void set_video_mode(DEVMODE mode);
  void check_video_mode();
+ void reset_display();
+ void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  public:
  SWGF_Display();
  ~SWGF_Display();
@@ -300,6 +303,8 @@ class SWGF_Render:public SWGF_Display, public SWGF_Frame
  void create_texture();
  void disable_vsync();
  void create_render();
+ void start_render();
+ void destroy_render();
  void refresh();
  public:
  SWGF_Render();
@@ -310,8 +315,8 @@ class SWGF_Screen:public SWGF_Synchronization, public SWGF_Render
 {
  public:
  void initialize();
+ void set_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  bool sync();
- void set_fps_limit(const unsigned long int fps);
  SWGF_Screen* get_handle();
 };
 

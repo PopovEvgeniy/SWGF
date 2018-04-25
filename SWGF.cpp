@@ -247,6 +247,11 @@ void SWGF_Engine::create_window()
  SetFocus(window);
 }
 
+void SWGF_Engine::destroy_window()
+{
+ if(window!=NULL) CloseWindow(window);
+}
+
 void SWGF_Engine::capture_mouse()
 {
  RECT border;
@@ -315,6 +320,7 @@ SWGF_Frame::~SWGF_Frame()
 
 void SWGF_Frame::create_render_buffer()
 {
+ if(buffer!=NULL) free(buffer);
  buffer_length=(size_t)frame_width*(size_t)frame_height;
  buffer=(unsigned long int*)calloc(buffer_length,sizeof(unsigned long int));
  if(buffer==NULL)
@@ -375,6 +381,11 @@ void SWGF_Display::set_video_mode(DEVMODE mode)
   puts("Can't change video mode");
   exit(EXIT_FAILURE);
  }
+ else
+ {
+  width=mode.dmPelsWidth;
+  height=mode.dmPelsHeight;
+ }
 
 }
 
@@ -388,11 +399,6 @@ DEVMODE SWGF_Display::get_video_mode()
   puts("Can't get display setting");
   exit(EXIT_FAILURE);
  }
- else
- {
-  width=mode.dmPelsWidth;
-  height=mode.dmPelsHeight;
- }
  return mode;
 }
 
@@ -400,6 +406,19 @@ void SWGF_Display::check_video_mode()
 {
  display=this->get_video_mode();
  if(display.dmBitsPerPel<16) display.dmBitsPerPel=16;
+ this->set_video_mode(display);
+}
+
+void SWGF_Display::reset_display()
+{
+ ChangeDisplaySettings(NULL,0);
+}
+
+void SWGF_Display::set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height)
+{
+ display=this->get_video_mode();
+ display.dmPelsWidth=screen_width;
+ display.dmPelsHeight=screen_height;
  this->set_video_mode(display);
 }
 
@@ -628,6 +647,26 @@ void SWGF_Render::create_render()
  this->disable_vsync();
 }
 
+void SWGF_Render::start_render()
+{
+ this->check_video_mode();
+ this->create_render_buffer();
+ this->create_window();
+ this->capture_mouse();
+ this->create_render();
+}
+
+void SWGF_Render::destroy_render()
+{
+ if(surface!=0) glDeleteLists(surface,1);
+ if(render!=NULL)
+ {
+  wglMakeCurrent(NULL,NULL);
+  wglDeleteContext(render);
+ }
+ if(context!=NULL) ReleaseDC(window,context);
+}
+
 void SWGF_Render::refresh()
 {
  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -639,13 +678,17 @@ void SWGF_Render::refresh()
 void SWGF_Screen::initialize()
 {
  this->prepare_engine();
- this->check_video_mode();
- this->create_render_buffer();
+ this->start_render();
  this->create_timer();
- this->create_window();
- this->capture_mouse();
- this->create_render();
- this->create_timer();
+ this->set_timer(17);
+}
+
+void SWGF_Screen::set_mode(const unsigned long int screen_width,const unsigned long int screen_height)
+{
+ this->destroy_render();
+ this->destroy_window();
+ this->set_display_mode(screen_width,screen_height);
+ this->start_render();
  this->set_timer(17);
 }
 
@@ -656,11 +699,6 @@ bool SWGF_Screen::sync()
  quit=this->process_message();
  this->wait_timer();
  return quit;
-}
-
-void SWGF_Screen::set_fps_limit(const unsigned long int fps)
-{
- if(fps>0) this->set_timer(1000/fps);
 }
 
 SWGF_Screen* SWGF_Screen::get_handle()
