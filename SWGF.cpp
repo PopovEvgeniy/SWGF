@@ -391,6 +391,7 @@ void SWGF_Display::set_display_mode(const unsigned long int screen_width,const u
  display=this->get_video_mode();
  display.dmPelsWidth=screen_width;
  display.dmPelsHeight=screen_height;
+ if(display.dmBitsPerPel<16) display.dmBitsPerPel=16;
  this->set_video_mode(display);
 }
 
@@ -621,7 +622,6 @@ void SWGF_Render::create_render()
 
 void SWGF_Render::start_render()
 {
- this->check_video_mode();
  this->create_window();
  this->capture_mouse();
  this->create_render();
@@ -648,6 +648,7 @@ void SWGF_Render::refresh()
 
 void SWGF_Screen::initialize()
 {
+ this->check_video_mode();
  this->prepare_engine();
  this->start_render();
  this->create_render_buffer();
@@ -1322,6 +1323,9 @@ bool SWGF_Timer::check_timer()
 
 SWGF_Primitive::SWGF_Primitive()
 {
+ color.red=0;
+ color.green=0;
+ color.blue=0;
  surface=NULL;
 }
 
