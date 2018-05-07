@@ -828,14 +828,12 @@ bool SWGF_Mouse::check_release(const unsigned char button)
 
 SWGF_Gamepad::SWGF_Gamepad()
 {
- active=SWGF_GAMEPAD1;
- length[0]=(unsigned long int)sizeof(JOYCAPS);
- length[1]=(unsigned long int)sizeof(JOYINFOEX);
+ active=0;
  memset(&configuration,0,sizeof(JOYCAPS));
  memset(&current,0,sizeof(JOYINFOEX));
  memset(&preversion,0,sizeof(JOYINFOEX));
- current.dwSize=length[1];
- preversion.dwSize=length[1];
+ current.dwSize=sizeof(JOYINFOEX);
+ preversion.dwSize=sizeof(JOYINFOEX);
  current.dwFlags=JOY_RETURNALL;
  preversion.dwFlags=JOY_RETURNALL;
  current.dwPOV=JOY_POVCENTERED;
@@ -851,7 +849,7 @@ bool SWGF_Gamepad::read_configuration()
 {
  bool result;
  result=false;
- if(joyGetDevCaps(active,&configuration,length[0])==JOYERR_NOERROR) result=true;
+ if(joyGetDevCaps(active,&configuration,sizeof(JOYCAPS))==JOYERR_NOERROR) result=true;
  return result;
 }
 
@@ -868,35 +866,20 @@ void SWGF_Gamepad::clear_state()
  memset(&configuration,0,sizeof(JOYCAPS));
  memset(&current,0,sizeof(JOYINFOEX));
  memset(&preversion,0,sizeof(JOYINFOEX));
- current.dwSize=length[1];
- preversion.dwSize=length[1];
+ current.dwSize=sizeof(JOYINFOEX);
+ preversion.dwSize=sizeof(JOYINFOEX);
  current.dwFlags=JOY_RETURNALL;
  preversion.dwFlags=JOY_RETURNALL;
  current.dwPOV=JOY_POVCENTERED;
  preversion.dwPOV=JOY_POVCENTERED;
 }
 
-bool SWGF_Gamepad::check_button(const unsigned long int button,const JOYINFOEX &target)
+bool SWGF_Gamepad::check_button(const SWGF_GAMEPAD_BUTTONS button,const JOYINFOEX &target)
 {
  bool result;
  result=false;
  if(target.dwButtons&button) result=true;
  return result;
-}
-
-void SWGF_Gamepad::set_active(const unsigned int gamepad)
-{
- if(active<=SWGF_GAMEPAD15)
- {
-  this->clear_state();
-  active=gamepad;
- }
-
-}
-
-unsigned int SWGF_Gamepad::get_active()
-{
- return active;
 }
 
 unsigned int SWGF_Gamepad::get_amount()
@@ -923,9 +906,47 @@ void SWGF_Gamepad::update()
  if(this->read_state()==false) this->clear_state();
 }
 
-unsigned char SWGF_Gamepad::get_dpad()
+unsigned long int SWGF_Gamepad::get_sticks_amount()
 {
- unsigned char result;
+ unsigned long int result;
+ result=0;
+ if(this->read_configuration()==true)
+ {
+  switch (configuration.wNumAxes)
+  {
+   case 2:
+   result=1;
+   break;
+   case 4:
+   result=2;
+   break;
+   default:
+   result=0;
+   break;
+  }
+
+ }
+ return result;
+}
+
+void SWGF_Gamepad::set_active(const unsigned int gamepad)
+{
+ if(active<16)
+ {
+  this->clear_state();
+  active=gamepad;
+ }
+
+}
+
+unsigned int SWGF_Gamepad::get_active()
+{
+ return active;
+}
+
+SWGF_GAMEPAD_DPAD SWGF_Gamepad::get_dpad()
+{
+ SWGF_GAMEPAD_DPAD result;
  result=SWGF_GAMEPAD_NONE;
  switch (current.dwPOV)
  {
@@ -957,30 +978,7 @@ unsigned char SWGF_Gamepad::get_dpad()
  return result;
 }
 
-unsigned long int SWGF_Gamepad::get_sticks_amount()
-{
- unsigned long int result;
- result=0;
- if(this->read_configuration()==true)
- {
-  switch (configuration.wNumAxes)
-  {
-   case 2:
-   result=1;
-   break;
-   case 4:
-   result=2;
-   break;
-   default:
-   result=0;
-   break;
-  }
-
- }
- return result;
-}
-
-char SWGF_Gamepad::get_stick_x(const unsigned char stick)
+char SWGF_Gamepad::get_stick_x(const SWGF_GAMEPAD_STICKS stick)
 {
  char result;
  unsigned long int control;
@@ -1016,7 +1014,7 @@ char SWGF_Gamepad::get_stick_x(const unsigned char stick)
  return result;
 }
 
-char SWGF_Gamepad::get_stick_y(const unsigned char stick)
+char SWGF_Gamepad::get_stick_y(const SWGF_GAMEPAD_STICKS stick)
 {
  char result;
  unsigned long int control;
@@ -1052,12 +1050,12 @@ char SWGF_Gamepad::get_stick_y(const unsigned char stick)
  return result;
 }
 
-bool SWGF_Gamepad::check_hold(const unsigned long int button)
+bool SWGF_Gamepad::check_hold(const SWGF_GAMEPAD_BUTTONS button)
 {
  return this->check_button(button,current);
 }
 
-bool SWGF_Gamepad::check_press(const unsigned long int button)
+bool SWGF_Gamepad::check_press(const SWGF_GAMEPAD_BUTTONS button)
 {
  bool result;
  result=false;
@@ -1068,7 +1066,7 @@ bool SWGF_Gamepad::check_press(const unsigned long int button)
  return result;
 }
 
-bool SWGF_Gamepad::check_release(const unsigned long int button)
+bool SWGF_Gamepad::check_release(const SWGF_GAMEPAD_BUTTONS button)
 {
  bool result;
  result=false;
@@ -1107,7 +1105,7 @@ wchar_t *SWGF_Multimedia::convert_file_name(const char *target)
   puts("Can't allocate memory");
   exit(EXIT_FAILURE);
  }
- for(index=0;index<length;index++) name[index]=btowc(target[index]);
+ for(index=0;index<length;++index) name[index]=btowc(target[index]);
  return name;
 }
 
