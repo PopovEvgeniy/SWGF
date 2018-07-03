@@ -87,6 +87,18 @@ enum SWGF_GAMEPAD_BUTTONS {SWGF_GAMEPAD_BUTTON1=JOY_BUTTON1,SWGF_GAMEPAD_BUTTON2
 extern BOOL WINAPI wglSwapIntervalEXT (int interval); // This code was taken from wglext.h by The Khronos Group Inc
 typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code was taken from wglext.h by The Khronos Group Inc
 
+struct SWGF_Vertex
+{
+ int x;
+ int y;
+};
+
+struct SWGF_Point
+{
+ float u;
+ float v;
+};
+
 struct SWGF_Color
 {
  unsigned char blue:8;
@@ -228,7 +240,8 @@ class SWGF_Render:public SWGF_Display, public SWGF_Frame
  HGLRC render;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
  unsigned int texture;
- unsigned int surface;
+ SWGF_Vertex vertex[4];
+ SWGF_Point point[4];
  bool check_common_setting(const PIXELFORMATDESCRIPTOR &setting);
  bool check_acceleration(const PIXELFORMATDESCRIPTOR &setting);
  int get_pixel_format();
@@ -241,6 +254,7 @@ class SWGF_Render:public SWGF_Display, public SWGF_Frame
  void check_videocard();
  void prepare_surface();
  void create_texture();
+ void load_surface_data();
  void disable_vsync();
  void create_render();
  void start_render();

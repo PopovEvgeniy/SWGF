@@ -392,16 +392,16 @@ void SWGF_Display::set_display_mode(const unsigned long int screen_width,const u
 
 SWGF_Render::SWGF_Render()
 {
+ memset(vertex,0,4*sizeof(SWGF_Vertex));
+ memset(point,0,4*sizeof(SWGF_Point));
  context=NULL;
  render=NULL;
  wglSwapIntervalEXT=NULL;
  texture=0;
- surface=0;
 }
 
 SWGF_Render::~SWGF_Render()
 {
- if(surface!=0) glDeleteLists(surface,1);
  if(render!=NULL)
  {
   wglMakeCurrent(NULL,NULL);
@@ -526,6 +526,13 @@ void SWGF_Render::set_perfomance_setting()
  glDisable(GL_LIGHTING);
  glDisable(GL_TEXTURE_1D);
  glEnable(GL_TEXTURE_2D);
+ glEnable(GL_TEXTURE_2D);
+ glEnableClientState(GL_VERTEX_ARRAY);
+ glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+ glDisableClientState(GL_COLOR_ARRAY);
+ glDisableClientState(GL_EDGE_FLAG_ARRAY);
+ glDisableClientState(GL_INDEX_ARRAY);
+ glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 void SWGF_Render::set_perspective()
@@ -563,24 +570,22 @@ void SWGF_Render::check_videocard()
 
 void SWGF_Render::prepare_surface()
 {
- surface=glGenLists(1);
- if(surface==0)
- {
-  puts("Can't create the display list");
-  exit(EXIT_FAILURE);
- }
- glNewList(surface,GL_COMPILE);
- glBegin(GL_QUADS);
- glTexCoord2f(0,1);
- glVertex2i(0,height);
- glTexCoord2f(1,1);
- glVertex2i(width,height);
- glTexCoord2f(1,0);
- glVertex2i(width,0);
- glTexCoord2f(0,0);
- glVertex2i(0,0);
- glEnd();
- glEndList();
+ vertex[0].x=0;
+ vertex[0].y=height;
+ vertex[1].x=width;
+ vertex[1].y=height;
+ vertex[2].x=width;
+ vertex[2].y=0;
+ vertex[3].x=0;
+ vertex[3].y=0;
+ point[0].u=0;
+ point[0].v=1;
+ point[1].u=1;
+ point[1].v=1;
+ point[2].u=1;
+ point[2].v=0;
+ point[3].u=0;
+ point[3].v=0;
 }
 
 void SWGF_Render::create_texture()
@@ -590,6 +595,12 @@ void SWGF_Render::create_texture()
  glBindTexture(GL_TEXTURE_2D,texture);
  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
  glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+}
+
+void SWGF_Render::load_surface_data()
+{
+ glVertexPointer(2,GL_INT,0,vertex);
+ glTexCoordPointer(2,GL_FLOAT,0,point);
 }
 
 void SWGF_Render::disable_vsync()
@@ -612,6 +623,7 @@ void SWGF_Render::create_render()
  this->check_videocard();
  this->create_texture();
  this->prepare_surface();
+ this->load_surface_data();
  this->disable_vsync();
 }
 
@@ -624,7 +636,6 @@ void SWGF_Render::start_render()
 
 void SWGF_Render::destroy_render()
 {
- if(surface!=0) glDeleteLists(surface,1);
  if(render!=NULL)
  {
   wglMakeCurrent(NULL,NULL);
@@ -635,9 +646,8 @@ void SWGF_Render::destroy_render()
 
 void SWGF_Render::refresh()
 {
- glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
  glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,frame_width,frame_height,0,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
- glCallList(surface);
+ glDrawArrays(GL_QUADS,0,4);
  SwapBuffers(context);
 }
 
