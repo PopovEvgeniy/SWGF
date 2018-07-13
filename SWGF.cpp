@@ -669,11 +669,16 @@ void SWGF_Screen::set_mode(const unsigned long int screen_width,const unsigned l
  this->start_render();
 }
 
+bool SWGF_Screen::update()
+{
+ this->refresh();
+ return this->process_message();
+}
+
 bool SWGF_Screen::sync()
 {
  bool quit;
- this->refresh();
- quit=this->process_message();
+ quit=this->update();
  this->wait_timer();
  return quit;
 }

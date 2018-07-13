@@ -235,7 +235,7 @@ class SWGF_Display:public SWGF_Engine
 
 class SWGF_Render:public SWGF_Display, public SWGF_Frame
 {
- protected:
+ private:
  HDC context;
  HGLRC render;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
@@ -257,6 +257,7 @@ class SWGF_Render:public SWGF_Display, public SWGF_Frame
  void load_surface_data();
  void disable_vsync();
  void create_render();
+ protected:
  void start_render();
  void destroy_render();
  void refresh();
@@ -270,6 +271,7 @@ class SWGF_Screen:public SWGF_Synchronization, public SWGF_Render
  public:
  void initialize();
  void set_mode(const unsigned long int screen_width,const unsigned long int screen_height);
+ bool update();
  bool sync();
  SWGF_Screen* get_handle();
 };
