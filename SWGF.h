@@ -204,11 +204,12 @@ class SWGF_Engine
 
 class SWGF_Frame
 {
+ private:
+ size_t buffer_length;
  protected:
+ COLORREF *buffer;
  unsigned long int frame_width;
  unsigned long int frame_height;
- size_t buffer_length;
- COLORREF *buffer;
  void create_render_buffer();
  public:
  SWGF_Frame();
@@ -233,21 +234,33 @@ class SWGF_Display:public SWGF_Engine
  ~SWGF_Display();
 };
 
-class SWGF_Render:public SWGF_Display, public SWGF_Frame
+class SWGF_WINGL:public SWGF_Display
 {
  private:
  HDC context;
  HGLRC render;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
- unsigned int texture;
- SWGF_Vertex vertex[4];
- SWGF_Point point[4];
  bool check_common_setting(const PIXELFORMATDESCRIPTOR &setting);
  bool check_acceleration(const PIXELFORMATDESCRIPTOR &setting);
  int get_pixel_format();
  void set_pixel_format(const int format);
  void create_render_context();
+ protected:
  void set_render();
+ void destroy_render();
+ void disable_vsync();
+ void Swap();
+ public:
+ SWGF_WINGL();
+ ~SWGF_WINGL();
+};
+
+class SWGF_Render:public SWGF_WINGL, public SWGF_Frame
+{
+ private:
+ unsigned int texture;
+ SWGF_Vertex vertex[4];
+ SWGF_Point point[4];
  void set_perfomance_setting();
  void set_perspective();
  void clear_stage();
@@ -255,11 +268,10 @@ class SWGF_Render:public SWGF_Display, public SWGF_Frame
  void prepare_surface();
  void create_texture();
  void load_surface_data();
- void disable_vsync();
  void create_render();
+ void draw();
  protected:
  void start_render();
- void destroy_render();
  void refresh();
  public:
  SWGF_Render();

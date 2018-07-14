@@ -390,17 +390,14 @@ void SWGF_Display::set_display_mode(const unsigned long int screen_width,const u
  this->set_video_mode(display);
 }
 
-SWGF_Render::SWGF_Render()
+SWGF_WINGL::SWGF_WINGL()
 {
- memset(vertex,0,4*sizeof(SWGF_Vertex));
- memset(point,0,4*sizeof(SWGF_Point));
  context=NULL;
  render=NULL;
  wglSwapIntervalEXT=NULL;
- texture=0;
 }
 
-SWGF_Render::~SWGF_Render()
+SWGF_WINGL::~SWGF_WINGL()
 {
  if(render!=NULL)
  {
@@ -410,7 +407,7 @@ SWGF_Render::~SWGF_Render()
  if(context!=NULL) ReleaseDC(window,context);
 }
 
-bool SWGF_Render::check_common_setting(const PIXELFORMATDESCRIPTOR &setting)
+bool SWGF_WINGL::check_common_setting(const PIXELFORMATDESCRIPTOR &setting)
 {
  bool result;
  result=false;
@@ -429,7 +426,7 @@ bool SWGF_Render::check_common_setting(const PIXELFORMATDESCRIPTOR &setting)
  return result;
 }
 
-bool SWGF_Render::check_acceleration(const PIXELFORMATDESCRIPTOR &setting)
+bool SWGF_WINGL::check_acceleration(const PIXELFORMATDESCRIPTOR &setting)
 {
  bool result;
  result=false;
@@ -444,7 +441,7 @@ bool SWGF_Render::check_acceleration(const PIXELFORMATDESCRIPTOR &setting)
  return result;
 }
 
-int SWGF_Render::get_pixel_format()
+int SWGF_WINGL::get_pixel_format()
 {
  int index,result;
  unsigned long int length;
@@ -471,7 +468,7 @@ int SWGF_Render::get_pixel_format()
  return result;
 }
 
-void SWGF_Render::set_pixel_format(const int format)
+void SWGF_WINGL::set_pixel_format(const int format)
 {
  PIXELFORMATDESCRIPTOR setting;
  memset(&setting,0,sizeof(PIXELFORMATDESCRIPTOR));
@@ -491,7 +488,7 @@ void SWGF_Render::set_pixel_format(const int format)
 
 }
 
-void SWGF_Render::create_render_context()
+void SWGF_WINGL::create_render_context()
 {
  render=wglCreateContext(context);
  if(render==NULL)
@@ -502,7 +499,7 @@ void SWGF_Render::create_render_context()
  wglMakeCurrent(context,render);
 }
 
-void SWGF_Render::set_render()
+void SWGF_WINGL::set_render()
 {
  int format;
  context=GetDC(window);
@@ -514,6 +511,44 @@ void SWGF_Render::set_render()
  format=this->get_pixel_format();
  this->set_pixel_format(format);
  this->create_render_context();
+}
+
+void SWGF_WINGL::destroy_render()
+{
+ if(render!=NULL)
+ {
+  wglMakeCurrent(NULL,NULL);
+  wglDeleteContext(render);
+ }
+ if(context!=NULL) ReleaseDC(window,context);
+}
+
+void SWGF_WINGL::disable_vsync()
+{
+ wglSwapIntervalEXT=(PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+ if(wglSwapIntervalEXT==NULL)
+ {
+  puts("Can't load OPENGL extension");
+  exit(EXIT_FAILURE);
+ }
+ wglSwapIntervalEXT(0);
+}
+
+void SWGF_WINGL::Swap()
+{
+ SwapBuffers(context);
+}
+
+SWGF_Render::SWGF_Render()
+{
+ memset(vertex,0,4*sizeof(SWGF_Vertex));
+ memset(point,0,4*sizeof(SWGF_Point));
+ texture=0;
+}
+
+SWGF_Render::~SWGF_Render()
+{
+
 }
 
 void SWGF_Render::set_perfomance_setting()
@@ -603,17 +638,6 @@ void SWGF_Render::load_surface_data()
  glTexCoordPointer(2,GL_FLOAT,0,point);
 }
 
-void SWGF_Render::disable_vsync()
-{
- wglSwapIntervalEXT=(PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
- if(wglSwapIntervalEXT==NULL)
- {
-  puts("Can't load OPENGL extension");
-  exit(EXIT_FAILURE);
- }
- wglSwapIntervalEXT(0);
-}
-
 void SWGF_Render::create_render()
 {
  this->set_render();
@@ -627,6 +651,12 @@ void SWGF_Render::create_render()
  this->disable_vsync();
 }
 
+void SWGF_Render::draw()
+{
+ glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,frame_width,frame_height,0,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
+ glDrawArrays(GL_QUADS,0,4);
+}
+
 void SWGF_Render::start_render()
 {
  this->create_window();
@@ -634,21 +664,10 @@ void SWGF_Render::start_render()
  this->create_render();
 }
 
-void SWGF_Render::destroy_render()
-{
- if(render!=NULL)
- {
-  wglMakeCurrent(NULL,NULL);
-  wglDeleteContext(render);
- }
- if(context!=NULL) ReleaseDC(window,context);
-}
-
 void SWGF_Render::refresh()
 {
- glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,frame_width,frame_height,0,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
- glDrawArrays(GL_QUADS,0,4);
- SwapBuffers(context);
+ this->draw();
+ this->Swap();
 }
 
 void SWGF_Screen::initialize()
