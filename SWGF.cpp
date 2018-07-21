@@ -878,7 +878,7 @@ bool SWGF_Gamepad::read_configuration()
 {
  bool result;
  result=false;
- if(joyGetDevCaps(active,&configuration,sizeof(JOYCAPS))==JOYERR_NOERROR) result=true;
+ if(joyGetDevCaps((UINT_PTR)active,&configuration,sizeof(JOYCAPS))==JOYERR_NOERROR) result=true;
  return result;
 }
 
@@ -1724,13 +1724,13 @@ void SWGF_Canvas::load_image(SWGF_Image &buffer)
  buffer.destroy_image();
 }
 
-void SWGF_Canvas::mirror_image(const unsigned char kind)
+void SWGF_Canvas::mirror_image(const SWGF_MIRROR_TYPE kind)
 {
  unsigned long int x,y;
  size_t index,index2;
  SWGF_Color *mirrored_image;
  mirrored_image=this->create_buffer(width,height);
- if (kind==0)
+ if (kind==SWGF_MIRROR_HORIZONTAL)
  {
   for (x=0;x<width;++x)
   {
@@ -1744,7 +1744,7 @@ void SWGF_Canvas::mirror_image(const unsigned char kind)
   }
 
  }
- else
+ if (kind==SWGF_MIRROR_VERTICAL)
  {
    for (x=0;x<width;++x)
   {
