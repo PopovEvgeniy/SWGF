@@ -291,6 +291,21 @@ SWGF_Frame::~SWGF_Frame()
 
 }
 
+void SWGF_Frame::set_size(const SWGF_SURFACE surface)
+{
+ if(surface==SWGF_SURFACE_SMALL)
+ {
+  frame_width=256;
+  frame_height=256;
+ }
+ if(surface==SWGF_SURFACE_LARGE)
+ {
+  frame_width=512;
+  frame_height=512;
+ }
+
+}
+
 void SWGF_Frame::create_render_buffer()
 {
  buffer_length=(size_t)frame_width*(size_t)frame_height;
@@ -678,6 +693,12 @@ void SWGF_Screen::initialize()
  this->create_render_buffer();
  this->create_timer();
  this->set_timer(17);
+}
+
+void SWGF_Screen::initialize(const SWGF_SURFACE surface)
+{
+ this->set_size(surface);
+ this->initialize();
 }
 
 void SWGF_Screen::set_mode(const unsigned long int screen_width,const unsigned long int screen_height)
