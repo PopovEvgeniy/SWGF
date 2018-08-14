@@ -475,8 +475,13 @@ class SWGF_Canvas
 class SWGF_Background:public SWGF_Canvas
 {
  private:
- void draw_background_image(const unsigned long int start,const unsigned long int frame_width,const unsigned long int frame_height);
+ unsigned long int start;
+ unsigned long int frame_width;
+ unsigned long int frame_height;
+ void draw_background_image();
  public:
+ SWGF_Background();
+ ~SWGF_Background();
  void draw_horizontal_background(const unsigned long int frame);
  void draw_vertical_background(const unsigned long int frame);
  void draw_background();
