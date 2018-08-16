@@ -462,8 +462,6 @@ class SWGF_Canvas
  SWGF_Canvas();
  ~SWGF_Canvas();
  SWGF_Color *get_image();
- unsigned long int get_width();
- unsigned long int get_height();
  void set_frames(const unsigned long int amount);
  unsigned long int get_frames();
  void initialize(SWGF_Screen *Screen);
@@ -492,18 +490,22 @@ class SWGF_Sprite:public SWGF_Canvas
  private:
  unsigned long int current_x;
  unsigned long int current_y;
+ unsigned long int sprite_width;
+ unsigned long int sprite_height;
+ unsigned long int start;
  bool compare_pixels(const SWGF_Color &first,const SWGF_Color &second);
  void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
+ void draw_sprite_image(const unsigned long int x,const unsigned long int y);
  public:
  SWGF_Sprite();
  ~SWGF_Sprite();
+ unsigned long int get_x();
+ unsigned long int get_y();
+ unsigned long int get_width();
+ unsigned long int get_height();
  void clone(SWGF_Sprite &target);
  void draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame);
  void draw_sprite(const unsigned long int x,const unsigned long int y);
- unsigned long int get_x();
- unsigned long int get_y();
- unsigned long int get_sprite_width();
- unsigned long int get_sprite_height();
  SWGF_Sprite* get_handle();
  SWGF_Box get_box();
 };

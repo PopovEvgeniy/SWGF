@@ -33,7 +33,7 @@ int main(void)
  image.load_tga("font.tga");
  font.load_image(image);
  text.load_font(font.get_handle());
- text.set_position(font.get_sprite_width(),font.get_sprite_width());
+ text.set_position(font.get_width(),font.get_width());
  ship.set_frames(2);
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);

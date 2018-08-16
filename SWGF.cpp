@@ -1710,16 +1710,6 @@ SWGF_Color *SWGF_Canvas::get_image()
  return image;
 }
 
-unsigned long int SWGF_Canvas::get_width()
-{
- return width;
-}
-
-unsigned long int SWGF_Canvas::get_height()
-{
- return height;
-}
-
 void SWGF_Canvas::set_frames(const unsigned long int amount)
 {
  if(amount>1) frames=amount;
@@ -1861,6 +1851,9 @@ SWGF_Sprite::SWGF_Sprite()
 {
  current_x=0;
  current_y=0;
+ sprite_width=0;
+ sprite_height=0;
+ start=0;
 }
 
 SWGF_Sprite::~SWGF_Sprite()
@@ -1888,28 +1881,15 @@ void SWGF_Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int 
  if(this->compare_pixels(image[0],image[offset])==true) this->draw_image_pixel(offset,x,y);
 }
 
-void SWGF_Sprite::clone(SWGF_Sprite &target)
+void SWGF_Sprite::draw_sprite_image(const unsigned long int x,const unsigned long int y)
 {
- size_t length;
- frames=target.get_frames();
- width=target.get_sprite_width();
- height=target.get_sprite_height();
- length=(size_t)width*(size_t)height*3;
- image=this->create_buffer(width,height);
- memmove(image,target.get_image(),length);
-}
-
-void SWGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame)
-{
- unsigned long int sprite_x,sprite_y,start,frame_width;
  size_t offset;
+ unsigned long int sprite_x,sprite_y;
  current_x=x;
  current_y=y;
- frame_width=width/frames;
- start=(frame-1)*frame_width;
- for(sprite_x=0;sprite_x<frame_width;++sprite_x)
+ for(sprite_x=0;sprite_x<sprite_width;++sprite_x)
  {
-  for(sprite_y=0;sprite_y<height;++sprite_y)
+  for(sprite_y=0;sprite_y<sprite_height;++sprite_y)
   {
    offset=this->get_offset(start,sprite_x,sprite_y);
    this->draw_sprite_pixel(offset,x+sprite_x,y+sprite_y);
@@ -1917,13 +1897,6 @@ void SWGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned lon
 
  }
 
-}
-
-void SWGF_Sprite::draw_sprite(const unsigned long int x,const unsigned long int y)
-{
- current_x=x;
- current_y=y;
- this->draw_sprite_frame(x,y,1);
 }
 
 unsigned long int SWGF_Sprite::get_x()
@@ -1936,14 +1909,38 @@ unsigned long int SWGF_Sprite::get_y()
  return current_y;
 }
 
-unsigned long int SWGF_Sprite::get_sprite_width()
+unsigned long int SWGF_Sprite::get_width()
 {
  return width/frames;
 }
 
-unsigned long int SWGF_Sprite::get_sprite_height()
+unsigned long int SWGF_Sprite::get_height()
 {
  return height;
+}
+
+void SWGF_Sprite::clone(SWGF_Sprite &target)
+{
+ size_t length;
+ frames=target.get_frames();
+ width=target.get_width();
+ height=target.get_height();
+ length=(size_t)width*(size_t)height*3;
+ image=this->create_buffer(width,height);
+ memmove(image,target.get_image(),length);
+}
+
+void SWGF_Sprite::draw_sprite_frame(const unsigned long int x,const unsigned long int y,const unsigned long int frame)
+{
+ sprite_width=width/frames;
+ sprite_height=height;
+ start=(frame-1)*sprite_width;
+ this->draw_sprite_image(x,y);
+}
+
+void SWGF_Sprite::draw_sprite(const unsigned long int x,const unsigned long int y)
+{
+ this->draw_sprite_frame(x,y,1);
 }
 
 SWGF_Sprite* SWGF_Sprite::get_handle()
@@ -1979,7 +1976,7 @@ void SWGF_Text::draw_character(const char target)
  if((target>31)||(target<0))
  {
   sprite->draw_sprite_frame(step_x,current_y,(unsigned long int)target+1);
-  step_x+=sprite->get_sprite_width();
+  step_x+=sprite->get_width();
  }
 
 }
