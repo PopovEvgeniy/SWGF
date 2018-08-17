@@ -291,6 +291,11 @@ SWGF_Frame::~SWGF_Frame()
 
 }
 
+unsigned int SWGF_Frame::get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue)
+{
+ return red+(green<<8)+(blue<<16);
+}
+
 void SWGF_Frame::set_size(const SWGF_SURFACE surface)
 {
  if(surface==SWGF_SURFACE_SMALL)
@@ -309,7 +314,7 @@ void SWGF_Frame::set_size(const SWGF_SURFACE surface)
 void SWGF_Frame::create_render_buffer()
 {
  buffer_length=(size_t)frame_width*(size_t)frame_height;
- buffer=(COLORREF*)calloc(buffer_length,sizeof(COLORREF));
+ buffer=(unsigned int*)calloc(buffer_length,sizeof(unsigned int));
  if(buffer==NULL)
  {
   puts("Can't allocate memory for render buffer");
@@ -317,7 +322,7 @@ void SWGF_Frame::create_render_buffer()
  }
  else
  {
-  buffer_length*=sizeof(COLORREF);
+  buffer_length*=sizeof(unsigned int);
  }
 
 }
@@ -326,7 +331,7 @@ void SWGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,
 {
  if((x<frame_width)&&(y<frame_height))
  {
-  buffer[(size_t)x+(size_t)y*(size_t)frame_width]=RGB(red,green,blue);
+  buffer[(size_t)x+(size_t)y*(size_t)frame_width]=this->get_rgb(red,green,blue);
  }
 
 }

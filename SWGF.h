@@ -209,9 +209,10 @@ class SWGF_Frame
  private:
  size_t buffer_length;
  protected:
- COLORREF *buffer;
+ unsigned int *buffer;
  unsigned long int frame_width;
  unsigned long int frame_height;
+ unsigned int get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue);
  void set_size(const SWGF_SURFACE surface);
  void create_render_buffer();
  public:
