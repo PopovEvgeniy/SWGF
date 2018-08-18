@@ -35,8 +35,10 @@ int main(void)
  text.load_font(font.get_handle());
  text.set_position(font.get_width(),font.get_width());
  ship.set_frames(2);
+ ship.set_kind(SWGF_ANIMATED_SPRITE);
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);
+ space.set_kind(SWGF_NORMAL_BACKGROUND);
  frame=1;
  mouse.hide();
  timer.set_timer(1);
@@ -100,7 +102,8 @@ int main(void)
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   space.draw_background();
   text.draw_text(perfomance);
-  ship.draw_sprite_frame(x,y,frame);
+  ship.set_target(frame);
+  ship.draw_sprite(x,y);
   if (timer.check_timer()==true)
   {
    itoa(fps,perfomance,10);
