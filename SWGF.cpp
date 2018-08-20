@@ -211,8 +211,16 @@ void SWGF_Engine::prepare_engine()
 
 }
 
+
+HWND SWGF_Engine::get_window()
+{
+ return window;
+}
+
 void SWGF_Engine::create_window()
 {
+ width=GetSystemMetrics(SM_CXSCREEN);
+ height=GetSystemMetrics(SM_CYSCREEN);
  window=CreateWindow(window_class.lpszClassName,NULL,WS_VISIBLE|WS_POPUP,0,0,width,height,NULL,NULL,window_class.hInstance,NULL);
  if (window==NULL)
  {
@@ -330,6 +338,11 @@ void SWGF_Frame::create_render_buffer()
 
 }
 
+unsigned int *SWGF_Frame::get_buffer()
+{
+ return buffer;
+}
+
 void SWGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  if((x<frame_width)&&(y<frame_height))
@@ -357,6 +370,7 @@ unsigned long int SWGF_Frame::get_frame_height()
 SWGF_Display::SWGF_Display()
 {
  memset(&display,0,sizeof(DEVMODE));
+ display.dmSize=sizeof(DEVMODE);
 }
 
 SWGF_Display::~SWGF_Display()
@@ -364,39 +378,31 @@ SWGF_Display::~SWGF_Display()
  ChangeDisplaySettings(NULL,0);
 }
 
-void SWGF_Display::set_video_mode(DEVMODE mode)
+void SWGF_Display::set_video_mode()
 {
- if (ChangeDisplaySettings(&mode,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)
+ if (ChangeDisplaySettings(&display,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)
  {
   puts("Can't change video mode");
   exit(EXIT_FAILURE);
  }
- else
- {
-  width=mode.dmPelsWidth;
-  height=mode.dmPelsHeight;
- }
 
 }
 
-DEVMODE SWGF_Display::get_video_mode()
+void SWGF_Display::get_video_mode()
 {
- DEVMODE mode;
- memset(&mode,0,sizeof(DEVMODE));
- mode.dmSize=sizeof(DEVMODE);
- if (EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS,&mode)==FALSE)
+ if (EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS,&display)==FALSE)
  {
   puts("Can't get display setting");
   exit(EXIT_FAILURE);
  }
- return mode;
+
 }
 
 void SWGF_Display::check_video_mode()
 {
- display=this->get_video_mode();
+ this->get_video_mode();
  if(display.dmBitsPerPel<16) display.dmBitsPerPel=16;
- this->set_video_mode(display);
+ this->set_video_mode();
 }
 
 void SWGF_Display::reset_display()
@@ -406,11 +412,16 @@ void SWGF_Display::reset_display()
 
 void SWGF_Display::set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height)
 {
- display=this->get_video_mode();
+ this->get_video_mode();
  display.dmPelsWidth=screen_width;
  display.dmPelsHeight=screen_height;
  if(display.dmBitsPerPel<16) display.dmBitsPerPel=16;
- this->set_video_mode(display);
+ this->set_video_mode();
+}
+
+unsigned long int SWGF_Display::get_color()
+{
+ return display.dmBitsPerPel;
 }
 
 SWGF_WINGL::SWGF_WINGL()
@@ -418,6 +429,9 @@ SWGF_WINGL::SWGF_WINGL()
  context=NULL;
  render=NULL;
  wglSwapIntervalEXT=NULL;
+ memset(&setting,0,sizeof(PIXELFORMATDESCRIPTOR));
+ setting.nSize=sizeof(PIXELFORMATDESCRIPTOR);
+ setting.nVersion=1;
 }
 
 SWGF_WINGL::~SWGF_WINGL()
@@ -427,14 +441,14 @@ SWGF_WINGL::~SWGF_WINGL()
   wglMakeCurrent(NULL,NULL);
   wglDeleteContext(render);
  }
- if(context!=NULL) ReleaseDC(window,context);
+ if(context!=NULL) ReleaseDC(this->get_window(),context);
 }
 
-bool SWGF_WINGL::check_common_setting(const PIXELFORMATDESCRIPTOR &setting)
+bool SWGF_WINGL::check_common_setting()
 {
  bool result;
  result=false;
- if(setting.cColorBits==display.dmBitsPerPel)
+ if(setting.cColorBits==this->get_color())
  {
   if((setting.dwFlags&PFD_DRAW_TO_WINDOW)&&(setting.dwFlags&PFD_SUPPORT_OPENGL))
   {
@@ -449,7 +463,7 @@ bool SWGF_WINGL::check_common_setting(const PIXELFORMATDESCRIPTOR &setting)
  return result;
 }
 
-bool SWGF_WINGL::check_acceleration(const PIXELFORMATDESCRIPTOR &setting)
+bool SWGF_WINGL::check_acceleration()
 {
  bool result;
  result=false;
@@ -468,18 +482,14 @@ int SWGF_WINGL::get_pixel_format()
 {
  int index,result;
  unsigned long int length;
- PIXELFORMATDESCRIPTOR setting;
  result=0;
  length=sizeof(PIXELFORMATDESCRIPTOR);
- memset(&setting,0,length);
- setting.nSize=length;
- setting.nVersion=1;
  for(index=DescribePixelFormat(context,1,length,&setting);index>0;--index)
  {
   DescribePixelFormat(context,index,length,&setting);
-  if(this->check_common_setting(setting)==true)
+  if(this->check_common_setting()==true)
   {
-   if(this->check_acceleration(setting)==true)
+   if(this->check_acceleration()==true)
    {
     result=index;
     break;
@@ -493,10 +503,6 @@ int SWGF_WINGL::get_pixel_format()
 
 void SWGF_WINGL::set_pixel_format(const int format)
 {
- PIXELFORMATDESCRIPTOR setting;
- memset(&setting,0,sizeof(PIXELFORMATDESCRIPTOR));
- setting.nSize=sizeof(PIXELFORMATDESCRIPTOR);
- setting.nVersion=1;
  if(format==0)
  {
   puts("Invalid pixel format");
@@ -525,7 +531,7 @@ void SWGF_WINGL::create_render_context()
 void SWGF_WINGL::set_render()
 {
  int format;
- context=GetDC(window);
+ context=GetDC(this->get_window());
  if(context==NULL)
  {
   puts("Can't get the window context");
@@ -543,7 +549,7 @@ void SWGF_WINGL::destroy_render()
   wglMakeCurrent(NULL,NULL);
   wglDeleteContext(render);
  }
- if(context!=NULL) ReleaseDC(window,context);
+ if(context!=NULL) ReleaseDC(this->get_window(),context);
 }
 
 void SWGF_WINGL::disable_vsync()
@@ -597,14 +603,14 @@ void SWGF_Render::set_perspective()
 {
  glMatrixMode(GL_PROJECTION);
  glLoadIdentity();
- glOrtho(0,width,height,0,0,1);
+ glOrtho(0,this->get_width(),this->get_height(),0,0,1);
  glMatrixMode(GL_MODELVIEW);
  glLoadIdentity();
  glEnable(GL_CULL_FACE);
  glCullFace(GL_BACK);
  glMatrixMode(GL_TEXTURE);
  glLoadIdentity();
- glViewport(0,0,width,height);
+ glViewport(0,0,this->get_width(),this->get_height());
 }
 
 void SWGF_Render::clear_stage()
@@ -618,7 +624,7 @@ void SWGF_Render::check_videocard()
  int control;
  control=0;
  glGetIntegerv(GL_MAX_TEXTURE_SIZE,&control);
- if((control<(int)frame_width)||(control<(int)frame_height))
+ if((control<(int)this->get_frame_width())||(control<(int)this->get_frame_height()))
  {
   puts("This video card don't support request texture size");
   exit(EXIT_FAILURE);
@@ -629,10 +635,10 @@ void SWGF_Render::check_videocard()
 void SWGF_Render::prepare_surface()
 {
  vertex[0].x=0;
- vertex[0].y=height;
- vertex[1].x=width;
- vertex[1].y=height;
- vertex[2].x=width;
+ vertex[0].y=this->get_height();
+ vertex[1].x=this->get_width();
+ vertex[1].y=this->get_height();
+ vertex[2].x=this->get_width();
  vertex[2].y=0;
  vertex[3].x=0;
  vertex[3].y=0;
@@ -676,8 +682,8 @@ void SWGF_Render::create_render()
 
 void SWGF_Render::draw()
 {
- glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,frame_width,frame_height,0,GL_RGBA,GL_UNSIGNED_BYTE,buffer);
- glDrawArrays(GL_QUADS,0,4);
+ glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,this->get_frame_width(),this->get_frame_height(),0,GL_RGBA,GL_UNSIGNED_BYTE,this->get_buffer());
+ glDrawArrays(GL_TRIANGLE_FAN,0,4);
 }
 
 void SWGF_Render::start_render()

@@ -192,11 +192,13 @@ class SWGF_Synchronization
 
 class SWGF_Engine
 {
- protected:
- HWND window;
+ private:
  WNDCLASS window_class;
+ HWND window;
  unsigned long int width;
  unsigned long int height;
+ protected:
+ HWND get_window();
  void prepare_engine();
  void create_window();
  void destroy_window();
@@ -213,13 +215,14 @@ class SWGF_Frame
 {
  private:
  size_t buffer_length;
- protected:
  unsigned int *buffer;
  unsigned long int frame_width;
  unsigned long int frame_height;
  unsigned int get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue);
+ protected:
  void set_size(const SWGF_SURFACE surface);
  void create_render_buffer();
+ unsigned int *get_buffer();
  public:
  SWGF_Frame();
  ~SWGF_Frame();
@@ -229,28 +232,31 @@ class SWGF_Frame
  unsigned long int get_frame_height();
 };
 
-class SWGF_Display:public SWGF_Engine
+class SWGF_Display
 {
- protected:
+ private:
  DEVMODE display;
- DEVMODE get_video_mode();
- void set_video_mode(DEVMODE mode);
+ void get_video_mode();
+ void set_video_mode();
+ protected:
  void check_video_mode();
  void reset_display();
  void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
+ unsigned long int get_color();
  public:
  SWGF_Display();
  ~SWGF_Display();
 };
 
-class SWGF_WINGL:public SWGF_Display
+class SWGF_WINGL:public SWGF_Display, public SWGF_Engine
 {
  private:
  HDC context;
  HGLRC render;
+ PIXELFORMATDESCRIPTOR setting;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
- bool check_common_setting(const PIXELFORMATDESCRIPTOR &setting);
- bool check_acceleration(const PIXELFORMATDESCRIPTOR &setting);
+ bool check_common_setting();
+ bool check_acceleration();
  int get_pixel_format();
  void set_pixel_format(const int format);
  void create_render_context();
