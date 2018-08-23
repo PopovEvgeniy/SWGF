@@ -481,12 +481,10 @@ bool SWGF_WINGL::check_acceleration()
 int SWGF_WINGL::get_pixel_format()
 {
  int index,result;
- unsigned long int length;
  result=0;
- length=sizeof(PIXELFORMATDESCRIPTOR);
- for(index=DescribePixelFormat(context,1,length,&setting);index>0;--index)
+ for(index=DescribePixelFormat(context,1,setting.nSize,&setting);index>0;--index)
  {
-  DescribePixelFormat(context,index,length,&setting);
+  DescribePixelFormat(context,index,setting.nSize,&setting);
   if(this->check_common_setting()==true)
   {
    if(this->check_acceleration()==true)
@@ -508,7 +506,7 @@ void SWGF_WINGL::set_pixel_format(const int format)
   puts("Invalid pixel format");
   exit(EXIT_FAILURE);
  }
- DescribePixelFormat(context,format,sizeof(PIXELFORMATDESCRIPTOR),&setting);
+ DescribePixelFormat(context,format,setting.nSize,&setting);
  if(SetPixelFormat(context,format,&setting)==FALSE)
  {
   puts("Can't set pixel format");
@@ -589,7 +587,6 @@ void SWGF_Render::set_perfomance_setting()
  glDisable(GL_FOG);
  glDisable(GL_LIGHTING);
  glDisable(GL_TEXTURE_1D);
- glEnable(GL_TEXTURE_2D);
  glEnable(GL_TEXTURE_2D);
  glEnableClientState(GL_VERTEX_ARRAY);
  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
