@@ -35,7 +35,7 @@ int main(void)
  text.load_font(font.get_handle());
  text.set_position(font.get_width(),font.get_width());
  ship.set_frames(2);
- ship.set_kind(SWGF_ANIMATED_SPRITE);
+ ship.set_kind(SWGF_HORIZONTAL_STRIP);
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);
  space.set_kind(SWGF_NORMAL_BACKGROUND);

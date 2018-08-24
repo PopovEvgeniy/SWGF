@@ -1977,10 +1977,15 @@ void SWGF_Sprite::set_kind(const SWGF_SPRITE_TYPE kind)
   sprite_height=this->get_image_height();
   start=0;
   break;
-  case SWGF_ANIMATED_SPRITE:
+  case SWGF_HORIZONTAL_STRIP:
   sprite_width=this->get_image_width()/this->get_frames();
   sprite_height=this->get_image_height();
   start=(frame-1)*sprite_width;
+  break;
+  case SWGF_VERTICAL_STRIP:
+  sprite_width=this->get_image_width();
+  sprite_height=this->get_image_height()/this->get_frames();
+  start=(frame-1)*sprite_width*sprite_height;
   break;
  }
  current_kind=kind;
@@ -2063,7 +2068,7 @@ void SWGF_Text::load_font(SWGF_Sprite *font)
 {
  sprite=font;
  sprite->set_frames(256);
- sprite->set_kind(SWGF_ANIMATED_SPRITE);
+ sprite->set_kind(SWGF_HORIZONTAL_STRIP);
 }
 
 void SWGF_Text::draw_text(const char *text)
