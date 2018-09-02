@@ -91,6 +91,12 @@ LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPA
  return DefWindowProc(window,Message,wParam,lParam);
 }
 
+void SWGF_Show_Error(const char *message)
+{
+ puts(message);
+ exit(EXIT_FAILURE);
+}
+
 SWGF_Base::SWGF_Base()
 {
  HRESULT status;
@@ -99,8 +105,7 @@ SWGF_Base::SWGF_Base()
  {
   if(status!=S_FALSE)
   {
-   puts("Can't initialize COM");
-   exit(EXIT_FAILURE);
+   SWGF_Show_Error("Can't initialize COM");
   }
 
  }
@@ -132,8 +137,7 @@ void SWGF_Synchronization::create_timer()
  timer=CreateWaitableTimer(NULL,FALSE,NULL);
  if (timer==NULL)
  {
-  puts("Can't create synchronization timer");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't create synchronization timer");
  }
 
 }
@@ -144,8 +148,7 @@ void SWGF_Synchronization::set_timer(const unsigned long int interval)
  start.QuadPart=0;
  if(SetWaitableTimer(timer,&start,interval,NULL,NULL,FALSE)==FALSE)
  {
-  puts("Can't set timer");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't set timer");
  }
 
 }
@@ -182,31 +185,26 @@ void SWGF_Engine::prepare_engine()
  window_class.hInstance=GetModuleHandle(NULL);
  if(window_class.hInstance==NULL)
  {
-  puts("Can't get the application instance");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't get the application instance");
  }
  window_class.hbrBackground=(HBRUSH)GetStockObject(BLACK_BRUSH);
  if (window_class.hbrBackground==NULL)
  {
-  puts("Can't set background color");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't set background color");
  }
  window_class.hIcon=LoadIcon(NULL,IDI_APPLICATION);
  if (window_class.hIcon==NULL)
  {
-  puts("Can't load the standart program icon");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't load the standart program icon");
  }
  window_class.hCursor=LoadCursor(NULL,IDC_ARROW);
  if (window_class.hCursor==NULL)
  {
-  puts("Can't load the standart cursor");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't load the standart cursor");
  }
  if (!RegisterClass(&window_class))
  {
-  puts("Can't register window class");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't register window class");
  }
 
 }
@@ -224,8 +222,7 @@ void SWGF_Engine::create_window()
  window=CreateWindow(window_class.lpszClassName,NULL,WS_VISIBLE|WS_POPUP,0,0,width,height,NULL,NULL,window_class.hInstance,NULL);
  if (window==NULL)
  {
-  puts("Can't create window");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't create window");
  }
  EnableWindow(window,TRUE);
  SetFocus(window);
@@ -241,13 +238,11 @@ void SWGF_Engine::capture_mouse()
  RECT border;
  if(GetClientRect(window,&border)==FALSE)
  {
-  puts("Can't capture window");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't capture window");
  }
  if(ClipCursor(&border)==FALSE)
  {
-  puts("Can't capture cursor");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't capture cursor");
  }
 
 }
@@ -325,11 +320,10 @@ void SWGF_Frame::set_size(const SWGF_SURFACE surface)
 void SWGF_Frame::create_render_buffer()
 {
  buffer_length=(size_t)frame_width*(size_t)frame_height;
- buffer=static_cast<unsigned int*>(calloc(buffer_length,sizeof(unsigned int)));
+ buffer=(unsigned int*)calloc(buffer_length,sizeof(unsigned int));
  if(buffer==NULL)
  {
-  puts("Can't allocate memory for render buffer");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't allocate memory for render buffer");
  }
  else
  {
@@ -382,8 +376,8 @@ void SWGF_Display::set_video_mode()
 {
  if (ChangeDisplaySettings(&display,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)
  {
-  puts("Can't change video mode");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't change video mode");
+  ;
  }
 
 }
@@ -392,8 +386,7 @@ void SWGF_Display::get_video_mode()
 {
  if (EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS,&display)==FALSE)
  {
-  puts("Can't get display setting");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't get display setting");
  }
 
 }
@@ -503,14 +496,12 @@ void SWGF_WINGL::set_pixel_format(const int format)
 {
  if(format==0)
  {
-  puts("Invalid pixel format");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Invalid pixel format");
  }
  DescribePixelFormat(context,format,setting.nSize,&setting);
  if(SetPixelFormat(context,format,&setting)==FALSE)
  {
-  puts("Can't set pixel format");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't set pixel format");
  }
 
 }
@@ -520,8 +511,7 @@ void SWGF_WINGL::create_render_context()
  render=wglCreateContext(context);
  if(render==NULL)
  {
-  puts("Can't create render context");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't create render context");
  }
  wglMakeCurrent(context,render);
 }
@@ -532,8 +522,7 @@ void SWGF_WINGL::set_render()
  context=GetDC(this->get_window());
  if(context==NULL)
  {
-  puts("Can't get the window context");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't get the window context");
  }
  format=this->get_pixel_format();
  this->set_pixel_format(format);
@@ -555,8 +544,7 @@ void SWGF_WINGL::disable_vsync()
  wglSwapIntervalEXT=(PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
  if(wglSwapIntervalEXT==NULL)
  {
-  puts("Can't load OPENGL extension");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't load OPENGL extension");
  }
  wglSwapIntervalEXT(0);
 }
@@ -623,8 +611,7 @@ void SWGF_Render::check_videocard()
  glGetIntegerv(GL_MAX_TEXTURE_SIZE,&control);
  if((control<(int)this->get_frame_width())||(control<(int)this->get_frame_height()))
  {
-  puts("This video card don't support request texture size");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("This video card don't support request texture size");
  }
 
 }
@@ -754,8 +741,7 @@ void SWGF_Keyboard::initialize()
  preversion=(unsigned char*)calloc(SWGF_KEYBOARD,1);
  if(preversion==NULL)
  {
-  puts("Can't allocate memory for keyboard state buffer");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't allocate memory for keyboard state buffer");
  }
 
 }
@@ -816,8 +802,7 @@ void SWGF_Mouse::set_position(const unsigned long int x,const unsigned long int 
 {
  if(SetCursorPos(x,y)==FALSE)
  {
-  puts("Can't set the mouse cursor position");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't set the mouse cursor position");
  }
 
 }
@@ -827,8 +812,7 @@ unsigned long int SWGF_Mouse::get_x()
  POINT position;
  if(GetCursorPos(&position)==FALSE)
  {
-  puts("Can't get the mouse cursor position");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't get the mouse cursor position");
  }
  return position.x;
 }
@@ -838,8 +822,7 @@ unsigned long int SWGF_Mouse::get_y()
  POINT position;
  if(GetCursorPos(&position)==FALSE)
  {
-  puts("Can't get the mouse cursor position");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't get the mouse cursor position");
  }
  return position.y;
 }
@@ -1147,8 +1130,7 @@ wchar_t *SWGF_Multimedia::convert_file_name(const char *target)
  name=(wchar_t*)calloc(length+1,sizeof(wchar_t));
  if(name==NULL)
  {
-  puts("Can't allocate memory");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't allocate memory");
  }
  for(index=0;index<length;++index) name[index]=btowc(target[index]);
  return name;
@@ -1159,8 +1141,7 @@ void SWGF_Multimedia::open(const wchar_t *target)
  player->StopWhenReady();
  if(loader->RenderFile(target,NULL)!=S_OK)
  {
-  puts("Can't load a multimedia file");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't load a multimedia file");
  }
  video->put_FullScreenMode(OATRUE);
 }
@@ -1176,8 +1157,7 @@ bool SWGF_Multimedia::is_end()
  }
  else
  {
-  puts("Can't get the current and the end position");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't get the current and the end position");
  }
  return result;
 }
@@ -1188,8 +1168,7 @@ void SWGF_Multimedia::rewind()
  position=0;
  if(controler->SetPositions(&position,AM_SEEKING_AbsolutePositioning,NULL,AM_SEEKING_NoPositioning)!=S_OK)
  {
-  puts("Can't set start position");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't set start position");
  }
 
 }
@@ -1198,23 +1177,20 @@ void SWGF_Multimedia::initialize()
 {
  if(CoCreateInstance(CLSID_FilterGraph,NULL,CLSCTX_INPROC_SERVER,IID_IGraphBuilder,(void**)&loader)!=S_OK)
  {
-  puts("Can't create a multimedia loader");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't create a multimedia loader");
  }
  if(loader->QueryInterface(IID_IMediaControl,(void**)&player)!=S_OK)
  {
-  puts("Can't create a multimedia player");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't create a multimedia player");
+  ;
  }
  if(loader->QueryInterface(IID_IMediaSeeking,(void**)&controler)!=S_OK)
  {
-  puts("Can't create a player controler");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't create a player controler");
  }
  if(loader->QueryInterface(IID_IVideoWindow,(void**)&video)!=S_OK)
  {
-  puts("Can't create a video player");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't create a video player");
  }
 
 }
@@ -1234,8 +1210,7 @@ bool SWGF_Multimedia::check_playing()
  result=false;
  if(player->GetState(INFINITE,&state)==E_FAIL)
  {
-  puts("Can't get the multimedia state");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't get the multimedia state");
  }
  else
  {
@@ -1275,8 +1250,7 @@ void SWGF_Memory::get_status()
 {
  if(GlobalMemoryStatusEx(&memory)==FALSE)
  {
-  puts("Can't get the memory status");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't get the memory status");
  }
 
 }
@@ -1327,8 +1301,7 @@ void SWGF_System::enable_logging(const char *name)
 {
  if(freopen(name,"wt",stdout)==NULL)
  {
-  puts("Can't create log file");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't create log file");
  }
 
 }
@@ -1472,8 +1445,7 @@ unsigned char *SWGF_Image::create_buffer(const size_t length)
  result=static_cast<unsigned char*>(calloc(length,sizeof(unsigned char)));
  if(result==NULL)
  {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't allocate memory for image buffer");
  }
  return result;
 }
@@ -1494,8 +1466,7 @@ FILE *SWGF_Image::open_image(const char *name)
  target=fopen(name,"rb");
  if(target==NULL)
  {
-  puts("Can't open a image file");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't open a image file");
  }
  return target;
 }
@@ -1526,15 +1497,13 @@ void SWGF_Image::load_tga(const char *name)
  fread(&image,10,1,target);
  if((head.color_map!=0)||(image.color!=24))
  {
-  puts("Invalid image format");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Invalid image format");
  }
  if(head.type!=2)
  {
   if(head.type!=10)
   {
-   puts("Invalid image format");
-   exit(EXIT_FAILURE);
+   SWGF_Show_Error("Invalid image format");
   }
 
  }
@@ -1594,8 +1563,7 @@ void SWGF_Image::load_pcx(const char *name)
  fread(&head,128,1,target);
  if((head.color*head.planes!=24)&&(head.compress!=1))
  {
-  puts("Incorrect image format");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Incorrect image format");
  }
  width=head.max_x-head.min_x+1;
  height=head.max_y-head.min_y+1;
@@ -1710,8 +1678,7 @@ SWGF_Color *SWGF_Canvas::create_buffer(const unsigned long int image_width,const
  result=(SWGF_Color*)calloc(length,3);
  if(result==NULL)
  {
-  puts("Can't allocate memory for image buffer");
-  exit(EXIT_FAILURE);
+  SWGF_Show_Error("Can't allocate memory for image buffer");
  }
  return result;
 }

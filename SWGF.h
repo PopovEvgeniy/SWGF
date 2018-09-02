@@ -169,6 +169,7 @@ struct SWGF_Box
 };
 
 LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
+void SWGF_Show_Error(const char *message);
 
 class SWGF_Base
 {
