@@ -82,10 +82,10 @@ LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPA
   SWGF_Buttons[SWGF_MOUSE_MIDDLE]=SWGFKEY_RELEASE;
   break;
   case WM_KEYDOWN:
-  SWGF_Keys[(lParam >> 16)&0x7f]=SWGFKEY_PRESS;
+  SWGF_Keys[SWGF_GETSCANCODE(lParam)]=SWGFKEY_PRESS;
   break;
   case WM_KEYUP:
-  SWGF_Keys[(lParam >> 16)&0x7f]=SWGFKEY_RELEASE;
+  SWGF_Keys[SWGF_GETSCANCODE(lParam)]=SWGFKEY_RELEASE;
   break;
  }
  return DefWindowProc(window,Message,wParam,lParam);

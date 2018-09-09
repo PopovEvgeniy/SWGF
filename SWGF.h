@@ -67,6 +67,8 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #include <mmsystem.h>
 #include <GL\gl.h>
 
+#define SWGF_GETSCANCODE(argument) ((argument >> 16)&0x7f)
+
 #define SWGF_KEYBOARD 256
 #define SWGF_MOUSE 3
 
