@@ -60,8 +60,8 @@ LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPA
   PostQuitMessage(0);
   break;
   case WM_CREATE:
-  memset(SWGF_Keys,SWGFKEY_NONE,SWGF_KEYBOARD);
-  memset(SWGF_Buttons,SWGFKEY_NONE,SWGF_MOUSE);
+  memset(SWGF_Keys,SWGFKEY_RELEASE,SWGF_KEYBOARD);
+  memset(SWGF_Buttons,SWGFKEY_RELEASE,SWGF_MOUSE);
   break;
   case WM_LBUTTONDOWN:
   SWGF_Buttons[SWGF_MOUSE_LEFT]=SWGFKEY_PRESS;
@@ -738,7 +738,7 @@ SWGF_Keyboard::~SWGF_Keyboard()
 
 void SWGF_Keyboard::initialize()
 {
- preversion=(unsigned char*)calloc(SWGF_KEYBOARD,1);
+ preversion=(unsigned char*)calloc(SWGF_KEYBOARD,sizeof(unsigned char));
  if(preversion==NULL)
  {
   SWGF_Show_Error("Can't allocate memory for keyboard state buffer");
@@ -751,6 +751,7 @@ bool SWGF_Keyboard::check_hold(const unsigned char code)
  bool result;
  result=false;
  if(SWGF_Keys[code]==SWGFKEY_PRESS) result=true;
+ preversion[code]=SWGF_Keys[code];
  return result;
 }
 
@@ -760,7 +761,7 @@ bool SWGF_Keyboard::check_press(const unsigned char code)
  result=false;
  if(SWGF_Keys[code]==SWGFKEY_PRESS)
  {
-  if(preversion[code]!=SWGFKEY_PRESS) result=true;
+  if(preversion[code]==SWGFKEY_RELEASE) result=true;
  }
  preversion[code]=SWGF_Keys[code];
  return result;
@@ -772,15 +773,15 @@ bool SWGF_Keyboard::check_release(const unsigned char code)
  result=false;
  if(SWGF_Keys[code]==SWGFKEY_RELEASE)
  {
-  result=true;
-  SWGF_Keys[code]=SWGFKEY_NONE;
+  if(preversion[code]==SWGFKEY_PRESS) result=true;
  }
+ preversion[code]=SWGF_Keys[code];
  return result;
 }
 
 SWGF_Mouse::SWGF_Mouse()
 {
- memset(preversion,SWGFKEY_NONE,SWGF_MOUSE);
+ memset(preversion,SWGFKEY_RELEASE,SWGF_MOUSE);
 }
 
 SWGF_Mouse::~SWGF_Mouse()
@@ -834,6 +835,7 @@ bool SWGF_Mouse::check_hold(const unsigned char button)
  if(button<=SWGF_MOUSE_MIDDLE)
  {
   if(SWGF_Buttons[button]==SWGFKEY_PRESS) result=true;
+  preversion[button]=SWGF_Buttons[button];
  }
  return result;
 }
@@ -846,7 +848,7 @@ bool SWGF_Mouse::check_press(const unsigned char button)
  {
   if(SWGF_Buttons[button]==SWGFKEY_PRESS)
   {
-   if(preversion[button]!=SWGFKEY_PRESS) result=true;
+   if(preversion[button]==SWGFKEY_RELEASE) result=true;
   }
 
  }
@@ -862,11 +864,11 @@ bool SWGF_Mouse::check_release(const unsigned char button)
  {
   if(SWGF_Buttons[button]==SWGFKEY_RELEASE)
   {
-   result=true;
-   SWGF_Buttons[button]=SWGFKEY_NONE;
+   if(preversion[button]==SWGFKEY_PRESS) result=true;
   }
 
  }
+ preversion[button]=SWGF_Buttons[button];
  return result;
 }
 
