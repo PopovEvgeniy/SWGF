@@ -1024,18 +1024,18 @@ SWGF_GAMEPAD_DPAD SWGF_Gamepad::get_dpad()
  return result;
 }
 
-char SWGF_Gamepad::get_stick_x(const SWGF_GAMEPAD_STICKS stick)
+SWGF_GAMEPAD_DIRECTION SWGF_Gamepad::get_stick_x(const SWGF_GAMEPAD_STICKS stick)
 {
- char result;
+ SWGF_GAMEPAD_DIRECTION result;
  unsigned long int control;
- result=0;
+ result=SWGF_NEUTRAL_DIRECTION;
  if(stick==SWGF_GAMEPAD_LEFT_STICK)
  {
   if(this->get_sticks_amount()>0)
   {
    control=(configuration.wXmax-configuration.wXmin)/2;
-   if(current.dwXpos<control) result=-1;
-   if(current.dwXpos>control) result=1;
+   if(current.dwXpos<control) result=SWGF_NEGATIVE_DIRECTION;
+   if(current.dwXpos>control) result=SWGF_POSITIVE_DIRECTION;
   }
 
  }
@@ -1044,26 +1044,26 @@ char SWGF_Gamepad::get_stick_x(const SWGF_GAMEPAD_STICKS stick)
   if(this->get_sticks_amount()>1)
   {
    control=(configuration.wZmax-configuration.wZmin)/2;
-   if(current.dwZpos<control) result=-1;
-   if(current.dwZpos>control) result=1;
+   if(current.dwZpos<control) result=SWGF_NEGATIVE_DIRECTION;
+   if(current.dwZpos>control) result=SWGF_POSITIVE_DIRECTION;
   }
 
  }
  return result;
 }
 
-char SWGF_Gamepad::get_stick_y(const SWGF_GAMEPAD_STICKS stick)
+SWGF_GAMEPAD_DIRECTION SWGF_Gamepad::get_stick_y(const SWGF_GAMEPAD_STICKS stick)
 {
- char result;
+ SWGF_GAMEPAD_DIRECTION result;
  unsigned long int control;
- result=0;
+ result=SWGF_NEUTRAL_DIRECTION;
  if(stick==SWGF_GAMEPAD_LEFT_STICK)
  {
   if(this->get_sticks_amount()>0)
   {
    control=(configuration.wYmax-configuration.wYmin)/2;
-   if(current.dwYpos<control) result=-1;
-   if(current.dwYpos>control) result=1;
+   if(current.dwYpos<control) result=SWGF_NEGATIVE_DIRECTION;
+   if(current.dwYpos>control) result=SWGF_POSITIVE_DIRECTION;
   }
 
  }
@@ -1072,8 +1072,8 @@ char SWGF_Gamepad::get_stick_y(const SWGF_GAMEPAD_STICKS stick)
   if(this->get_sticks_amount()>1)
   {
    control=(configuration.wRmax-configuration.wRmin)/2;
-   if(current.dwRpos<control) result=-1;
-   if(current.dwRpos>control) result=1;
+   if(current.dwRpos<control) result=SWGF_NEGATIVE_DIRECTION;
+   if(current.dwRpos>control) result=SWGF_POSITIVE_DIRECTION;
   }
 
  }
