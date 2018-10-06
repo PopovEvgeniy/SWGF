@@ -1308,6 +1308,68 @@ void SWGF_System::enable_logging(const char *name)
 
 }
 
+SWGF_File::SWGF_File()
+{
+ target=NULL;
+}
+
+SWGF_File::~SWGF_File()
+{
+ if(target!=NULL) fclose(target);
+}
+
+void SWGF_File::open(const char *name)
+{
+ target=fopen(name,"w+b");
+ if(target==NULL)
+ {
+  SWGF_Show_Error("Can't open the binary file");
+ }
+
+}
+
+void SWGF_File::close()
+{
+ if(target!=NULL) fclose(target);
+}
+
+void SWGF_File::set_position(const off_t offset)
+{
+ fseek(target,offset,SEEK_SET);
+}
+
+long int SWGF_File::get_position()
+{
+ return ftell(target);
+}
+
+long int SWGF_File::get_length()
+{
+ long int result;
+ fseek(target,0,SEEK_END);
+ result=ftell(target);
+ rewind(target);
+ return result;
+}
+
+void SWGF_File::read(void *buffer,const size_t length)
+{
+ fread(buffer,length,1,target);
+}
+
+void SWGF_File::write(void *buffer,const size_t length)
+{
+ fwrite(buffer,length,1,target);
+}
+
+bool SWGF_File::check_error()
+{
+ bool result;
+ result=false;
+ if(ferror(target)!=0) result=true;
+ return result;
+}
+
 SWGF_Timer::SWGF_Timer()
 {
  interval=0;
