@@ -547,8 +547,9 @@ class SWGF_Sprite:public SWGF_Canvas
  void set_kind(const SWGF_SPRITE_TYPE kind);
  SWGF_SPRITE_TYPE get_kind();
  void set_target(const unsigned long int target);
+ void set_position(const unsigned long int x,const unsigned long int y);
  void clone(SWGF_Sprite &target);
- void draw_sprite(const unsigned long int x,const unsigned long int y);
+ void draw_sprite();
 };
 
 class SWGF_Text
