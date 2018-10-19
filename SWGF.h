@@ -222,6 +222,7 @@ class SWGF_Frame
  unsigned long int frame_width;
  unsigned long int frame_height;
  unsigned int get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue);
+ size_t get_offset(const unsigned long int x,const unsigned long int y);
  protected:
  void set_size(const SWGF_SURFACE surface);
  void create_render_buffer();

@@ -302,6 +302,11 @@ unsigned int SWGF_Frame::get_rgb(const unsigned int red,const unsigned int green
  return red+(green<<8)+(blue<<16);
 }
 
+size_t SWGF_Frame::get_offset(const unsigned long int x,const unsigned long int y)
+{
+ return (size_t)x+(size_t)y*(size_t)frame_width;
+}
+
 void SWGF_Frame::set_size(const SWGF_SURFACE surface)
 {
  if(surface==SWGF_SURFACE_SMALL)
@@ -341,7 +346,7 @@ void SWGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,
 {
  if((x<frame_width)&&(y<frame_height))
  {
-  buffer[(size_t)x+(size_t)y*(size_t)frame_width]=this->get_rgb(red,green,blue);
+  buffer[this->get_offset(x,y)]=this->get_rgb(red,green,blue);
  }
 
 }
@@ -394,8 +399,12 @@ void SWGF_Display::get_video_mode()
 void SWGF_Display::check_video_mode()
 {
  this->get_video_mode();
- if(display.dmBitsPerPel<16) display.dmBitsPerPel=16;
- this->set_video_mode();
+ if(display.dmBitsPerPel<16)
+ {
+  display.dmBitsPerPel=16;
+  this->set_video_mode();
+ }
+
 }
 
 void SWGF_Display::reset_display()
