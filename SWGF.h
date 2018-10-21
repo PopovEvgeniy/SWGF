@@ -244,7 +244,6 @@ class SWGF_Display
  void set_video_mode();
  protected:
  void check_video_mode();
- void reset_display();
  void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  unsigned long int get_color();
  public:

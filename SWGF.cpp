@@ -407,18 +407,16 @@ void SWGF_Display::check_video_mode()
 
 }
 
-void SWGF_Display::reset_display()
-{
- ChangeDisplaySettings(NULL,0);
-}
-
 void SWGF_Display::set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height)
 {
  this->get_video_mode();
- display.dmPelsWidth=screen_width;
- display.dmPelsHeight=screen_height;
- if(display.dmBitsPerPel<16) display.dmBitsPerPel=16;
- this->set_video_mode();
+ if((display.dmPelsWidth!=screen_width)||(display.dmPelsHeight!=screen_height))
+ {
+  display.dmPelsWidth=screen_width;
+  display.dmPelsHeight=screen_height;
+  this->set_video_mode();
+ }
+
 }
 
 unsigned long int SWGF_Display::get_color()
