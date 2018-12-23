@@ -382,12 +382,9 @@ void SWGF_FPS::update_counter()
 {
  time_t stop;
  if(current==0) start=time(NULL);
+ ++current;
  stop=time(NULL);
- if(difftime(stop,start)<1)
- {
-  ++current;
- }
- else
+ if(difftime(stop,start)>=1)
  {
   fps=current;
   current=0;
