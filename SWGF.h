@@ -236,6 +236,20 @@ class SWGF_Frame
  unsigned long int get_frame_height();
 };
 
+class SWGF_FPS
+{
+ private:
+ time_t start;
+ unsigned long int current;
+ unsigned long int fps;
+ protected:
+ void update_counter();
+ public:
+ SWGF_FPS();
+ ~SWGF_FPS();
+ unsigned long int get_fps();
+};
+
 class SWGF_Display
 {
  private:
@@ -296,7 +310,7 @@ class SWGF_Render:public SWGF_WINGL, public SWGF_Frame
  ~SWGF_Render();
 };
 
-class SWGF_Screen:public SWGF_Synchronization, public SWGF_Render
+class SWGF_Screen:public SWGF_FPS, public SWGF_Synchronization, public SWGF_Render
 {
  public:
  void initialize();

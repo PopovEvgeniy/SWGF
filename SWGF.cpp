@@ -366,6 +366,40 @@ unsigned long int SWGF_Frame::get_frame_height()
  return frame_height;
 }
 
+SWGF_FPS::SWGF_FPS()
+{
+ start=time(NULL);
+ current=0;
+ fps=0;
+}
+
+SWGF_FPS::~SWGF_FPS()
+{
+
+}
+
+void SWGF_FPS::update_counter()
+{
+ time_t stop;
+ if(current==0) start=time(NULL);
+ stop=time(NULL);
+ if(difftime(stop,start)<1)
+ {
+  ++current;
+ }
+ else
+ {
+  fps=current;
+  current=0;
+ }
+
+}
+
+unsigned long int SWGF_FPS::get_fps()
+{
+ return fps;
+}
+
 SWGF_Display::SWGF_Display()
 {
  memset(&display,0,sizeof(DEVMODE));
@@ -717,6 +751,7 @@ void SWGF_Screen::set_mode(const unsigned long int screen_width,const unsigned l
 bool SWGF_Screen::update()
 {
  this->refresh();
+ this->update_counter();
  return this->process_message();
 }
 

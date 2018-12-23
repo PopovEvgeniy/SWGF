@@ -10,24 +10,22 @@
 				<Option output="bin/Release/demo" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-m32" />
-				</Compiler>
+				<Option compiler="mingw-w64_32_bit" />
 				<Linker>
-					<Add option="-m32" />
+					<Add option="-static-libstdc++" />
+					<Add option="-static-libgcc" />
+					<Add option="-static" />
 				</Linker>
 			</Target>
 			<Target title="64 bit">
 				<Option output="bin/Release/demo64" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-m64" />
-				</Compiler>
+				<Option compiler="mingw-w64_64_bit" />
 				<Linker>
-					<Add option="-m64" />
+					<Add option="-static-libstdc++" />
+					<Add option="-static-libgcc" />
+					<Add option="-static" />
 				</Linker>
 			</Target>
 		</Build>
@@ -36,9 +34,6 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Linker>
-			<Add option="-static-libstdc++" />
-			<Add option="-static-libgcc" />
-			<Add option="-static" />
 			<Add library="user32" />
 			<Add library="kernel32" />
 			<Add library="gdi32" />
