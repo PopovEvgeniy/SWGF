@@ -283,7 +283,7 @@ SWGF_Frame::SWGF_Frame()
 {
  frame_width=512;
  frame_height=512;
- buffer_length=0;
+ pixels=0;
  buffer=NULL;
 }
 
@@ -324,15 +324,11 @@ void SWGF_Frame::set_size(const SWGF_SURFACE surface)
 
 void SWGF_Frame::create_render_buffer()
 {
- buffer_length=(size_t)frame_width*(size_t)frame_height;
- buffer=(unsigned int*)calloc(buffer_length,sizeof(unsigned int));
+ pixels=(size_t)frame_width*(size_t)frame_height;
+ buffer=(unsigned int*)calloc(pixels,sizeof(unsigned int));
  if(buffer==NULL)
  {
   SWGF_Show_Error("Can't allocate memory for render buffer");
- }
- else
- {
-  buffer_length*=sizeof(unsigned int);
  }
 
 }
@@ -353,7 +349,12 @@ void SWGF_Frame::draw_pixel(const unsigned long int x,const unsigned long int y,
 
 void SWGF_Frame::clear_screen()
 {
- memset(buffer,0,buffer_length);
+ size_t index;
+ for (index=0;index<pixels;++index)
+ {
+  buffer[index]=0;
+ }
+
 }
 
 unsigned long int SWGF_Frame::get_frame_width()

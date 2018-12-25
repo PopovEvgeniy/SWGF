@@ -217,7 +217,7 @@ class SWGF_Engine
 class SWGF_Frame
 {
  private:
- size_t buffer_length;
+ size_t pixels;
  unsigned int *buffer;
  unsigned long int frame_width;
  unsigned long int frame_height;
