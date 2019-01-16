@@ -583,13 +583,13 @@ class SWGF_Text
  unsigned long int current_x;
  unsigned long int current_y;
  unsigned long int step_x;
- SWGF_Sprite *sprite;
+ SWGF_Sprite *font;
  void draw_character(const char target);
  public:
  SWGF_Text();
  ~SWGF_Text();
  void set_position(const unsigned long int x,const unsigned long int y);
- void load_font(SWGF_Sprite *font);
+ void load_font(SWGF_Sprite *target);
  void draw_text(const char *text);
 };
 
