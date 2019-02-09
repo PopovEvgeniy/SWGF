@@ -183,7 +183,12 @@ class SWGF_Base
 class SWGF_Synchronization
 {
  private:
- HANDLE timer;
+ TIMECAPS resolution;
+ unsigned long int start;
+ unsigned long int delay;
+ void set_timer_resolution();
+ void reset_timer_resolution();
+ void pause(const unsigned long int interval);
  protected:
  void create_timer();
  void set_timer(const unsigned long int interval);

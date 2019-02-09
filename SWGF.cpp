@@ -119,43 +119,66 @@ SWGF_Base::~SWGF_Base()
 
 SWGF_Synchronization::SWGF_Synchronization()
 {
- timer=NULL;
+ resolution.wPeriodMin=0;
+ resolution.wPeriodMax=0;
+ start=0;
+ delay=0;
 }
 
 SWGF_Synchronization::~SWGF_Synchronization()
 {
- if(timer==NULL)
+
+}
+
+void SWGF_Synchronization::set_timer_resolution()
+{
+ if(timeBeginPeriod(resolution.wPeriodMin)!=TIMERR_NOERROR)
  {
-  CancelWaitableTimer(timer);
-  CloseHandle(timer);
+  SWGF_Show_Error("Can't set timer resolution");
  }
 
 }
 
+void SWGF_Synchronization::reset_timer_resolution()
+{
+ if(timeEndPeriod(resolution.wPeriodMin)!=TIMERR_NOERROR)
+ {
+  SWGF_Show_Error("Can't reset timer resolution");
+ }
+
+}
+
+void SWGF_Synchronization::pause(const unsigned long int interval)
+{
+ this->set_timer_resolution();
+ Sleep(interval);
+ this->reset_timer_resolution();
+}
+
 void SWGF_Synchronization::create_timer()
 {
- timer=CreateWaitableTimer(NULL,FALSE,NULL);
- if (timer==NULL)
+ if(timeGetDevCaps(&resolution,sizeof(TIMECAPS))!=MMSYSERR_NOERROR)
  {
-  SWGF_Show_Error("Can't create synchronization timer");
+  SWGF_Show_Error("Can't get timer resolution");
  }
 
 }
 
 void SWGF_Synchronization::set_timer(const unsigned long int interval)
 {
- LARGE_INTEGER start;
- start.QuadPart=0;
- if(SetWaitableTimer(timer,&start,interval,NULL,NULL,FALSE)==FALSE)
- {
-  SWGF_Show_Error("Can't set timer");
- }
-
+ delay=interval;
+ start=timeGetTime();
 }
 
 void SWGF_Synchronization::wait_timer()
 {
- WaitForSingleObject(timer,INFINITE);
+ unsigned long int interval;
+ interval=timeGetTime()-start;
+ if(interval<delay)
+ {
+  this->pause(delay-interval);
+ }
+ start=timeGetTime();
 }
 
 SWGF_Engine::SWGF_Engine()
