@@ -554,6 +554,7 @@ class SWGF_Background:public SWGF_Canvas
 class SWGF_Sprite:public SWGF_Canvas
 {
  private:
+ bool transparent;
  unsigned long int current_x;
  unsigned long int current_y;
  unsigned long int sprite_width;
@@ -566,6 +567,8 @@ class SWGF_Sprite:public SWGF_Canvas
  public:
  SWGF_Sprite();
  ~SWGF_Sprite();
+ void set_transparent(const bool enabled);
+ bool get_transparent();
  void set_x(const unsigned long int x);
  void set_y(const unsigned long int y);
  unsigned long int get_x();
