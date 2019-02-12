@@ -1330,16 +1330,28 @@ void SWGF_Memory::get_status()
 
 }
 
-unsigned long long int SWGF_Memory::get_total_memory()
+unsigned long long int SWGF_Memory::get_total_physical()
 {
  this->get_status();
  return memory.ullTotalPhys;
 }
 
-unsigned long long int SWGF_Memory::get_free_memory()
+unsigned long long int SWGF_Memory::get_free_physical()
 {
  this->get_status();
  return memory.ullAvailPhys;
+}
+
+unsigned long long int SWGF_Memory::get_total_virtual()
+{
+ this->get_status();
+ return memory.ullTotalVirtual;
+}
+
+unsigned long long int SWGF_Memory::get_free_virtual()
+{
+ this->get_status();
+ return memory.ullAvailVirtual;
 }
 
 SWGF_System::SWGF_System()
