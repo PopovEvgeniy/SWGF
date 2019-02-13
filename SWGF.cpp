@@ -1354,6 +1354,12 @@ unsigned long long int SWGF_Memory::get_free_virtual()
  return memory.ullAvailVirtual;
 }
 
+unsigned long int SWGF_Memory::get_usage()
+{
+ this->get_status();
+ return memory.dwMemoryLoad;
+}
+
 SWGF_System::SWGF_System()
 {
  srand(time(NULL));
