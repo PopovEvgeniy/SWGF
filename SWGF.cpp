@@ -809,14 +809,20 @@ SWGF_Keyboard::~SWGF_Keyboard()
  if(preversion!=NULL) free(preversion);
 }
 
+unsigned char *SWGF_Keyboard::create_buffer(const char *error)
+{
+ unsigned char *buffer;
+ buffer=(unsigned char*)calloc(SWGF_KEYBOARD,sizeof(unsigned char));
+ if(buffer==NULL)
+ {
+  SWGF_Show_Error(error);
+ }
+ return buffer;
+}
+
 void SWGF_Keyboard::initialize()
 {
- preversion=(unsigned char*)calloc(SWGF_KEYBOARD,sizeof(unsigned char));
- if(preversion==NULL)
- {
-  SWGF_Show_Error("Can't allocate memory for keyboard state buffer");
- }
-
+ preversion=this->create_buffer("Can't allocate memory for keyboard state buffer");
 }
 
 bool SWGF_Keyboard::check_hold(const unsigned char code)

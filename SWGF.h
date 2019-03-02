@@ -329,6 +329,7 @@ class SWGF_Keyboard
 {
  private:
  unsigned char *preversion;
+ unsigned char *create_buffer(const char *error);
  public:
  SWGF_Keyboard();
  ~SWGF_Keyboard();
