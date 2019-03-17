@@ -5,17 +5,17 @@ int main(void)
  long int x,y,screen_width,screen_height;
  unsigned char frame;
  char perfomance[8];
- SWGF_Timer timer;
- SWGF_Screen screen;
- SWGF_System System;
- SWGF_Keyboard keyboard;
- SWGF_Gamepad gamepad;
- SWGF_Mouse mouse;
- SWGF_Multimedia media;
- SWGF_Image image;
- SWGF_Background space;
- SWGF_Sprite ship,font;
- SWGF_Text text;
+ SWGF::Timer timer;
+ SWGF::Screen screen;
+ SWGF::System System;
+ SWGF::Keyboard keyboard;
+ SWGF::Gamepad gamepad;
+ SWGF::Mouse mouse;
+ SWGF::Multimedia media;
+ SWGF::Image image;
+ SWGF::Background space;
+ SWGF::Sprite ship,font;
+ SWGF::Text text;
  System.enable_logging("log.txt");
  keyboard.initialize();
  space.initialize(screen.get_handle());
@@ -34,10 +34,10 @@ int main(void)
  text.load_font(font.get_handle());
  text.set_position(font.get_width(),font.get_width());
  ship.set_frames(2);
- ship.set_kind(SWGF_HORIZONTAL_STRIP);
+ ship.set_kind(HORIZONTAL_STRIP);
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);
- space.set_kind(SWGF_NORMAL_BACKGROUND);
+ space.set_kind(NORMAL_BACKGROUND);
  frame=1;
  mouse.hide();
  timer.set_timer(1);
@@ -49,52 +49,52 @@ int main(void)
  {
   gamepad.update();
   if(media.check_playing()==false) media.play();
-  if(mouse.check_press(SWGF_MOUSE_LEFT)==true) break;
+  if(mouse.check_press(MOUSE_LEFT)==true) break;
   if(keyboard.check_hold(57)==true) break;
   if(keyboard.check_hold(72)==true) y-=2;
   if(keyboard.check_hold(80)==true) y+=2;
   if(keyboard.check_hold(75)==true) x-=2;
   if(keyboard.check_hold(77)==true) x+=2;
-  if(keyboard.check_press(71)==true) ship.mirror_image(SWGF_MIRROR_HORIZONTAL);
-  if(keyboard.check_press(79)==true) ship.mirror_image(SWGF_MIRROR_VERTICAL);
-  if(gamepad.check_hold(SWGF_GAMEPAD_BUTTON2)==true) break;
-  if(gamepad.check_press(SWGF_GAMEPAD_BUTTON4)==true) ship.mirror_image(SWGF_MIRROR_HORIZONTAL);
-  if(gamepad.check_press(SWGF_GAMEPAD_BUTTON3)==true) ship.mirror_image(SWGF_MIRROR_VERTICAL);
+  if(keyboard.check_press(71)==true) ship.mirror_image(MIRROR_HORIZONTAL);
+  if(keyboard.check_press(79)==true) ship.mirror_image(MIRROR_VERTICAL);
+  if(gamepad.check_hold(GAMEPAD_BUTTON2)==true) break;
+  if(gamepad.check_press(GAMEPAD_BUTTON4)==true) ship.mirror_image(MIRROR_HORIZONTAL);
+  if(gamepad.check_press(GAMEPAD_BUTTON3)==true) ship.mirror_image(MIRROR_VERTICAL);
   switch (gamepad.get_dpad())
   {
-   case SWGF_GAMEPAD_UP:
+   case GAMEPAD_UP:
    y--;
    break;
-   case SWGF_GAMEPAD_DOWN:
+   case GAMEPAD_DOWN:
    y++;
    break;
-   case SWGF_GAMEPAD_UPLEFT:
+   case GAMEPAD_UPLEFT:
    y--;
    x--;
    break;
-   case SWGF_GAMEPAD_UPRIGHT:
+   case GAMEPAD_UPRIGHT:
    y--;
    x++;
    break;
-   case SWGF_GAMEPAD_DOWNLEFT:
+   case GAMEPAD_DOWNLEFT:
    y++;
    x--;
    break;
-   case SWGF_GAMEPAD_DOWNRIGHT:
+   case GAMEPAD_DOWNRIGHT:
    y++;
    x++;
    break;
-   case SWGF_GAMEPAD_LEFT:
+   case GAMEPAD_LEFT:
    x--;
    break;
-   case SWGF_GAMEPAD_RIGHT:
+   case GAMEPAD_RIGHT:
    x++;
    break;
   }
-  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==SWGF_NEGATIVE_DIRECTION) x--;
-  if(gamepad.get_stick_x(SWGF_GAMEPAD_LEFT_STICK)==SWGF_POSITIVE_DIRECTION) x++;
-  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==SWGF_NEGATIVE_DIRECTION) y--;
-  if(gamepad.get_stick_y(SWGF_GAMEPAD_LEFT_STICK)==SWGF_POSITIVE_DIRECTION) y++;
+  if(gamepad.get_stick_x(GAMEPAD_LEFT_STICK)==GAMEPAD_NEGATIVE_DIRECTION) x--;
+  if(gamepad.get_stick_x(GAMEPAD_LEFT_STICK)==GAMEPAD_POSITIVE_DIRECTION) x++;
+  if(gamepad.get_stick_y(GAMEPAD_LEFT_STICK)==GAMEPAD_NEGATIVE_DIRECTION) y--;
+  if(gamepad.get_stick_y(GAMEPAD_LEFT_STICK)==GAMEPAD_POSITIVE_DIRECTION) y++;
   if((x<=0)||(x>=screen_width)) x=screen_width/2;
   if((y<=0)||(y>=screen_height)) y=screen_height/2;
   itoa(screen.get_fps(),perfomance,10);

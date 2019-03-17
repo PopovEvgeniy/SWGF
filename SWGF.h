@@ -67,31 +67,31 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #include <mmsystem.h>
 #include <GL\gl.h>
 
-#define SWGF_GETSCANCODE(argument) ((argument >> 16)&0x7f)
+#define GETSCANCODE(argument) ((argument >> 16)&0x7f)
 
-#define SWGF_KEYBOARD 256
-#define SWGF_MOUSE 3
+#define KEYBOARD 256
+#define MOUSE 3
 
-#define SWGFKEY_RELEASE 0
-#define SWGFKEY_PRESS 1
+#define KEY_RELEASE 0
+#define KEY_PRESS 1
 
-#define SWGF_MOUSE_LEFT 0
-#define SWGF_MOUSE_RIGHT 1
-#define SWGF_MOUSE_MIDDLE 2
+#define MOUSE_LEFT 0
+#define MOUSE_RIGHT 1
+#define MOUSE_MIDDLE 2
 
 #define JOYSTICK_UPLEFT 31500
 #define JOYSTICK_UPRIGHT 4500
 #define JOYSTICK_DOWNLEFT 22500
 #define JOYSTICK_DOWNRIGHT 13500
 
-enum SWGF_MIRROR_TYPE {SWGF_MIRROR_HORIZONTAL=0,SWGF_MIRROR_VERTICAL=1};
-enum SWGF_BACKGROUND_TYPE {SWGF_NORMAL_BACKGROUND=0,SWGF_HORIZONTAL_BACKGROUND=1,SWGF_VERTICAL_BACKGROUND=2};
-enum SWGF_SPRITE_TYPE {SWGF_SINGE_SPRITE=0,SWGF_HORIZONTAL_STRIP=1,SWGF_VERTICAL_STRIP=2};
-enum SWGF_SURFACE {SWGF_SURFACE_SMALL=0,SWGF_SURFACE_LARGE=1};
-enum SWGF_GAMEPAD_DIRECTION {SWGF_NEUTRAL_DIRECTION=0,SWGF_NEGATIVE_DIRECTION=-1,SWGF_POSITIVE_DIRECTION=1};
-enum SWGF_GAMEPAD_STICKS {SWGF_GAMEPAD_LEFT_STICK=0,SWGF_GAMEPAD_RIGHT_STICK=1};
-enum SWGF_GAMEPAD_DPAD {SWGF_GAMEPAD_NONE=0,SWGF_GAMEPAD_UP=1,SWGF_GAMEPAD_DOWN=2,SWGF_GAMEPAD_LEFT=3,SWGF_GAMEPAD_RIGHT=4,SWGF_GAMEPAD_UPLEFT=5,SWGF_GAMEPAD_UPRIGHT=6,SWGF_GAMEPAD_DOWNLEFT=7,SWGF_GAMEPAD_DOWNRIGHT=8};
-enum SWGF_GAMEPAD_BUTTONS {SWGF_GAMEPAD_BUTTON1=JOY_BUTTON1,SWGF_GAMEPAD_BUTTON2=JOY_BUTTON2,SWGF_GAMEPAD_BUTTON3=JOY_BUTTON3,SWGF_GAMEPAD_BUTTON4=JOY_BUTTON4,SWGF_GAMEPAD_BUTTON5=JOY_BUTTON5,SWGF_GAMEPAD_BUTTON6=JOY_BUTTON6,SWGF_GAMEPAD_BUTTON7=JOY_BUTTON7,SWGF_GAMEPAD_BUTTON8=JOY_BUTTON8,SWGF_GAMEPAD_BUTTON9=JOY_BUTTON9,SWGF_GAMEPAD_BUTTON10=JOY_BUTTON10,SWGF_GAMEPAD_BUTTON11=JOY_BUTTON11,SWGF_GAMEPAD_BUTTON12=JOY_BUTTON12,SWGF_GAMEPAD_BUTTON113=JOY_BUTTON13,SWGF_GAMEPAD_BUTTON14=JOY_BUTTON14,SWGF_GAMEPAD_BUTTON15=JOY_BUTTON15,SWGF_GAMEPAD_BUTTON16=JOY_BUTTON16,SWGF_GAMEPAD_BUTTON17=JOY_BUTTON17,SWGF_GAMEPAD_BUTTON18=JOY_BUTTON18,SWGF_GAMEPAD_BUTTON19=JOY_BUTTON19,SWGF_GAMEPAD_BUTTON20=JOY_BUTTON20,SWGF_GAMEPAD_BUTTON21=JOY_BUTTON21,SWGF_GAMEPAD_BUTTON22=JOY_BUTTON22,SWGF_GAMEPAD_BUTTON23=JOY_BUTTON23,SWGF_GAMEPAD_BUTTON24=JOY_BUTTON24,SWGF_GAMEPAD_BUTTON25=JOY_BUTTON25,SWGF_GAMEPAD_BUTTON26=JOY_BUTTON26,SWGF_GAMEPAD_BUTTON27=JOY_BUTTON27,SWGF_GAMEPAD_BUTTON28=JOY_BUTTON28,SWGF_GAMEPAD_BUTTON29=JOY_BUTTON29,SWGF_GAMEPAD_BUTTON30=JOY_BUTTON30,SWGF_GAMEPAD_BUTTON31=JOY_BUTTON31,SWGF_GAMEPAD_BUTTON32=JOY_BUTTON32};
+enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
+enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
+enum SPRITE_TYPE {SINGLE_SPRITE=0,HORIZONTAL_STRIP=1,VERTICAL_STRIP=2};
+enum SURFACE {SURFACE_SMALL=0,SURFACE_LARGE=1};
+enum GAMEPAD_DIRECTION {GAMEPAD_NEUTRAL_DIRECTION=0,GAMEPAD_NEGATIVE_DIRECTION=-1,GAMEPAD_POSITIVE_DIRECTION=1};
+enum GAMEPAD_STICKS {GAMEPAD_LEFT_STICK=0,GAMEPAD_RIGHT_STICK=1};
+enum GAMEPAD_DPAD {GAMEPAD_NONE=0,GAMEPAD_UP=1,GAMEPAD_DOWN=2,GAMEPAD_LEFT=3,GAMEPAD_RIGHT=4,GAMEPAD_UPLEFT=5,GAMEPAD_UPRIGHT=6,GAMEPAD_DOWNLEFT=7,GAMEPAD_DOWNRIGHT=8};
+enum GAMEPAD_BUTTONS {GAMEPAD_BUTTON1=JOY_BUTTON1,GAMEPAD_BUTTON2=JOY_BUTTON2,GAMEPAD_BUTTON3=JOY_BUTTON3,GAMEPAD_BUTTON4=JOY_BUTTON4,GAMEPAD_BUTTON5=JOY_BUTTON5,GAMEPAD_BUTTON6=JOY_BUTTON6,GAMEPAD_BUTTON7=JOY_BUTTON7,GAMEPAD_BUTTON8=JOY_BUTTON8,GAMEPAD_BUTTON9=JOY_BUTTON9,GAMEPAD_BUTTON10=JOY_BUTTON10,GAMEPAD_BUTTON11=JOY_BUTTON11,GAMEPAD_BUTTON12=JOY_BUTTON12,GAMEPAD_BUTTON113=JOY_BUTTON13,GAMEPAD_BUTTON14=JOY_BUTTON14,GAMEPAD_BUTTON15=JOY_BUTTON15,GAMEPAD_BUTTON16=JOY_BUTTON16,GAMEPAD_BUTTON17=JOY_BUTTON17,GAMEPAD_BUTTON18=JOY_BUTTON18,GAMEPAD_BUTTON19=JOY_BUTTON19,GAMEPAD_BUTTON20=JOY_BUTTON20,GAMEPAD_BUTTON21=JOY_BUTTON21,GAMEPAD_BUTTON22=JOY_BUTTON22,GAMEPAD_BUTTON23=JOY_BUTTON23,GAMEPAD_BUTTON24=JOY_BUTTON24,GAMEPAD_BUTTON25=JOY_BUTTON25,GAMEPAD_BUTTON26=JOY_BUTTON26,GAMEPAD_BUTTON27=JOY_BUTTON27,GAMEPAD_BUTTON28=JOY_BUTTON28,GAMEPAD_BUTTON29=JOY_BUTTON29,GAMEPAD_BUTTON30=JOY_BUTTON30,GAMEPAD_BUTTON31=JOY_BUTTON31,GAMEPAD_BUTTON32=JOY_BUTTON32};
 
 extern BOOL WINAPI wglSwapIntervalEXT (int interval); // This code was taken from wglext.h by The Khronos Group Inc
 typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code was taken from wglext.h by The Khronos Group Inc
@@ -108,7 +108,7 @@ struct SWGF_Point
  float v;
 };
 
-struct SWGF_Color
+struct IMG_Pixel
 {
  unsigned char blue:8;
  unsigned char green:8;
@@ -162,7 +162,7 @@ struct PCX_head
  unsigned char filled[54];
 };
 
-struct SWGF_Box
+struct Collision_Box
 {
  unsigned long int x:32;
  unsigned long int y:32;
@@ -170,17 +170,20 @@ struct SWGF_Box
  unsigned long int height:32;
 };
 
-LRESULT CALLBACK SWGF_Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
-void SWGF_Show_Error(const char *message);
+LRESULT CALLBACK Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
+void Show_Error(const char *message);
 
-class SWGF_Base
+namespace SWGF
+{
+
+class COM_Base
 {
  public:
- SWGF_Base();
- ~SWGF_Base();
+ COM_Base();
+ ~COM_Base();
 };
 
-class SWGF_Synchronization
+class Synchronization
 {
  private:
  HANDLE timer;
@@ -189,11 +192,11 @@ class SWGF_Synchronization
  void set_timer(const unsigned long int interval);
  void wait_timer();
  public:
- SWGF_Synchronization();
- ~SWGF_Synchronization();
+ Synchronization();
+ ~Synchronization();
 };
 
-class SWGF_Engine
+class Engine
 {
  private:
  WNDCLASS window_class;
@@ -208,13 +211,13 @@ class SWGF_Engine
  void capture_mouse();
  bool process_message();
  public:
- SWGF_Engine();
- ~SWGF_Engine();
+ Engine();
+ ~Engine();
  unsigned long int get_width();
  unsigned long int get_height();
 };
 
-class SWGF_Frame
+class Frame
 {
  private:
  size_t pixels;
@@ -225,13 +228,13 @@ class SWGF_Frame
  unsigned int get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue);
  size_t get_offset(const unsigned long int x,const unsigned long int y);
  protected:
- void set_size(const SWGF_SURFACE surface);
+ void set_size(const SURFACE surface);
  unsigned int *create_buffer(const char *error);
  void create_buffers();
  unsigned int *get_buffer();
  public:
- SWGF_Frame();
- ~SWGF_Frame();
+ Frame();
+ ~Frame();
  void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void clear_screen();
  void save();
@@ -240,7 +243,7 @@ class SWGF_Frame
  unsigned long int get_frame_height();
 };
 
-class SWGF_FPS
+class FPS
 {
  private:
  time_t start;
@@ -249,12 +252,12 @@ class SWGF_FPS
  protected:
  void update_counter();
  public:
- SWGF_FPS();
- ~SWGF_FPS();
+ FPS();
+ ~FPS();
  unsigned long int get_fps();
 };
 
-class SWGF_Display
+class Display
 {
  private:
  DEVMODE display;
@@ -265,11 +268,11 @@ class SWGF_Display
  void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  unsigned long int get_color();
  public:
- SWGF_Display();
- ~SWGF_Display();
+ Display();
+ ~Display();
 };
 
-class SWGF_WINGL:public SWGF_Display, public SWGF_Engine
+class WINGL:public Display, public Engine
 {
  private:
  HDC context;
@@ -287,11 +290,11 @@ class SWGF_WINGL:public SWGF_Display, public SWGF_Engine
  void disable_vsync();
  void Swap();
  public:
- SWGF_WINGL();
- ~SWGF_WINGL();
+ WINGL();
+ ~WINGL();
 };
 
-class SWGF_Render:public SWGF_WINGL, public SWGF_Frame
+class Render:public WINGL, public Frame
 {
  private:
  unsigned int texture;
@@ -310,42 +313,42 @@ class SWGF_Render:public SWGF_WINGL, public SWGF_Frame
  void start_render();
  void refresh();
  public:
- SWGF_Render();
- ~SWGF_Render();
+ Render();
+ ~Render();
 };
 
-class SWGF_Screen:public SWGF_FPS, public SWGF_Synchronization, public SWGF_Render
+class Screen:public FPS, public Synchronization, public Render
 {
  public:
  void initialize();
- void initialize(const SWGF_SURFACE surface);
+ void initialize(const SURFACE surface);
  void set_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  bool update();
  bool sync();
- SWGF_Screen* get_handle();
+ Screen* get_handle();
 };
 
-class SWGF_Keyboard
+class Keyboard
 {
  private:
  unsigned char *preversion;
  unsigned char *create_buffer(const char *error);
  public:
- SWGF_Keyboard();
- ~SWGF_Keyboard();
+ Keyboard();
+ ~Keyboard();
  void initialize();
  bool check_hold(const unsigned char code);
  bool check_press(const unsigned char code);
  bool check_release(const unsigned char code);
 };
 
-class SWGF_Mouse
+class Mouse
 {
  private:
- unsigned char preversion[SWGF_MOUSE];
+ unsigned char preversion[MOUSE];
  public:
- SWGF_Mouse();
- ~SWGF_Mouse();
+ Mouse();
+ ~Mouse();
  void show();
  void hide();
  void set_position(const unsigned long int x,const unsigned long int y);
@@ -356,7 +359,7 @@ class SWGF_Mouse
  bool check_release(const unsigned char button);
 };
 
-class SWGF_Gamepad
+class Gamepad
 {
  private:
  JOYINFOEX current;
@@ -366,10 +369,10 @@ class SWGF_Gamepad
  bool read_configuration();
  bool read_state();
  void clear_state();
- bool check_button(const SWGF_GAMEPAD_BUTTONS button,const JOYINFOEX &target);
+ bool check_button(const GAMEPAD_BUTTONS button,const JOYINFOEX &target);
  public:
- SWGF_Gamepad();
- ~SWGF_Gamepad();
+ Gamepad();
+ ~Gamepad();
  unsigned int get_amount();
  unsigned int get_button_amount();
  bool check_connection();
@@ -377,15 +380,15 @@ class SWGF_Gamepad
  unsigned long int get_sticks_amount();
  void set_active(const unsigned int gamepad);
  unsigned int get_active();
- SWGF_GAMEPAD_DPAD get_dpad();
- SWGF_GAMEPAD_DIRECTION get_stick_x(const SWGF_GAMEPAD_STICKS stick);
- SWGF_GAMEPAD_DIRECTION get_stick_y(const SWGF_GAMEPAD_STICKS stick);
- bool check_hold(const SWGF_GAMEPAD_BUTTONS button);
- bool check_press(const SWGF_GAMEPAD_BUTTONS button);
- bool check_release(const SWGF_GAMEPAD_BUTTONS button);
+ GAMEPAD_DPAD get_dpad();
+ GAMEPAD_DIRECTION get_stick_x(const GAMEPAD_STICKS stick);
+ GAMEPAD_DIRECTION get_stick_y(const GAMEPAD_STICKS stick);
+ bool check_hold(const GAMEPAD_BUTTONS button);
+ bool check_press(const GAMEPAD_BUTTONS button);
+ bool check_release(const GAMEPAD_BUTTONS button);
 };
 
-class SWGF_Multimedia:public SWGF_Base
+class Multimedia:public COM_Base
 {
  private:
  IGraphBuilder *loader;
@@ -397,8 +400,8 @@ class SWGF_Multimedia:public SWGF_Base
  bool is_end();
  void rewind();
  public:
- SWGF_Multimedia();
- ~SWGF_Multimedia();
+ Multimedia();
+ ~Multimedia();
  void initialize();
  void load(const char *target);
  bool check_playing();
@@ -406,14 +409,14 @@ class SWGF_Multimedia:public SWGF_Base
  void play();
 };
 
-class SWGF_Memory
+class Memory
 {
  private:
  MEMORYSTATUSEX memory;
  void get_status();
  public:
- SWGF_Memory();
- ~SWGF_Memory();
+ Memory();
+ ~Memory();
  unsigned long long int get_total_physical();
  unsigned long long int get_free_physical();
  unsigned long long int get_total_virtual();
@@ -421,11 +424,11 @@ class SWGF_Memory
  unsigned long int get_usage();
 };
 
-class SWGF_System
+class System
 {
  public:
- SWGF_System();
- ~SWGF_System();
+ System();
+ ~System();
  unsigned long int get_random(const unsigned long int number);
  void quit();
  void run(const char *command);
@@ -433,13 +436,13 @@ class SWGF_System
  void enable_logging(const char *name);
 };
 
-class SWGF_File
+class Binary_File
 {
  private:
  FILE *target;
  public:
- SWGF_File();
- ~SWGF_File();
+ Binary_File();
+ ~Binary_File();
  void open(const char *name);
  void close();
  void set_position(const off_t offset);
@@ -450,34 +453,34 @@ class SWGF_File
  bool check_error();
 };
 
-class SWGF_Timer
+class Timer
 {
  private:
  unsigned long int interval;
  time_t start;
  public:
- SWGF_Timer();
- ~SWGF_Timer();
+ Timer();
+ ~Timer();
  void set_timer(const unsigned long int seconds);
  bool check_timer();
 };
 
-class SWGF_Primitive
+class Primitive
 {
  private:
- SWGF_Color color;
- SWGF_Screen *surface;
+ IMG_Pixel color;
+ Screen *surface;
  public:
- SWGF_Primitive();
- ~SWGF_Primitive();
- void initialize(SWGF_Screen *Screen);
+ Primitive();
+ ~Primitive();
+ void initialize(Screen *Screen);
  void set_color(const unsigned char red,const unsigned char green,const unsigned char blue);
  void draw_line(const unsigned long int x1,const unsigned long int y1,const unsigned long int x2,const unsigned long int y2);
  void draw_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
  void draw_filled_rectangle(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
 };
 
-class SWGF_Image
+class Image
 {
  private:
  unsigned long int width;
@@ -488,8 +491,8 @@ class SWGF_Image
  FILE *open_image(const char *name);
  unsigned long int get_file_size(FILE *target);
  public:
- SWGF_Image();
- ~SWGF_Image();
+ Image();
+ ~Image();
  void load_tga(const char *name);
  void load_pcx(const char *name);
  unsigned long int get_width();
@@ -499,39 +502,39 @@ class SWGF_Image
  void destroy_image();
 };
 
-class SWGF_Canvas
+class Canvas
 {
  private:
  unsigned long int width;
  unsigned long int height;
  unsigned long int frames;
- SWGF_Screen *surface;
+ Screen *surface;
  void clear_buffer();
  protected:
- SWGF_Color *image;
+ IMG_Pixel *image;
  void save();
  void restore();
  void set_width(const unsigned long int image_width);
  void set_height(const unsigned long int image_height);
- SWGF_Color *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
+ IMG_Pixel *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
  void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  public:
- SWGF_Canvas();
- ~SWGF_Canvas();
- SWGF_Color *get_image();
+ Canvas();
+ ~Canvas();
+ IMG_Pixel *get_image();
  size_t get_length();
  unsigned long int get_image_width();
  unsigned long int get_image_height();
  void set_frames(const unsigned long int amount);
  unsigned long int get_frames();
- void initialize(SWGF_Screen *Screen);
- void load_image(SWGF_Image &buffer);
- void mirror_image(const SWGF_MIRROR_TYPE kind);
+ void initialize(Screen *Screen);
+ void load_image(Image &buffer);
+ void mirror_image(const MIRROR_TYPE kind);
  void resize_image(const unsigned long int new_width,const unsigned long int new_height);
 };
 
-class SWGF_Background:public SWGF_Canvas
+class Background:public Canvas
 {
  private:
  unsigned long int start;
@@ -539,18 +542,18 @@ class SWGF_Background:public SWGF_Canvas
  unsigned long int background_height;
  unsigned long int frame;
  unsigned long int current;
- SWGF_BACKGROUND_TYPE current_kind;
+ BACKGROUND_TYPE current_kind;
  void draw_background_pixel(const unsigned long int x,const unsigned long int y);
  void slow_draw_background();
  public:
- SWGF_Background();
- ~SWGF_Background();
- void set_kind(SWGF_BACKGROUND_TYPE kind);
+ Background();
+ ~Background();
+ void set_kind(BACKGROUND_TYPE kind);
  void set_target(const unsigned long int target);
  void draw_background();
 };
 
-class SWGF_Sprite:public SWGF_Canvas
+class Sprite:public Canvas
 {
  private:
  bool transparent;
@@ -560,12 +563,12 @@ class SWGF_Sprite:public SWGF_Canvas
  unsigned long int sprite_height;
  unsigned long int frame;
  unsigned long int start;
- SWGF_SPRITE_TYPE current_kind;
- bool compare_pixels(const SWGF_Color &first,const SWGF_Color &second);
+ SPRITE_TYPE current_kind;
+ bool compare_pixels(const IMG_Pixel &first,const IMG_Pixel &second);
  void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  public:
- SWGF_Sprite();
- ~SWGF_Sprite();
+ Sprite();
+ ~Sprite();
  void set_transparent(const bool enabled);
  bool get_transparent();
  void set_x(const unsigned long int x);
@@ -574,36 +577,38 @@ class SWGF_Sprite:public SWGF_Canvas
  unsigned long int get_y();
  unsigned long int get_width();
  unsigned long int get_height();
- SWGF_Sprite* get_handle();
- SWGF_Box get_box();
- void set_kind(const SWGF_SPRITE_TYPE kind);
- SWGF_SPRITE_TYPE get_kind();
+ Sprite* get_handle();
+ Collision_Box get_box();
+ void set_kind(const SPRITE_TYPE kind);
+ SPRITE_TYPE get_kind();
  void set_target(const unsigned long int target);
  void set_position(const unsigned long int x,const unsigned long int y);
- void clone(SWGF_Sprite &target);
+ void clone(Sprite &target);
  void draw_sprite();
 };
 
-class SWGF_Text
+class Text
 {
  private:
  unsigned long int current_x;
  unsigned long int current_y;
  unsigned long int step_x;
- SWGF_Sprite *font;
+ Sprite *font;
  void draw_character(const char target);
  public:
- SWGF_Text();
- ~SWGF_Text();
+ Text();
+ ~Text();
  void set_position(const unsigned long int x,const unsigned long int y);
- void load_font(SWGF_Sprite *target);
+ void load_font(Sprite *target);
  void draw_text(const char *text);
 };
 
-class SWGF_Collision
+class Collision
 {
  public:
- bool check_horizontal_collision(const SWGF_Box &first,const SWGF_Box &second);
- bool check_vertical_collision(const SWGF_Box &first,const SWGF_Box &second);
- bool check_collision(const SWGF_Box &first,const SWGF_Box &second);
+ bool check_horizontal_collision(const Collision_Box &first,const Collision_Box &second);
+ bool check_vertical_collision(const Collision_Box &first,const Collision_Box &second);
+ bool check_collision(const Collision_Box &first,const Collision_Box &second);
 };
+
+}
