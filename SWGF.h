@@ -502,33 +502,41 @@ class Image
  void destroy_image();
 };
 
-class Canvas
+class Surface
 {
  private:
+ Screen *surface;
+ protected:
  unsigned long int width;
  unsigned long int height;
- unsigned long int frames;
- Screen *surface;
- void clear_buffer();
- protected:
  IMG_Pixel *image;
  void save();
  void restore();
+ void clear_buffer();
+ IMG_Pixel *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
  void set_width(const unsigned long int image_width);
  void set_height(const unsigned long int image_height);
- IMG_Pixel *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
- void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
+ void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
+ public:
+ Surface();
+ ~Surface();
+ void initialize(Screen *screen);
+ size_t get_length();
+ IMG_Pixel *get_image();
+};
+
+class Canvas:public Surface
+{
+ private:
+ unsigned long int frames;
  public:
  Canvas();
  ~Canvas();
- IMG_Pixel *get_image();
- size_t get_length();
  unsigned long int get_image_width();
  unsigned long int get_image_height();
  void set_frames(const unsigned long int amount);
  unsigned long int get_frames();
- void initialize(Screen *Screen);
  void load_image(Image &buffer);
  void mirror_image(const MIRROR_TYPE kind);
  void resize_image(const unsigned long int new_width,const unsigned long int new_height);
@@ -585,6 +593,26 @@ class Sprite:public Canvas
  void set_position(const unsigned long int x,const unsigned long int y);
  void clone(Sprite &target);
  void draw_sprite();
+};
+
+class Tileset:public Surface
+{
+ private:
+ unsigned long int offset;
+ unsigned long int tile_width;
+ unsigned long int tile_height;
+ unsigned long int rows;
+ unsigned long int columns;
+ public:
+ Tileset();
+ ~Tileset();
+ unsigned long int get_tile_width();
+ unsigned long int get_tile_height();
+ unsigned long int get_rows();
+ unsigned long int get_columns();
+ void select_tile(const unsigned long int row,const unsigned long int column);
+ void draw_tile(const unsigned long int x,const unsigned long int y);
+ void load_tileset(Image &buffer,const unsigned long int row_amount,const unsigned long int column_amount);
 };
 
 class Text

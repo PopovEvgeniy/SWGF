@@ -1804,47 +1804,21 @@ void Image::destroy_image()
  this->clear_buffer();
 }
 
-Canvas::Canvas()
+Surface::Surface()
 {
- image=NULL;
- surface=NULL;
  width=0;
  height=0;
- frames=1;
+ image=NULL;
+ surface=NULL;
 }
 
-Canvas::~Canvas()
+Surface::~Surface()
 {
  surface=NULL;
  if(image!=NULL) free(image);
 }
 
-void Canvas::clear_buffer()
-{
- if(image!=NULL) free(image);
-}
-
-void Canvas::save()
-{
- surface->save();
-}
-
-void Canvas::restore()
-{
- surface->restore();
-}
-
-void Canvas::set_width(const unsigned long int image_width)
-{
- width=image_width;
-}
-
-void Canvas::set_height(const unsigned long int image_height)
-{
- height=image_height;
-}
-
-IMG_Pixel *Canvas::create_buffer(const unsigned long int image_width,const unsigned long int image_height)
+IMG_Pixel *Surface::create_buffer(const unsigned long int image_width,const unsigned long int image_height)
 {
  IMG_Pixel *result;
  size_t length;
@@ -1857,24 +1831,64 @@ IMG_Pixel *Canvas::create_buffer(const unsigned long int image_width,const unsig
  return result;
 }
 
-void Canvas::draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
+void Surface::save()
 {
- surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
+ surface->save();
 }
 
-size_t Canvas::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
+void Surface::restore()
+{
+ surface->restore();
+}
+
+void Surface::clear_buffer()
+{
+ if(image!=NULL) free(image);
+}
+
+void Surface::set_width(const unsigned long int image_width)
+{
+ width=image_width;
+}
+
+void Surface::set_height(const unsigned long int image_height)
+{
+ height=image_height;
+}
+
+size_t Surface::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
 {
  return (size_t)start+(size_t)x+(size_t)y*(size_t)width;
 }
 
-IMG_Pixel *Canvas::get_image()
+void Surface::draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
+{
+ surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
+}
+
+void Surface::initialize(Screen *screen)
+{
+ surface=screen;
+}
+
+size_t Surface::get_length()
+{
+ return (size_t)width*(size_t)height;
+}
+
+IMG_Pixel *Surface::get_image()
 {
  return image;
 }
 
-size_t Canvas::get_length()
+Canvas::Canvas()
 {
- return (size_t)width*(size_t)height;
+ frames=1;
+}
+
+Canvas::~Canvas()
+{
+
 }
 
 unsigned long int Canvas::get_image_width()
@@ -1895,11 +1909,6 @@ void Canvas::set_frames(const unsigned long int amount)
 unsigned long int Canvas::get_frames()
 {
  return frames;
-}
-
-void Canvas::initialize(Screen *Screen)
-{
- surface=Screen;
 }
 
 void Canvas::load_image(Image &buffer)
@@ -2228,6 +2237,84 @@ void Sprite::draw_sprite()
 
  }
 
+}
+
+Tileset::Tileset()
+{
+ offset=0;
+ rows=0;
+ columns=0;
+ tile_width=0;
+ tile_height=0;
+}
+
+Tileset::~Tileset()
+{
+
+}
+
+unsigned long int Tileset::get_tile_width()
+{
+ return tile_width;
+}
+
+unsigned long int Tileset::get_tile_height()
+{
+ return tile_height;
+}
+
+unsigned long int Tileset::get_rows()
+{
+ return rows;
+}
+
+unsigned long int Tileset::get_columns()
+{
+ return columns;
+}
+
+void Tileset::select_tile(const unsigned long int row,const unsigned long int column)
+{
+ unsigned long int x_offset,y_offset;
+ x_offset=0;
+ y_offset=0;
+ if ((row<rows)&&(column<columns))
+ {
+  x_offset=row*tile_width;
+  y_offset=column*tile_height;
+  offset=this->get_offset(0,x_offset,y_offset);
+ }
+
+}
+
+void Tileset::draw_tile(const unsigned long int x,const unsigned long int y)
+{
+ size_t tile_offset;
+ unsigned long int tile_x,tile_y;
+ for(tile_x=0;tile_x<tile_width;++tile_x)
+ {
+  for(tile_y=0;tile_y<tile_height;++tile_y)
+  {
+   tile_offset=this->get_offset(offset,tile_x,tile_y);
+   this->draw_image_pixel(tile_offset,x+tile_x,y+tile_y);
+  }
+
+ }
+
+}
+
+void Tileset::load_tileset(Image &buffer,const unsigned long int row_amount,const unsigned long int column_amount)
+{
+ width=buffer.get_width();
+ height=buffer.get_height();
+ rows=row_amount;
+ columns=column_amount;
+ tile_width=width/rows;
+ tile_height=height/columns;
+ this->clear_buffer();
+ image=this->create_buffer(width,height);
+ memmove(image,buffer.get_data(),buffer.get_data_length());
+ buffer.destroy_image();
 }
 
 Text::Text()
