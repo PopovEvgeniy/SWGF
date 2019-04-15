@@ -634,6 +634,7 @@ class Text
 class Collision
 {
  public:
+ Collision_Box generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
  bool check_horizontal_collision(const Collision_Box &first,const Collision_Box &second);
  bool check_vertical_collision(const Collision_Box &first,const Collision_Box &second);
  bool check_collision(const Collision_Box &first,const Collision_Box &second);

@@ -2367,6 +2367,16 @@ void Text::draw_text(const char *text)
 
 }
 
+Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
+{
+ Collision_Box result;
+ result.x=x;
+ result.y=y;
+ result.width=width;
+ result.height=height;
+ return result;
+}
+
 bool Collision::check_horizontal_collision(const Collision_Box &first,const Collision_Box &second)
 {
  bool result;

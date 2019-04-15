@@ -16,9 +16,9 @@ void draw_map()
  y=0;
  for (row=0;row<MAP_WIDTH;++row)
  {
+  x=(unsigned long int)row*tilemap.get_tile_width();
   for (column=0;column<MAP_HEIGHT;++column)
   {
-   x=(unsigned long int)row*tilemap.get_tile_width();
    y=(unsigned long int)column*tilemap.get_tile_height();
    tilemap.select_tile(MAP_ROWS[row],MAP_COLUMNS[column]);
    tilemap.draw_tile(x,y);
