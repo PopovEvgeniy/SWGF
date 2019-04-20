@@ -48,7 +48,7 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #pragma comment(lib,"strmiids.lib")
 #pragma comment(lib,"winmm.lib")
 
-//Uncomment follow lines if you will compile the code under Visual C++ 2017
+//Uncomment follow lines if you will compile the code under Visual C++ 2017 or higher
 /*
 #pragma warning(disable : 4995)
 #define _CRT_SECURE_NO_WARNINGS
@@ -445,7 +445,7 @@ class Binary_File
  ~Binary_File();
  void open(const char *name);
  void close();
- void set_position(const off_t offset);
+ void set_position(const long int offset);
  long int get_position();
  long int get_length();
  void read(void *buffer,const size_t length);

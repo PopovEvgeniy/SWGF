@@ -3,7 +3,7 @@
 int main(void)
 {
  long int x,y,screen_width,screen_height;
- unsigned char frame;
+ unsigned long int frame;
  char perfomance[8];
  SWGF::Timer timer;
  SWGF::Screen screen;
