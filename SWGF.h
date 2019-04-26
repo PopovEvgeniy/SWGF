@@ -265,8 +265,8 @@ class Display
  void set_video_mode();
  protected:
  void check_video_mode();
- void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
+ void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  public:
  Display();
  ~Display();
