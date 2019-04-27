@@ -218,6 +218,11 @@ HWND Engine::get_window()
  return window;
 }
 
+HDC Engine::get_context()
+{
+ return GetDC(window);
+}
+
 void Engine::create_window()
 {
  width=GetSystemMetrics(SM_CXSCREEN);
@@ -595,7 +600,7 @@ void WINGL::create_render_context()
 void WINGL::set_render()
 {
  int format;
- context=GetDC(this->get_window());
+ context=this->get_context();
  if(context==NULL)
  {
   Show_Error("Can't get the window context");
@@ -605,7 +610,7 @@ void WINGL::set_render()
  this->create_render_context();
 }
 
-void WINGL::destroy_render()
+void WINGL::destroy_render_context()
 {
  if(render!=NULL)
  {
@@ -746,6 +751,12 @@ void Render::draw()
  glDrawArrays(GL_TRIANGLE_FAN,0,4);
 }
 
+void Render::destroy_render()
+{
+ this->destroy_render_context();
+ this->destroy_window();
+}
+
 void Render::start_render()
 {
  this->create_window();
@@ -778,7 +789,6 @@ void Screen::initialize(const SURFACE surface)
 void Screen::set_mode(const unsigned long int screen_width,const unsigned long int screen_height)
 {
  this->destroy_render();
- this->destroy_window();
  this->set_display_mode(screen_width,screen_height);
  this->start_render();
 }
@@ -786,7 +796,6 @@ void Screen::set_mode(const unsigned long int screen_width,const unsigned long i
 void Screen::set_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth)
 {
  this->destroy_render();
- this->destroy_window();
  this->set_display_mode(screen_width,screen_height,depth);
  this->start_render();
 }

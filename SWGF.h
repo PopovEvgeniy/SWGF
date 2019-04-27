@@ -205,6 +205,7 @@ class Engine
  unsigned long int height;
  protected:
  HWND get_window();
+ HDC get_context();
  void prepare_engine();
  void create_window();
  void destroy_window();
@@ -287,7 +288,7 @@ class WINGL:public Display, public Engine
  void create_render_context();
  protected:
  void set_render();
- void destroy_render();
+ void destroy_render_context();
  void disable_vsync();
  void Swap();
  public:
@@ -311,6 +312,7 @@ class Render:public WINGL, public Frame
  void create_render();
  void draw();
  protected:
+ void destroy_render();
  void start_render();
  void refresh();
  public:
