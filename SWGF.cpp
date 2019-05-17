@@ -975,6 +975,7 @@ bool Mouse::check_release(const unsigned char button)
 Gamepad::Gamepad()
 {
  active=0;
+ max_amount=16;
  memset(&configuration,0,sizeof(JOYCAPS));
  memset(&current,0,sizeof(JOYINFOEX));
  memset(&preversion,0,sizeof(JOYINFOEX));
@@ -1041,6 +1042,14 @@ unsigned int Gamepad::get_button_amount()
  return result;
 }
 
+unsigned int Gamepad::get_last_index()
+{
+ unsigned int last_index;
+ last_index=this->get_amount();
+ if (last_index>0) --last_index;
+ return last_index;
+}
+
 bool Gamepad::check_connection()
 {
  return this->read_state();
@@ -1077,12 +1086,17 @@ unsigned long int Gamepad::get_sticks_amount()
 
 void Gamepad::set_active(const unsigned int gamepad)
 {
- if(active<16)
+ if(active<max_amount)
  {
   this->clear_state();
   active=gamepad;
  }
 
+}
+
+unsigned int Gamepad::get_max_amount()
+{
+ return max_amount;
 }
 
 unsigned int Gamepad::get_active()
