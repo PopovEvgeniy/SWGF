@@ -1289,26 +1289,48 @@ void Multimedia::rewind()
 
 }
 
-void Multimedia::initialize()
+void Multimedia::create_loader()
 {
  if(CoCreateInstance(CLSID_FilterGraph,NULL,CLSCTX_INPROC_SERVER,IID_IGraphBuilder,(void**)&loader)!=S_OK)
  {
   Show_Error("Can't create a multimedia loader");
  }
+
+}
+
+void Multimedia::create_player()
+{
  if(loader->QueryInterface(IID_IMediaControl,(void**)&player)!=S_OK)
  {
   Show_Error("Can't create a multimedia player");
-  ;
  }
+
+}
+
+void Multimedia::create_controler()
+{
  if(loader->QueryInterface(IID_IMediaSeeking,(void**)&controler)!=S_OK)
  {
   Show_Error("Can't create a player controler");
  }
+
+}
+
+void Multimedia::create_video_player()
+{
  if(loader->QueryInterface(IID_IVideoWindow,(void**)&video)!=S_OK)
  {
   Show_Error("Can't create a video player");
  }
 
+}
+
+void Multimedia::initialize()
+{
+ this->create_loader();
+ this->create_player();
+ this->create_controler();
+ this->create_video_player();
 }
 
 void Multimedia::load(const char *target)
@@ -1450,7 +1472,17 @@ Binary_File::~Binary_File()
  if(target!=NULL) fclose(target);
 }
 
-void Binary_File::open(const char *name)
+void Binary_File::open_read(const char *name)
+{
+ target=fopen(name,"rb");
+ if(target==NULL)
+ {
+  Show_Error("Can't open the binary file");
+ }
+
+}
+
+void Binary_File::open_write(const char *name)
 {
  target=fopen(name,"w+b");
  if(target==NULL)
@@ -1486,12 +1518,12 @@ long int Binary_File::get_length()
 
 void Binary_File::read(void *buffer,const size_t length)
 {
- fread(buffer,length,1,target);
+ fread(buffer,sizeof(char),length,target);
 }
 
 void Binary_File::write(void *buffer,const size_t length)
 {
- fwrite(buffer,length,1,target);
+ fwrite(buffer,sizeof(char),length,target);
 }
 
 bool Binary_File::check_error()
