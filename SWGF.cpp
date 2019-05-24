@@ -1469,32 +1469,42 @@ Binary_File::Binary_File()
 
 Binary_File::~Binary_File()
 {
- if(target!=NULL) fclose(target);
+ if(target!=NULL)
+ {
+  fclose(target);
+  target=NULL;
+ }
+
+}
+
+void Binary_File::open(const char *name,const char *mode)
+{
+ target=fopen(name,mode);
+ if(target==NULL)
+ {
+  Show_Error("Can't open the binary file");
+ }
+
 }
 
 void Binary_File::open_read(const char *name)
 {
- target=fopen(name,"rb");
- if(target==NULL)
- {
-  Show_Error("Can't open the binary file");
- }
-
+ this->open(name,"rb");
 }
 
 void Binary_File::open_write(const char *name)
 {
- target=fopen(name,"w+b");
- if(target==NULL)
- {
-  Show_Error("Can't open the binary file");
- }
-
+ this->open(name,"w+b");
 }
 
 void Binary_File::close()
 {
- if(target!=NULL) fclose(target);
+ if(target!=NULL)
+ {
+  fclose(target);
+  target=NULL;
+ }
+
 }
 
 void Binary_File::set_position(const long int offset)
