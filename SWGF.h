@@ -501,8 +501,6 @@ class Image
  unsigned char *data;
  unsigned char *create_buffer(const size_t length);
  void clear_buffer();
- FILE *open_image(const char *name);
- unsigned long int get_file_size(FILE *target);
  public:
  Image();
  ~Image();

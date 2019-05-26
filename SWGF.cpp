@@ -1698,29 +1698,9 @@ void Image::clear_buffer()
 
 }
 
-FILE *Image::open_image(const char *name)
-{
- FILE *target;
- target=fopen(name,"rb");
- if(target==NULL)
- {
-  Show_Error("Can't open a image file");
- }
- return target;
-}
-
-unsigned long int Image::get_file_size(FILE *target)
-{
- unsigned long int length;
- fseek(target,0,SEEK_END);
- length=ftell(target);
- rewind(target);
- return length;
-}
-
 void Image::load_tga(const char *name)
 {
- FILE *target;
+ Binary_File target;
  size_t index,position,amount,compressed_length,uncompressed_length;
  unsigned char *compressed;
  unsigned char *uncompressed;
@@ -1728,11 +1708,11 @@ void Image::load_tga(const char *name)
  TGA_map color_map;
  TGA_image image;
  this->clear_buffer();
- target=this->open_image(name);
- compressed_length=(size_t)this->get_file_size(target)-18;
- fread(&head,3,1,target);
- fread(&color_map,5,1,target);
- fread(&image,10,1,target);
+ target.open_read(name);
+ compressed_length=(size_t)target.get_length()-18;
+ target.read(&head,3);
+ target.read(&color_map,5);
+ target.read(&image,10);
  if((head.color_map!=0)||(image.color!=24))
  {
   Show_Error("Invalid image format");
@@ -1753,12 +1733,12 @@ void Image::load_tga(const char *name)
  uncompressed=this->create_buffer(uncompressed_length);
  if(head.type==2)
  {
-  fread(uncompressed,uncompressed_length,1,target);
+  target.read(uncompressed,uncompressed_length);
  }
  if(head.type==10)
  {
   compressed=this->create_buffer(compressed_length);
-  fread(compressed,compressed_length,1,target);
+  target.read(compressed,compressed_length);
   while(index<uncompressed_length)
   {
    if(compressed[position]<128)
@@ -1782,13 +1762,13 @@ void Image::load_tga(const char *name)
   }
   free(compressed);
  }
- fclose(target);
+ target.close();
  data=uncompressed;
 }
 
 void Image::load_pcx(const char *name)
 {
- FILE *target;
+ Binary_File target;
  unsigned long int x,y;
  size_t index,position,line,row,length,uncompressed_length;
  unsigned char repeat;
@@ -1796,9 +1776,9 @@ void Image::load_pcx(const char *name)
  unsigned char *uncompressed;
  PCX_head head;
  this->clear_buffer();
- target=this->open_image(name);
- length=(size_t)this->get_file_size(target)-128;
- fread(&head,128,1,target);
+ target.open_read(name);
+ length=(size_t)target.get_length()-128;
+ target.read(&head,128);
  if((head.color*head.planes!=24)&&(head.compress!=1))
  {
   Show_Error("Incorrect image format");
@@ -1812,8 +1792,8 @@ void Image::load_pcx(const char *name)
  position=0;
  original=this->create_buffer(length);
  uncompressed=this->create_buffer(uncompressed_length);
- fread(original,length,1,target);
- fclose(target);
+ target.read(original,length);
+ target.close();
  while (index<length)
  {
   if (original[index]<192)
