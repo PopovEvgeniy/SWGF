@@ -266,12 +266,11 @@ class Display
  void set_video_mode();
  protected:
  void check_video_mode();
- void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
  void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
+ unsigned long int get_color();
  public:
  Display();
  ~Display();
- unsigned long int get_color();
 };
 
 class WINGL:public Display, public Engine
@@ -326,7 +325,6 @@ class Screen:public FPS, public Synchronization, public Render
  void initialize();
  void initialize(const SURFACE surface);
  void set_mode(const unsigned long int screen_width,const unsigned long int screen_height);
- void set_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
  bool update();
  bool sync();
  Screen* get_handle();
