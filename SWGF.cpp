@@ -2320,14 +2320,9 @@ unsigned long int Tileset::get_columns()
 
 void Tileset::select_tile(const unsigned long int row,const unsigned long int column)
 {
- unsigned long int x_offset,y_offset;
- x_offset=0;
- y_offset=0;
  if ((row<rows)&&(column<columns))
  {
-  x_offset=row*tile_width;
-  y_offset=column*tile_height;
-  offset=this->get_offset(0,x_offset,y_offset);
+  offset=this->get_offset(0,row*tile_width,column*tile_height);
  }
 
 }
