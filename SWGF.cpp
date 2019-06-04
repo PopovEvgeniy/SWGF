@@ -2284,6 +2284,12 @@ void Sprite::draw_sprite()
 
 }
 
+void Sprite::draw_sprite(const unsigned long int x,const unsigned long int y)
+{
+ this->set_position(x,y);
+ this->draw_sprite();
+}
+
 Tileset::Tileset()
 {
  offset=0;

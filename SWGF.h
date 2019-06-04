@@ -602,6 +602,7 @@ class Sprite:public Canvas
  void set_position(const unsigned long int x,const unsigned long int y);
  void clone(Sprite &target);
  void draw_sprite();
+ void draw_sprite(const unsigned long int x,const unsigned long int y);
 };
 
 class Tileset:public Surface
