@@ -264,9 +264,11 @@ class Display
  DEVMODE display;
  void get_video_mode();
  void set_video_mode();
+ void set_display_setting(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
+ bool check_display_setting(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
  protected:
  void check_video_mode();
- void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
+ void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
  unsigned long int get_color();
  public:
  Display();
@@ -324,6 +326,7 @@ class Screen:public FPS, public Synchronization, public Render
  public:
  void initialize();
  void initialize(const SURFACE surface);
+ void set_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
  void set_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  bool update();
  bool sync();
