@@ -269,10 +269,10 @@ class Display
  protected:
  void check_video_mode();
  void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
- unsigned long int get_color();
  public:
  Display();
  ~Display();
+ unsigned long int get_color();
 };
 
 class WINGL:public Display, public Engine
