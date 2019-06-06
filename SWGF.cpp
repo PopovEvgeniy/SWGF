@@ -236,11 +236,6 @@ void Engine::create_window()
  SetFocus(window);
 }
 
-void Engine::destroy_window()
-{
- if(window!=NULL) CloseWindow(window);
-}
-
 void Engine::capture_mouse()
 {
  RECT border;
@@ -350,15 +345,8 @@ unsigned int *Frame::create_buffer(const char *error)
 
 void Frame::create_buffers()
 {
- if (buffer==NULL)
- {
-  buffer=this->create_buffer("Can't allocate memory for render buffer");
- }
- if (shadow==NULL)
- {
-  shadow=this->create_buffer("Can't allocate memory for shadow buffer");
- }
-
+ buffer=this->create_buffer("Can't allocate memory for render buffer");
+ shadow=this->create_buffer("Can't allocate memory for shadow buffer");
 }
 
 unsigned int *Frame::get_buffer()
@@ -466,29 +454,6 @@ void Display::set_video_mode()
 
 }
 
-void Display::set_display_setting(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth)
-{
- if (depth<16)
- {
-  display.dmBitsPerPel=16;
- }
- else
- {
-  display.dmBitsPerPel=depth;
- }
- display.dmPelsWidth=screen_width;
- display.dmPelsHeight=screen_height;
-}
-
-bool Display::check_display_setting(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth)
-{
- bool result;
- result=false;
- if (display.dmBitsPerPel!=depth) result=true;
- if ((display.dmPelsWidth!=screen_width)||(display.dmPelsHeight=screen_height)) result=true;
- return result;
-}
-
 void Display::get_video_mode()
 {
  if (EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS,&display)==FALSE)
@@ -504,17 +469,6 @@ void Display::check_video_mode()
  if(display.dmBitsPerPel<16)
  {
   display.dmBitsPerPel=16;
-  this->set_video_mode();
- }
-
-}
-
-void Display::set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth)
-{
- this->get_video_mode();
- if (this->check_display_setting(screen_width,screen_height,depth)==true)
- {
-  this->set_display_setting(screen_width,screen_height,depth);
   this->set_video_mode();
  }
 
@@ -635,16 +589,6 @@ void WINGL::set_render()
  format=this->get_pixel_format();
  this->set_pixel_format(format);
  this->create_render_context();
-}
-
-void WINGL::destroy_render_context()
-{
- if(render!=NULL)
- {
-  wglMakeCurrent(NULL,NULL);
-  wglDeleteContext(render);
- }
- if(context!=NULL) ReleaseDC(this->get_window(),context);
 }
 
 void WINGL::disable_vsync()
@@ -778,12 +722,6 @@ void Render::draw()
  glDrawArrays(GL_TRIANGLE_FAN,0,4);
 }
 
-void Render::destroy_render()
-{
- this->destroy_render_context();
- this->destroy_window();
-}
-
 void Render::start_render()
 {
  this->create_window();
@@ -811,18 +749,6 @@ void Screen::initialize(const SURFACE surface)
 {
  this->set_size(surface);
  this->initialize();
-}
-
-void Screen::set_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth)
-{
- this->destroy_render();
- this->set_display_mode(screen_width,screen_height,depth);
- this->start_render();
-}
-
-void Screen::set_mode(const unsigned long int screen_width,const unsigned long int screen_height)
-{
- this->set_mode(screen_width,screen_height,this->get_color());
 }
 
 bool Screen::update()

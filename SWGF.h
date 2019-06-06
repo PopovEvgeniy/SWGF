@@ -208,7 +208,6 @@ class Engine
  HDC get_context();
  void prepare_engine();
  void create_window();
- void destroy_window();
  void capture_mouse();
  bool process_message();
  public:
@@ -264,15 +263,12 @@ class Display
  DEVMODE display;
  void get_video_mode();
  void set_video_mode();
- void set_display_setting(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
- bool check_display_setting(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
  protected:
  void check_video_mode();
- void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
+ unsigned long int get_color();
  public:
  Display();
  ~Display();
- unsigned long int get_color();
 };
 
 class WINGL:public Display, public Engine
@@ -289,7 +285,6 @@ class WINGL:public Display, public Engine
  void create_render_context();
  protected:
  void set_render();
- void destroy_render_context();
  void disable_vsync();
  void Swap();
  public:
@@ -313,7 +308,6 @@ class Render:public WINGL, public Frame
  void create_render();
  void draw();
  protected:
- void destroy_render();
  void start_render();
  void refresh();
  public:
@@ -326,8 +320,6 @@ class Screen:public FPS, public Synchronization, public Render
  public:
  void initialize();
  void initialize(const SURFACE surface);
- void set_mode(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int depth);
- void set_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  bool update();
  bool sync();
  Screen* get_handle();
