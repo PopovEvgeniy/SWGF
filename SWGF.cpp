@@ -2301,7 +2301,7 @@ void Tileset::draw_tile(const unsigned long int x,const unsigned long int y)
  {
   for(tile_y=0;tile_y<tile_height;++tile_y)
   {
-   tile_offset=this->get_offset(offset,tile_x,tile_y);
+   tile_offset=offset+this->get_offset(0,tile_x,tile_y);
    this->draw_image_pixel(tile_offset,x+tile_x,y+tile_y);
   }
 

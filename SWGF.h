@@ -603,7 +603,7 @@ class Sprite:public Canvas
 class Tileset:public Surface
 {
  private:
- unsigned long int offset;
+ size_t offset;
  unsigned long int tile_width;
  unsigned long int tile_height;
  unsigned long int rows;
