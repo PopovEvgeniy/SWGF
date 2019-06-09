@@ -1851,6 +1851,15 @@ void Surface::clear_buffer()
  if(image!=NULL) free(image);
 }
 
+void Surface::load_from_buffer(Image &buffer)
+{
+ width=buffer.get_width();
+ height=buffer.get_height();
+ this->clear_buffer();
+ image=this->create_buffer(width,height);
+ memmove(image,buffer.get_data(),buffer.get_data_length());
+}
+
 void Surface::set_width(const unsigned long int image_width)
 {
  width=image_width;
@@ -1918,11 +1927,7 @@ unsigned long int Canvas::get_frames()
 
 void Canvas::load_image(Image &buffer)
 {
- width=buffer.get_width();
- height=buffer.get_height();
- this->clear_buffer();
- image=this->create_buffer(width,height);
- memmove(image,buffer.get_data(),buffer.get_data_length());
+ this->load_from_buffer(buffer);
 }
 
 void Canvas::mirror_image(const MIRROR_TYPE kind)
@@ -2310,15 +2315,15 @@ void Tileset::draw_tile(const unsigned long int x,const unsigned long int y)
 
 void Tileset::load_tileset(Image &buffer,const unsigned long int row_amount,const unsigned long int column_amount)
 {
- width=buffer.get_width();
- height=buffer.get_height();
- rows=row_amount;
- columns=column_amount;
- tile_width=width/rows;
- tile_height=height/columns;
- this->clear_buffer();
- image=this->create_buffer(width,height);
- memmove(image,buffer.get_data(),buffer.get_data_length());
+ if ((row_amount>0)&&(column_amount>0))
+ {
+  this->load_from_buffer(buffer);
+  rows=row_amount;
+  columns=column_amount;
+  tile_width=width/rows;
+  tile_height=height/columns;
+ }
+
 }
 
 Text::Text()
