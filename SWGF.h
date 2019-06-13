@@ -561,7 +561,9 @@ class Background:public Canvas
  public:
  Background();
  ~Background();
- void set_kind(BACKGROUND_TYPE kind);
+ unsigned long int get_background_width();
+ unsigned long int get_background_height();
+ void set_kind(const BACKGROUND_TYPE kind);
  void set_target(const unsigned long int target);
  void draw_background();
 };
