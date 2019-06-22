@@ -1860,16 +1860,6 @@ void Surface::load_from_buffer(Image &buffer)
  memmove(image,buffer.get_data(),buffer.get_data_length());
 }
 
-void Surface::set_width(const unsigned long int image_width)
-{
- width=image_width;
-}
-
-void Surface::set_height(const unsigned long int image_height)
-{
- height=image_height;
-}
-
 size_t Surface::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
 {
  return (size_t)start+(size_t)x+(size_t)y*(size_t)width;
@@ -2102,6 +2092,16 @@ Sprite::Sprite()
 Sprite::~Sprite()
 {
 
+}
+
+void Sprite::set_width(const unsigned long int image_width)
+{
+ width=image_width;
+}
+
+void Sprite::set_height(const unsigned long int image_height)
+{
+ height=image_height;
 }
 
 bool Sprite::compare_pixels(const IMG_Pixel &first,const IMG_Pixel &second)

@@ -519,8 +519,6 @@ class Surface
  void clear_buffer();
  IMG_Pixel *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
  void load_from_buffer(Image &buffer);
- void set_width(const unsigned long int image_width);
- void set_height(const unsigned long int image_height);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  public:
@@ -579,6 +577,8 @@ class Sprite:public Canvas
  unsigned long int frame;
  unsigned long int start;
  SPRITE_TYPE current_kind;
+ void set_width(const unsigned long int image_width);
+ void set_height(const unsigned long int image_height);
  bool compare_pixels(const IMG_Pixel &first,const IMG_Pixel &second);
  void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  public:
