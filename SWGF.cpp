@@ -2340,7 +2340,6 @@ Text::Text()
 {
  current_x=0;
  current_y=0;
- step_x=0;
  font=NULL;
 }
 
@@ -2349,16 +2348,16 @@ Text::~Text()
  font=NULL;
 }
 
-void Text::draw_character(const char target)
+void Text::increase_position()
 {
- font->set_position(step_x,current_y);
- font->set_target((unsigned char)target+1);
- font->draw_sprite();
- step_x+=font->get_width();
+ unsigned long int x;
+ x=font->get_x()+font->get_width();
+ font->set_x(x);
 }
 
 void Text::set_position(const unsigned long int x,const unsigned long int y)
 {
+ font->set_position(x,y);
  current_x=x;
  current_y=y;
 }
@@ -2370,16 +2369,23 @@ void Text::load_font(Sprite *target)
  font->set_kind(HORIZONTAL_STRIP);
 }
 
+void Text::draw_character(const char target)
+{
+ font->set_target((unsigned char)target+1);
+ font->draw_sprite();
+}
+
 void Text::draw_text(const char *text)
 {
  size_t index,length;
  length=strlen(text);
- step_x=current_x;
+ font->set_position(current_x,current_y);
  for (index=0;index<length;++index)
  {
   this->draw_character(text[index]);
+  this->increase_position();
  }
-
+ font->set_position(current_x,current_y);
 }
 
 Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)

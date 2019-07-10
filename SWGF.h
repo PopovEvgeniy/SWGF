@@ -628,14 +628,14 @@ class Text
  private:
  unsigned long int current_x;
  unsigned long int current_y;
- unsigned long int step_x;
  Sprite *font;
- void draw_character(const char target);
+ void increase_position();
  public:
  Text();
  ~Text();
  void set_position(const unsigned long int x,const unsigned long int y);
  void load_font(Sprite *target);
+ void draw_character(const char target);
  void draw_text(const char *text);
 };
 
