@@ -51,7 +51,7 @@ int main(void)
  screen.initialize();
  draw_map();
  screen.save();
- while (screen.sync()==false)
+ while (screen.sync())
  {
   if (keyboard.check_hold(1)==true) break;
   screen.restore();

@@ -265,10 +265,10 @@ class Display
  void set_video_mode();
  protected:
  void check_video_mode();
- unsigned long int get_color();
  public:
  Display();
  ~Display();
+ unsigned long int get_color();
 };
 
 class WINGL:public Display, public Engine
