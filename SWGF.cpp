@@ -1887,11 +1887,22 @@ IMG_Pixel *Surface::get_image()
 
 Canvas::Canvas()
 {
+ start=0;
+ frame=1;
  frames=1;
 }
 
 Canvas::~Canvas()
 {
+
+}
+
+void Canvas::set_frame(const unsigned long int target)
+{
+ if (target<=frames)
+ {
+  frame=target;
+ }
 
 }
 
@@ -1913,6 +1924,11 @@ void Canvas::set_frames(const unsigned long int amount)
 unsigned long int Canvas::get_frames()
 {
  return frames;
+}
+
+unsigned long int Canvas::get_frame()
+{
+ return frame;
 }
 
 void Canvas::load_image(Image &buffer)
@@ -1985,11 +2001,9 @@ void Canvas::resize_image(const unsigned long int new_width,const unsigned long 
 
 Background::Background()
 {
- start=0;
  background_width=0;
  background_height=0;
  current=0;
- frame=1;
  current_kind=NORMAL_BACKGROUND;
 }
 
@@ -2041,40 +2055,36 @@ void Background::set_kind(const BACKGROUND_TYPE kind)
   case HORIZONTAL_BACKGROUND:
   background_width=this->get_image_width()/this->get_frames();
   background_height=this->get_image_height();
-  start=(frame-1)*background_width;
+  start=(this->get_frame()-1)*background_width;
   break;
   case VERTICAL_BACKGROUND:
   background_width=this->get_image_width();
   background_height=this->get_image_height()/this->get_frames();
-  start=(frame-1)*background_width*background_height;
+  start=(this->get_frame()-1)*background_width*background_height;
   break;
  }
  current_kind=kind;
 }
 
-void Background::set_target(const unsigned long int target)
-{
- if(target<=this->get_frames())
- {
-  frame=target;
-  this->set_kind(current_kind);
- }
-
-}
-
 void Background::draw_background()
 {
- if (current!=frame)
+ if (current!=this->get_frame())
  {
   this->slow_draw_background();
   this->save();
-  current=frame;
+  current=this->get_frame();
  }
  else
  {
   this->restore();
  }
 
+}
+
+void Background::set_target(const unsigned long int target)
+{
+ this->set_frame(target);
+ this->set_kind(current_kind);
 }
 
 Sprite::Sprite()
@@ -2084,8 +2094,6 @@ Sprite::Sprite()
  current_y=0;
  sprite_width=0;
  sprite_height=0;
- frame=0;
- start=0;
  current_kind=SINGLE_SPRITE;
 }
 
@@ -2199,12 +2207,12 @@ void Sprite::set_kind(const SPRITE_TYPE kind)
   case HORIZONTAL_STRIP:
   sprite_width=this->get_image_width()/this->get_frames();
   sprite_height=this->get_image_height();
-  start=(frame-1)*sprite_width;
+  start=(this->get_frame()-1)*sprite_width;
   break;
   case VERTICAL_STRIP:
   sprite_width=this->get_image_width();
   sprite_height=this->get_image_height()/this->get_frames();
-  start=(frame-1)*sprite_width*sprite_height;
+  start=(this->get_frame()-1)*sprite_width*sprite_height;
   break;
  }
  current_kind=kind;
@@ -2217,12 +2225,8 @@ SPRITE_TYPE Sprite::get_kind()
 
 void Sprite::set_target(const unsigned long int target)
 {
- if(target<=this->get_frames())
- {
-  frame=target;
-  this->set_kind(current_kind);
- }
-
+ this->set_frame(target);
+ this->set_kind(current_kind);
 }
 
 void Sprite::set_position(const unsigned long int x,const unsigned long int y)
