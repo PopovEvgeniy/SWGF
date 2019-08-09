@@ -7,7 +7,6 @@
 int main(void)
 {
  long int x,y,screen_width,screen_height;
- unsigned long int frame;
  char perfomance[8];
  SWGF::Timer timer;
  SWGF::Screen screen;
@@ -42,7 +41,6 @@ int main(void)
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);
  space.set_kind(NORMAL_BACKGROUND);
- frame=1;
  mouse.hide();
  timer.set_timer(1);
  media.initialize();
@@ -104,13 +102,11 @@ int main(void)
   itoa(screen.get_fps(),perfomance,10);
   space.draw_background();
   text.draw_text(perfomance);
-  ship.set_target(frame);
   ship.set_position(x,y);
   ship.draw_sprite();
   if (timer.check_timer()==true)
   {
-   frame++;
-   if (frame>ship.get_frames()) frame=1;
+   ship.step();
   }
 
  }
