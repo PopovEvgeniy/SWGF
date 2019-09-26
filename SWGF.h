@@ -204,6 +204,11 @@ class Engine
  HWND window;
  unsigned long int width;
  unsigned long int height;
+ void get_instance();
+ void set_backgrond_color();
+ void load_icon();
+ void load_cursor();
+ void register_window_class();
  protected:
  HWND get_window();
  HDC get_context();

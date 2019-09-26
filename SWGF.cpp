@@ -183,35 +183,54 @@ Engine::~Engine()
  UnregisterClass(window_class.lpszClassName,window_class.hInstance);
 }
 
-void Engine::prepare_engine()
+void Engine::get_instance()
 {
  window_class.hInstance=GetModuleHandle(NULL);
  if(window_class.hInstance==NULL)
  {
   Halt("Can't get the application instance");
  }
+
+}
+
+void Engine::set_backgrond_color()
+{
  window_class.hbrBackground=(HBRUSH)GetStockObject(BLACK_BRUSH);
  if (window_class.hbrBackground==NULL)
  {
   Halt("Can't set background color");
  }
+
+}
+
+void Engine::load_icon()
+{
  window_class.hIcon=LoadIcon(NULL,IDI_APPLICATION);
  if (window_class.hIcon==NULL)
  {
   Halt("Can't load the standart program icon");
  }
- window_class.hCursor=LoadCursor(NULL,IDC_ARROW);
+
+}
+
+void Engine::load_cursor()
+{
+  window_class.hCursor=LoadCursor(NULL,IDC_ARROW);
  if (window_class.hCursor==NULL)
  {
   Halt("Can't load the standart cursor");
  }
+
+}
+
+void Engine::register_window_class()
+{
  if (!RegisterClass(&window_class))
  {
   Halt("Can't register window class");
  }
 
 }
-
 
 HWND Engine::get_window()
 {
@@ -221,6 +240,15 @@ HWND Engine::get_window()
 HDC Engine::get_context()
 {
  return GetDC(window);
+}
+
+void Engine::prepare_engine()
+{
+ this->get_instance();
+ this->set_backgrond_color();
+ this->load_icon();
+ this->load_cursor();
+ this->register_window_class();
 }
 
 void Engine::create_window()
