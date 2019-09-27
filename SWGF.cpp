@@ -173,8 +173,6 @@ Engine::Engine()
  window_class.cbClsExtra=0;
  window_class.cbWndExtra=0;
  window=NULL;
- width=0;
- height=0;
 }
 
 Engine::~Engine()
@@ -253,9 +251,7 @@ void Engine::prepare_engine()
 
 void Engine::create_window()
 {
- width=GetSystemMetrics(SM_CXSCREEN);
- height=GetSystemMetrics(SM_CYSCREEN);
- window=CreateWindow(window_class.lpszClassName,NULL,WS_VISIBLE|WS_POPUP,0,0,width,height,NULL,NULL,window_class.hInstance,NULL);
+ window=CreateWindow(window_class.lpszClassName,NULL,WS_VISIBLE|WS_POPUP,0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),NULL,NULL,window_class.hInstance,NULL);
  if (window==NULL)
  {
   Halt("Can't create window");
@@ -298,16 +294,6 @@ bool Engine::process_message()
 
  }
  return run;
-}
-
-unsigned long int Engine::get_width()
-{
- return width;
-}
-
-unsigned long int Engine::get_height()
-{
- return height;
 }
 
 Frame::Frame()
@@ -505,6 +491,16 @@ void Display::check_video_mode()
 unsigned long int Display::get_color()
 {
  return display.dmBitsPerPel;
+}
+
+unsigned long int Display::get_width()
+{
+ return display.dmPelsWidth;
+}
+
+unsigned long int Display::get_height()
+{
+ return display.dmPelsHeight;
 }
 
 WINGL::WINGL()
