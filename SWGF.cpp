@@ -2438,6 +2438,47 @@ void Text::draw_text(const char *text)
  font->set_position(current_x,current_y);
 }
 
+Transformation::Transformation()
+{
+ screen_x_factor=0;
+ screen_y_factor=0;
+ surface_x_factor=0;
+ surface_y_factor=0;
+}
+
+Transformation::~Transformation()
+{
+
+}
+
+void Transformation::initialize(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int surface_width,const unsigned long int surface_height)
+{
+ screen_x_factor=(float)screen_width/(float)surface_width;
+ screen_y_factor=(float)screen_height/(float)surface_height;
+ surface_x_factor=(float)surface_width/(float)screen_width;
+ surface_y_factor=(float)surface_height/(float)screen_height;
+}
+
+unsigned long int Transformation::get_screen_x(const unsigned long int surface_x)
+{
+ return screen_x_factor*(float)surface_x;
+}
+
+unsigned long int Transformation::get_screen_y(const unsigned long int surface_y)
+{
+ return screen_y_factor*(float)surface_y;
+}
+
+unsigned long int Transformation::get_surface_x(const unsigned long int screen_x)
+{
+ return surface_x_factor*(float)screen_x;
+}
+
+unsigned long int Transformation::get_surface_y(const unsigned long int screen_y)
+{
+ return surface_y_factor*(float)screen_y;
+}
+
 Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
 {
  Collision_Box result;

@@ -647,6 +647,23 @@ class Text
  void draw_text(const char *text);
 };
 
+class Transformation
+{
+ private:
+ float screen_x_factor;
+ float screen_y_factor;
+ float surface_x_factor;
+ float surface_y_factor;
+ public:
+ Transformation();
+ ~Transformation();
+ void initialize(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int surface_width,const unsigned long int surface_height);
+ unsigned long int get_screen_x(const unsigned long int surface_x);
+ unsigned long int get_screen_y(const unsigned long int surface_y);
+ unsigned long int get_surface_x(const unsigned long int screen_x);
+ unsigned long int get_surface_y(const unsigned long int screen_y);
+};
+
 class Collision
 {
  public:
