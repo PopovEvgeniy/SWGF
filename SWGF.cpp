@@ -249,6 +249,11 @@ void Engine::prepare_engine()
  this->register_window_class();
 }
 
+void Engine::destroy_window()
+{
+ if(window!=NULL) CloseWindow(window);
+}
+
 void Engine::create_window()
 {
  window=CreateWindow(window_class.lpszClassName,NULL,WS_VISIBLE|WS_POPUP,0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),NULL,NULL,window_class.hInstance,NULL);
@@ -488,6 +493,18 @@ void Display::check_video_mode()
 
 }
 
+void Display::set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height)
+{
+ this->get_video_mode();
+ if((display.dmPelsWidth!=screen_width)||(display.dmPelsHeight!=screen_height))
+ {
+  display.dmPelsWidth=screen_width;
+  display.dmPelsHeight=screen_height;
+  this->set_video_mode();
+ }
+
+}
+
 unsigned long int Display::get_color()
 {
  return display.dmBitsPerPel;
@@ -600,6 +617,16 @@ void WINGL::create_render_context()
   Halt("Can't create render context");
  }
  wglMakeCurrent(context,render);
+}
+
+void WINGL::destroy_render_context()
+{
+ if(render!=NULL)
+ {
+  wglMakeCurrent(NULL,NULL);
+  wglDeleteContext(render);
+ }
+ if(context!=NULL) ReleaseDC(this->get_window(),context);
 }
 
 void WINGL::set_render()
@@ -746,6 +773,12 @@ void Render::draw()
  glDrawArrays(GL_TRIANGLE_FAN,0,4);
 }
 
+void Render::destroy_render()
+{
+ this->destroy_render_context();
+ this->destroy_window();
+}
+
 void Render::start_render()
 {
  this->create_window();
@@ -773,6 +806,13 @@ void Screen::initialize(const SURFACE surface)
 {
  this->set_size(surface);
  this->initialize();
+}
+
+void Screen::set_mode(const unsigned long int screen_width,const unsigned long int screen_height)
+{
+ this->destroy_render();
+ this->set_display_mode(screen_width,screen_height);
+ this->start_render();
 }
 
 bool Screen::update()

@@ -211,6 +211,7 @@ class Engine
  HWND get_window();
  HDC get_context();
  void prepare_engine();
+ void destroy_window();
  void create_window();
  void capture_mouse();
  bool process_message();
@@ -267,6 +268,7 @@ class Display
  void set_video_mode();
  protected:
  void check_video_mode();
+ void set_display_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  public:
  Display();
  ~Display();
@@ -288,6 +290,7 @@ class WINGL:public Display, public Engine
  void set_pixel_format(const int format);
  void create_render_context();
  protected:
+ void destroy_render_context();
  void set_render();
  void disable_vsync();
  void Swap();
@@ -312,6 +315,7 @@ class Render:public WINGL, public Frame
  void create_render();
  void draw();
  protected:
+ void destroy_render();
  void start_render();
  void refresh();
  public:
@@ -324,6 +328,7 @@ class Screen:public FPS, public Synchronization, public Render
  public:
  void initialize();
  void initialize(const SURFACE surface);
+ void set_mode(const unsigned long int screen_width,const unsigned long int screen_height);
  bool update();
  bool sync();
  Screen* get_handle();
