@@ -251,7 +251,12 @@ void Engine::prepare_engine()
 
 void Engine::destroy_window()
 {
- if(window!=NULL) CloseWindow(window);
+ if(window!=NULL)
+ {
+  CloseWindow(window);
+  window=NULL;
+ }
+
 }
 
 void Engine::create_window()
@@ -625,8 +630,14 @@ void WINGL::destroy_render_context()
  {
   wglMakeCurrent(NULL,NULL);
   wglDeleteContext(render);
+  render=NULL;
  }
- if(context!=NULL) ReleaseDC(this->get_window(),context);
+ if(context!=NULL)
+ {
+  ReleaseDC(this->get_window(),context);
+  context=NULL;
+ }
+
 }
 
 void WINGL::set_render()
