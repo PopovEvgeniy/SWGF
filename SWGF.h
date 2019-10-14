@@ -446,6 +446,7 @@ class System
  void quit();
  void run(const char *command);
  char* read_environment(const char *variable);
+ bool delete_file(const char *name);
  void enable_logging(const char *name);
 };
 

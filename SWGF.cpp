@@ -1479,6 +1479,17 @@ char* System::read_environment(const char *variable)
  return getenv(variable);
 }
 
+bool System::delete_file(const char *name)
+{
+ bool result;
+ result=false;
+ if (remove(name)==0)
+ {
+  result=true;
+ }
+ return result;
+}
+
 void System::enable_logging(const char *name)
 {
  if(freopen(name,"wt",stdout)==NULL)
