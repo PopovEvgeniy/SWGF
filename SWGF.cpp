@@ -1934,7 +1934,12 @@ void Surface::restore()
 
 void Surface::clear_buffer()
 {
- if(image!=NULL) free(image);
+ if(image!=NULL)
+ {
+  free(image);
+  image=NULL;
+ }
+
 }
 
 void Surface::load_from_buffer(Image &buffer)
@@ -1944,6 +1949,16 @@ void Surface::load_from_buffer(Image &buffer)
  this->clear_buffer();
  image=this->create_buffer(width,height);
  memmove(image,buffer.get_data(),buffer.get_data_length());
+}
+
+void Surface::set_width(const unsigned long int image_width)
+{
+ width=image_width;
+}
+
+void Surface::set_height(const unsigned long int image_height)
+{
+ height=image_height;
 }
 
 size_t Surface::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
@@ -1971,68 +1986,17 @@ IMG_Pixel *Surface::get_image()
  return image;
 }
 
-Canvas::Canvas()
-{
- start=0;
- frame=1;
- frames=1;
-}
-
-Canvas::~Canvas()
-{
-
-}
-
-void Canvas::set_frame(const unsigned long int target)
-{
- if (target<=frames)
- {
-  frame=target;
- }
-
-}
-
-void Canvas::increase_frame()
-{
- ++frame;
- if (frame>frames)
- {
-  frame=1;
- }
-
-}
-
-unsigned long int Canvas::get_image_width()
+unsigned long int Surface::get_image_width()
 {
  return width;
 }
 
-unsigned long int Canvas::get_image_height()
+unsigned long int Surface::get_image_height()
 {
  return height;
 }
 
-void Canvas::set_frames(const unsigned long int amount)
-{
- if(amount>1) frames=amount;
-}
-
-unsigned long int Canvas::get_frames()
-{
- return frames;
-}
-
-unsigned long int Canvas::get_frame()
-{
- return frame;
-}
-
-void Canvas::load_image(Image &buffer)
-{
- this->load_from_buffer(buffer);
-}
-
-void Canvas::mirror_image(const MIRROR_TYPE kind)
+void Surface::mirror_image(const MIRROR_TYPE kind)
 {
  unsigned long int x,y;
  size_t index,index2;
@@ -2070,7 +2034,7 @@ void Canvas::mirror_image(const MIRROR_TYPE kind)
  image=mirrored_image;
 }
 
-void Canvas::resize_image(const unsigned long int new_width,const unsigned long int new_height)
+void Surface::resize_image(const unsigned long int new_width,const unsigned long int new_height)
 {
  float x_ratio,y_ratio;
  unsigned long int x,y;
@@ -2093,6 +2057,57 @@ void Canvas::resize_image(const unsigned long int new_width,const unsigned long 
  image=scaled_image;
  width=new_width;
  height=new_height;
+}
+
+Canvas::Canvas()
+{
+ start=0;
+ frame=1;
+ frames=1;
+}
+
+Canvas::~Canvas()
+{
+
+}
+
+void Canvas::set_frame(const unsigned long int target)
+{
+ if (target<=frames)
+ {
+  frame=target;
+ }
+
+}
+
+void Canvas::increase_frame()
+{
+ ++frame;
+ if (frame>frames)
+ {
+  frame=1;
+ }
+
+}
+
+void Canvas::set_frames(const unsigned long int amount)
+{
+ if(amount>1) frames=amount;
+}
+
+unsigned long int Canvas::get_frames()
+{
+ return frames;
+}
+
+unsigned long int Canvas::get_frame()
+{
+ return frame;
+}
+
+void Canvas::load_image(Image &buffer)
+{
+ this->load_from_buffer(buffer);
 }
 
 Background::Background()
@@ -2202,16 +2217,6 @@ Sprite::Sprite()
 Sprite::~Sprite()
 {
 
-}
-
-void Sprite::set_width(const unsigned long int image_width)
-{
- width=image_width;
-}
-
-void Sprite::set_height(const unsigned long int image_height)
-{
- height=image_height;
 }
 
 bool Sprite::compare_pixels(const IMG_Pixel &first,const IMG_Pixel &second)
@@ -2351,7 +2356,7 @@ void Sprite::clone(Sprite &target)
  this->set_kind(target.get_kind());
  this->set_transparent(target.get_transparent());
  image=this->create_buffer(target.get_image_width(),target.get_image_width());
- memmove(image,target.get_image(),target.get_length());
+ memmove(this->get_image(),target.get_image(),target.get_length());
 }
 
 void Sprite::draw_sprite()
@@ -2442,8 +2447,8 @@ void Tileset::load_tileset(Image &buffer,const unsigned long int row_amount,cons
   this->load_from_buffer(buffer);
   rows=row_amount;
   columns=column_amount;
-  tile_width=width/rows;
-  tile_height=height/columns;
+  tile_width=this->get_image_width()/rows;
+  tile_height=this->get_image_height()/columns;
  }
 
 }

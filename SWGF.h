@@ -520,15 +520,17 @@ class Surface
 {
  private:
  Screen *surface;
- protected:
  unsigned long int width;
  unsigned long int height;
+ protected:
  IMG_Pixel *image;
  void save();
  void restore();
  void clear_buffer();
  IMG_Pixel *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
  void load_from_buffer(Image &buffer);
+ void set_width(const unsigned long int image_width);
+ void set_height(const unsigned long int image_height);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  public:
@@ -537,6 +539,10 @@ class Surface
  void initialize(Screen *screen);
  size_t get_length();
  IMG_Pixel *get_image();
+ unsigned long int get_image_width();
+ unsigned long int get_image_height();
+ void mirror_image(const MIRROR_TYPE kind);
+ void resize_image(const unsigned long int new_width,const unsigned long int new_height);
 };
 
 class Canvas:public Surface
@@ -551,14 +557,10 @@ class Canvas:public Surface
  public:
  Canvas();
  ~Canvas();
- unsigned long int get_image_width();
- unsigned long int get_image_height();
  void set_frames(const unsigned long int amount);
  unsigned long int get_frames();
  unsigned long int get_frame();
  void load_image(Image &buffer);
- void mirror_image(const MIRROR_TYPE kind);
- void resize_image(const unsigned long int new_width,const unsigned long int new_height);
 };
 
 class Background:public Canvas
@@ -590,8 +592,6 @@ class Sprite:public Canvas
  unsigned long int sprite_width;
  unsigned long int sprite_height;
  SPRITE_TYPE current_kind;
- void set_width(const unsigned long int image_width);
- void set_height(const unsigned long int image_height);
  bool compare_pixels(const IMG_Pixel &first,const IMG_Pixel &second);
  void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  public:
