@@ -1479,6 +1479,20 @@ char* System::read_environment(const char *variable)
  return getenv(variable);
 }
 
+bool System::file_exist(const char *name)
+{
+ FILE *target;
+ bool result;
+ result=false;
+ target=fopen(name,"rb");
+ if (target!=NULL)
+ {
+  result=true;
+  fclose(target);
+ }
+ return result;
+}
+
 bool System::delete_file(const char *name)
 {
  bool result;
