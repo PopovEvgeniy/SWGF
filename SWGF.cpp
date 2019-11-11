@@ -330,6 +330,18 @@ Frame::~Frame()
 
 }
 
+unsigned int *Frame::create_buffer(const char *error)
+{
+ unsigned int *target;
+ pixels=(size_t)frame_width*(size_t)frame_height;
+ target=(unsigned int*)calloc(pixels,sizeof(unsigned int));
+ if(target==NULL)
+ {
+  Halt(error);
+ }
+ return target;
+}
+
 unsigned int Frame::get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue)
 {
  return red+(green<<8)+(blue<<16);
@@ -353,18 +365,6 @@ void Frame::set_size(const SURFACE surface)
   frame_height=512;
  }
 
-}
-
-unsigned int *Frame::create_buffer(const char *error)
-{
- unsigned int *target;
- pixels=(size_t)frame_width*(size_t)frame_height;
- target=(unsigned int*)calloc(pixels,sizeof(unsigned int));
- if(target==NULL)
- {
-  Halt(error);
- }
- return target;
 }
 
 void Frame::create_buffers()
