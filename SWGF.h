@@ -284,6 +284,8 @@ class WINGL:public Display, public Engine
  HGLRC render;
  PIXELFORMATDESCRIPTOR setting;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
+ bool check_base_setting();
+ bool check_advanced_setting();
  bool check_common_setting();
  bool check_acceleration();
  int get_pixel_format();

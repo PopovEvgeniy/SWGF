@@ -545,21 +545,35 @@ WINGL::~WINGL()
  if(context!=NULL) ReleaseDC(this->get_window(),context);
 }
 
+bool WINGL::check_base_setting()
+{
+ bool result;
+ result=false;
+ if (setting.cColorBits==this->get_color())
+ {
+  if ((setting.dwFlags&PFD_DRAW_TO_WINDOW)&&(setting.dwFlags&PFD_SUPPORT_OPENGL)) result=true;
+ }
+ return result;
+}
+
+bool WINGL::check_advanced_setting()
+{
+ bool result;
+ result=false;
+ if (setting.dwFlags&PFD_DOUBLEBUFFER)
+ {
+  if ((setting.iPixelType==PFD_TYPE_RGBA)&&(setting.iLayerType==PFD_MAIN_PLANE)) result=true;
+ }
+ return result;
+}
+
 bool WINGL::check_common_setting()
 {
  bool result;
  result=false;
- if(setting.cColorBits==this->get_color())
+ if(this->check_base_setting()==true)
  {
-  if((setting.dwFlags&PFD_DRAW_TO_WINDOW)&&(setting.dwFlags&PFD_SUPPORT_OPENGL))
-  {
-   if(setting.dwFlags&PFD_DOUBLEBUFFER)
-   {
-    if((setting.iPixelType==PFD_TYPE_RGBA)&&(setting.iLayerType==PFD_MAIN_PLANE)) result=true;
-   }
-
-  }
-
+  result=this->check_advanced_setting();
  }
  return result;
 }
