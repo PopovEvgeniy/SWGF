@@ -1552,6 +1552,16 @@ void Binary_File::open(const char *name,const char *mode)
 
 }
 
+void Binary_File::create_temp()
+{
+ target=tmpfile();
+ if(target==NULL)
+ {
+  Halt("Can't create a temporary file");
+ }
+
+}
+
 void Binary_File::open_read(const char *name)
 {
  this->open(name,"rb");

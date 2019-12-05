@@ -461,6 +461,7 @@ class Binary_File
  public:
  Binary_File();
  ~Binary_File();
+ void create_temp();
  void open_read(const char *name);
  void open_write(const char *name);
  void close();
