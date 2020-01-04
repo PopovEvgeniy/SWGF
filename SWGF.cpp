@@ -8,7 +8,7 @@ Some code was taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL
 
 Simple windows game framework license
 
-Copyright (C) 2016-2019 Popov Evgeniy Alekseyevich
+Copyright (C) 2016-2020 Popov Evgeniy Alekseyevich
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -413,6 +413,32 @@ void Frame::restore()
  for (index=0;index<pixels;++index)
  {
   buffer[index]=shadow[index];
+ }
+
+}
+
+void Frame::restore(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
+{
+ unsigned long int target_x,target_y,stop_x,stop_y;
+ size_t position;
+ stop_x=x+width;
+ stop_y=y+height;
+ if ((x<frame_width)&&(y<frame_height))
+ {
+  if ((stop_x<=frame_width)&&(stop_y<=frame_height))
+  {
+   for (target_x=x;target_x<stop_x;++target_x)
+   {
+    for (target_y=y;target_y<stop_y;++target_y)
+    {
+     position=this->get_offset(target_x,target_y);
+     buffer[position]=shadow[position];
+    }
+
+   }
+
+  }
+
  }
 
 }

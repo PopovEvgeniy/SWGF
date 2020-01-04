@@ -4,7 +4,7 @@ Some code was taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL
 
 Simple windows game framework license
 
-Copyright (C) 2016-2019 Popov Evgeniy Alekseyevich
+Copyright (C) 2016-2020 Popov Evgeniy Alekseyevich
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -242,6 +242,7 @@ class Frame
  void clear_screen();
  void save();
  void restore();
+ void restore(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height);
  unsigned long int get_frame_width();
  unsigned long int get_frame_height();
 };
