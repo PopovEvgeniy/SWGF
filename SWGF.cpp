@@ -178,6 +178,7 @@ Engine::Engine()
 Engine::~Engine()
 {
  if(window!=NULL) CloseWindow(window);
+ if(window_class.hbrBackground!=NULL) DeleteObject(window_class.hbrBackground);
  UnregisterClass(window_class.lpszClassName,window_class.hInstance);
 }
 
@@ -193,7 +194,7 @@ void Engine::get_instance()
 
 void Engine::set_backgrond_color()
 {
- window_class.hbrBackground=(HBRUSH)GetStockObject(BLACK_BRUSH);
+ window_class.hbrBackground=CreateSolidBrush(RGB(0,0,0));
  if (window_class.hbrBackground==NULL)
  {
   Halt("Can't set background color");
@@ -758,7 +759,7 @@ void Render::check_videocard()
 
 }
 
-void Render::prepare_surface()
+void Render::set_vertex_coordinates()
 {
  vertex[0].x=0;
  vertex[0].y=this->get_height();
@@ -768,6 +769,10 @@ void Render::prepare_surface()
  vertex[2].y=0;
  vertex[3].x=0;
  vertex[3].y=0;
+}
+
+void Render::set_texture_coordinates()
+{
  point[0].u=0;
  point[0].v=1;
  point[1].u=1;
@@ -776,6 +781,12 @@ void Render::prepare_surface()
  point[2].v=0;
  point[3].u=0;
  point[3].v=0;
+}
+
+void Render::prepare_surface()
+{
+ this->set_vertex_coordinates();
+ this->set_texture_coordinates();
 }
 
 void Render::create_texture()

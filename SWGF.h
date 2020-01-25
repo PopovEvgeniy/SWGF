@@ -311,6 +311,8 @@ class Render:public WINGL, public Frame
  void set_perspective();
  void clear_stage();
  void check_videocard();
+ void set_vertex_coordinates();
+ void set_texture_coordinates();
  void prepare_surface();
  void create_texture();
  void load_surface_data();
