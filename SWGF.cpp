@@ -201,19 +201,9 @@ void Engine::set_backgrond_color()
 
 }
 
-void Engine::load_icon()
-{
- window_class.hIcon=LoadIcon(NULL,IDI_APPLICATION);
- if (window_class.hIcon==NULL)
- {
-  Halt("Can't load the standart program icon");
- }
-
-}
-
 void Engine::load_cursor()
 {
-  window_class.hCursor=LoadCursor(NULL,IDC_ARROW);
+ window_class.hCursor=LoadCursor(NULL,IDC_ARROW);
  if (window_class.hCursor==NULL)
  {
   Halt("Can't load the standart cursor");
@@ -244,7 +234,6 @@ void Engine::prepare_engine()
 {
  this->get_instance();
  this->set_backgrond_color();
- this->load_icon();
  this->load_cursor();
  this->register_window_class();
 }

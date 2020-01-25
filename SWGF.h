@@ -204,7 +204,6 @@ class Engine
  HWND window;
  void get_instance();
  void set_backgrond_color();
- void load_icon();
  void load_cursor();
  void register_window_class();
  protected:
