@@ -947,11 +947,22 @@ bool Keyboard::check_release(const unsigned char code)
 Mouse::Mouse()
 {
  memset(preversion,KEY_RELEASE,MOUSE);
+ position.x=0;
+ position.y=0;
 }
 
 Mouse::~Mouse()
 {
  while(ShowCursor(TRUE)<1) ;
+}
+
+void Mouse::get_position()
+{
+ if(GetCursorPos(&position)==FALSE)
+ {
+  Halt("Can't get the mouse cursor position");
+ }
+
 }
 
 void Mouse::show()
@@ -975,21 +986,13 @@ void Mouse::set_position(const unsigned long int x,const unsigned long int y)
 
 unsigned long int Mouse::get_x()
 {
- POINT position;
- if(GetCursorPos(&position)==FALSE)
- {
-  Halt("Can't get the mouse cursor position");
- }
+ this->get_position();
  return position.x;
 }
 
 unsigned long int Mouse::get_y()
 {
- POINT position;
- if(GetCursorPos(&position)==FALSE)
- {
-  Halt("Can't get the mouse cursor position");
- }
+ this->get_position();
  return position.y;
 }
 
