@@ -672,11 +672,11 @@ class Transformation
  public:
  Transformation();
  ~Transformation();
- void initialize(const unsigned long int screen_width,const unsigned long int screen_height,const unsigned long int surface_width,const unsigned long int surface_height);
- unsigned long int get_screen_x(const unsigned long int surface_x);
- unsigned long int get_screen_y(const unsigned long int surface_y);
- unsigned long int get_surface_x(const unsigned long int screen_x);
- unsigned long int get_surface_y(const unsigned long int screen_y);
+ void initialize(const float screen_width,const float screen_height,const float surface_width,const float surface_height);
+ float get_screen_x(const float surface_x);
+ float get_screen_y(const float surface_y);
+ float get_surface_x(const float screen_x);
+ float get_surface_y(const float screen_y);
 };
 
 class Collision
