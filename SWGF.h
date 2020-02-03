@@ -343,6 +343,7 @@ class Keyboard
  private:
  unsigned char *preversion;
  unsigned char *create_buffer(const char *error);
+ bool check_state(const unsigned char code,const unsigned char state);
  public:
  Keyboard();
  ~Keyboard();
@@ -358,6 +359,7 @@ class Mouse
  unsigned char preversion[MOUSE];
  POINT position;
  void get_position();
+ bool check_state(const unsigned char button,const unsigned char state);
  public:
  Mouse();
  ~Mouse();

@@ -906,6 +906,18 @@ unsigned char *Keyboard::create_buffer(const char *error)
  return buffer;
 }
 
+bool Keyboard::check_state(const unsigned char code,const unsigned char state)
+{
+ bool result;
+ result=false;
+ if(Keys[code]==state)
+ {
+  if(preversion[code]!=state) result=true;
+ }
+ preversion[code]=Keys[code];
+ return result;
+}
+
 void Keyboard::initialize()
 {
  preversion=this->create_buffer("Can't allocate memory for keyboard state buffer");
@@ -922,26 +934,12 @@ bool Keyboard::check_hold(const unsigned char code)
 
 bool Keyboard::check_press(const unsigned char code)
 {
- bool result;
- result=false;
- if(Keys[code]==KEY_PRESS)
- {
-  if(preversion[code]==KEY_RELEASE) result=true;
- }
- preversion[code]=Keys[code];
- return result;
+ return this->check_state(code,KEY_PRESS);
 }
 
 bool Keyboard::check_release(const unsigned char code)
 {
- bool result;
- result=false;
- if(Keys[code]==KEY_RELEASE)
- {
-  if(preversion[code]==KEY_PRESS) result=true;
- }
- preversion[code]=Keys[code];
- return result;
+ return this->check_state(code,KEY_RELEASE);
 }
 
 Mouse::Mouse()
@@ -963,6 +961,22 @@ void Mouse::get_position()
   Halt("Can't get the mouse cursor position");
  }
 
+}
+
+bool Mouse::check_state(const unsigned char button,const unsigned char state)
+{
+ bool result;
+ result=false;
+ if(button<=MOUSE_MIDDLE)
+ {
+  if(Buttons[button]==state)
+  {
+   if(preversion[button]!=state) result=true;
+  }
+
+ }
+ preversion[button]=Buttons[button];
+ return result;
 }
 
 void Mouse::show()
@@ -1010,34 +1024,12 @@ bool Mouse::check_hold(const unsigned char button)
 
 bool Mouse::check_press(const unsigned char button)
 {
- bool result;
- result=false;
- if(button<=MOUSE_MIDDLE)
- {
-  if(Buttons[button]==KEY_PRESS)
-  {
-   if(preversion[button]==KEY_RELEASE) result=true;
-  }
-
- }
- preversion[button]=Buttons[button];
- return result;
+ return this->check_state(button,KEY_PRESS);
 }
 
 bool Mouse::check_release(const unsigned char button)
 {
- bool result;
- result=false;
- if(button<=MOUSE_MIDDLE)
- {
-  if(Buttons[button]==KEY_RELEASE)
-  {
-   if(preversion[button]==KEY_PRESS) result=true;
-  }
-
- }
- preversion[button]=Buttons[button];
- return result;
+ return this->check_state(button,KEY_RELEASE);
 }
 
 Gamepad::Gamepad()
