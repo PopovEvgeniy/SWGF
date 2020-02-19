@@ -31,13 +31,11 @@ int main(void)
  image.load_tga("space.tga");
  space.load_image(image);
  image.load_tga("ship.tga");
- ship.load_image(image);
+ ship.load_sprite(image,HORIZONTAL_STRIP,2);
  image.load_tga("font.tga");
  font.load_image(image);
  text.load_font(font.get_handle());
  text.set_position(font.get_width(),font.get_width());
- ship.set_frames(2);
- ship.set_kind(HORIZONTAL_STRIP);
  screen.clear_screen();
  space.resize_image(screen_width,screen_height);
  space.set_kind(NORMAL_BACKGROUND);

@@ -608,6 +608,7 @@ class Sprite:public Canvas
  public:
  Sprite();
  ~Sprite();
+ void load_sprite(Image &buffer,const SPRITE_TYPE kind,const unsigned long int frames);
  void set_transparent(const bool enabled);
  bool get_transparent();
  void set_x(const unsigned long int x);

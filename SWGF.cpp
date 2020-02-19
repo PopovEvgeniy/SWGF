@@ -2310,6 +2310,13 @@ void Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int x,con
 
 }
 
+void Sprite::load_sprite(Image &buffer,const SPRITE_TYPE kind,const unsigned long int frames)
+{
+ this->load_image(buffer);
+ if (kind!=SINGLE_SPRITE) this->set_frames(frames);
+ this->set_kind(kind);
+}
+
 void Sprite::set_transparent(const bool enabled)
 {
  transparent=enabled;
