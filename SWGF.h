@@ -231,6 +231,7 @@ class Frame
  unsigned int get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue);
  size_t get_offset(const unsigned long int x,const unsigned long int y);
  protected:
+ void set_size(const unsigned long int surface_width,const unsigned long int surface_height);
  void set_size(const SURFACE surface);
  void create_buffers();
  public:

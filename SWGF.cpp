@@ -341,6 +341,12 @@ size_t Frame::get_offset(const unsigned long int x,const unsigned long int y)
  return (size_t)x+(size_t)y*(size_t)frame_width;
 }
 
+void Frame::set_size(const unsigned long int surface_width,const unsigned long int surface_height)
+{
+ frame_width=surface_width;
+ frame_height=surface_height;
+}
+
 void Frame::set_size(const SURFACE surface)
 {
  if(surface==SURFACE_SMALL)
