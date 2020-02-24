@@ -367,6 +367,11 @@ unsigned int *Frame::get_buffer()
  return buffer;
 }
 
+size_t Frame::get_pixels()
+{
+ return pixels;
+}
+
 void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
 {
  if((x<frame_width)&&(y<frame_height))

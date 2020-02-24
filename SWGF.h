@@ -233,10 +233,11 @@ class Frame
  protected:
  void set_size(const SURFACE surface);
  void create_buffers();
- unsigned int *get_buffer();
  public:
  Frame();
  ~Frame();
+ unsigned int *get_buffer();
+ size_t get_pixels();
  void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void clear_screen();
  void save();
