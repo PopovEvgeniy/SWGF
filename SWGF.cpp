@@ -453,6 +453,40 @@ unsigned long int Frame::get_frame_height()
  return frame_height;
 }
 
+Plane::Plane()
+{
+ target=NULL;
+ plane=NULL;
+ amount=0;
+ Ratio=0;
+}
+
+Plane::~Plane()
+{
+
+}
+
+void Plane::create_plane(const unsigned long int width,const unsigned long int height,unsigned int *surface_buffer,const size_t surface_pixels)
+{
+ this->set_size(width,height);
+ this->create_buffers();
+ amount=surface_pixels;
+ plane=this->get_buffer();
+ target=surface_buffer;
+ Ratio=(float)this->get_pixels()/(float)amount;
+}
+
+void Plane::transfer()
+{
+ size_t index,position;
+ for (index=0;index<amount;++index)
+ {
+  position=(size_t)(Ratio*(float)index);
+  target[index]=plane[position];
+ }
+
+}
+
 FPS::FPS()
 {
  start=time(NULL);

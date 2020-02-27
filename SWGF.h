@@ -248,6 +248,20 @@ class Frame
  unsigned long int get_frame_height();
 };
 
+class Plane: public Frame
+{
+ private:
+ unsigned int *plane;
+ unsigned int *target;
+ size_t amount;
+ float Ratio;
+ public:
+ Plane();
+ ~Plane();
+ void create_plane(const unsigned long int width,const unsigned long int height,unsigned int *surface_buffer,const size_t surface_pixels);
+ void transfer();
+};
+
 class FPS
 {
  private:
