@@ -497,11 +497,9 @@ FPS::~FPS()
 
 void FPS::update_counter()
 {
- time_t stop;
- if(current==0) start=time(NULL);
+ if (current==0) start=time(NULL);
  ++current;
- stop=time(NULL);
- if(difftime(stop,start)>=1)
+ if (difftime(time(NULL),start)>=1)
  {
   fps=current;
   current=0;
@@ -1700,10 +1698,8 @@ void Timer::set_timer(const unsigned long int seconds)
 bool Timer::check_timer()
 {
  bool result;
- time_t stop;
  result=false;
- stop=time(NULL);
- if(difftime(stop,start)>=interval)
+ if (difftime(time(NULL),start)>=interval)
  {
   result=true;
   start=time(NULL);
