@@ -483,6 +483,11 @@ void Plane::transfer()
 
 }
 
+Plane* Plane::get_handle()
+{
+ return this;
+}
+
 FPS::FPS()
 {
  start=time(NULL);
