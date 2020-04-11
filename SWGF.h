@@ -229,9 +229,10 @@ class Frame
  unsigned int *shadow;
  unsigned int *create_buffer(const char *error);
  unsigned int get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue);
- size_t get_offset(const unsigned long int x,const unsigned long int y);
  void put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue);
  protected:
+ size_t get_offset(const unsigned long int x,const unsigned long int y,const unsigned long int target_width);
+ size_t get_offset(const unsigned long int x,const unsigned long int y);
  void set_size(const unsigned long int surface_width,const unsigned long int surface_height);
  void set_size(const SURFACE surface);
  void create_buffers();
@@ -560,6 +561,7 @@ class Surface
  void set_width(const unsigned long int image_width);
  void set_height(const unsigned long int image_height);
  void set_buffer(IMG_Pixel *buffer);
+ size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y,const unsigned long int target_width);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
  void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  bool compare_pixels(const size_t first,const size_t second);
