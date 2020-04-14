@@ -458,8 +458,10 @@ Plane::Plane()
 {
  target=NULL;
  plane=NULL;
- amount=0;
- Ratio=0;
+ target_width=0;
+ target_height=0;
+ x_ratio=0;
+ y_ratio=0;
 }
 
 Plane::~Plane()
@@ -467,23 +469,32 @@ Plane::~Plane()
 
 }
 
-void Plane::create_plane(const unsigned long int width,const unsigned long int height,unsigned int *surface_buffer,const size_t surface_pixels)
+void Plane::create_plane(const unsigned long int width,const unsigned long int height,const unsigned long int surface_width,const unsigned long int surface_height,unsigned int *surface_buffer)
 {
  this->set_size(width,height);
  this->create_buffers();
- amount=surface_pixels;
  plane=this->get_buffer();
  target=surface_buffer;
- Ratio=(float)this->get_pixels()/(float)amount;
+ target_width=surface_width;
+ target_height=surface_height;
+ x_ratio=(float)width/(float)surface_width;
+ y_ratio=(float)height/(float)surface_height;
 }
 
 void Plane::transfer()
 {
+ unsigned long int x,y,width;
  size_t index,position;
- for (index=0;index<amount;++index)
+ width=this->get_frame_width();
+ for (x=0;x<target_width;++x)
  {
-  position=(size_t)(Ratio*(float)index);
-  target[index]=plane[position];
+  for (y=0;y<target_height;++y)
+  {
+   index=this->get_offset(x,y,target_width);
+   position=this->get_offset((x_ratio*(float)x),(y_ratio*(float)y),width);
+   target[index]=plane[position];
+  }
+
  }
 
 }

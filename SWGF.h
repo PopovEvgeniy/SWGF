@@ -255,12 +255,14 @@ class Plane: public Frame
  private:
  unsigned int *plane;
  unsigned int *target;
- size_t amount;
- float Ratio;
+ unsigned long int target_width;
+ unsigned long int target_height;
+ float x_ratio;
+ float y_ratio;
  public:
  Plane();
  ~Plane();
- void create_plane(const unsigned long int width,const unsigned long int height,unsigned int *surface_buffer,const size_t surface_pixels);
+ void create_plane(const unsigned long int width,const unsigned long int height,const unsigned long int surface_width,const unsigned long int surface_height,unsigned int *surface_buffer);
  void transfer();
  Plane* get_handle();
 };
