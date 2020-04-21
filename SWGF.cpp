@@ -1033,9 +1033,8 @@ bool Mouse::check_state(const unsigned char button,const unsigned char state)
   {
    if(preversion[button]!=state) result=true;
   }
-
+  preversion[button]=Buttons[button];
  }
- preversion[button]=Buttons[button];
  return result;
 }
 
