@@ -378,7 +378,7 @@ unsigned int *Frame::get_buffer()
  return buffer;
 }
 
-size_t Frame::get_pixels()
+size_t Frame::get_pixels() const
 {
  return pixels;
 }
@@ -444,12 +444,12 @@ void Frame::restore(const unsigned long int x,const unsigned long int y,const un
 
 }
 
-unsigned long int Frame::get_frame_width()
+unsigned long int Frame::get_frame_width() const
 {
  return frame_width;
 }
 
-unsigned long int Frame::get_frame_height()
+unsigned long int Frame::get_frame_height() const
 {
  return frame_height;
 }
@@ -528,7 +528,7 @@ void FPS::update_counter()
 
 }
 
-unsigned long int FPS::get_fps()
+unsigned long int FPS::get_fps() const
 {
  return fps;
 }
@@ -585,17 +585,17 @@ void Display::set_display_mode(const unsigned long int screen_width,const unsign
 
 }
 
-unsigned long int Display::get_color()
+unsigned long int Display::get_color() const
 {
  return display.dmBitsPerPel;
 }
 
-unsigned long int Display::get_width()
+unsigned long int Display::get_width() const
 {
  return display.dmPelsWidth;
 }
 
-unsigned long int Display::get_height()
+unsigned long int Display::get_height() const
 {
  return display.dmPelsHeight;
 }
@@ -631,7 +631,7 @@ bool WINGL::check_base_setting()
  return result;
 }
 
-bool WINGL::check_advanced_setting()
+bool WINGL::check_advanced_setting() const
 {
  bool result;
  result=false;
@@ -653,7 +653,7 @@ bool WINGL::check_common_setting()
  return result;
 }
 
-bool WINGL::check_acceleration()
+bool WINGL::check_acceleration() const
 {
  bool result;
  result=false;
@@ -759,8 +759,22 @@ void WINGL::Swap()
 
 Render::Render()
 {
- memset(vertex,0,4*sizeof(SWGF_Vertex));
- memset(point,0,4*sizeof(SWGF_Point));
+ vertex[0].x=0;
+ vertex[0].y=0;
+ vertex[1].x=0;
+ vertex[1].y=0;
+ vertex[2].x=0;
+ vertex[2].y=0;
+ vertex[3].x=0;
+ vertex[3].y=0;
+ point[0].u=0;
+ point[0].v=0;
+ point[1].u=0;
+ point[1].v=0;
+ point[2].u=0;
+ point[2].v=0;
+ point[3].u=0;
+ point[3].v=0;
  texture=0;
 }
 
@@ -1213,17 +1227,17 @@ void Gamepad::set_active(const unsigned int gamepad)
 
 }
 
-unsigned int Gamepad::get_max_amount()
+unsigned int Gamepad::get_max_amount() const
 {
  return max_amount;
 }
 
-unsigned int Gamepad::get_active()
+unsigned int Gamepad::get_active() const
 {
  return active;
 }
 
-GAMEPAD_DPAD Gamepad::get_dpad()
+GAMEPAD_DPAD Gamepad::get_dpad() const
 {
  GAMEPAD_DPAD result;
  result=GAMEPAD_NONE;
@@ -1983,17 +1997,17 @@ void Image::load_pcx(const char *name)
  data=original;
 }
 
-unsigned long int Image::get_width()
+unsigned long int Image::get_width() const
 {
  return width;
 }
 
-unsigned long int Image::get_height()
+unsigned long int Image::get_height() const
 {
  return height;
 }
 
-size_t Image::get_data_length()
+size_t Image::get_data_length() const
 {
  return (size_t)width*(size_t)height*3;
 }
@@ -2096,7 +2110,7 @@ void Surface::draw_image_pixel(const size_t offset,const unsigned long int x,con
  surface->draw_pixel(x,y,image[offset].red,image[offset].green,image[offset].blue);
 }
 
-bool Surface::compare_pixels(const size_t first,const size_t second)
+bool Surface::compare_pixels(const size_t first,const size_t second) const
 {
  bool result;
  result=false;
@@ -2116,9 +2130,9 @@ void Surface::initialize(Screen *screen)
  surface=screen;
 }
 
-size_t Surface::get_length()
+size_t Surface::get_length() const
 {
- return (size_t)width*(size_t)height;
+ return (size_t)width*(size_t)height*3;
 }
 
 IMG_Pixel *Surface::get_image()
@@ -2126,12 +2140,12 @@ IMG_Pixel *Surface::get_image()
  return image;
 }
 
-unsigned long int Surface::get_image_width()
+unsigned long int Surface::get_image_width() const
 {
  return width;
 }
 
-unsigned long int Surface::get_image_height()
+unsigned long int Surface::get_image_height() const
 {
  return height;
 }
@@ -2235,12 +2249,12 @@ void Canvas::set_frames(const unsigned long int amount)
  if(amount>1) frames=amount;
 }
 
-unsigned long int Canvas::get_frames()
+unsigned long int Canvas::get_frames() const
 {
  return frames;
 }
 
-unsigned long int Canvas::get_frame()
+unsigned long int Canvas::get_frame() const
 {
  return frame;
 }
@@ -2284,12 +2298,12 @@ void Background::slow_draw_background()
 
 }
 
-unsigned long int Background::get_background_width()
+unsigned long int Background::get_background_width() const
 {
  return background_width;
 }
 
-unsigned long int Background::get_background_height()
+unsigned long int Background::get_background_height() const
 {
  return background_height;
 }
@@ -2384,7 +2398,7 @@ void Sprite::set_transparent(const bool enabled)
  transparent=enabled;
 }
 
-bool Sprite::get_transparent()
+bool Sprite::get_transparent() const
 {
  return transparent;
 }
@@ -2399,22 +2413,22 @@ void Sprite::set_y(const unsigned long int y)
  current_y=y;
 }
 
-unsigned long int Sprite::get_x()
+unsigned long int Sprite::get_x() const
 {
  return current_x;
 }
 
-unsigned long int Sprite::get_y()
+unsigned long int Sprite::get_y() const
 {
  return current_y;
 }
 
-unsigned long int Sprite::get_width()
+unsigned long int Sprite::get_width() const
 {
  return sprite_width;
 }
 
-unsigned long int Sprite::get_height()
+unsigned long int Sprite::get_height() const
 {
  return sprite_height;
 }
@@ -2424,7 +2438,7 @@ Sprite* Sprite::get_handle()
  return this;
 }
 
-Collision_Box Sprite::get_box()
+Collision_Box Sprite::get_box() const
 {
  Collision_Box target;
  target.x=current_x;
@@ -2457,7 +2471,7 @@ void Sprite::set_kind(const SPRITE_TYPE kind)
  current_kind=kind;
 }
 
-SPRITE_TYPE Sprite::get_kind()
+SPRITE_TYPE Sprite::get_kind() const
 {
  return current_kind;
 }
@@ -2527,22 +2541,22 @@ Tileset::~Tileset()
 
 }
 
-unsigned long int Tileset::get_tile_width()
+unsigned long int Tileset::get_tile_width() const
 {
  return tile_width;
 }
 
-unsigned long int Tileset::get_tile_height()
+unsigned long int Tileset::get_tile_height() const
 {
  return tile_height;
 }
 
-unsigned long int Tileset::get_rows()
+unsigned long int Tileset::get_rows() const
 {
  return rows;
 }
 
-unsigned long int Tileset::get_columns()
+unsigned long int Tileset::get_columns() const
 {
  return columns;
 }
@@ -2658,27 +2672,27 @@ void Transformation::initialize(const float screen_width,const float screen_heig
  surface_y_factor=surface_height/screen_height;
 }
 
-float Transformation::get_screen_x(const float surface_x)
+float Transformation::get_screen_x(const float surface_x) const
 {
  return screen_x_factor*surface_x;
 }
 
-float Transformation::get_screen_y(const float surface_y)
+float Transformation::get_screen_y(const float surface_y) const
 {
  return screen_y_factor*surface_y;
 }
 
-float Transformation::get_surface_x(const float screen_x)
+float Transformation::get_surface_x(const float screen_x) const
 {
  return surface_x_factor*screen_x;
 }
 
-float Transformation::get_surface_y(const float screen_y)
+float Transformation::get_surface_y(const float screen_y) const
 {
  return surface_y_factor*screen_y;
 }
 
-Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height)
+Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height) const
 {
  Collision_Box result;
  result.x=x;
@@ -2688,7 +2702,7 @@ Collision_Box Collision::generate_box(const unsigned long int x,const unsigned l
  return result;
 }
 
-bool Collision::check_horizontal_collision(const Collision_Box &first,const Collision_Box &second)
+bool Collision::check_horizontal_collision(const Collision_Box &first,const Collision_Box &second) const
 {
  bool result;
  result=false;
@@ -2699,7 +2713,7 @@ bool Collision::check_horizontal_collision(const Collision_Box &first,const Coll
  return result;
 }
 
-bool Collision::check_vertical_collision(const Collision_Box &first,const Collision_Box &second)
+bool Collision::check_vertical_collision(const Collision_Box &first,const Collision_Box &second) const
 {
  bool result;
  result=false;
@@ -2710,7 +2724,7 @@ bool Collision::check_vertical_collision(const Collision_Box &first,const Collis
  return result;
 }
 
-bool Collision::check_collision(const Collision_Box &first,const Collision_Box &second)
+bool Collision::check_collision(const Collision_Box &first,const Collision_Box &second) const
 {
  return this->check_horizontal_collision(first,second) || this->check_vertical_collision(first,second);
 }
