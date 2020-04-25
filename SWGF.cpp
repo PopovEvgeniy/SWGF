@@ -2692,6 +2692,50 @@ float Transformation::get_surface_y(const float screen_y) const
  return surface_y_factor*screen_y;
 }
 
+Collision::Collision()
+{
+ memset(&first,0,sizeof(Collision_Box));
+ memset(&first,0,sizeof(Collision_Box));
+}
+
+Collision::~Collision()
+{
+
+}
+
+void Collision::set_target(const Collision_Box first_target,const Collision_Box second_target)
+{
+ first=first_target;
+ second=second_target;
+}
+
+bool Collision::check_horizontal_collision() const
+{
+ bool result;
+ result=false;
+ if ((first.x+first.width)>=second.x)
+ {
+  if (first.x<=(second.x+second.width)) result=true;
+ }
+ return result;
+}
+
+bool Collision::check_vertical_collision() const
+{
+ bool result;
+ result=false;
+ if ((first.y+first.height)>=second.y)
+ {
+  if (first.y<=(second.y+second.height)) result=true;
+ }
+ return result;
+}
+
+bool Collision::check_collision() const
+{
+ return this->check_horizontal_collision() || this->check_vertical_collision();
+}
+
 Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height) const
 {
  Collision_Box result;
@@ -2700,33 +2744,6 @@ Collision_Box Collision::generate_box(const unsigned long int x,const unsigned l
  result.width=width;
  result.height=height;
  return result;
-}
-
-bool Collision::check_horizontal_collision(const Collision_Box &first,const Collision_Box &second) const
-{
- bool result;
- result=false;
- if((first.x+first.width)>=second.x)
- {
-  if(first.x<=(second.x+second.width)) result=true;
- }
- return result;
-}
-
-bool Collision::check_vertical_collision(const Collision_Box &first,const Collision_Box &second) const
-{
- bool result;
- result=false;
- if((first.y+first.height)>=second.y)
- {
-  if(first.y<=(second.y+second.height)) result=true;
- }
- return result;
-}
-
-bool Collision::check_collision(const Collision_Box &first,const Collision_Box &second) const
-{
- return this->check_horizontal_collision(first,second) || this->check_vertical_collision(first,second);
 }
 
 }
