@@ -542,7 +542,7 @@ class Image
  void load_pcx(const char *name);
  unsigned long int get_width() const;
  unsigned long int get_height() const;
- size_t get_data_length() const;
+ size_t get_length() const;
  unsigned char *get_data();
  void destroy_image();
 };
@@ -609,8 +609,8 @@ class Background:public Canvas
  public:
  Background();
  ~Background();
- unsigned long int get_background_width() const;
- unsigned long int get_background_height() const;
+ unsigned long int get_width() const;
+ unsigned long int get_height() const;
  void set_kind(const BACKGROUND_TYPE kind);
  void set_target(const unsigned long int target);
  void step();
