@@ -90,6 +90,9 @@ int main(void)
    case GAMEPAD_RIGHT:
    x++;
    break;
+   case GAMEPAD_NONE:
+   ;
+   break;
   }
   if(gamepad.get_stick_x(GAMEPAD_LEFT_STICK)==GAMEPAD_NEGATIVE_DIRECTION) x--;
   if(gamepad.get_stick_x(GAMEPAD_LEFT_STICK)==GAMEPAD_POSITIVE_DIRECTION) x++;

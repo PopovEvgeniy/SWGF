@@ -712,7 +712,7 @@ class Collision
  public:
  Collision();
  ~Collision();
- void set_target(const Collision_Box first_target,const Collision_Box second_target);
+ void set_target(const Collision_Box &first_target,const Collision_Box &second_target);
  bool check_horizontal_collision() const;
  bool check_vertical_collision() const;
  bool check_collision() const;
