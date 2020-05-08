@@ -1133,7 +1133,10 @@ bool Gamepad::read_configuration()
 {
  bool result;
  result=false;
- if (joyGetDevCaps(active,&configuration,sizeof(JOYCAPS))==JOYERR_NOERROR) result=true;
+ if (joyGetDevCaps(static_cast<size_t>(active),&configuration,sizeof(JOYCAPS))==JOYERR_NOERROR)
+ {
+  result=true;
+ }
  return result;
 }
 
@@ -1559,7 +1562,7 @@ unsigned long int Memory::get_usage()
 
 System::System()
 {
- srand(time(NULL));
+ srand(UINT_MAX);
 }
 
 System::~System()
