@@ -1375,17 +1375,35 @@ Multimedia::~Multimedia()
  if(loader!=NULL) loader->Release();
 }
 
-wchar_t *Multimedia::convert_file_name(const char *target)
+wchar_t *Multimedia::create_buffer(const size_t length)
 {
- wchar_t *name;
- size_t index,length;
- length=strlen(target);
- name=static_cast<wchar_t*>(calloc(length+1,sizeof(wchar_t)));
- if(name==NULL)
+ wchar_t *target;
+ target=NULL;
+ target=static_cast<wchar_t*>(calloc(length+1,sizeof(wchar_t)));
+ if(target==NULL)
  {
   Halt("Can't allocate memory");
  }
- for(index=0;index<length;++index) name[index]=btowc(target[index]);
+ return target;
+}
+
+void Multimedia::convert_string(const char *source,wchar_t *target)
+{
+ size_t index,length;
+ length=strlen(source);
+ for (index=0;index<length;++index)
+ {
+  target[index]=btowc(source[index]);
+ }
+
+}
+
+wchar_t *Multimedia::convert_file_name(const char *target)
+{
+ wchar_t *name;
+ name=NULL;
+ name=this->create_buffer(strlen(target));
+ this->convert_string(target,name);
  return name;
 }
 

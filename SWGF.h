@@ -433,6 +433,8 @@ class Multimedia:public COM_Base
  IMediaControl *player;
  IMediaSeeking *controler;
  IVideoWindow *video;
+ wchar_t *create_buffer(const size_t length);
+ void convert_string(const char *source,wchar_t *target);
  wchar_t *convert_file_name(const char *target);
  void open(const wchar_t *target);
  bool is_end();
