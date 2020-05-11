@@ -228,7 +228,6 @@ class Frame
  unsigned int *buffer;
  unsigned int *shadow;
  unsigned int *create_buffer(const char *error);
- unsigned int get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue);
  void put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue);
  protected:
  size_t get_offset(const unsigned long int x,const unsigned long int y,const unsigned long int target_width);

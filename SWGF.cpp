@@ -331,16 +331,11 @@ unsigned int *Frame::create_buffer(const char *error)
  return target;
 }
 
-unsigned int Frame::get_rgb(const unsigned int red,const unsigned int green,const unsigned int blue)
-{
- return red+(green<<8)+(blue<<16);
-}
-
 void Frame::put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue)
 {
  if (offset<pixels)
  {
-  buffer[offset]=this->get_rgb(red,green,blue);
+  buffer[offset]=red+(green<<8)+(blue<<16);
  }
 
 }
