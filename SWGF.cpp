@@ -2392,13 +2392,41 @@ Sprite::~Sprite()
 
 void Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
 {
- if (transparent==true)
- {
-  if(this->compare_pixels(0,offset)==true) this->draw_image_pixel(offset,x,y);
- }
- else
+ if (this->compare_pixels(0,offset)==true)
  {
   this->draw_image_pixel(offset,x,y);
+ }
+
+}
+
+void Sprite::draw_transparent_sprite()
+{
+ size_t offset;
+ unsigned long int sprite_x,sprite_y;
+ for (sprite_x=0;sprite_x<sprite_width;++sprite_x)
+ {
+  for (sprite_y=0;sprite_y<sprite_height;++sprite_y)
+  {
+   offset=this->get_offset(start,sprite_x,sprite_y);
+   this->draw_sprite_pixel(offset,current_x+sprite_x,current_y+sprite_y);
+  }
+
+ }
+
+}
+
+void Sprite::draw_normal_sprite()
+{
+ size_t offset;
+ unsigned long int sprite_x,sprite_y;
+ for (sprite_x=0;sprite_x<sprite_width;++sprite_x)
+ {
+  for (sprite_y=0;sprite_y<sprite_height;++sprite_y)
+  {
+   offset=this->get_offset(start,sprite_x,sprite_y);
+   this->draw_image_pixel(offset,current_x+sprite_x,current_y+sprite_y);
+  }
+
  }
 
 }
@@ -2524,16 +2552,13 @@ void Sprite::clone(Sprite &target)
 
 void Sprite::draw_sprite()
 {
- size_t offset;
- unsigned long int sprite_x,sprite_y;
- for(sprite_x=0;sprite_x<sprite_width;++sprite_x)
+ if (transparent==true)
  {
-  for(sprite_y=0;sprite_y<sprite_height;++sprite_y)
-  {
-   offset=this->get_offset(start,sprite_x,sprite_y);
-   this->draw_sprite_pixel(offset,current_x+sprite_x,current_y+sprite_y);
-  }
-
+  this->draw_transparent_sprite();
+ }
+ else
+ {
+  this->draw_normal_sprite();
  }
 
 }

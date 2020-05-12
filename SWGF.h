@@ -628,6 +628,8 @@ class Sprite:public Canvas
  unsigned long int sprite_height;
  SPRITE_TYPE current_kind;
  void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
+ void draw_transparent_sprite();
+ void draw_normal_sprite();
  public:
  Sprite();
  ~Sprite();
