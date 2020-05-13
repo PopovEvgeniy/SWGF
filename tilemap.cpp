@@ -14,17 +14,13 @@ SWGF::Tileset tilemap;
 
 void draw_map()
 {
- unsigned long int x,y,row,column;
- x=0;
- y=0;
+ unsigned long int row,column;
  for (row=0;row<MAP_WIDTH;++row)
  {
-  x=row*tilemap.get_tile_width();
   for (column=0;column<MAP_HEIGHT;++column)
   {
-   y=column*tilemap.get_tile_height();
    tilemap.select_tile(MAP_ROWS[row],MAP_COLUMNS[column]);
-   tilemap.draw_tile(x,y);
+   tilemap.draw_tile(row*tilemap.get_tile_width(),column*tilemap.get_tile_height());
   }
 
  }

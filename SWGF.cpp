@@ -2294,13 +2294,6 @@ Background::~Background()
 
 }
 
-void Background::draw_background_pixel(const unsigned long int x,const unsigned long int y)
-{
- size_t offset;
- offset=this->get_offset(start,x,y);
- this->draw_image_pixel(offset,x,y);
-}
-
 void Background::slow_draw_background()
 {
  unsigned long int x,y;
@@ -2308,7 +2301,7 @@ void Background::slow_draw_background()
  {
   for(y=0;y<background_height;++y)
   {
-   this->draw_background_pixel(x,y);
+   this->draw_image_pixel(this->get_offset(start,x,y),x,y);
   }
 
  }
