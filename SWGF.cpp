@@ -1,7 +1,3 @@
-// This is an open source non-commercial project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 /*
 Simple windows game framework was create by Popov Evgeniy Alekseyevich
 Some code was taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL/wglext.h) by The Khronos Group Inc
@@ -499,9 +495,38 @@ Plane* Plane::get_handle()
  return this;
 }
 
+Timer::Timer()
+{
+ interval=0;
+ start=time(NULL);
+}
+
+Timer::~Timer()
+{
+
+}
+
+void Timer::set_timer(const unsigned long int seconds)
+{
+ interval=seconds;
+ start=time(NULL);
+}
+
+bool Timer::check_timer()
+{
+ bool result;
+ result=false;
+ if (difftime(time(NULL),start)>=interval)
+ {
+  result=true;
+  start=time(NULL);
+ }
+ return result;
+}
+
 FPS::FPS()
 {
- start=time(NULL);
+ timer.set_timer(1);
  current=0;
  fps=0;
 }
@@ -513,9 +538,8 @@ FPS::~FPS()
 
 void FPS::update_counter()
 {
- if (current==0) start=time(NULL);
  ++current;
- if (difftime(time(NULL),start)>=1)
+ if (timer.check_timer()==true)
  {
   fps=current;
   current=0;
@@ -1726,35 +1750,6 @@ bool Binary_File::check_error()
  bool result;
  result=false;
  if(ferror(target)!=0) result=true;
- return result;
-}
-
-Timer::Timer()
-{
- interval=0;
- start=time(NULL);
-}
-
-Timer::~Timer()
-{
-
-}
-
-void Timer::set_timer(const unsigned long int seconds)
-{
- interval=seconds;
- start=time(NULL);
-}
-
-bool Timer::check_timer()
-{
- bool result;
- result=false;
- if (difftime(time(NULL),start)>=interval)
- {
-  result=true;
-  start=time(NULL);
- }
  return result;
 }
 
