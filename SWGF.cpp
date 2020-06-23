@@ -809,7 +809,9 @@ void Render::set_perfomance_setting()
  glDisable(GL_DEPTH_TEST);
  glDisable(GL_DITHER);
  glDisable(GL_FOG);
+ glDisable(GL_CULL_FACE);
  glDisable(GL_LIGHTING);
+ glDisable(GL_NORMALIZE);
  glDisable(GL_TEXTURE_1D);
  glEnable(GL_TEXTURE_2D);
  glEnableClientState(GL_VERTEX_ARRAY);
@@ -827,8 +829,6 @@ void Render::set_perspective()
  glOrtho(0,this->get_width(),this->get_height(),0,0,1);
  glMatrixMode(GL_MODELVIEW);
  glLoadIdentity();
- glEnable(GL_CULL_FACE);
- glCullFace(GL_BACK);
  glMatrixMode(GL_TEXTURE);
  glLoadIdentity();
  glViewport(0,0,this->get_width(),this->get_height());
