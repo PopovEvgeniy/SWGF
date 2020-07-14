@@ -180,8 +180,7 @@ Engine::~Engine()
 
 void Engine::get_instance()
 {
- window_class.hInstance=GetModuleHandle(NULL);
- if(window_class.hInstance==NULL)
+ if (GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,NULL,&window_class.hInstance)==FALSE)
  {
   Halt("Can't get the application instance");
  }
@@ -224,7 +223,7 @@ HWND Engine::get_window()
 
 HDC Engine::get_context()
 {
- return GetDC(window);
+ return GetWindowDC(window);
 }
 
 void Engine::prepare_engine()
