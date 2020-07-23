@@ -161,11 +161,13 @@ Engine::Engine()
 {
  window_class.lpszClassName=TEXT("SWGF");
  window_class.style=CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
+ window_class.cbSize=sizeof(WNDCLASSEX);
  window_class.lpfnWndProc=Process_Message;
  window_class.hInstance=NULL;
  window_class.hbrBackground=NULL;
  window_class.hIcon=NULL;
  window_class.hCursor=NULL;
+ window_class.hIconSm=NULL;
  window_class.cbClsExtra=0;
  window_class.cbWndExtra=0;
  window=NULL;
@@ -197,6 +199,16 @@ void Engine::set_backgrond_color()
 
 }
 
+void Engine::load_icon()
+{
+ window_class.hIcon=LoadIcon(NULL,IDI_APPLICATION);
+ if (window_class.hIcon==NULL)
+ {
+  Halt("Can't load the standart program icon");
+ }
+
+}
+
 void Engine::load_cursor()
 {
  window_class.hCursor=LoadCursor(NULL,IDC_ARROW);
@@ -209,7 +221,7 @@ void Engine::load_cursor()
 
 void Engine::register_window_class()
 {
- if (!RegisterClass(&window_class))
+ if (!RegisterClassEx(&window_class))
  {
   Halt("Can't register window class");
  }
@@ -230,6 +242,7 @@ void Engine::prepare_engine()
 {
  this->get_instance();
  this->set_backgrond_color();
+ this->load_icon();
  this->load_cursor();
  this->register_window_class();
 }

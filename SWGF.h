@@ -200,10 +200,11 @@ class Synchronization
 class Engine
 {
  private:
- WNDCLASS window_class;
+ WNDCLASSEX window_class;
  HWND window;
  void get_instance();
  void set_backgrond_color();
+ void load_icon();
  void load_cursor();
  void register_window_class();
  protected:
