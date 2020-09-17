@@ -2458,6 +2458,26 @@ void Sprite::set_y(const unsigned long int y)
  current_y=y;
 }
 
+void Sprite::increase_x(const unsigned long int increment)
+{
+ current_x+=increment;
+}
+
+void Sprite::decrease_x(const unsigned long int decrement)
+{
+ current_x-=decrement;
+}
+
+void Sprite::increase_y(const unsigned long int increment)
+{
+ current_y+=increment;
+}
+
+void Sprite::decrease_y(const unsigned long int decrement)
+{
+ current_y-=decrement;
+}
+
 unsigned long int Sprite::get_x() const
 {
  return current_x;
@@ -2655,9 +2675,12 @@ Text::~Text()
 
 void Text::increase_position()
 {
- unsigned long int x;
- x=font->get_x()+font->get_width();
- font->set_x(x);
+ font->increase_x(font->get_width());
+}
+
+void Text::restore_position()
+{
+ font->set_position(current_x,current_y);
 }
 
 void Text::set_position(const unsigned long int x,const unsigned long int y)
@@ -2684,13 +2707,13 @@ void Text::draw_text(const char *text)
 {
  size_t index,length;
  length=strlen(text);
- font->set_position(current_x,current_y);
+ this->restore_position();
  for (index=0;index<length;++index)
  {
   this->draw_character(text[index]);
   this->increase_position();
  }
- font->set_position(current_x,current_y);
+ this->restore_position();
 }
 
 void Text::draw_character(const unsigned long int x,const unsigned long int y,const char target)

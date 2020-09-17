@@ -1,0 +1,16 @@
+Quick help
+
+Controls for keyboard and mouse
+
+Arrow keys - Move
+Home - Do horizontal mirror the ship
+End - Do vertical mirror the ship
+Space - Exit from demo
+Left mouse button - Exit from demo
+
+Controls for game-pad
+
+D-pad or left stick - Move
+Button 4 - Do horizontal mirror the ship
+Button 3 - Do vertical mirror the ship
+Button 2 - Exit from demo

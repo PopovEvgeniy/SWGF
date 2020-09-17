@@ -638,6 +638,10 @@ class Sprite:public Canvas
  bool get_transparent() const;
  void set_x(const unsigned long int x);
  void set_y(const unsigned long int y);
+ void increase_x(const unsigned long int increment);
+ void decrease_x(const unsigned long int decrement);
+ void increase_y(const unsigned long int increment);
+ void decrease_y(const unsigned long int decrement);
  unsigned long int get_x() const;
  unsigned long int get_y() const;
  unsigned long int get_width() const;
@@ -681,6 +685,7 @@ class Text
  unsigned long int current_y;
  Sprite *font;
  void increase_position();
+ void restore_position();
  public:
  Text();
  ~Text();
