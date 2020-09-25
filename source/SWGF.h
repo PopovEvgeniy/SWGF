@@ -69,20 +69,10 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 
 #define GETSCANCODE(argument) ((argument >> 16)&0x7f)
 
-#define KEYBOARD 256
 #define MOUSE 3
-
-#define KEY_RELEASE 0
-#define KEY_PRESS 1
-
 #define MOUSE_LEFT 0
 #define MOUSE_RIGHT 1
 #define MOUSE_MIDDLE 2
-
-#define JOYSTICK_UPLEFT 31500
-#define JOYSTICK_UPRIGHT 4500
-#define JOYSTICK_DOWNLEFT 22500
-#define JOYSTICK_DOWNRIGHT 13500
 
 enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
 enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
@@ -95,18 +85,6 @@ enum GAMEPAD_BUTTONS {GAMEPAD_BUTTON1=JOY_BUTTON1,GAMEPAD_BUTTON2=JOY_BUTTON2,GA
 
 extern BOOL WINAPI wglSwapIntervalEXT (int interval); // This code was taken from wglext.h by The Khronos Group Inc
 typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code was taken from wglext.h by The Khronos Group Inc
-
-struct SWGF_Vertex
-{
- int x;
- int y;
-};
-
-struct SWGF_Point
-{
- float u;
- float v;
-};
 
 struct IMG_Pixel
 {
@@ -174,6 +152,18 @@ LRESULT CALLBACK Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM l
 
 namespace SWGF
 {
+
+struct Vertex
+{
+ int x;
+ int y;
+};
+
+struct Point
+{
+ float u;
+ float v;
+};
 
 void Halt(const char *message);
 
@@ -338,8 +328,8 @@ class Render:public WINGL, public Frame
 {
  private:
  unsigned int texture;
- SWGF_Vertex vertex[4];
- SWGF_Point point[4];
+ Vertex vertex[4];
+ Point point[4];
  void set_perfomance_setting();
  void set_perspective();
  void clear_stage();

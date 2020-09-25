@@ -1,6 +1,6 @@
 #include "SWGF.h"
 
-int main(void)
+int main()
 {
  long int x,y,screen_width,screen_height;
  char perfomance[8];

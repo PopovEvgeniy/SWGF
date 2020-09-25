@@ -23,7 +23,7 @@ void draw_map()
 
 }
 
-int main(void)
+int main()
 {
  SWGF::Screen screen;
  SWGF::Sprite font;
