@@ -1080,18 +1080,15 @@ void Mouse::get_position()
 
 }
 
-bool Mouse::check_state(const unsigned char button,const unsigned char state)
+bool Mouse::check_state(const MOUSE_BUTTON button,const unsigned char state)
 {
  bool result;
  result=false;
- if(button<=MOUSE_MIDDLE)
+ if (Buttons[button]==state)
  {
-  if(Buttons[button]==state)
-  {
-   if(preversion[button]!=state) result=true;
-  }
-  preversion[button]=Buttons[button];
+  if (preversion[button]!=state) result=true;
  }
+ preversion[button]=Buttons[button];
  return result;
 }
 
@@ -1126,24 +1123,24 @@ unsigned long int Mouse::get_y()
  return position.y;
 }
 
-bool Mouse::check_hold(const unsigned char button)
+bool Mouse::check_hold(const MOUSE_BUTTON button)
 {
  bool result;
  result=false;
- if(button<=MOUSE_MIDDLE)
+ if (Buttons[button]==KEY_PRESS)
  {
-  if(Buttons[button]==KEY_PRESS) result=true;
-  preversion[button]=Buttons[button];
+  result=true;
  }
+ preversion[button]=Buttons[button];
  return result;
 }
 
-bool Mouse::check_press(const unsigned char button)
+bool Mouse::check_press(const MOUSE_BUTTON button)
 {
  return this->check_state(button,KEY_PRESS);
 }
 
-bool Mouse::check_release(const unsigned char button)
+bool Mouse::check_release(const MOUSE_BUTTON button)
 {
  return this->check_state(button,KEY_RELEASE);
 }
