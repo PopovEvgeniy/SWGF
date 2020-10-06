@@ -1061,7 +1061,9 @@ bool Keyboard::check_release(const unsigned char code)
 
 Mouse::Mouse()
 {
- memset(preversion,KEY_RELEASE,MOUSE);
+ preversion[MOUSE_LEFT]=KEY_RELEASE;
+ preversion[MOUSE_RIGHT]=KEY_RELEASE;
+ preversion[MOUSE_MIDDLE]=KEY_RELEASE;
  position.x=0;
  position.y=0;
 }
@@ -2776,8 +2778,14 @@ float Transformation::get_surface_y(const float screen_y) const
 
 Collision::Collision()
 {
- memset(&first,0,sizeof(Collision_Box));
- memset(&second,0,sizeof(Collision_Box));
+ first.x=0;
+ first.y=0;
+ first.width=0;
+ first.height=0;
+ second.x=0;
+ second.y=0;
+ second.width=0;
+ second.height=0;
 }
 
 Collision::~Collision()
