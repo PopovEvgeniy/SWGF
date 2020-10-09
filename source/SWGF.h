@@ -489,10 +489,10 @@ class Binary_File
  public:
  Binary_File();
  ~Binary_File();
+ void close();
  void create_temp();
  void open_read(const char *name);
  void open_write(const char *name);
- void close();
  void set_position(const long int offset);
  long int get_position();
  long int get_length();
@@ -600,6 +600,7 @@ class Background:public Canvas
  unsigned long int get_width() const;
  unsigned long int get_height() const;
  void set_kind(const BACKGROUND_TYPE kind);
+ void set_setting(const BACKGROUND_TYPE kind,const unsigned long int frames);
  void set_target(const unsigned long int target);
  void step();
  void draw_background();
