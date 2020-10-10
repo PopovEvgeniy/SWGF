@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=windows-1251">
@@ -40,8 +41,8 @@
           <li><a href="#mozTocId810361">Chapter 4. Graphic primitives</a></li>
           <li><a href="#mozTocId289525">Chapter 5. Base image subsystem</a></li>
           <li><a href="#mozTocId501089">Chapter 6. Advanced image subsystem</a></li>
-          <li><a href="#mozTocId455894"> Chapter 7. Background</a></li>
-          <li><a href="#mozTocId662651"> Chapter 8. Sprites</a></li>
+          <li><a href="#mozTocId455894">Chapter 7. Background</a></li>
+          <li><a href="#mozTocId662651">Chapter 8. Sprites</a></li>
           <li><a href="#mozTocId367464">Chapter 9. Text</a></li>
           <li><a href="#mozTocId146800">Chapter 10. Tile-set</a></li>
           <li><a href="#mozTocId67980">Chapter 11. Loading images</a></li>
@@ -52,26 +53,32 @@
           <li><a href="#mozTocId236677">Chapter 1. Interaction with operation
               system</a></li>
           <li><a href="#mozTocId853711">Chapter 2. Abnormal program termination</a></li>
-          <li><a href="#mozTocId840088">Chapter 3. Binary files</a></li>
-          <li><a href="#mozTocId656377">Chapter 4. Timer</a></li>
-          <li><a href="#mozTocId638476">Chapter 5. Coordinate system</a></li>
-          <li><a href="#mozTocId381935">Chapter 6. Collision</a></li>
+          <li><a href="#mozTocId656377">Chapter 3. Timer</a></li>
+          <li><a href="#mozTocId638476">Chapter 4. Coordinate system</a></li>
+          <li><a href="#mozTocId381935">Chapter 5. Collision</a></li>
         </ul>
       </li>
-      <li><a href="#mozTocId291572">Part 5. Input</a>
+      <li><a href="#mozTocId81465">Part 5. Binary files</a>
+        <ul>
+          <li><a href="#mozTocId402543">Chapter 1. Base binary files subsystem</a></li>
+          <li><a href="#mozTocId3436">Chapter 2. File reader</a></li>
+          <li><a href="#mozTocId353425">Chapter 3. File writer</a></li>
+        </ul>
+      </li>
+      <li><a href="#mozTocId291572">Part 6. Input</a>
         <ul>
           <li><a href="#mozTocId685403">Chapter 1. Keyboard</a></li>
           <li><a href="#mozTocId686993">Chapter 2. Mouse</a></li>
           <li><a href="#mozTocId861609">Chapter 3. Game-pad</a></li>
         </ul>
       </li>
-      <li><a href="#mozTocId897139">Part 6. Other important things</a>
+      <li><a href="#mozTocId897139">Part 7. Other important things</a>
         <ul>
           <li><a href="#mozTocId585261">Chapter 1. Memory</a></li>
           <li><a href="#mozTocId903881">Chapter 2. Multimedia</a></li>
         </ul>
       </li>
-      <li><a href="#mozTocId309127">Part 7. Internal details of the library
+      <li><a href="#mozTocId309127">Part 8. Internal details of the library
           subsystems</a>
         <ul>
           <li><a href="#mozTocId383177">Chapter 1. A few words for a curious
@@ -438,7 +445,7 @@ C++
       <span style="text-decoration: underline;">Work with advanced graphics</span><br>
       <br>
       <span style="font-style: italic;">Frame</span> class provide simple access
-      virtual surface. Don’t use it directly. Let’s look to public methods.<br>
+      to virtual surface. Don’t use it directly. Let’s look to public methods.<br>
       <br>
       <span style="font-style: italic;">unsigned int* Frame::get_buffer();</span>
       – Return handle to surface buffer.<br>
@@ -1056,43 +1063,9 @@ C++
       <span style="font-style: italic;">void SWGF::Halt(const char *message);</span>
       – Terminate the program. Write error message to log file if logging
       enabled.<br>
-      <br>
+    </big><big><br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId840088"></a><big>Chapter 3. Binary
-        files</big></h2>
-    <big><br>
-      <span style="text-decoration: underline;">Work with binary files</span><br>
-      <br>
-      Just use <span style="font-style: italic;">Binary_File</span> class for
-      work with the binary files. Let’s look to public methods.<br>
-      <br>
-      <span style="font-style: italic;">void Binary_File::create_temp();</span>
-      – Create a temporary file. This file will be deleted when it closed.<br>
-      <span style="font-style: italic;">void Binary_File::open_read(const char
-        *name);</span> – Open a file for read.<br>
-      <span style="font-style: italic;">void Binary_File::open_write(const char
-        *name);</span> – Open a file for read and write.<br>
-      <span style="font-style: italic;">void Binary_File::close();</span> –
-      Close the file.<br>
-      <span style="font-style: italic;">void Binary_File::set_position(const
-        long int offset);</span> – Set the file position.<br>
-      <span style="font-style: italic;">long int Binary_File::get_position();</span>
-      – Return current file position.<br>
-      <span style="font-style: italic;">long int Binary_File::get_length();</span>
-      – Return file length in bytes.<br>
-      <span style="font-style: italic;">void Binary_File::read(void
-        *buffer,const size_t length);</span> – Read data from the file.<br>
-      <span style="font-style: italic;">void Binary_File::write(void
-        *buffer,const size_t length);</span> – Write data to the file.<br>
-      <span style="font-style: italic;">bool Binary_File::check_error();</span>
-      – Return true if last file operation failed.<br>
-      <br>
-      <span style="text-decoration: underline;">Important notice</span><br>
-      <br>
-      Target file size limit is 2 gigabytes.<br>
-      <br>
-    </big>
-    <h2><a class="mozTocH2" name="mozTocId656377"></a><big>Chapter 4. Timer</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId656377"></a><big>Chapter 3. Timer</big></h2>
     <big><br>
       Timer is very useful thing. Just use <span style="font-style: italic;">Timer</span>
       class for work with the timer. Let’s look to public methods.<br>
@@ -1106,7 +1079,7 @@ C++
       seconds.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId638476"></a><big>Chapter 5. Coordinate
+    <h2><a class="mozTocH2" name="mozTocId638476"></a><big>Chapter 4. Coordinate
         system</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Two kinds of coordinate system</span><br>
@@ -1139,7 +1112,7 @@ C++
       Convert screen y-coordinate to surface y-coordinate.<br>
       <br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId381935"></a><big>Chapter 6. Collision</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId381935"></a><big>Chapter 5. Collision</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Very important thing for any
         game</span><br>
@@ -1185,7 +1158,56 @@ C++
       properties.<br>
       <br>
     </big>
-    <h1><a class="mozTocH1" name="mozTocId291572"></a><big>Part 5. Input</big></h1>
+    <h1><a id="mozTocId81465" class="mozTocH1"></a><big> Part 5. Binary files</big></h1>
+    <big> <br>
+    </big>
+    <h2><a id="mozTocId402543" class="mozTocH2"></a><big> Chapter 1. Base binary
+        files subsystem</big></h2>
+    <big> <br>
+      <u> Work with binary files</u><br>
+      <br>
+      <i>Binary_File</i> class provide simple access to base binary files
+      subsystem. Don’t use it directly. Let’s look to public methods.<br>
+      <br>
+      <i> void Binary_File::close();</i> – Close the file.<br>
+      <i> void Binary_File::set_position(const long int offset);</i> – Set the
+      file position.<br>
+      <i> long int Binary_File::get_position();</i> – Return current file
+      position.<br>
+      <i> long int Binary_File::get_length();</i> – Return file length in bytes.<br>
+      <i> bool Binary_File::check_error();</i> – Return true if last file
+      operation failed.<br>
+      <br>
+      <u>Important notice</u><br>
+      <br>
+      Target file size limit is 2 gigabytes.<br>
+      <br>
+    </big>
+    <h2><a id="mozTocId3436" class="mozTocH2"></a><big> Chapter 2. File reader</big></h2>
+    <big> <br>
+      File reader intend for reading data from a binary files. <i>Input_File</i>
+      class provide access to file reader. It is derived from <i>Binary_File</i>
+      class. Let’s look on public methods.<br>
+      <br>
+      <i> void Input_File::open(const char *name);</i> – Open a file for read.<br>
+      <i> void Input_File::read(void *buffer,const size_t length);</i> – Read
+      data from the file.<br>
+      <br>
+    </big>
+    <h2><a id="mozTocId353425" class="mozTocH2"></a><big> Chapter 3. File writer</big></h2>
+    <big> <br>
+      File writer intend for write data to binary files. Output_File class
+      provide access to file reader. It is derived from Binary_File class. Let’s
+      look on public methods.<br>
+      <br>
+      <i> void Output_File::open(const char *name);</i> – Open a file for write.<br>
+      <i> void Output_File::create_temp();</i> – Create a temporary file. This
+      file will be deleted when it closed.<br>
+      <i> void Output_File::write(void *buffer,const size_t length);</i> – Write
+      data to the file.<br>
+      <br>
+    </big>
+    <h1><a class="mozTocH1" name="mozTocId291572"></a><big>Part 6. Input</big></h1>
     <big><br>
     </big>
     <h2><a class="mozTocH2" name="mozTocId685403"></a><big>Chapter 1. Keyboard</big></h2>
@@ -1906,7 +1928,7 @@ C++
       y-direction of specific stick.<br>
       <br>
     </big>
-    <h1><a class="mozTocH1" name="mozTocId897139"></a><big>Part 6. Other
+    <h1><a class="mozTocH1" name="mozTocId897139"></a><big>Part 7. Other
         important things</big></h1>
     <big><br>
     </big>
@@ -2014,7 +2036,7 @@ C++
       – Return true if the multimedia resource is playing.<br>
       <br>
     </big>
-    <h1><a class="mozTocH1" name="mozTocId309127"></a><big>Part 7. Internal
+    <h1><a class="mozTocH1" name="mozTocId309127"></a><big>Part 8. Internal
         details of the library subsystems</big></h1>
     <big><br>
     </big>
@@ -2478,6 +2500,7 @@ Multimedia
     <big>5.6.7 – Source code was synced with Neon game development kit 4.8.4.</big><br>
     <big>5.6.8 – Source code was synced with Neon game development kit 4.8.5.</big><br>
     <big>5.6.9 – Source code was synced with Neon game development kit 4.8.6.</big><br>
-    <big>5.7 – Source code was synced with Neon game development kit 4.8.7.</big>
+    <big>5.7 – Source code was synced with Neon game development kit 4.8.7.</big><br>
+    <big>5.7.1 – Source code was synced with Neon game development kit 4.8.8.</big>
   </body>
 </html>

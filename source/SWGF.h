@@ -483,22 +483,36 @@ class System
 
 class Binary_File
 {
- private:
+ protected:
  FILE *target;
- void open(const char *name,const char *mode);
+ void open_file(const char *name,const char *mode);
  public:
  Binary_File();
  ~Binary_File();
  void close();
- void create_temp();
- void open_read(const char *name);
- void open_write(const char *name);
  void set_position(const long int offset);
  long int get_position();
  long int get_length();
- void read(void *buffer,const size_t length);
- void write(void *buffer,const size_t length);
  bool check_error();
+};
+
+class Input_File:public Binary_File
+{
+ public:
+ Input_File();
+ ~Input_File();
+ void open(const char *name);
+ void read(void *buffer,const size_t length);
+};
+
+class Output_File:public Binary_File
+{
+ public:
+ Output_File();
+ ~Output_File();
+ void open(const char *name);
+ void create_temp();
+ void write(void *buffer,const size_t length);
 };
 
 class Primitive
