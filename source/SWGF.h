@@ -513,6 +513,7 @@ class Output_File:public Binary_File
  void open(const char *name);
  void create_temp();
  void write(void *buffer,const size_t length);
+ void flush();
 };
 
 class Primitive

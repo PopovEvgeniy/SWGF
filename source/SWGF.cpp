@@ -1795,6 +1795,11 @@ void Output_File::write(void *buffer,const size_t length)
  fwrite(buffer,sizeof(char),length,target);
 }
 
+void Output_File::flush()
+{
+ fflush(target);
+}
+
 Primitive::Primitive()
 {
  color.red=0;
