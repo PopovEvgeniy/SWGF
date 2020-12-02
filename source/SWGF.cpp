@@ -2499,6 +2499,26 @@ void Sprite::set_y(const unsigned long int y)
  current_y=y;
 }
 
+void Sprite::increase_x()
+{
+ ++current_x;
+}
+
+void Sprite::decrease_x()
+{
+ --current_x;
+}
+
+void Sprite::increase_y()
+{
+ ++current_y;
+}
+
+void Sprite::decrease_y()
+{
+ --current_y;
+}
+
 void Sprite::increase_x(const unsigned long int increment)
 {
  current_x+=increment;

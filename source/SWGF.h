@@ -641,6 +641,10 @@ class Sprite:public Canvas
  bool get_transparent() const;
  void set_x(const unsigned long int x);
  void set_y(const unsigned long int y);
+ void increase_x();
+ void decrease_x();
+ void increase_y();
+ void decrease_y();
  void increase_x(const unsigned long int increment);
  void decrease_x(const unsigned long int decrement);
  void increase_y(const unsigned long int increment);
