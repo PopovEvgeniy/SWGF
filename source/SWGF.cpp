@@ -324,13 +324,43 @@ Frame::~Frame()
 {
  if (buffer!=NULL)
  {
-  free(buffer);
+  delete[] buffer;
   buffer=NULL;
  }
  if (shadow!=NULL)
  {
-  free(shadow);
+  delete[] shadow;
   shadow=NULL;
+ }
+
+}
+
+void Frame::calculate_buffer_length()
+{
+ pixels=static_cast<size_t>(frame_width)*static_cast<size_t>(frame_height);
+}
+
+unsigned int *Frame::get_memory(const char *error)
+{
+ unsigned int *target;
+ target=NULL;
+ try
+ {
+  target=new unsigned int[pixels];
+ }
+ catch (...)
+ {
+  Halt(error);
+ }
+ return target;
+}
+
+void Frame::clear_buffer(unsigned int *target)
+{
+ size_t index;
+ for (index=0;index<pixels;++index)
+ {
+  target[index]=0;
  }
 
 }
@@ -338,12 +368,10 @@ Frame::~Frame()
 unsigned int *Frame::create_buffer(const char *error)
 {
  unsigned int *target;
- pixels=static_cast<size_t>(frame_width)*static_cast<size_t>(frame_height);
- target=static_cast<unsigned int*>(calloc(pixels,sizeof(unsigned int)));
- if (target==NULL)
- {
-  Halt(error);
- }
+ target=NULL;
+ this->calculate_buffer_length();
+ target=this->get_memory(error);
+ this->clear_buffer(target);
  return target;
 }
 
@@ -401,12 +429,7 @@ void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const
 
 void Frame::clear_screen()
 {
- size_t index;
- for (index=0;index<pixels;++index)
- {
-  buffer[index]=0;
- }
-
+ this->clear_buffer(buffer);
 }
 
 void Frame::save()
@@ -1009,18 +1032,35 @@ Keyboard::Keyboard()
 
 Keyboard::~Keyboard()
 {
- if (preversion!=NULL) free(preversion);
+ if (preversion!=NULL)
+ {
+  delete[] preversion;
+  preversion=NULL;
+ }
+
 }
 
-unsigned char *Keyboard::create_buffer(const char *error)
+void Keyboard::create_buffer()
 {
- unsigned char *buffer;
- buffer=static_cast<unsigned char*>(calloc(KEYBOARD,sizeof(unsigned char)));
- if (buffer==NULL)
+ try
  {
-  Halt(error);
+  preversion=new unsigned char[KEYBOARD];
  }
- return buffer;
+ catch (...)
+ {
+  Halt("Can't allocate memory for keyboard state buffer");
+ }
+
+}
+
+void Keyboard::clear_buffer()
+{
+ size_t index;
+ for (index=0;index<KEYBOARD;++index)
+ {
+  preversion[index]=KEY_RELEASE;
+ }
+
 }
 
 bool Keyboard::check_state(const unsigned char code,const unsigned char state)
@@ -1037,7 +1077,8 @@ bool Keyboard::check_state(const unsigned char code,const unsigned char state)
 
 void Keyboard::initialize()
 {
- preversion=this->create_buffer("Can't allocate memory for keyboard state buffer");
+ this->create_buffer();
+ this->clear_buffer();
 }
 
 bool Keyboard::check_hold(const unsigned char code)
@@ -1413,15 +1454,37 @@ Multimedia::~Multimedia()
  if (loader!=NULL) loader->Release();
 }
 
+wchar_t *Multimedia::get_memory(const size_t length)
+{
+ wchar_t *target;
+ target=NULL;
+ try
+ {
+  target=new wchar_t[length];
+ }
+ catch (...)
+ {
+  Halt("Can't allocate memory");
+ }
+ return target;
+}
+
+void Multimedia::clear_buffer(wchar_t *target,const size_t length)
+{
+ size_t index;
+ for (index=0;index<length;++index)
+ {
+  target[index]=0;
+ }
+
+}
+
 wchar_t *Multimedia::create_buffer(const size_t length)
 {
  wchar_t *target;
  target=NULL;
- target=static_cast<wchar_t*>(calloc(length+1,sizeof(wchar_t)));
- if (target==NULL)
- {
-  Halt("Can't allocate memory");
- }
+ target=this->get_memory(length);
+ this->clear_buffer(target,length);
  return target;
 }
 
@@ -1531,7 +1594,7 @@ void Multimedia::load(const char *target)
  wchar_t *name;
  name=this->convert_file_name(target);
  this->open(name);
- free(name);
+ delete[] name;
 }
 
 bool Multimedia::check_playing()
@@ -1899,14 +1962,23 @@ Image::Image()
 
 Image::~Image()
 {
- if (data!=NULL) free(data);
+ if (data!=NULL)
+ {
+  delete[] data;
+  data=NULL;
+ }
+
 }
 
 unsigned char *Image::create_buffer(const size_t length)
 {
  unsigned char *result;
- result=static_cast<unsigned char*>(calloc(length,sizeof(unsigned char)));
- if (result==NULL)
+ result=NULL;
+ try
+ {
+  result=new unsigned char[length];
+ }
+ catch (...)
  {
   Halt("Can't allocate memory for image buffer");
  }
@@ -1917,7 +1989,7 @@ void Image::clear_buffer()
 {
  if (data!=NULL)
  {
-  free(data);
+  delete[] data;
   data=NULL;
  }
 
