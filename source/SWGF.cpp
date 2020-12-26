@@ -595,6 +595,64 @@ unsigned long int FPS::get_fps() const
  return fps;
 }
 
+Unicode_Convertor::Unicode_Convertor()
+{
+ target=NULL;
+}
+
+Unicode_Convertor::~Unicode_Convertor()
+{
+ if (target!=NULL) delete[] target;
+}
+
+void Unicode_Convertor::get_memory(const size_t length)
+{
+ try
+ {
+  target=new wchar_t[length+1];
+ }
+ catch (...)
+ {
+  Halt("Can't allocate memory");
+ }
+
+}
+
+void Unicode_Convertor::clear_buffer(const size_t length)
+{
+ size_t index,stop;
+ stop=length+1;
+ for (index=0;index<stop;++index)
+ {
+  target[index]=0;
+ }
+
+}
+
+void Unicode_Convertor::create_buffer(const size_t length)
+{
+ this->get_memory(length);
+ this->clear_buffer(length);
+}
+
+void Unicode_Convertor::convert_string(const char *source)
+{
+ size_t index,length;
+ length=strlen(source);
+ for (index=0;index<length;++index)
+ {
+  target[index]=btowc(source[index]);
+ }
+
+}
+
+wchar_t *Unicode_Convertor::convert(const char *source)
+{
+ this->create_buffer(strlen(source));
+ this->convert_string(source);
+ return target;
+}
+
 Display::Display()
 {
  memset(&display,0,sizeof(DEVMODE));
@@ -1454,61 +1512,6 @@ Multimedia::~Multimedia()
  if (loader!=NULL) loader->Release();
 }
 
-wchar_t *Multimedia::get_memory(const size_t length)
-{
- wchar_t *target;
- target=NULL;
- try
- {
-  target=new wchar_t[length+1];
- }
- catch (...)
- {
-  Halt("Can't allocate memory");
- }
- return target;
-}
-
-void Multimedia::clear_buffer(wchar_t *target,const size_t length)
-{
- size_t index,stop;
- stop=length+1;
- for (index=0;index<stop;++index)
- {
-  target[index]=0;
- }
-
-}
-
-wchar_t *Multimedia::create_buffer(const size_t length)
-{
- wchar_t *target;
- target=NULL;
- target=this->get_memory(length);
- this->clear_buffer(target,length);
- return target;
-}
-
-void Multimedia::convert_string(const char *source,wchar_t *target)
-{
- size_t index,length;
- length=strlen(source);
- for (index=0;index<length;++index)
- {
-  target[index]=btowc(source[index]);
- }
-
-}
-
-wchar_t *Multimedia::convert_file_name(const char *target)
-{
- wchar_t *name;
- name=NULL;
- name=this->create_buffer(strlen(target));
- this->convert_string(target,name);
- return name;
-}
-
 void Multimedia::open(const wchar_t *target)
 {
  player->StopWhenReady();
@@ -1592,10 +1595,8 @@ void Multimedia::initialize()
 
 void Multimedia::load(const char *target)
 {
- wchar_t *name;
- name=this->convert_file_name(target);
- this->open(name);
- delete[] name;
+ Unicode_Convertor convertor;
+ this->open(convertor.convert(target));
 }
 
 bool Multimedia::check_playing()
