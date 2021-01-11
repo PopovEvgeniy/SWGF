@@ -4,7 +4,7 @@ Some code was taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL
 
 Simple windows game framework license
 
-Copyright (C) 2016-2020 Popov Evgeniy Alekseyevich
+Copyright (C) 2016-2021 Popov Evgeniy Alekseyevich
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -452,7 +452,7 @@ class Multimedia:public COM_Base
  IMediaSeeking *controler;
  IVideoWindow *video;
  void open(const wchar_t *target);
- bool is_end();
+ bool is_play();
  void rewind();
  void create_loader();
  void create_player();
