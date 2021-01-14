@@ -888,10 +888,10 @@ Render::Render()
  vertex[3].x=0;
  vertex[3].y=0;
  point[0].u=0;
- point[0].v=0;
- point[1].u=0;
- point[1].v=0;
- point[2].u=0;
+ point[0].v=1;
+ point[1].u=1;
+ point[1].v=1;
+ point[2].u=1;
  point[2].v=0;
  point[3].u=0;
  point[3].v=0;
@@ -969,24 +969,6 @@ void Render::set_vertex_coordinates()
  vertex[3].y=0;
 }
 
-void Render::set_texture_coordinates()
-{
- point[0].u=0;
- point[0].v=1;
- point[1].u=1;
- point[1].v=1;
- point[2].u=1;
- point[2].v=0;
- point[3].u=0;
- point[3].v=0;
-}
-
-void Render::prepare_surface()
-{
- this->set_vertex_coordinates();
- this->set_texture_coordinates();
-}
-
 void Render::create_texture()
 {
  glPixelStorei(GL_UNPACK_ALIGNMENT,1);
@@ -1010,7 +992,7 @@ void Render::create_render()
  this->clear_stage();
  this->check_videocard();
  this->create_texture();
- this->prepare_surface();
+ this->set_vertex_coordinates();
  this->load_surface_data();
  this->disable_vsync();
 }
