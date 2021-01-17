@@ -696,6 +696,7 @@ class Tileset:public Surface
  unsigned long int get_columns() const;
  void select_tile(const unsigned long int row,const unsigned long int column);
  void draw_tile(const unsigned long int x,const unsigned long int y);
+ void draw_tile(const unsigned long int row,const unsigned long int column,const unsigned long int x,const unsigned long int y);
  void load_tileset(Image &buffer,const unsigned long int row_amount,const unsigned long int column_amount);
 };
 

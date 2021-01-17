@@ -849,10 +849,14 @@ C++
         const;</span> – Return amount of columns.<br>
       <span style="font-style: italic;">void Tileset::select_tile(const unsigned
         long int row,const unsigned long int column);</span> – Select target
-      tile.<br>
-      <span style="font-style: italic;">void Tileset::draw_tile(const unsigned
-        long int x,const unsigned long int y);</span> – Draw selected tile.<br>
-      <span style="font-style: italic;">void Tileset::load_tileset(Image
+      tile.</big><br>
+    <big> <span style="font-style: italic;">void Tileset::draw_tile(const
+        unsigned long int x,const unsigned long int y);</span> – Draw selected
+      tile at specific position.</big><br>
+    <big><i>void Tileset::draw_tile(const unsigned long int row,const unsigned
+        long int column,const unsigned long int x,const unsigned long int y);</i>
+      – Draw target tile at specific position.</big><br>
+    <big> <span style="font-style: italic;">void Tileset::load_tileset(Image
         &amp;buffer,const unsigned long int row_amount,const unsigned long int
         column_amount);</span> – Load a tile-set. </big>
     <h2><a class="mozTocH2" name="mozTocId67980"></a><big>Chapter 11. Loading
@@ -1449,9 +1453,7 @@ C++
       <span style="text-decoration: underline;">Ordinary buttons codes</span><br>
       <br>
       Ordinary buttons codes look as predefined constants. First button is <span
-
         style="font-style: italic;">GAMEPAD_BUTTON1</span>. Last button is <span
-
         style="font-style: italic;">GAMEPAD_BUTTON32</span>.<br>
       <br>
       <span style="text-decoration: underline;">D-pad buttons codes</span><br>
@@ -1517,6 +1519,7 @@ C++
     <big><br>
     </big>
     <table style="text-align: left; width: 365px; height: 94px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -1773,7 +1776,6 @@ Multimedia
     <big><br>
     </big>
     <table style="text-align: left; width: 519px; height: 94px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2157,6 +2159,7 @@ Multimedia
     <big>5.7.9 – Source code was synced with Neon game development kit 4.9.6.</big><br>
     <big>5.8 – Source code was synced with Neon game development kit 5.0.1.</big><br>
     <big>5.8.1 – Source code was synced with Neon game development kit 5.0.4.</big><br>
-    <big>5.8.2 – Small changes.</big>
+    <big>5.8.2 – Small changes.</big><br>
+    <big>5.8.3 – Source code was synced with Neon game development kit 5.0.5.</big>
   </body>
 </html>

@@ -2753,6 +2753,12 @@ void Tileset::draw_tile(const unsigned long int x,const unsigned long int y)
 
 }
 
+void Tileset::draw_tile(const unsigned long int row,const unsigned long int column,const unsigned long int x,const unsigned long int y)
+{
+ this->select_tile(row,column);
+ this->draw_tile(x,y);
+}
+
 void Tileset::load_tileset(Image &buffer,const unsigned long int row_amount,const unsigned long int column_amount)
 {
  if ((row_amount>0)&&(column_amount>0))
