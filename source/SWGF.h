@@ -748,6 +748,9 @@ class Collision
  bool check_horizontal_collision() const;
  bool check_vertical_collision() const;
  bool check_collision() const;
+ bool check_horizontal_collision(const Collision_Box &first_target,const Collision_Box &second_target);
+ bool check_vertical_collision(const Collision_Box &first_target,const Collision_Box &second_target);
+ bool check_collision(const Collision_Box &first_target,const Collision_Box &second_target);
  Collision_Box generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height) const;
 };
 

@@ -605,6 +605,7 @@ C++
     <big><br>
     </big>
     <table style="text-align: left; width: 554px; height: 124px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -689,6 +690,7 @@ C++
     <big><br>
     </big>
     <table style="text-align: left; width: 363px; height: 124px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -1039,11 +1041,20 @@ C++
       horizontal collision between two object is accepted.<br>
       <span style="font-style: italic;">bool
         Collision::check_vertical_collision() const;</span> – Return true if
-      vertical collision between two objects is accepted.<br>
-      <span style="font-style: italic;">bool Collision::check_collision() const;</span>
-      – Return true if horizontal or vertical collision between two objects is
-      accepted.<br>
-      <span style="font-style: italic;">Collision_Box
+      vertical collision between two objects is accepted.</big><br>
+    <big> <span style="font-style: italic;">bool Collision::check_collision()
+        const;</span> – Return true if horizontal or vertical collision between
+      two objects is accepted.</big><br>
+    <big><i>bool Collision::check_horizontal_collision(const Box_Collision
+        &amp;first_target,const Box_Collision &amp;second_target);</i> – Set
+      collision target and check horizontal collision.</big><br>
+    <big><i>bool Collision::check_vertical_collision(const Box_Collision
+        &amp;first_target,const Box_Collision &amp;second_target);</i> – Set
+      collision target and check vertical collision.</big><br>
+    <big><i>bool Collision::check_collision(const Box_Collision
+        &amp;first_target,const Box_Collision &amp;second_target);</i> – Set
+      collision target and check collision.</big><br>
+    <big> <span style="font-style: italic;">Collision_Box
         Collision::generate_box(const unsigned long int x,const unsigned long
         int y,const unsigned long int width,const unsigned long int height)
         const;</span> – Generate collision related information from the object
@@ -1453,7 +1464,9 @@ C++
       <span style="text-decoration: underline;">Ordinary buttons codes</span><br>
       <br>
       Ordinary buttons codes look as predefined constants. First button is <span
+
         style="font-style: italic;">GAMEPAD_BUTTON1</span>. Last button is <span
+
         style="font-style: italic;">GAMEPAD_BUTTON32</span>.<br>
       <br>
       <span style="text-decoration: underline;">D-pad buttons codes</span><br>
@@ -1519,7 +1532,6 @@ C++
     <big><br>
     </big>
     <table style="text-align: left; width: 365px; height: 94px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2160,6 +2172,7 @@ Multimedia
     <big>5.8 – Source code was synced with Neon game development kit 5.0.1.</big><br>
     <big>5.8.1 – Source code was synced with Neon game development kit 5.0.4.</big><br>
     <big>5.8.2 – Small changes.</big><br>
-    <big>5.8.3 – Source code was synced with Neon game development kit 5.0.5.</big>
+    <big>5.8.3 – Source code was synced with Neon game development kit 5.0.5.</big><br>
+    <big>5.8.4 – Source code was synced with Neon game development kit 5.0.9.</big>
   </body>
 </html>

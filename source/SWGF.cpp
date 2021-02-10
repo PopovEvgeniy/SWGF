@@ -2930,6 +2930,24 @@ bool Collision::check_collision() const
  return this->check_horizontal_collision() || this->check_vertical_collision();
 }
 
+bool Collision::check_horizontal_collision(const Collision_Box &first_target,const Collision_Box &second_target)
+{
+ this->set_target(first_target,second_target);
+ return this->check_horizontal_collision();
+}
+
+bool Collision::check_vertical_collision(const Collision_Box &first_target,const Collision_Box &second_target)
+{
+ this->set_target(first_target,second_target);
+ return this->check_vertical_collision();
+}
+
+bool Collision::check_collision(const Collision_Box &first_target,const Collision_Box &second_target)
+{
+ this->set_target(first_target,second_target);
+ return this->check_collision();
+}
+
 Collision_Box Collision::generate_box(const unsigned long int x,const unsigned long int y,const unsigned long int width,const unsigned long int height) const
 {
  Collision_Box result;
