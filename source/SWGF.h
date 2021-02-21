@@ -677,6 +677,8 @@ class Sprite:public Canvas
  void clone(Sprite &target);
  void draw_sprite();
  void draw_sprite(const unsigned long int x,const unsigned long int y);
+ void draw_sprite(const bool transparency);
+ void draw_sprite(const bool transparency,const unsigned long int x,const unsigned long int y);
 };
 
 class Tileset:public Surface

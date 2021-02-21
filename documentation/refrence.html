@@ -605,7 +605,6 @@ C++
     <big><br>
     </big>
     <table style="text-align: left; width: 554px; height: 124px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -690,7 +689,6 @@ C++
     <big><br>
     </big>
     <table style="text-align: left; width: 363px; height: 124px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -774,12 +772,17 @@ C++
       – Create copy of exist sprite.<br>
       <span style="font-style: italic;">void Sprite::set_position(const unsigned
         long int x, const unsigned long int y);</span> – Set sprite position.<br>
-      <span style="font-style: italic;">void Sprite::draw_sprite();</span> –
-      Draw a sprite.<br>
-      <span style="font-style: italic;">void Sprite::draw_sprite(const unsigned
-        long int x, const unsigned long int y);</span> – Set sprite position and
-      draw it.<br>
-      <br>
+    </big><big> <span style="font-style: italic;">void Sprite::draw_sprite();</span>
+      – Draw a sprite.</big><br>
+    <big> <span style="font-style: italic;">void Sprite::draw_sprite(const
+        unsigned long int x, const unsigned long int y);</span> – Set sprite
+      position and draw it.</big><br>
+    <big><i>void Sprite::draw_sprite(const bool transparency);</i> – Set
+      transparent mode and draw a sprite.</big><br>
+    <big><i>void Sprite::draw_sprite(const bool transparency,const unsigned long
+        int x, const unsigned long int y);</i> – Set transparent mode and draw a
+      sprite at target position.</big><br>
+    <big> <br>
       <span style="text-decoration: underline;">Important notes</span><br>
       <br>
       Always call <span style="font-style: italic;">set_kind</span> method
@@ -1464,9 +1467,7 @@ C++
       <span style="text-decoration: underline;">Ordinary buttons codes</span><br>
       <br>
       Ordinary buttons codes look as predefined constants. First button is <span
-
         style="font-style: italic;">GAMEPAD_BUTTON1</span>. Last button is <span
-
         style="font-style: italic;">GAMEPAD_BUTTON32</span>.<br>
       <br>
       <span style="text-decoration: underline;">D-pad buttons codes</span><br>
@@ -1532,6 +1533,7 @@ C++
     <big><br>
     </big>
     <table style="text-align: left; width: 365px; height: 94px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2173,6 +2175,7 @@ Multimedia
     <big>5.8.1 – Source code was synced with Neon game development kit 5.0.4.</big><br>
     <big>5.8.2 – Small changes.</big><br>
     <big>5.8.3 – Source code was synced with Neon game development kit 5.0.5.</big><br>
-    <big>5.8.4 – Source code was synced with Neon game development kit 5.0.9.</big>
+    <big>5.8.4 – Source code was synced with Neon game development kit 5.0.9.</big><br>
+    <big>5.8.5 – Source code was synced with Neon game development kit 5.1.</big>
   </body>
 </html>
