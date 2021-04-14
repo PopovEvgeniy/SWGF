@@ -2316,6 +2316,16 @@ void Surface::resize_image(const unsigned long int new_width,const unsigned long
  height=new_height;
 }
 
+void Surface::horizontal_mirror()
+{
+ this->mirror_image(MIRROR_HORIZONTAL);
+}
+
+void Surface::vertical_mirror()
+{
+ this->mirror_image(MIRROR_VERTICAL);
+}
+
 Canvas::Canvas()
 {
  start=0;

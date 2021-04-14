@@ -47,11 +47,11 @@ int main()
   if (keyboard.check_hold(80)==true) ship.increase_y(2);
   if (keyboard.check_hold(75)==true) ship.decrease_x(2);
   if (keyboard.check_hold(77)==true) ship.increase_x(2);
-  if (keyboard.check_press(71)==true) ship.mirror_image(MIRROR_HORIZONTAL);
-  if (keyboard.check_press(79)==true) ship.mirror_image(MIRROR_VERTICAL);
+  if (keyboard.check_press(71)==true) ship.horizontal_mirror();
+  if (keyboard.check_press(79)==true) ship.vertical_mirror();
   if (gamepad.check_hold(GAMEPAD_BUTTON2)==true) break;
-  if (gamepad.check_press(GAMEPAD_BUTTON4)==true) ship.mirror_image(MIRROR_HORIZONTAL);
-  if (gamepad.check_press(GAMEPAD_BUTTON3)==true) ship.mirror_image(MIRROR_VERTICAL);
+  if (gamepad.check_press(GAMEPAD_BUTTON4)==true) ship.horizontal_mirror();
+  if (gamepad.check_press(GAMEPAD_BUTTON3)==true) ship.vertical_mirror();
   switch (gamepad.get_dpad())
   {
    case GAMEPAD_UP:

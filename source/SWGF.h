@@ -595,6 +595,8 @@ class Surface
  unsigned long int get_image_height() const;
  void mirror_image(const MIRROR_TYPE kind);
  void resize_image(const unsigned long int new_width,const unsigned long int new_height);
+ void horizontal_mirror();
+ void vertical_mirror();
 };
 
 class Canvas:public Surface
