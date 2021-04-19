@@ -1771,10 +1771,7 @@ long int Binary_File::get_length()
 
 bool Binary_File::check_error()
 {
- bool result;
- result=false;
- if (ferror(target)!=0) result=true;
- return result;
+ return ferror(target)!=0;
 }
 
 Input_File::Input_File()
