@@ -1681,31 +1681,6 @@ char* System::read_environment(const char *variable)
  return getenv(variable);
 }
 
-bool System::file_exist(const char *name)
-{
- FILE *target;
- bool result;
- result=false;
- target=fopen(name,"rb");
- if (target!=NULL)
- {
-  result=true;
-  fclose(target);
- }
- return result;
-}
-
-bool System::delete_file(const char *name)
-{
- bool result;
- result=false;
- if (remove(name)==0)
- {
-  result=true;
- }
- return result;
-}
-
 void System::enable_logging(const char *name)
 {
  if (freopen(name,"wt",stdout)==NULL)
@@ -1713,6 +1688,44 @@ void System::enable_logging(const char *name)
   Halt("Can't create log file");
  }
 
+}
+
+Filesystem::Filesystem()
+{
+ status=false;
+}
+
+Filesystem::~Filesystem()
+{
+
+}
+
+void Filesystem::file_exist(const char *name)
+{
+ FILE *target;
+ status=false;
+ target=fopen(name,"rb");
+ if (target!=NULL)
+ {
+  status=true;
+  fclose(target);
+ }
+
+}
+
+void Filesystem::delete_file(const char *name)
+{
+ status=false;
+ if (remove(name)==0)
+ {
+  status=true;
+ }
+
+}
+
+bool Filesystem::get_status() const
+{
+ return status;
 }
 
 Binary_File::Binary_File()

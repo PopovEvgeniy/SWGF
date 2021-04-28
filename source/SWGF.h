@@ -490,9 +490,19 @@ class System
  void quit();
  void run(const char *command);
  char* read_environment(const char *variable);
- bool file_exist(const char *name);
- bool delete_file(const char *name);
  void enable_logging(const char *name);
+};
+
+class Filesystem
+{
+ private:
+ bool status;
+ public:
+ Filesystem();
+ ~Filesystem();
+ void file_exist(const char *name);
+ void delete_file(const char *name);
+ bool get_status() const;
 };
 
 class Binary_File
