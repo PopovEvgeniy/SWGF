@@ -131,7 +131,7 @@ Synchronization::Synchronization()
 
 Synchronization::~Synchronization()
 {
- if (timer==NULL)
+ if (timer!=NULL)
  {
   CancelWaitableTimer(timer);
   CloseHandle(timer);
