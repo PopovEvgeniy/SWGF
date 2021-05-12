@@ -2222,14 +2222,22 @@ bool Surface::compare_pixels(const size_t first,const size_t second) const
 {
  bool result;
  result=false;
- if ((image[first].red!=image[second].red)||(image[first].green!=image[second].green))
+ if (image[first].red!=image[second].red)
  {
   result=true;
+  goto finish;
  }
- else
+ if (image[first].green!=image[second].green)
  {
-  if (image[first].blue!=image[second].blue) result=true;
+  result=true;
+  goto finish;
  }
+ if (image[first].blue!=image[second].blue)
+ {
+  result=true;
+  goto finish;
+ }
+ finish: ;
  return result;
 }
 
