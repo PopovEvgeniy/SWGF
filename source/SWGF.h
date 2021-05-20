@@ -190,16 +190,17 @@ class Engine
  private:
  WNDCLASSEX window_class;
  HWND window;
+ HDC context;
  void get_instance();
  void set_backgrond_color();
  void load_icon();
  void load_cursor();
  void register_window_class();
  protected:
- HWND get_window();
  HDC get_context();
  void prepare_engine();
  void destroy_window();
+ void take_context();
  void create_window();
  void capture_mouse();
  bool process_message();
@@ -318,7 +319,6 @@ class Display
 class WINGL:public Display, public Engine
 {
  private:
- HDC context;
  HGLRC render;
  PIXELFORMATDESCRIPTOR setting;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;

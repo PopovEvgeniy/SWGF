@@ -179,12 +179,23 @@ Engine::Engine()
  window_class.cbClsExtra=0;
  window_class.cbWndExtra=0;
  window=NULL;
+ context=NULL;
 }
 
 Engine::~Engine()
 {
- if (window!=NULL) CloseWindow(window);
- if (window_class.hbrBackground!=NULL) DeleteObject(window_class.hbrBackground);
+ if (window!=NULL)
+ {
+  CloseWindow(window);
+ }
+ if (context!=NULL)
+ {
+  ReleaseDC(window,context);
+ }
+ if (window_class.hbrBackground!=NULL)
+ {
+  DeleteObject(window_class.hbrBackground);
+ }
  UnregisterClass(window_class.lpszClassName,window_class.hInstance);
 }
 
@@ -236,14 +247,9 @@ void Engine::register_window_class()
 
 }
 
-HWND Engine::get_window()
-{
- return window;
-}
-
 HDC Engine::get_context()
 {
- return GetWindowDC(window);
+ return context;
 }
 
 void Engine::prepare_engine()
@@ -261,6 +267,21 @@ void Engine::destroy_window()
  {
   CloseWindow(window);
   window=NULL;
+ }
+ if (context!=NULL)
+ {
+  ReleaseDC(window,context);
+  context=NULL;
+ }
+
+}
+
+void Engine::take_context()
+{
+ context=GetWindowDC(window);
+ if (context==NULL)
+ {
+  Halt("Can't take window context");
  }
 
 }
@@ -722,7 +743,6 @@ unsigned long int Display::get_height() const
 
 WINGL::WINGL()
 {
- context=NULL;
  render=NULL;
  wglSwapIntervalEXT=NULL;
  memset(&setting,0,sizeof(PIXELFORMATDESCRIPTOR));
@@ -737,7 +757,7 @@ WINGL::~WINGL()
   wglMakeCurrent(NULL,NULL);
   wglDeleteContext(render);
  }
- if (context!=NULL) ReleaseDC(this->get_window(),context);
+
 }
 
 bool WINGL::check_base_setting()
@@ -792,9 +812,9 @@ int WINGL::get_pixel_format()
 {
  int index,result;
  result=0;
- for (index=DescribePixelFormat(context,1,setting.nSize,&setting);index>0;--index)
+ for (index=DescribePixelFormat(this->get_context(),1,setting.nSize,&setting);index>0;--index)
  {
-  DescribePixelFormat(context,index,setting.nSize,&setting);
+  DescribePixelFormat(this->get_context(),index,setting.nSize,&setting);
   if (this->check_common_setting()==true)
   {
    if (this->check_acceleration()==true)
@@ -815,8 +835,8 @@ void WINGL::set_pixel_format(const int format)
  {
   Halt("Invalid pixel format");
  }
- DescribePixelFormat(context,format,setting.nSize,&setting);
- if (SetPixelFormat(context,format,&setting)==FALSE)
+ DescribePixelFormat(this->get_context(),format,setting.nSize,&setting);
+ if (SetPixelFormat(this->get_context(),format,&setting)==FALSE)
  {
   Halt("Can't set pixel format");
  }
@@ -825,12 +845,12 @@ void WINGL::set_pixel_format(const int format)
 
 void WINGL::create_render_context()
 {
- render=wglCreateContext(context);
+ render=wglCreateContext(this->get_context());
  if (render==NULL)
  {
   Halt("Can't create render context");
  }
- wglMakeCurrent(context,render);
+ wglMakeCurrent(this->get_context(),render);
 }
 
 void WINGL::destroy_render_context()
@@ -841,24 +861,12 @@ void WINGL::destroy_render_context()
   wglDeleteContext(render);
   render=NULL;
  }
- if (context!=NULL)
- {
-  ReleaseDC(this->get_window(),context);
-  context=NULL;
- }
 
 }
 
 void WINGL::set_render()
 {
- int format;
- context=this->get_context();
- if (context==NULL)
- {
-  Halt("Can't get the window context");
- }
- format=this->get_pixel_format();
- this->set_pixel_format(format);
+ this->set_pixel_format(this->get_pixel_format());
  this->create_render_context();
 }
 
@@ -874,7 +882,7 @@ void WINGL::disable_vsync()
 
 void WINGL::Swap()
 {
- SwapBuffers(context);
+ SwapBuffers(this->get_context());
 }
 
 Render::Render()
@@ -1012,6 +1020,7 @@ void Render::destroy_render()
 void Render::start_render()
 {
  this->create_window();
+ this->take_context();
  this->capture_mouse();
  this->create_render();
 }
