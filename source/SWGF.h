@@ -322,9 +322,9 @@ class WINGL:public Display, public Engine
  HGLRC render;
  PIXELFORMATDESCRIPTOR setting;
  PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
- bool check_base_setting();
+ bool check_base_setting() const;
  bool check_advanced_setting() const;
- bool check_common_setting();
+ bool check_common_setting() const;
  bool check_acceleration() const;
  int get_pixel_format();
  void set_pixel_format(const int format);

@@ -760,7 +760,7 @@ WINGL::~WINGL()
 
 }
 
-bool WINGL::check_base_setting()
+bool WINGL::check_base_setting() const
 {
  bool result;
  result=false;
@@ -782,7 +782,7 @@ bool WINGL::check_advanced_setting() const
  return result;
 }
 
-bool WINGL::check_common_setting()
+bool WINGL::check_common_setting() const
 {
  bool result;
  result=false;
