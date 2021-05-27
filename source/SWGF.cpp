@@ -1031,6 +1031,16 @@ void Render::refresh()
  this->Swap();
 }
 
+Screen::Screen()
+{
+
+}
+
+Screen::~Screen()
+{
+
+}
+
 void Screen::initialize()
 {
  this->check_video_mode();
@@ -1862,9 +1872,9 @@ Primitive::~Primitive()
 
 }
 
-void Primitive::initialize(Screen *Screen)
+void Primitive::initialize(Screen *screen)
 {
- surface=Screen;
+ surface=screen;
 }
 
 void Primitive::set_color(const unsigned char red,const unsigned char green,const unsigned char blue)
