@@ -2089,15 +2089,15 @@ void Image::load_pcx(const char *name)
   if (original[index]<192)
   {
    uncompressed[position]=original[index];
-   position++;
-   index++;
+   ++position;
+   ++index;
   }
   else
   {
    for (repeat=original[index]-192;repeat>0;--repeat)
    {
     uncompressed[position]=original[index+1];
-    position++;
+    ++position;
    }
    index+=2;
   }
