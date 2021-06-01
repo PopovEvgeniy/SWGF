@@ -221,7 +221,6 @@ class Frame
  unsigned int *get_memory(const char *error);
  void clear_buffer(unsigned int *target);
  unsigned int *create_buffer(const char *error);
- void put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue);
  protected:
  size_t get_offset(const unsigned long int x,const unsigned long int y,const unsigned long int target_width);
  size_t get_offset(const unsigned long int x,const unsigned long int y);
@@ -233,6 +232,7 @@ class Frame
  ~Frame();
  unsigned int *get_buffer();
  size_t get_pixels() const;
+ bool put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue);
  void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
  void clear_screen();
  void save();

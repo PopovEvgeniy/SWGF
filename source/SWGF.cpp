@@ -396,15 +396,6 @@ unsigned int *Frame::create_buffer(const char *error)
  return target;
 }
 
-void Frame::put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue)
-{
- if (offset<pixels)
- {
-  buffer[offset]=red+(green<<8)+(blue<<16);
- }
-
-}
-
 size_t Frame::get_offset(const unsigned long int x,const unsigned long int y,const unsigned long int target_width)
 {
  return static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(target_width);
@@ -441,6 +432,18 @@ unsigned int *Frame::get_buffer()
 size_t Frame::get_pixels() const
 {
  return pixels;
+}
+
+bool Frame::put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue)
+{
+ bool result;
+ result=false;
+ if (offset<pixels)
+ {
+  buffer[offset]=red+(green<<8)+(blue<<16);
+  result=true;
+ }
+ return result;
 }
 
 void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)

@@ -391,12 +391,15 @@ C++
       <span style="font-style: italic;">size_t Frame::get_pixels() const;</span>
       – Return amount of pixels in the buffer.<br>
       <span style="font-style: italic;">void Frame::clear_screen();</span> –
-      Clear the surface. Fill it by black color.<br>
-      <span style="font-style: italic;">void Frame::draw_pixel(const unsigned
-        long int x,const unsigned long int y, const unsigned char red,const
-        unsigned char green, const unsigned char blue);</span> – Draw a pixel to
-      the surface.<br>
-      <span style="font-style: italic;">unsigned long int
+      Clear the surface. Fill it by black color.</big><br>
+    <big> <span style="font-style: italic;">void Frame::draw_pixel(const
+        unsigned long int x,const unsigned long int y, const unsigned char
+        red,const unsigned char green, const unsigned char blue);</span> – Draw
+      a pixel to the surface.</big><br>
+    <big><i>bool Frame::put_pixel(const size_t offset,const unsigned int
+        red,const unsigned int green,const unsigned int blue);</i> – Put a pixel
+      to the surface buffer. Return false if operation was failed.</big><br>
+    <big> <span style="font-style: italic;">unsigned long int
         Frame::get_frame_width() const;</span> – Return frame width in pixels.<br>
       <span style="font-style: italic;">unsigned long int
         Frame::get_frame_height() const;</span> – Return frame height in pixels.<br>
@@ -2200,6 +2203,7 @@ Multimedia
     <big>6.0.1 – Source code was synced with Neon game development kit 5.2.2.</big><br>
     <big>6.0.2 – Source code was synced with Neon game development kit 5.2.3.</big><br>
     <big>6.0.3 – Source code was synced with Neon game development kit 5.2.4.</big><br>
-    <big>6.0.4 – Source code was synced with Neon game development kit 5.2.5.</big>
+    <big>6.0.4 – Source code was synced with Neon game development kit 5.2.5.</big><br>
+    <big>6.0.5 – Source code was synced with Neon game development kit 5.2.6.</big>
   </body>
 </html>
