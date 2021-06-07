@@ -223,7 +223,7 @@ class Frame
  unsigned int *create_buffer(const char *error);
  protected:
  size_t get_offset(const unsigned long int x,const unsigned long int y,const unsigned long int target_width);
- size_t get_offset(const unsigned long int x,const unsigned long int y);
+ size_t get_offset(const unsigned long int x,const unsigned long int y) const;
  void set_size(const unsigned long int surface_width,const unsigned long int surface_height);
  void set_size(const SURFACE surface);
  void create_buffers();
@@ -232,8 +232,7 @@ class Frame
  ~Frame();
  unsigned int *get_buffer();
  size_t get_pixels() const;
- bool put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue);
- void draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue);
+ bool draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned long int red,const unsigned long int green,const unsigned long int blue);
  void clear_screen();
  void save();
  void restore();
@@ -594,9 +593,11 @@ class Surface
  void set_height(const unsigned long int image_height);
  void set_buffer(IMG_Pixel *buffer);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y,const unsigned long int target_width);
- size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y);
+ size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y) const;
  void draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  bool compare_pixels(const size_t first,const size_t second) const;
+ unsigned long int get_surface_width() const;
+ unsigned long int get_surface_height() const;
  public:
  Surface();
  ~Surface();
@@ -634,9 +635,14 @@ class Background:public Canvas
  private:
  unsigned long int background_width;
  unsigned long int background_height;
+ unsigned long int maximum_width;
+ unsigned long int maximum_height;
  unsigned long int current;
  BACKGROUND_TYPE current_kind;
+ void get_maximum_width();
+ void get_maximum_height();
  void slow_draw_background();
+ void configure_background();
  public:
  Background();
  ~Background();
@@ -658,7 +664,6 @@ class Sprite:public Canvas
  unsigned long int sprite_width;
  unsigned long int sprite_height;
  SPRITE_TYPE current_kind;
- void draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y);
  void draw_transparent_sprite();
  void draw_normal_sprite();
  public:

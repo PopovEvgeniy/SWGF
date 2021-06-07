@@ -401,9 +401,9 @@ size_t Frame::get_offset(const unsigned long int x,const unsigned long int y,con
  return static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(target_width);
 }
 
-size_t Frame::get_offset(const unsigned long int x,const unsigned long int y)
+size_t Frame::get_offset(const unsigned long int x,const unsigned long int y) const
 {
- return this->get_offset(x,y,frame_width);
+ return static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(frame_width);
 }
 
 void Frame::set_size(const unsigned long int surface_width,const unsigned long int surface_height)
@@ -434,21 +434,18 @@ size_t Frame::get_pixels() const
  return pixels;
 }
 
-bool Frame::put_pixel(const size_t offset,const unsigned int red,const unsigned int green,const unsigned int blue)
+bool Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned long int red,const unsigned long int green,const unsigned long int blue)
 {
  bool result;
+ size_t offset;
  result=false;
+ offset=this->get_offset(x,y);
  if (offset<pixels)
  {
   buffer[offset]=red+(green<<8)+(blue<<16);
   result=true;
  }
  return result;
-}
-
-void Frame::draw_pixel(const unsigned long int x,const unsigned long int y,const unsigned char red,const unsigned char green,const unsigned char blue)
-{
- this->put_pixel(this->get_offset(x,y),red,green,blue);
 }
 
 void Frame::clear_screen()
@@ -2227,9 +2224,9 @@ size_t Surface::get_offset(const unsigned long int start,const unsigned long int
  return static_cast<size_t>(start)+static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(target_width);
 }
 
-size_t Surface::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y)
+size_t Surface::get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y) const
 {
- return this->get_offset(start,x,y,width);
+ return static_cast<size_t>(start)+static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(width);
 }
 
 void Surface::draw_image_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
@@ -2258,6 +2255,16 @@ bool Surface::compare_pixels(const size_t first,const size_t second) const
  }
  finish: ;
  return result;
+}
+
+unsigned long int Surface::get_surface_width() const
+{
+ return surface->get_frame_width();
+}
+
+unsigned long int Surface::get_surface_height() const
+{
+ return surface->get_frame_height();
 }
 
 void Surface::initialize(Screen *screen)
@@ -2413,6 +2420,8 @@ Background::Background()
 {
  background_width=0;
  background_height=0;
+ maximum_width=0;
+ maximum_height=0;
  current=0;
  current_kind=NORMAL_BACKGROUND;
 }
@@ -2422,33 +2431,47 @@ Background::~Background()
 
 }
 
-void Background::slow_draw_background()
+void Background::get_maximum_width()
 {
- unsigned long int x,y;
- for (x=0;x<background_width;++x)
+ maximum_width=background_width;
+ if (maximum_width>this->get_surface_width())
  {
-  for (y=0;y<background_height;++y)
-  {
-   this->draw_image_pixel(this->get_offset(start,x,y),x,y);
-  }
-
+  maximum_width=this->get_surface_width();
  }
 
 }
 
-unsigned long int Background::get_width() const
+void Background::get_maximum_height()
 {
- return background_width;
+ maximum_height=background_height;
+ if (maximum_height>this->get_surface_height())
+ {
+  maximum_height=this->get_surface_height();
+ }
+
 }
 
-unsigned long int Background::get_height() const
+void Background::slow_draw_background()
 {
- return background_height;
+ unsigned long int x,y,index;
+ x=0;
+ y=0;
+ for (index=maximum_width*maximum_height;index>0;--index)
+ {
+  this->draw_image_pixel(this->get_offset(start,x,y),x,y);
+  if (x==maximum_width)
+  {
+   x=0;
+   ++y;
+  }
+  ++x;
+ }
+
 }
 
-void Background::set_kind(const BACKGROUND_TYPE kind)
+void Background::configure_background()
 {
- switch(kind)
+ switch(current_kind)
  {
   case NORMAL_BACKGROUND:
   background_width=this->get_image_width();
@@ -2466,7 +2489,25 @@ void Background::set_kind(const BACKGROUND_TYPE kind)
   start=(this->get_frame()-1)*background_width*background_height;
   break;
  }
+
+}
+
+unsigned long int Background::get_width() const
+{
+ return background_width;
+}
+
+unsigned long int Background::get_height() const
+{
+ return background_height;
+}
+
+void Background::set_kind(const BACKGROUND_TYPE kind)
+{
  current_kind=kind;
+ this->configure_background();
+ this->get_maximum_width();
+ this->get_maximum_height();
 }
 
 void Background::set_setting(const BACKGROUND_TYPE kind,const unsigned long int frames)
@@ -2517,39 +2558,41 @@ Sprite::~Sprite()
 
 }
 
-void Sprite::draw_sprite_pixel(const size_t offset,const unsigned long int x,const unsigned long int y)
-{
- if (this->compare_pixels(0,offset)==true)
- {
-  this->draw_image_pixel(offset,x,y);
- }
-
-}
-
 void Sprite::draw_transparent_sprite()
 {
- unsigned long int sprite_x,sprite_y;
- for (sprite_x=0;sprite_x<sprite_width;++sprite_x)
+ unsigned long int x,y,index;
+ x=0;
+ y=0;
+ for (index=sprite_width*sprite_height;index>0;--index)
  {
-  for (sprite_y=0;sprite_y<sprite_height;++sprite_y)
+  if (this->compare_pixels(0,this->get_offset(start,x,y))==true)
   {
-   this->draw_sprite_pixel(this->get_offset(start,sprite_x,sprite_y),current_x+sprite_x,current_y+sprite_y);
+   this->draw_image_pixel(this->get_offset(start,x,y),x+current_x,y+current_y);
   }
-
+  if (x==sprite_width)
+  {
+   x=0;
+   ++y;
+  }
+  ++x;
  }
 
 }
 
 void Sprite::draw_normal_sprite()
 {
- unsigned long int sprite_x,sprite_y;
- for (sprite_x=0;sprite_x<sprite_width;++sprite_x)
+ unsigned long int x,y,index;
+ x=0;
+ y=0;
+ for (index=sprite_width*sprite_height;index>0;--index)
  {
-  for (sprite_y=0;sprite_y<sprite_height;++sprite_y)
+  this->draw_image_pixel(this->get_offset(start,x,y),x+current_x,y+current_y);
+  if (x==sprite_width)
   {
-   this->draw_image_pixel(this->get_offset(start,sprite_x,sprite_y),current_x+sprite_x,current_y+sprite_y);
+   x=0;
+   ++y;
   }
-
+  ++x;
  }
 
 }
@@ -2789,16 +2832,18 @@ void Tileset::select_tile(const unsigned long int row,const unsigned long int co
 
 void Tileset::draw_tile(const unsigned long int x,const unsigned long int y)
 {
- size_t tile_offset;
- unsigned long int tile_x,tile_y;
- for (tile_x=0;tile_x<tile_width;++tile_x)
+ unsigned long int tile_x,tile_y,index;
+ tile_x=0;
+ tile_y=0;
+ for (index=tile_width*tile_height;index>0;--index)
  {
-  for (tile_y=0;tile_y<tile_height;++tile_y)
+  this->draw_image_pixel(offset+this->get_offset(0,tile_x,tile_y),x+tile_x,y+tile_y);
+  if (tile_x==tile_width)
   {
-   tile_offset=offset+this->get_offset(0,tile_x,tile_y);
-   this->draw_image_pixel(tile_offset,x+tile_x,y+tile_y);
+   tile_x=0;
+   ++tile_y;
   }
-
+  ++tile_x;
  }
 
 }
