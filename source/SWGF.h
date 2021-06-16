@@ -637,9 +637,11 @@ class Background:public Canvas
  unsigned long int background_height;
  unsigned long int maximum_width;
  unsigned long int maximum_height;
+ unsigned long int current;
  BACKGROUND_TYPE current_kind;
  void get_maximum_width();
  void get_maximum_height();
+ void slow_draw_background();
  void configure_background();
  public:
  Background();
