@@ -36,9 +36,9 @@
           <li><a href="#mozTocId552078">Chapter 3. Base graphics subsystem</a></li>
           <li><a href="#mozTocId810361">Chapter 4. Graphic primitives</a></li>
           <li><a href="#mozTocId289525">Chapter 5. Base image subsystem</a></li>
-          <li><a href="#mozTocId501089">Chapter 6. Advanced image subsystem</a></li>
-          <li><a href="#mozTocId455894">Chapter 7. Background</a></li>
-          <li><a href="#mozTocId662651">Chapter 8. Sprites</a></li>
+          <li><a href="#mozTocId501089">Chapter 6. Animation subsystem</a></li>
+          <li><a href="#mozTocId455894"> Chapter 7. Background</a></li>
+          <li><a href="#mozTocId662651"> Chapter 8. Sprites</a></li>
           <li><a href="#mozTocId367464">Chapter 9. Text</a></li>
           <li><a href="#mozTocId146800">Chapter 10. Tile-set</a></li>
           <li><a href="#mozTocId67980">Chapter 11. Loading images</a></li>
@@ -48,18 +48,18 @@
         <ul>
           <li><a href="#mozTocId236677">Chapter 1. Interaction with operation
               system</a></li>
-          <li><a href="#mozTocId495779">Chapter 2. Filesystem</a></li>
+          <li><a href="#mozTocId826928">Chapter 2. Filesystem</a></li>
           <li><a href="#mozTocId853711">Chapter 3. Abnormal program termination</a></li>
           <li><a href="#mozTocId656377">Chapter 4. Timer</a></li>
           <li><a href="#mozTocId638476">Chapter 5. Coordinate system</a></li>
           <li><a href="#mozTocId381935">Chapter 6. Collision</a></li>
         </ul>
       </li>
-      <li><a href="#mozTocId81465">Part 5. Binary files</a>
+      <li><a href="#mozTocId935671"> Part 5. Binary files</a>
         <ul>
-          <li><a href="#mozTocId402543">Chapter 1. Base binary files subsystem</a></li>
-          <li><a href="#mozTocId3436">Chapter 2. File reader</a></li>
-          <li><a href="#mozTocId353425">Chapter 3. File writer</a></li>
+          <li><a href="#mozTocId505921"> Chapter 1. Base binary files subsystem</a></li>
+          <li><a href="#mozTocId794232"> Chapter 2. File reader</a></li>
+          <li><a href="#mozTocId329791"> Chapter 3. File writer</a></li>
         </ul>
       </li>
       <li><a href="#mozTocId291572">Part 6. Input</a>
@@ -205,52 +205,38 @@
         requirement. You can see minimum system requirement bellow.</big></p>
     <big><br>
     </big>
-    <table style="text-align: left; width: 903px; height: 244px;" cellspacing="2"
+    <table style="text-align: left; width: 710px; height: 244px;" cellspacing="2"
       cellpadding="2" border="1">
       <tbody>
         <tr>
           <td style="vertical-align: top;"><big>Operation system </big></td>
           <td style="vertical-align: top;"><big>Windows XP or higher </big></td>
-          <td style="vertical-align: top;"><big>Additional notes </big></td>
         </tr>
         <tr>
           <td style="vertical-align: top;"><big>Additional software </big></td>
           <td style="vertical-align: top;"><big>DirectX 8.1 or higher </big></td>
-          <td style="vertical-align: top;"><big>None </big></td>
         </tr>
         <tr>
           <td style="vertical-align: top;"><big>System type </big></td>
           <td style="vertical-align: top;"><big>32 or 64 bits </big></td>
-          <td style="vertical-align: top;"><big>None </big></td>
         </tr>
         <tr>
           <td style="vertical-align: top;"><big>Minimum color depth </big></td>
           <td style="vertical-align: top;"><big>16 bits </big></td>
-          <td style="vertical-align: top;"><big>None </big></td>
         </tr>
         <tr>
           <td style="vertical-align: top;"><big>Sound card </big></td>
           <td style="vertical-align: top;"><big>Any sound card </big></td>
-          <td style="vertical-align: top;"><big>None </big></td>
-        </tr>
-        <tr>
-          <td style="vertical-align: top;"><big>Video-card </big></td>
-          <td style="vertical-align: top;"><big>A good video-card with hardware
-              acceleration </big></td>
-          <td style="vertical-align: top;"><big>Intel integrated graphics don’t
-              supported </big></td>
         </tr>
         <tr>
           <td colspan="1" rowspan="2" style="vertical-align: top;"><big>Processor
               </big></td>
           <td style="vertical-align: top;"><big>Intel Pentium 4 for 32 bit
               system </big></td>
-          <td style="vertical-align: top;"><big>None </big></td>
         </tr>
         <tr>
           <td style="vertical-align: top;"><big>Intel Core 2 Duo for 64 bit
               system </big></td>
-          <td style="vertical-align: top;"><big>None </big></td>
         </tr>
       </tbody>
     </table>
@@ -435,8 +421,10 @@ C++
       <span style="text-decoration: underline;">Introduce to base graphics
         subsystem</span><br>
       <br>
-      Base graphics subsystem rendering game scene. It works together with
-      virtual surface.<br>
+      Base graphics subsystem rendering game scene. This subsystem using <a href="http://opengl.org/">OPENGL</a>
+      for render. Most modern video-card support hardware accelerated OPENGL.
+      Software emulated OPENGL will activate if hardware acceleration not
+      available. Base graphics subsystem works together with virtual surface.<br>
       <br>
       <span style="text-decoration: underline;">Render performance</span><br>
       <br>
@@ -548,7 +536,10 @@ C++
         *Screen);</span> – Initialize the subsystem.<br>
       <span style="font-style: italic;">IMG_Pixel *Surface::get_image();</span>
       – Return handle to image buffer.<br>
-      <span style="font-style: italic;">size_t Surface::get_length() const;</span>
+    </big><big><span style="font-style: italic;">void Surface::load_image(Image
+        &amp;buffer);</span> – Load an image from memory buffer. Replace current
+      image if exist.</big><br>
+    <big> <span style="font-style: italic;">size_t Surface::get_length() const;</span>
       – Return length of image buffer in bytes.<br>
       <span style="font-style: italic;">unsigned long int
         Surface::get_image_width() const;</span> – Return image width in pixels.<br>
@@ -562,32 +553,26 @@ C++
         MIRROR_TYPE kind);</span> – Do mirror the current image.</big><br>
     <big><i>void Surface::horizontal_mirror();</i> – Do horizontal image mirror.</big><br>
     <big><i>void Surface::vertical_mirror();</i> – Do vertical image mirror.</big>
-    <h2><a class="mozTocH2" name="mozTocId501089"></a><big>Chapter 6. Advanced
-        image subsystem</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId501089"></a><big>Chapter 6. Animation
+        subsystem</big></h2>
     <big><br>
       <span style="text-decoration: underline;">Very important subsystems</span><br>
       <br>
-      Advanced image subsystem is extended version of base image subsystem.
-      Background and sprite subsystems working over advanced image subsystem.<br>
+      Animation subsystem let you control animation frames.<br>
       <br>
-      <span style="text-decoration: underline;">Work with advanced graphics</span><br>
+      <span style="text-decoration: underline;">Work with animation subsystem</span><br>
       <br>
-      <span style="font-style: italic;">Canvas</span> class provide simple
-      access to advanced image subsystem. It is derived from Surface class.
-      Don’t use it directly. Let’s look to public methods.<br>
+      <span style="font-style: italic;">Animation</span> class provide simple
+      access to advanced image subsystem. Don’t use it directly. Let’s look to
+      public methods.<br>
       <br>
-      <span style="font-style: italic;">void Canvas::set_frames(unsigned long
-        int amount);</span> – Set amounts of frames in scrolling background or
-      animated sprite.<br>
-      <span style="font-style: italic;">unsigned long int Canvas::get_frames()
-        const;</span> – Return amount of frames in scrolling background or
-      animated sprite.<br>
-      <span style="font-style: italic;">unsigned long int Canvas::get_frame()
-        const;</span> – Return current frame in scrolling background or animated
-      sprite.<br>
-      <span style="font-style: italic;">void Canvas::load_image(Image
-        &amp;buffer);</span> – Load an image from memory buffer. Replace current
-      image if exist. </big>
+      <span style="font-style: italic;">void Animation::set_frames(const
+        unsigned long int amount);</span> – Set amounts of frames.<br>
+      <span style="font-style: italic;">unsigned long int
+        Animation::get_frames() const;</span> – Return amount of frames.<br>
+      <span style="font-style: italic;">unsigned long int Animation::get_frame()
+        const;</span> – Return current frame.<span style="font-style: italic;"><br>
+      </span> </big>
     <h2><a class="mozTocH2" name="mozTocId455894"></a><big> Chapter 7.
         Background</big></h2>
     <big> <br>
@@ -633,8 +618,9 @@ C++
       <span style="text-decoration: underline;">Work with background</span><br>
       <br>
       Just use <span style="font-style: italic;">Background</span> class for
-      work with background. It is derived from <span style="font-style: italic;">Canvas</span>
-      class. Let’s look to public methods.<br>
+      work with background. It is derived from <span style="font-style: italic;">Surface</span>
+      and <span style="font-style: italic;">Animation</span> classes. Let’s
+      look to public methods.<br>
       <br>
       <span style="font-style: italic;">unsigned long int
         Background::get_width() const;</span> – Return background width in
@@ -716,8 +702,9 @@ C++
       <span style="text-decoration: underline;">Work with sprites</span><br>
       <br>
       Just use <span style="font-style: italic;">Sprites</span> class for work
-      with a sprite. It is derived from <span style="font-style: italic;">Canvas</span>
-      class. Let’s look to public methods.<br>
+      with a sprite. It is derived from <span style="font-style: italic;">Surface</span>
+      and <span style="font-style: italic;">Animation</span> classes. Let’s
+      look to public methods.<br>
       <br>
       <span style="font-style: italic;">void Sprite::load_sprite(Image
         &amp;buffer,const SPRITE_TYPE kind,const unsigned long int frames);</span>
@@ -957,19 +944,22 @@ C++
       class for few important things.<br>
       <br>
     </big>
-    <h2><a id="mozTocId495779" class="mozTocH2"></a><big>Chapter 2. Filesystem</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId826928"></a><a id="mozTocId495779" class="mozTocH2"></a><big>Chapter
+        2. Filesystem</big></h2>
     <big><br>
       Filesystem subsystem let you doing some file operation. <span style="font-style: italic;">Filesystem</span>
       class provide simple access to this subsystem. Let’s look to public
       methods.<br>
       <br>
-      <span style="font-style: italic;">void Filesystem::file_exist(const char
+      <span style="font-style: italic;">bool Filesystem::file_exist(const char
         *name);</span> – Check the target file for exist.<br>
-      <span style="font-style: italic;">void Filesystem::delete_file(const char
+      <span style="font-style: italic;">bool Filesystem::delete_file(const char
         *name);</span> – Delete the target file.<br>
-      <span style="font-style: italic;">bool Filesystem::get_status() const;</span>
-      – Return false if last file operation was failed.<br>
-    </big>
+      <br>
+      <span style="text-decoration: underline;">Important remark</span><br>
+      <br>
+      All methods return false if operation was failed.<br>
+      <span style="font-style: italic;"></span> </big>
     <h2><a class="mozTocH2" name="mozTocId853711"></a><big>Chapter 3. Abnormal
         program termination</big></h2>
     <big><br>
@@ -984,9 +974,8 @@ C++
       Timer is very useful thing. Just use <span style="font-style: italic;">Timer</span>
       class for work with the timer. Let’s look to public methods.<br>
       <br>
-      <span style="font-style: italic;">void Timer::set_timer(const unsigned
-        long int seconds);</span> – Set timer interval and initialize start
-      point.<br>
+      <span style="font-style: italic;">void Timer::set_timer(const double
+        seconds);</span> – Set timer interval and initialize start point.<br>
       <span style="font-style: italic;">bool Timer::check_timer();</span> –
       Initialize stop point. Return true and reinitialize start point if
       interval between stop and start points large or equal than specific
@@ -1037,10 +1026,10 @@ C++
       <br>
       <span style="font-style: italic;">struct Collision_Box</span><br style="font-style: italic;">
       <span style="font-style: italic;">{</span><br style="font-style: italic;">
-      <span style="font-style: italic;">unsigned long int x:32;</span><br style="font-style: italic;">
-      <span style="font-style: italic;">unsigned long int y:32;</span><br style="font-style: italic;">
-      <span style="font-style: italic;">unsigned long int width:32;</span><br style="font-style: italic;">
-      <span style="font-style: italic;">unsigned long int height:32;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned long int x;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned long int y;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned long int width;</span><br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned long int height;</span><br style="font-style: italic;">
       <span style="font-style: italic;">};</span><br>
       <br>
       <span style="text-decoration: underline;">Work with collision detector</span><br>
@@ -1075,10 +1064,11 @@ C++
         int y,const unsigned long int width,const unsigned long int height)
         const;</span> – Generate collision related information from the object
       properties. </big>
-    <h1><a id="mozTocId81465" class="mozTocH1"></a><big> Part 5. Binary files</big></h1>
+    <h1><a class="mozTocH1" name="mozTocId935671"></a><a id="mozTocId81465" class="mozTocH1"></a><big>
+        Part 5. Binary files</big></h1>
     <big> </big>
-    <h2><a id="mozTocId402543" class="mozTocH2"></a><big> Chapter 1. Base binary
-        files subsystem</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId505921"></a><a id="mozTocId402543" class="mozTocH2"></a><big>
+        Chapter 1. Base binary files subsystem</big></h2>
     <big> <br>
       <u> Work with binary files</u><br>
       <br>
@@ -1097,7 +1087,8 @@ C++
       <u>Important notice</u><br>
       <br>
       Target file size limit is 2 gigabytes. </big>
-    <h2><a id="mozTocId3436" class="mozTocH2"></a><big> Chapter 2. File reader</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId794232"></a><a id="mozTocId3436" class="mozTocH2"></a><big>
+        Chapter 2. File reader</big></h2>
     <big> <br>
       File reader intend for reading data from a binary files. <i>Input_File</i>
       class provide access to file reader. It is derived from <i>Binary_File</i>
@@ -1106,7 +1097,8 @@ C++
       <i> void Input_File::open(const char *name);</i> – Open a file for read.<br>
       <i> void Input_File::read(void *buffer,const size_t length);</i> – Read
       data from the file. </big>
-    <h2><a id="mozTocId353425" class="mozTocH2"></a><big> Chapter 3. File writer</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId329791"></a><a id="mozTocId353425" class="mozTocH2"></a><big>
+        Chapter 3. File writer</big></h2>
     <big> <br>
       File writer intend for write data to binary files. <i>Output_File</i>
       class provide access to file reader. It is derived from <i>Binary_File</i>
@@ -1480,9 +1472,7 @@ C++
       <span style="text-decoration: underline;">Ordinary buttons codes</span><br>
       <br>
       Ordinary buttons codes look as predefined constants. First button is <span
-
         style="font-style: italic;">GAMEPAD_BUTTON1</span>. Last button is <span
-
         style="font-style: italic;">GAMEPAD_BUTTON32</span>.<br>
       <br>
       <span style="text-decoration: underline;">D-pad buttons codes</span><br>
@@ -1760,13 +1750,6 @@ C++
     <h2><a class="mozTocH2" name="mozTocId293644"></a><big>Chapter 3. Base
         graphics subsystem</big></h2>
     <big><br>
-      <span style="text-decoration: underline;">Render back-end</span><br>
-      <br>
-      Base graphics subsystem working over <a href="http://opengl.org">OPENGL</a>.
-      OPENGL is very fast because it uses hardware acceleration.<br>
-      <br>
-      <span style="text-decoration: underline;">Render surface</span><br>
-      <br>
       Render surface is very simple. It is just textured rectangle. Surface
       texture using as back-buffer. Texture is just array of pixels. A singe
       pixel of texture represent by 4-bytes value. Shadow buffer is array of
@@ -2220,6 +2203,9 @@ Multimedia
     <big>6.1.9 – Source code was synced with Neon game development kit 5.4.1.</big><br>
     <big>6.2 – Source code was synced with Neon game development kit 5.4.2.</big><br>
     <big>6.2.1 – Source code was synced with Neon game development kit 5.4.3.</big><br>
-    <big>6.2.2 – Source code was synced with Neon game development kit 5.4.4.</big>
+    <big>6.2.2 – Source code was synced with Neon game development kit 5.4.4.<br>
+      6.2.3 – Source code was synced with Neon game development kit 5.5.5.<br>
+      6.2.4 – 6.2.6 – Render was improved.<br>
+    </big>
   </body>
 </html>
