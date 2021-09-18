@@ -579,8 +579,7 @@ class Surface
  void restore();
  void clear_buffer();
  IMG_Pixel *create_buffer(const unsigned long int image_width,const unsigned long int image_height);
- void set_width(const unsigned long int image_width);
- void set_height(const unsigned long int image_height);
+ void set_size(const unsigned long int image_width,const unsigned long int image_height);
  void set_buffer(IMG_Pixel *buffer);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y,const unsigned long int target_width);
  size_t get_offset(const unsigned long int start,const unsigned long int x,const unsigned long int y) const;

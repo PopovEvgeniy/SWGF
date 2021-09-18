@@ -524,16 +524,22 @@ void Plane::create_plane(const unsigned long int width,const unsigned long int h
 
 void Plane::transfer()
 {
- unsigned long int x,y,width;
- size_t index,position;
+ unsigned long int x,y,width,steps;
+ size_t index,location,position;
  width=this->get_frame_width();
- for (x=0;x<target_width;++x)
+ x=0;
+ y=0;
+ steps=target_width*target_height;
+ for (index=0;index<steps;++index)
  {
-  for (y=0;y<target_height;++y)
+  location=this->get_offset(x,y,target_width);
+  position=this->get_offset((x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
+  target[location]=plane[position];
+  ++x;
+  if (x==target_width)
   {
-   index=this->get_offset(x,y,target_width);
-   position=this->get_offset((x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
-   target[index]=plane[position];
+   x=0;
+   ++y;
   }
 
  }
@@ -2093,13 +2099,9 @@ void Surface::clear_buffer()
 
 }
 
-void Surface::set_width(const unsigned long int image_width)
+void Surface::set_size(const unsigned long int image_width,const unsigned long int image_height)
 {
  width=image_width;
-}
-
-void Surface::set_height(const unsigned long int image_height)
-{
  height=image_height;
 }
 
@@ -2234,19 +2236,25 @@ void Surface::mirror_image(const MIRROR_TYPE kind)
 void Surface::resize_image(const unsigned long int new_width,const unsigned long int new_height)
 {
  float x_ratio,y_ratio;
- unsigned long int x,y;
- size_t index,position;
+ unsigned long int x,y,steps;
+ size_t index,location,position;
  IMG_Pixel *scaled_image;
+ x=0;
+ y=0;
+ steps=new_width*new_height;
  scaled_image=this->create_buffer(new_width,new_height);
  x_ratio=static_cast<float>(width)/static_cast<float>(new_width);
  y_ratio=static_cast<float>(height)/static_cast<float>(new_height);
- for (x=0;x<new_width;++x)
+ for (index=0;index<steps;++index)
  {
-  for (y=0;y<new_height;++y)
+  location=this->get_offset(0,x,y,new_width);
+  position=this->get_offset(0,(x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
+  scaled_image[location]=image[position];
+  ++x;
+  if (x==new_width)
   {
-   index=this->get_offset(0,x,y,new_width);
-   position=this->get_offset(0,(x_ratio*static_cast<float>(x)),(y_ratio*static_cast<float>(y)),width);
-   scaled_image[index]=image[position];
+   x=0;
+   ++y;
   }
 
  }
@@ -2646,8 +2654,7 @@ void Sprite::set_position(const unsigned long int x,const unsigned long int y)
 
 void Sprite::clone(Sprite &target)
 {
- this->set_width(target.get_image_width());
- this->set_height(target.get_image_height());
+ this->set_size(target.get_image_width(),target.get_image_height());
  this->set_frames(target.get_frames());
  this->set_kind(target.get_kind());
  this->set_transparent(target.get_transparent());
