@@ -10,7 +10,7 @@ SWGF::Tileset tilemap;
 
 void draw_map()
 {
- unsigned long int row,column;
+ unsigned int row,column;
  for (row=0;row<MAP_WIDTH;++row)
  {
   for (column=0;column<MAP_HEIGHT;++column)
