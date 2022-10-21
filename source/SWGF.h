@@ -1,10 +1,10 @@
 /*
-Simple windows game framework was create by Popov Evgeniy Alekseyevich
-Some code was taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL/wglext.h) by The Khronos Group Inc
+Simple windows game framework made by Popov Evgeniy Alekseyevich
+Some code taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL/wglext.h) by The Khronos Group Inc
 
 Simple windows game framework license
 
-Copyright (C) 2016-2021 Popov Evgeniy Alekseyevich
+Copyright (C) 2016 - 2022 Popov Evgeniy Alekseyevich
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
@@ -40,742 +40,885 @@ in all copies or substantial portions of the Materials.
 THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
 */
 
-#pragma comment(lib,"kernel32.lib")
-#pragma comment(lib,"user32.lib")
-#pragma comment(lib,"gdi32.lib")
-#pragma comment(lib,"opengl32.lib")
-#pragma comment(lib,"ole32.lib")
-#pragma comment(lib,"strmiids.lib")
-#pragma comment(lib,"winmm.lib")
+#ifndef SWGF_H
+#define SWGF_H
 
-//Uncomment follow lines if you will compile the code under Visual C++ 2017 or higher
-/*
-#pragma warning(disable : 4995)
-#define _CRT_SECURE_NO_WARNINGS
-#define _CRT_NONSTDC_NO_WARNINGS
-*/
+#if defined _MSC_VER && _MSC_VER>=1400
+  #pragma warning(disable : 4996)
+#endif
 
-#include <limits.h>
+#if !defined __GNUC__
+ #pragma comment(lib,"kernel32.lib")
+ #pragma comment(lib,"user32.lib")
+ #pragma comment(lib,"gdi32.lib")
+ #pragma comment(lib,"opengl32.lib")
+ #pragma comment(lib,"winmm.lib")
+#endif
+
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <limits.h>
 #include <new>
-#include <wchar.h>
 #include <windows.h>
-#include <unknwn.h>
-#include <dshow.h>
 #include <mmsystem.h>
 #include <GL\gl.h>
 
-#define GETSCANCODE(argument) ((argument >> 16)&0x7f)
-#define MOUSE 3
-
-enum MIRROR_TYPE {MIRROR_HORIZONTAL=0,MIRROR_VERTICAL=1};
-enum BACKGROUND_TYPE {NORMAL_BACKGROUND=0,HORIZONTAL_BACKGROUND=1,VERTICAL_BACKGROUND=2};
-enum SPRITE_TYPE {SINGLE_SPRITE=0,HORIZONTAL_STRIP=1,VERTICAL_STRIP=2};
-enum SURFACE {SURFACE_SMALL=0,SURFACE_LARGE=1};
-enum MOUSE_BUTTON {MOUSE_LEFT=0,MOUSE_RIGHT=1,MOUSE_MIDDLE=2};
-enum GAMEPAD_DIRECTION {GAMEPAD_NEUTRAL_DIRECTION=0,GAMEPAD_NEGATIVE_DIRECTION=-1,GAMEPAD_POSITIVE_DIRECTION=1};
-enum GAMEPAD_STICKS {GAMEPAD_LEFT_STICK=0,GAMEPAD_RIGHT_STICK=1};
-enum GAMEPAD_DPAD {GAMEPAD_NONE=0,GAMEPAD_UP=1,GAMEPAD_DOWN=2,GAMEPAD_LEFT=3,GAMEPAD_RIGHT=4,GAMEPAD_UPLEFT=5,GAMEPAD_UPRIGHT=6,GAMEPAD_DOWNLEFT=7,GAMEPAD_DOWNRIGHT=8};
-enum GAMEPAD_BUTTONS {GAMEPAD_BUTTON1=JOY_BUTTON1,GAMEPAD_BUTTON2=JOY_BUTTON2,GAMEPAD_BUTTON3=JOY_BUTTON3,GAMEPAD_BUTTON4=JOY_BUTTON4,GAMEPAD_BUTTON5=JOY_BUTTON5,GAMEPAD_BUTTON6=JOY_BUTTON6,GAMEPAD_BUTTON7=JOY_BUTTON7,GAMEPAD_BUTTON8=JOY_BUTTON8,GAMEPAD_BUTTON9=JOY_BUTTON9,GAMEPAD_BUTTON10=JOY_BUTTON10,GAMEPAD_BUTTON11=JOY_BUTTON11,GAMEPAD_BUTTON12=JOY_BUTTON12,GAMEPAD_BUTTON113=JOY_BUTTON13,GAMEPAD_BUTTON14=JOY_BUTTON14,GAMEPAD_BUTTON15=JOY_BUTTON15,GAMEPAD_BUTTON16=JOY_BUTTON16,GAMEPAD_BUTTON17=JOY_BUTTON17,GAMEPAD_BUTTON18=JOY_BUTTON18,GAMEPAD_BUTTON19=JOY_BUTTON19,GAMEPAD_BUTTON20=JOY_BUTTON20,GAMEPAD_BUTTON21=JOY_BUTTON21,GAMEPAD_BUTTON22=JOY_BUTTON22,GAMEPAD_BUTTON23=JOY_BUTTON23,GAMEPAD_BUTTON24=JOY_BUTTON24,GAMEPAD_BUTTON25=JOY_BUTTON25,GAMEPAD_BUTTON26=JOY_BUTTON26,GAMEPAD_BUTTON27=JOY_BUTTON27,GAMEPAD_BUTTON28=JOY_BUTTON28,GAMEPAD_BUTTON29=JOY_BUTTON29,GAMEPAD_BUTTON30=JOY_BUTTON30,GAMEPAD_BUTTON31=JOY_BUTTON31,GAMEPAD_BUTTON32=JOY_BUTTON32};
-
-extern BOOL WINAPI wglSwapIntervalEXT (int interval); // This code was taken from wglext.h by The Khronos Group Inc
-typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code was taken from wglext.h by The Khronos Group Inc
-
-struct IMG_Pixel
-{
- unsigned char blue:8;
- unsigned char green:8;
- unsigned char red:8;
-};
-
-struct TGA_head
-{
- unsigned char id:8;
- unsigned char color_map:8;
- unsigned char type:8;
-};
-
-struct TGA_map
-{
- unsigned short int index:16;
- unsigned short int length:16;
- unsigned char map_size:8;
-};
-
-struct TGA_image
-{
- unsigned short int x:16;
- unsigned short int y:16;
- unsigned short int width:16;
- unsigned short int height:16;
- unsigned char color:8;
- unsigned char alpha:3;
- unsigned char direction:5;
-};
-
-struct PCX_head
-{
- unsigned char vendor:8;
- unsigned char version:8;
- unsigned char compress:8;
- unsigned char color:8;
- unsigned short int min_x:16;
- unsigned short int min_y:16;
- unsigned short int max_x:16;
- unsigned short int max_y:16;
- unsigned short int vertical_dpi:16;
- unsigned short int horizontal_dpi:16;
- unsigned char palette[48];
- unsigned char reversed:8;
- unsigned char planes:8;
- unsigned short int plane_length:16;
- unsigned short int palette_type:16;
- unsigned short int screen_width:16;
- unsigned short int screen_height:16;
- unsigned char filled[54];
-};
-
-struct Collision_Box
-{
- unsigned int x;
- unsigned int y;
- unsigned int width;
- unsigned int height;
-};
-
-LRESULT CALLBACK Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
+#define SOUND_STOP PlaySound(NULL,NULL,SND_ASYNC)
+#define SOUND_PLAY(sound) PlaySound(TEXT(sound),NULL,SND_FILENAME|SND_NODEFAULT|SND_ASYNC)
+#define MUSIC_PLAY(music) PlaySound(TEXT(music),NULL,SND_FILENAME|SND_NODEFAULT|SND_ASYNC|SND_LOOP)
 
 namespace SWGF
 {
 
-struct Vertex
+ typedef enum
+ {
+  STATIC_IMAGE=0,
+  HORIZONTAL_ANIMATED=1,
+  VERTICAL_ANIMATED=2
+ } IMAGE_KIND;
+
+ typedef enum
+ {
+  HORIZONTAL_TEXT=0,
+  VERTICAL_TEXT=1
+ } TEXT_KIND;
+
+ typedef enum
+ {
+  MOUSE_LEFT=0,
+  MOUSE_RIGHT=1,
+  MOUSE_MIDDLE=2
+ } MOUSE_BUTTON;
+
+typedef enum
 {
- int x;
- int y;
-};
+ GAMEPAD_NEUTRAL_DIRECTION=0,
+ GAMEPAD_NEGATIVE_DIRECTION=-1,
+ GAMEPAD_POSITIVE_DIRECTION=1
+} GAMEPAD_DIRECTION;
 
-struct Point
-{
- float u;
- float v;
-};
+ typedef enum
+ {
+  GAMEPAD_LEFT_STICK=0,
+  GAMEPAD_RIGHT_STICK=1
+ } GAMEPAD_STICKS;
 
-void Halt(const char *message);
+ typedef enum
+ {
+  GAMEPAD_NONE=0,
+  GAMEPAD_UP=1,
+  GAMEPAD_DOWN=2,
+  GAMEPAD_LEFT=3,
+  GAMEPAD_RIGHT=4,
+  GAMEPAD_UPLEFT=5,
+  GAMEPAD_UPRIGHT=6,
+  GAMEPAD_DOWNLEFT=7,
+  GAMEPAD_DOWNRIGHT=8
+ } GAMEPAD_DPAD;
 
-class COM_Base
-{
- public:
- COM_Base();
- ~COM_Base();
-};
+ typedef enum
+ {
+  GAMEPAD_BUTTON1=JOY_BUTTON1,
+  GAMEPAD_BUTTON2=JOY_BUTTON2,
+  GAMEPAD_BUTTON3=JOY_BUTTON3,
+  GAMEPAD_BUTTON4=JOY_BUTTON4,
+  GAMEPAD_BUTTON5=JOY_BUTTON5,
+  GAMEPAD_BUTTON6=JOY_BUTTON6,
+  GAMEPAD_BUTTON7=JOY_BUTTON7,
+  GAMEPAD_BUTTON8=JOY_BUTTON8,
+  GAMEPAD_BUTTON9=JOY_BUTTON9,
+  GAMEPAD_BUTTON10=JOY_BUTTON10,
+  GAMEPAD_BUTTON11=JOY_BUTTON11,
+  GAMEPAD_BUTTON12=JOY_BUTTON12,
+  GAMEPAD_BUTTON113=JOY_BUTTON13,
+  GAMEPAD_BUTTON14=JOY_BUTTON14,
+  GAMEPAD_BUTTON15=JOY_BUTTON15,
+  GAMEPAD_BUTTON16=JOY_BUTTON16,
+  GAMEPAD_BUTTON17=JOY_BUTTON17,
+  GAMEPAD_BUTTON18=JOY_BUTTON18,
+  GAMEPAD_BUTTON19=JOY_BUTTON19,
+  GAMEPAD_BUTTON20=JOY_BUTTON20,
+  GAMEPAD_BUTTON21=JOY_BUTTON21,
+  GAMEPAD_BUTTON22=JOY_BUTTON22,
+  GAMEPAD_BUTTON23=JOY_BUTTON23,
+  GAMEPAD_BUTTON24=JOY_BUTTON24,
+  GAMEPAD_BUTTON25=JOY_BUTTON25,
+  GAMEPAD_BUTTON26=JOY_BUTTON26,
+  GAMEPAD_BUTTON27=JOY_BUTTON27,
+  GAMEPAD_BUTTON28=JOY_BUTTON28,
+  GAMEPAD_BUTTON29=JOY_BUTTON29,
+  GAMEPAD_BUTTON30=JOY_BUTTON30,
+  GAMEPAD_BUTTON31=JOY_BUTTON31,
+  GAMEPAD_BUTTON32=JOY_BUTTON32
+ } GAMEPAD_BUTTONS;
 
-class Synchronization
-{
- private:
- HANDLE timer;
- protected:
- void create_timer();
- void set_timer(const unsigned long int interval);
- void wait_timer();
- public:
- Synchronization();
- ~Synchronization();
-};
+ typedef struct
+ {
+  unsigned int x;
+  unsigned int y;
+  unsigned int width;
+  unsigned int height;
+ } BOX;
 
-class Engine
-{
- private:
- WNDCLASSEX window_class;
- HWND window;
- HDC context;
- void get_instance();
- void set_backgrond_color();
- void load_icon();
- void load_cursor();
- void register_window_class();
- protected:
- HDC get_context();
- void prepare_engine();
- void take_context();
- void create_window();
- bool process_message();
- public:
- Engine();
- ~Engine();
- unsigned int get_width();
- unsigned int get_height();
-};
+ void Halt(const char *message);
 
-class Frame
-{
- private:
- size_t pixels;
- unsigned int frame_width;
- unsigned int frame_height;
- unsigned int *buffer;
- unsigned int *shadow;
- void calculate_buffer_length();
- unsigned int *get_memory(const char *error);
- void clear_buffer(unsigned int *target);
- unsigned int *create_buffer(const char *error);
- protected:
- size_t get_offset(const unsigned int x,const unsigned int y,const unsigned int target_width);
- size_t get_offset(const unsigned int x,const unsigned int y) const;
- void set_size(const unsigned int surface_width,const unsigned int surface_height);
- void set_size(const SURFACE surface);
- void create_buffers();
- public:
- Frame();
- ~Frame();
- unsigned int *get_buffer();
- size_t get_pixels() const;
- void draw_pixel(const unsigned int x,const unsigned int y,const unsigned int red,const unsigned int green,const unsigned int blue);
- void clear_screen();
- void save();
- void restore();
- unsigned int get_frame_width() const;
- unsigned int get_frame_height() const;
-};
+ namespace Internal
+ {
 
-class Plane: public Frame
-{
- private:
- unsigned int *plane;
- unsigned int *target;
- unsigned int target_width;
- unsigned int target_height;
- float x_ratio;
- float y_ratio;
- public:
- Plane();
- ~Plane();
- void create_plane(const unsigned int width,const unsigned int height,const unsigned int surface_width,const unsigned int surface_height,unsigned int *surface_buffer);
- void transfer();
- Plane* get_handle();
-};
+  typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code taken from wglext.h by The Khronos Group Inc
 
-class Timer
-{
- private:
- double interval;
- time_t start;
- public:
- Timer();
- ~Timer();
- void set_timer(const double seconds);
- bool check_timer();
-};
+  LRESULT CALLBACK Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
 
-class FPS
-{
- private:
- time_t start;
- unsigned int current;
- unsigned int fps;
- protected:
- void update_counter();
- public:
- FPS();
- ~FPS();
- unsigned int get_fps() const;
-};
+  class Synchronization
+  {
+   private:
+   HANDLE event;
+   MMRESULT timer;
+   void create_event();
+   void timer_setup(const unsigned int delay);
+   protected:
+   void create_timer(const unsigned int delay);
+   void wait_timer();
+   public:
+   Synchronization();
+   ~Synchronization();
+  };
 
-class Unicode_Convertor
-{
- private:
- wchar_t *target;
- void get_memory(const size_t length);
- void clear_buffer(const size_t length);
- void create_buffer(const size_t length);
- void convert_string(const char *source);
- public:
- Unicode_Convertor();
- ~Unicode_Convertor();
- wchar_t *convert(const char *source);
-};
+  class Display
+  {
+   private:
+   DEVMODE display;
+   protected:
+   void set_video_mode();
+   void get_video_mode();
+   void correct_depth();
+   void set_setting(const unsigned long int width,const unsigned long int height);
+   unsigned long int get_depth() const;
+   unsigned long int get_display_width() const;
+   unsigned long int get_display_height() const;
+   public:
+   Display();
+   ~Display();
+  };
 
-class Display
-{
- private:
- DEVMODE display;
- void get_video_mode();
- void set_video_mode();
- protected:
- void check_video_mode();
- public:
- Display();
- ~Display();
- unsigned long int get_color() const;
-};
+  class Engine
+  {
+   private:
+   WNDCLASSEX window_class;
+   HWND window;
+   HDC context;
+   void get_instance();
+   void set_backgrond_color();
+   void load_icon();
+   void load_cursor();
+   void register_window_class();
+   void take_context();
+   void create_window();
+   protected:
+   HDC get_context();
+   void prepare_engine();
+   bool process_message();
+   public:
+   Engine();
+   ~Engine();
+  };
 
-class WINGL:public Display, public Engine
-{
- private:
- HGLRC render;
- PIXELFORMATDESCRIPTOR setting;
- PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
- int get_pixel_format();
- void set_pixel_format(const int format);
- void create_render_context();
- protected:
- void set_render();
- void disable_vsync();
- void Swap();
- public:
- WINGL();
- ~WINGL();
-};
+  class WINGL
+  {
+   private:
+   HDC device;
+   HGLRC render;
+   PIXELFORMATDESCRIPTOR setting;
+   PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
+   bool check_flag(const unsigned long int flag) const;
+   int get_pixel_format(HDC target,const unsigned long int color);
+   void set_pixel_format(const int format);
+   void create_render_context();
+   void disable_vsync();
+   protected:
+   void set_render(HDC target,const unsigned long int color);
+   void Swap();
+   bool is_software_render() const;
+   public:
+   WINGL();
+   ~WINGL();
+  };
 
-class Render:public WINGL, public Frame
-{
- private:
- unsigned int texture;
- Vertex vertex[4];
- Point point[4];
- void set_perfomance_setting();
- void set_common_setting();
- void set_perspective();
- void clear_stage();
- void check_videocard();
- void set_vertex_coordinates();
- void create_texture();
- void check_texture();
- void load_surface_data();
- void draw();
- void create_render();
- protected:
- void start_render();
- void refresh();
- public:
- Render();
- ~Render();
-};
+ }
 
-class Screen:public FPS, public Synchronization, public Render
-{
- private:
- bool ready;
- public:
- Screen();
- ~Screen();
- void initialize();
- void initialize(const SURFACE surface);
- bool update();
- bool sync();
- Screen* get_handle();
-};
+ namespace Resource
+ {
 
-class Keyboard
-{
- private:
- unsigned char *preversion;
- void create_buffer();
- void clear_buffer();
- bool check_state(const unsigned char code,const unsigned char state);
- public:
- Keyboard();
- ~Keyboard();
- void initialize();
- bool check_hold(const unsigned char code);
- bool check_press(const unsigned char code);
- bool check_release(const unsigned char code);
-};
+  template <class RESOURCE>
+  RESOURCE *create()
+  {
+   RESOURCE *target=NULL;
+   try
+   {
+    target=new RESOURCE;
+   }
+   catch (...)
+   {
+    SWGF::Halt("Can't allocate memory");
+   }
+   return target;
+  }
 
-class Mouse
-{
- private:
- unsigned char preversion[MOUSE];
- POINT position;
- void get_position();
- bool check_state(const MOUSE_BUTTON button,const unsigned char state);
- public:
- Mouse();
- ~Mouse();
- void show();
- void hide();
- void set_position(const unsigned int x,const unsigned int y);
- unsigned int get_x();
- unsigned int get_y();
- bool check_hold(const MOUSE_BUTTON button);
- bool check_press(const MOUSE_BUTTON button);
- bool check_release(const MOUSE_BUTTON button);
-};
+  template <class RESOURCE>
+  RESOURCE *create_array(const size_t amount)
+  {
+   RESOURCE *target=NULL;
+   try
+   {
+    target=new RESOURCE[amount];
+   }
+   catch (...)
+   {
+    SWGF::Halt("Can't allocate memory");
+   }
+   return target;
+  }
 
-class Gamepad
-{
- private:
- JOYINFOEX current;
- JOYINFOEX preversion;
- JOYCAPS configuration;
- unsigned int active;
- bool read_configuration();
- bool read_state();
- void clear_state();
- bool check_button(const GAMEPAD_BUTTONS button,const JOYINFOEX &target);
- public:
- Gamepad();
- ~Gamepad();
- unsigned int get_amount();
- unsigned int get_button_amount();
- unsigned int get_last_index();
- bool check_connection();
- void update();
- unsigned long int get_sticks_amount();
- void set_active(const unsigned int gamepad);
- unsigned int get_max_amount() const;
- unsigned int get_active() const;
- GAMEPAD_DPAD get_dpad() const;
- GAMEPAD_DIRECTION get_stick_x(const GAMEPAD_STICKS stick);
- GAMEPAD_DIRECTION get_stick_y(const GAMEPAD_STICKS stick);
- bool check_hold(const GAMEPAD_BUTTONS button);
- bool check_press(const GAMEPAD_BUTTONS button);
- bool check_release(const GAMEPAD_BUTTONS button);
-};
+  template <class RESOURCE>
+  void destroy(RESOURCE *target)
+  {
+   if (target!=NULL)
+   {
+    delete target;
+   }
 
-class Multimedia:public COM_Base
-{
- private:
- IGraphBuilder *loader;
- IMediaControl *player;
- IMediaSeeking *controler;
- IVideoWindow *video;
- void set_screen_mode();
- void load_content(const wchar_t *target);
- void open(const wchar_t *target);
- bool is_play();
- void rewind();
- void play_content();
- void create_loader();
- void create_player();
- void create_controler();
- void create_video_player();
- public:
- Multimedia();
- ~Multimedia();
- void initialize();
- bool check_playing();
- void stop();
- void play();
- void load(const char *target);
- void initialize(const char *target);
-};
+  }
 
-class Memory
-{
- private:
- MEMORYSTATUSEX memory;
- void get_status();
- public:
- Memory();
- ~Memory();
- unsigned long long int get_total_physical();
- unsigned long long int get_free_physical();
- unsigned long long int get_total_virtual();
- unsigned long long int get_free_virtual();
- unsigned long int get_usage();
-};
+  template <class RESOURCE>
+  void destroy_array(RESOURCE *target)
+  {
+   if (target!=NULL)
+   {
+    delete[] target;
+   }
 
-class System
-{
- public:
- System();
- ~System();
- unsigned int get_random(const unsigned int number);
- void quit();
- void run(const char *command);
- char* read_environment(const char *variable);
- void enable_logging(const char *name);
-};
+  }
 
-class Filesystem
-{
- public:
- Filesystem();
- ~Filesystem();
- bool file_exist(const char *name);
- bool delete_file(const char *name);
-};
+ }
 
-class Binary_File
-{
- protected:
- FILE *target;
- public:
- Binary_File();
- ~Binary_File();
- void close();
- void set_position(const long int offset);
- long int get_position();
- long int get_length();
- bool check_error();
- bool is_open() const;
-};
+ namespace Core
+ {
 
-class Input_File:public Binary_File
-{
- public:
- Input_File();
- ~Input_File();
- void open(const char *name);
- void read(void *buffer,const size_t length);
-};
+  typedef struct
+ {
+  int x;
+  int y;
+ } Vertex;
 
-class Output_File:public Binary_File
-{
- public:
- Output_File();
- ~Output_File();
- void open(const char *name);
- void create_temp();
- void write(void *buffer,const size_t length);
- void flush();
-};
+  typedef struct
+ {
+  double u;
+  double v;
+ } Point;
 
-class Primitive
-{
- private:
- IMG_Pixel color;
- Screen *surface;
- public:
- Primitive();
- ~Primitive();
- void initialize(Screen *screen);
- void set_color(const unsigned char red,const unsigned char green,const unsigned char blue);
- void draw_line(const unsigned int x1,const unsigned int y1,const unsigned int x2,const unsigned int y2);
- void draw_rectangle(const unsigned int x,const unsigned int y,const unsigned int width,const unsigned int height);
- void draw_filled_rectangle(const unsigned int x,const unsigned int y,const unsigned int width,const unsigned int height);
-};
+ double get_start_offset(const double current,const double total);
+ double get_end_offset(const double current,const double total);
 
-class Image
-{
- private:
- unsigned int width;
- unsigned int height;
- unsigned char *data;
- unsigned char *create_buffer(const size_t length);
- void load_tga(Input_File &target);
- void load_pcx(Input_File &target);
- public:
- Image();
- ~Image();
- unsigned int get_width() const;
- unsigned int get_height() const;
- size_t get_length() const;
- unsigned char *get_data();
- void destroy_image();
- void load_tga(const char *name);
- void load_pcx(const char *name);
-};
+ template <class DATA_TYPE>
+ class Buffer
+ {
+  private:
+  DATA_TYPE *buffer;
+  size_t length;
+  public:
 
-class Surface
-{
- private:
- Screen *surface;
- IMG_Pixel *image;
- unsigned int width;
- unsigned int height;
- protected:
- void save();
- void restore();
- void clear_buffer();
- IMG_Pixel *create_buffer(const unsigned int image_width,const unsigned int image_height);
- void set_size(const unsigned int image_width,const unsigned int image_height);
- void set_buffer(IMG_Pixel *buffer);
- size_t get_offset(const unsigned int start,const unsigned int x,const unsigned int y,const unsigned int target_width);
- size_t get_offset(const unsigned int start,const unsigned int x,const unsigned int y) const;
- void draw_image_pixel(const size_t offset,const unsigned int x,const unsigned int y);
- bool compare_pixels(const size_t first,const size_t second) const;
- unsigned int get_surface_width() const;
- unsigned int get_surface_height() const;
- void do_mirror_image(const MIRROR_TYPE kind);
- void do_resize_image(const unsigned int new_width,const unsigned int new_height);
- public:
- Surface();
- ~Surface();
- void initialize(Screen *screen);
- size_t get_length() const;
- bool is_surface_empty() const;
- IMG_Pixel *get_image();
- void load_image(Image &buffer);
- unsigned int get_image_width() const;
- unsigned int get_image_height() const;
- void mirror_image(const MIRROR_TYPE kind);
- void resize_image(const unsigned int new_width,const unsigned int new_height);
- void horizontal_mirror();
- void vertical_mirror();
-};
+  Buffer()
+  {
+   buffer=NULL;
+   length=0;
+  }
 
-class Animation
-{
- private:
- unsigned int frames;
- unsigned int frame;
- protected:
- unsigned int start;
- void set_frame(const unsigned int target);
- void increase_frame();
- public:
- Animation();
- ~Animation();
- void set_frames(const unsigned int amount);
- unsigned int get_frames() const;
- unsigned int get_frame() const;
-};
+  ~Buffer()
+  {
+   Resource::destroy_array(buffer);
+   buffer=NULL;
+   length=0;
+  }
 
-class Background:public Surface,public Animation
-{
- private:
- unsigned int background_width;
- unsigned int background_height;
- unsigned int maximum_width;
- unsigned int maximum_height;
- unsigned int current;
- BACKGROUND_TYPE current_kind;
- void get_maximum_width();
- void get_maximum_height();
- void slow_draw_background();
- void background_setup();
- void configure_background();
- public:
- Background();
- ~Background();
- unsigned int get_width() const;
- unsigned int get_height() const;
- void set_kind(const BACKGROUND_TYPE kind);
- void set_setting(const BACKGROUND_TYPE kind,const unsigned int frames);
- void set_target(const unsigned int target);
- void step();
- void draw_background();
-};
+  void set_length(const size_t amount)
+  {
+   length=amount;
+  }
 
-class Sprite:public Surface,public Animation
-{
- private:
- bool transparent;
- unsigned int current_x;
- unsigned int current_y;
- unsigned int sprite_width;
- unsigned int sprite_height;
- SPRITE_TYPE current_kind;
- void configure_sprite();
- void draw_transparent_sprite();
- void draw_normal_sprite();
- public:
- Sprite();
- ~Sprite();
- void set_transparent(const bool enabled);
- bool get_transparent() const;
- void set_x(const unsigned int x);
- void set_y(const unsigned int y);
- void increase_x();
- void decrease_x();
- void increase_y();
- void decrease_y();
- void increase_x(const unsigned int increment);
- void decrease_x(const unsigned int decrement);
- void increase_y(const unsigned int increment);
- void decrease_y(const unsigned int decrement);
- unsigned int get_x() const;
- unsigned int get_y() const;
- unsigned int get_width() const;
- unsigned int get_height() const;
- Sprite* get_handle();
- Collision_Box get_box() const;
- void set_kind(const SPRITE_TYPE kind);
- void set_setting(const SPRITE_TYPE kind,const unsigned int frames);
- SPRITE_TYPE get_kind() const;
- void set_target(const unsigned int target);
- void step();
- void set_position(const unsigned int x,const unsigned int y);
- void clone(Sprite &target);
- void draw_sprite();
- void draw_sprite(const unsigned int x,const unsigned int y);
- void draw_sprite(const bool transparency);
- void draw_sprite(const bool transparency,const unsigned int x,const unsigned int y);
- void load_sprite(Image &buffer,const SPRITE_TYPE kind,const unsigned int frames);
-};
+  void destroy_buffer()
+  {
+   Resource::destroy_array(buffer);
+   buffer=NULL;
+   length=0;
+  }
 
-class Tileset:public Surface
-{
- private:
- size_t offset;
- unsigned int tile_width;
- unsigned int tile_height;
- unsigned int rows;
- unsigned int columns;
- void set_tileset_setting(const unsigned int row_amount,const unsigned int column_amount);
- public:
- Tileset();
- ~Tileset();
- unsigned int get_tile_width() const;
- unsigned int get_tile_height() const;
- unsigned int get_rows() const;
- unsigned int get_columns() const;
- void select_tile(const unsigned int row,const unsigned int column);
- void draw_tile(const unsigned int x,const unsigned int y);
- void draw_tile(const unsigned int row,const unsigned int column,const unsigned int x,const unsigned int y);
- void load_tileset(Image &buffer,const unsigned int row_amount,const unsigned int column_amount);
-};
+  void fill_buffer(const DATA_TYPE value)
+  {
+   size_t index;
+   for (index=0;index<length;++index)
+   {
+    buffer[index]=value;
+   }
 
-class Text
-{
- private:
- unsigned int current_x;
- unsigned int current_y;
- Sprite *font;
- void increase_position();
- void restore_position();
- void print_character(const char target);
- void print_text(const char *text);
- public:
- Text();
- ~Text();
- void set_position(const unsigned int x,const unsigned int y);
- void load_font(Sprite *target);
- void load_font(Sprite &target);
- void draw_character(const char target);
- void draw_text(const char *text);
- void draw_character(const unsigned int x,const unsigned int y,const char target);
- void draw_text(const unsigned int x,const unsigned int y,const char *text);
-};
+  }
 
-class Transformation
-{
- private:
- float screen_x_factor;
- float screen_y_factor;
- float surface_x_factor;
- float surface_y_factor;
- public:
- Transformation();
- ~Transformation();
- void initialize(const float screen_width,const float screen_height,const float surface_width,const float surface_height);
- float get_screen_x(const float surface_x) const;
- float get_screen_y(const float surface_y) const;
- float get_surface_x(const float screen_x) const;
- float get_surface_y(const float screen_y) const;
-};
+  void create_buffer()
+  {
+   buffer=Resource::create_array<DATA_TYPE>(length);
+  }
 
-class Collision
-{
- private:
- Collision_Box first;
- Collision_Box second;
- public:
- Collision();
- ~Collision();
- void set_target(const Collision_Box &first_target,const Collision_Box &second_target);
- bool check_horizontal_collision() const;
- bool check_vertical_collision() const;
- bool check_collision() const;
- bool check_horizontal_collision(const Collision_Box &first_target,const Collision_Box &second_target);
- bool check_vertical_collision(const Collision_Box &first_target,const Collision_Box &second_target);
- bool check_collision(const Collision_Box &first_target,const Collision_Box &second_target);
- Collision_Box generate_box(const unsigned int x,const unsigned int y,const unsigned int width,const unsigned int height) const;
-};
+  size_t get_length() const
+  {
+   return length;
+  }
 
-};
+  DATA_TYPE *get_buffer()
+  {
+   return buffer;
+  }
+
+  DATA_TYPE& operator[](const size_t index)
+  {
+   return buffer[index];
+  }
+
+ };
+
+  class Resizer
+  {
+   private:
+   Buffer<unsigned int> image;
+   unsigned int size_limit;
+   unsigned int source_width;
+   unsigned int source_height;
+   unsigned int target_width;
+   unsigned int target_height;
+   size_t get_source_offset(const unsigned int x,const unsigned int y) const;
+   void resize_image(const unsigned int *target);
+   void set_setting(const unsigned int width,const unsigned int height,const unsigned int limit);
+   void calculate_size();
+   void correct_size();
+   void create_texture();
+   public:
+   Resizer();
+   ~Resizer();
+   void make_texture(const unsigned int *target,const unsigned int width,const unsigned int height,const unsigned int limit);
+   unsigned int get_width() const;
+   unsigned int get_height() const;
+   unsigned int *get_buffer();
+  };
+
+  class FPS
+  {
+   private:
+   time_t start;
+   unsigned int current;
+   unsigned int fps;
+   protected:
+   void update_counter();
+   unsigned int get_fps_amount() const;
+   public:
+   FPS();
+   ~FPS();
+  };
+
+  class Shape
+  {
+   private:
+   unsigned int target_width;
+   unsigned int target_height;
+   unsigned int total_width;
+   unsigned int total_height;
+   unsigned int current_x;
+   unsigned int current_y;
+   protected:
+   Vertex vertex[4];
+   Point point[4];
+   void set_data();
+   unsigned int get_total_width() const;
+   unsigned int get_total_height() const;
+   public:
+   Shape();
+   ~Shape();
+   void set_total_size(const unsigned int width,const unsigned int height);
+   void set_size(const unsigned int width,const unsigned int height);
+   void set_position(const unsigned int x,const unsigned int y);
+   void set_tile_offset(const double row,const double rows,const double column,const double columns);
+   void set_horizontal_offset(const double current,const double total);
+   void set_vertical_offset(const double current,const double total);
+  };
+
+  class Rectangle:public Shape
+  {
+   private:
+   unsigned int texture;
+   void create_texture(const unsigned int *buffer);
+   void delete_texture();
+   void check_texture();
+   void load_data();
+   void draw_rectangle();
+   public:
+   Rectangle();
+   ~Rectangle();
+   void enable_transparent();
+   void disable_transparent();
+   void prepare(const unsigned int *buffer);
+   void draw();
+   void destroy_texture();
+   bool is_texture_exist() const;
+  };
+
+  class Render
+  {
+   private:
+   unsigned int get_maximum_texture_size() const;
+   void set_perfomance_setting();
+   void set_render_hints();
+   void set_common_setting();
+   void set_matrix_setting();
+   void set_perspective(const unsigned int width,const unsigned int height);
+   void create_render(const unsigned int width,const unsigned int height);
+   protected:
+   void clear_stage();
+   void start_render(const unsigned int width,const unsigned int height);
+   public:
+   Render();
+   ~Render();
+  };
+
+ }
+
+ namespace Misc
+ {
+
+  class Multimedia
+  {
+   private:
+   unsigned int target;
+   void open(const char *name);
+   void close();
+   void play_media();
+   public:
+   Multimedia();
+   ~Multimedia();
+   bool check_playing();
+   void stop();
+   void play();
+   void play_loop();
+   void load(const char *name);
+  };
+
+ }
+
+ namespace Input
+ {
+
+  class Keyboard
+  {
+   private:
+   Core::Buffer<unsigned char> preversion;
+   bool check_state(const unsigned char code,const unsigned char state);
+   public:
+   Keyboard();
+   ~Keyboard();
+   void initialize();
+   bool check_hold(const unsigned char code);
+   bool check_press(const unsigned char code);
+   bool check_release(const unsigned char code);
+   bool is_ready() const;
+  };
+
+  class Mouse
+  {
+   private:
+   unsigned char preversion[3];
+   POINT position;
+   void get_position();
+   bool check_state(const SWGF::MOUSE_BUTTON button,const unsigned char state);
+   public:
+   Mouse();
+   ~Mouse();
+   void show();
+   void hide();
+   void set_position(const unsigned int x,const unsigned int y);
+   unsigned int get_x();
+   unsigned int get_y();
+   bool check_hold(const SWGF::MOUSE_BUTTON button);
+   bool check_press(const SWGF::MOUSE_BUTTON button);
+   bool check_release(const SWGF::MOUSE_BUTTON button);
+  };
+
+  class Gamepad
+  {
+   private:
+   JOYINFOEX current;
+   JOYINFOEX preversion;
+   JOYCAPS configuration;
+   unsigned int active;
+   bool read_configuration();
+   bool read_state();
+   void clear_state();
+   bool check_current_state(const unsigned long int button) const;
+   bool check_preversion_state(const unsigned long int button) const;
+   public:
+   Gamepad();
+   ~Gamepad();
+   unsigned int get_amount();
+   unsigned int get_button_amount();
+   void update();
+   unsigned long int get_sticks_amount();
+   void set_active(const unsigned int gamepad);
+   SWGF::GAMEPAD_DPAD get_dpad() const;
+   SWGF::GAMEPAD_DIRECTION get_stick_x(const SWGF::GAMEPAD_STICKS stick);
+   SWGF::GAMEPAD_DIRECTION get_stick_y(const SWGF::GAMEPAD_STICKS stick);
+   SWGF::GAMEPAD_DIRECTION get_left_stick_x();
+   SWGF::GAMEPAD_DIRECTION get_left_stick_y();
+   SWGF::GAMEPAD_DIRECTION get_right_stick_x();
+   SWGF::GAMEPAD_DIRECTION get_right_stick_y();
+   bool check_hold(const SWGF::GAMEPAD_BUTTONS button) const;
+   bool check_press(const SWGF::GAMEPAD_BUTTONS button) const;
+   bool check_release(const SWGF::GAMEPAD_BUTTONS button) const;
+  };
+
+ }
+
+ namespace File
+ {
+
+  class Binary_File
+  {
+   private:
+   FILE *target;
+   protected:
+   FILE *get_target();
+   void set_target(FILE *point);
+   public:
+   Binary_File();
+   ~Binary_File();
+   void close();
+   void set_position(const long int offset);
+   long int get_position();
+   long int get_length();
+   bool check_error();
+   bool is_open() const;
+  };
+
+  class Input_File:public Binary_File
+  {
+   public:
+   Input_File();
+   ~Input_File();
+   void open(const char *name);
+   void read(void *buffer,const size_t length);
+  };
+
+  class Output_File:public Binary_File
+  {
+   public:
+   Output_File();
+   ~Output_File();
+   void open(const char *name);
+   void create_temp();
+   void write(const void *buffer,const size_t length);
+   void flush();
+  };
+
+ }
+
+ namespace Graphics
+ {
+
+  class Screen:public Core::FPS, public Core::Render, public Internal::Display, public Internal::Engine, public Internal::WINGL, public Internal::Synchronization
+ {
+   private:
+   void check_video_mode();
+   void set_resolution(const unsigned long int width,const unsigned long int height);
+   void screen_setup();
+   public:
+   Screen();
+   ~Screen();
+   void clear_screen();
+   void initialize();
+   void initialize(const unsigned int width,const unsigned int height);
+   bool update();
+   bool sync();
+   bool is_ready();
+   bool is_accelerated() const;
+   bool is_software() const;
+   unsigned long int get_color() const;
+   unsigned int get_fps() const;
+   unsigned int get_width() const;
+   unsigned int get_height() const;
+   Screen* get_handle();
+  };
+
+   class Image
+  {
+   private:
+   Core::Buffer<unsigned char> data;
+   unsigned int width;
+   unsigned int height;
+   void uncompress_tga_data(const unsigned char *target);
+   void load_tga(File::Input_File &target);
+   public:
+   Image();
+   ~Image();
+   unsigned int get_width() const;
+   unsigned int get_height() const;
+   size_t get_length() const;
+   unsigned char *get_data();
+   Image* get_handle();
+   void destroy_image();
+   unsigned char *load_tga(const char *name);
+  };
+
+  class Picture
+  {
+   private:
+   Core::Buffer<unsigned int> image;
+   unsigned int image_width;
+   unsigned int image_height;
+   protected:
+   void set_image_size(const unsigned int width,const unsigned int height);
+   void create_storage();
+   void load_image(Image *buffer);
+   public:
+   Picture();
+   ~Picture();
+   void destroy_image();
+   bool is_storage_empty() const;
+   unsigned int get_image_width() const;
+   unsigned int get_image_height() const;
+   size_t get_image_length() const;
+   unsigned int *get_image();
+  };
+
+  class Animation
+  {
+   private:
+   unsigned int frames;
+   unsigned int frame;
+   void correct_frame();
+   protected:
+   void reset_animation_setting();
+   void increase_frame();
+   void set_frame(const unsigned int target);
+   void set_frames(const unsigned int amount);
+   public:
+   Animation();
+   ~Animation();
+   unsigned int get_frames() const;
+   unsigned int get_frame() const;
+  };
+
+  class Billboard
+  {
+   private:
+   bool transparent;
+   unsigned int current_x;
+   unsigned int current_y;
+   unsigned int sprite_width;
+   unsigned int sprite_height;
+   void check_transparent();
+   void draw_sprite_image();
+   protected:
+   Core::Rectangle billboard;
+   void reset_billboard_setting();
+   void prepare(const unsigned int width,const unsigned int height,const unsigned int *picture);
+   public:
+   Billboard();
+   ~Billboard();
+   void set_transparent(const bool enabled);
+   bool get_transparent() const;
+   void set_width(const unsigned int width);
+   void set_height(const unsigned int height);
+   void set_size(const unsigned int width,const unsigned int height);
+   void set_position(const unsigned int x,const unsigned int y);
+   void set_x(const unsigned int x);
+   void set_y(const unsigned int y);
+   unsigned int increase_x();
+   unsigned int decrease_x();
+   unsigned int increase_y();
+   unsigned int decrease_y();
+   unsigned int increase_x(const unsigned int increment);
+   unsigned int decrease_x(const unsigned int decrement);
+   unsigned int increase_y(const unsigned int increment);
+   unsigned int decrease_y(const unsigned int decrement);
+   unsigned int get_x() const;
+   unsigned int get_y() const;
+   unsigned int get_width() const;
+   unsigned int get_height() const;
+   SWGF::BOX get_box() const;
+   void draw();
+   void draw(const unsigned int x,const unsigned int y);
+   void draw(const bool transparency);
+   void draw(const bool transparency,const unsigned int x,const unsigned int y);
+  };
+
+  class Sprite:public Billboard,public Animation,public Picture
+  {
+   private:
+   SWGF::IMAGE_KIND current_kind;
+   void reset_sprite_setting();
+   void set_sprite_setting();
+   void configure_sprite();
+   void set_sprite_frame();
+   void set_kind(const SWGF::IMAGE_KIND kind);
+   public:
+   Sprite();
+   ~Sprite();
+   Sprite* get_handle();
+   SWGF::IMAGE_KIND get_kind() const;
+   void set_setting(const SWGF::IMAGE_KIND kind,const unsigned int frames);
+   void load(Image *buffer,const SWGF::IMAGE_KIND kind,const unsigned int frames);
+   void load(Image *buffer);
+   void load(Image &buffer,const SWGF::IMAGE_KIND kind,const unsigned int frames);
+   void load(Image &buffer);
+   void load(const char *name,const SWGF::IMAGE_KIND kind,const unsigned int frames);
+   void load(const char *name);
+   void set_target(const unsigned int target);
+   void step();
+   void clone(Sprite *target);
+   void clone(Sprite &target);
+   void destroy();
+  };
+
+  class Sheet:public Billboard,public Picture,public Animation
+  {
+   private:
+   unsigned int rows;
+   unsigned int columns;
+   void reset_sheet_setting();
+   void prepare_sheet();
+   public:
+   Sheet();
+   ~Sheet();
+   unsigned int get_row(const unsigned int target) const;
+   unsigned int get_column(const unsigned int target) const;
+   unsigned int calculate(const unsigned int row,const unsigned int column) const;
+   unsigned int get_rows() const;
+   unsigned int get_columns() const;
+   void destroy();
+   void select(const unsigned int row,const unsigned int column);
+   void select(const unsigned int target);
+   void step();
+   void load(Image *sheet,const unsigned int row_amount,const unsigned int column_amount);
+   void load(Image &sheet,const unsigned int row_amount,const unsigned int column_amount);
+   void load(const char *name,const unsigned int row_amount,const unsigned int column_amount);
+  };
+
+  class Background
+  {
+   private:
+   Graphics::Sprite stage;
+   public:
+   Background();
+   ~Background();
+   void prepare(const Screen *screen);
+   void prepare(Screen &screen);
+   void prepare(const unsigned int width,const unsigned int height);
+   void set_setting(const SWGF::IMAGE_KIND kind,const unsigned int frames);
+   void load(Image *background,const IMAGE_KIND kind,const unsigned int frames);
+   void load(Image *background);
+   void load(Image &background,const SWGF::IMAGE_KIND kind,const unsigned int frames);
+   void load(Image &background);
+   void load(const char *name,const SWGF::IMAGE_KIND kind,const unsigned int frames);
+   void load(const char *name);
+   void set_target(const unsigned int target);
+   void step();
+   void draw();
+   void destroy_image();
+   void destroy();
+   unsigned int get_frame() const;
+   unsigned int get_frames() const;
+   unsigned int get_width() const;
+   unsigned int get_height() const;
+   SWGF::IMAGE_KIND get_kind() const;
+  };
+
+  class Text
+  {
+   private:
+   Graphics::Sheet text;
+   SWGF::TEXT_KIND orientation;
+   unsigned int current_x;
+   unsigned int current_y;
+   void increase_position();
+   void restore_position();
+   public:
+   Text();
+   ~Text();
+   SWGF::TEXT_KIND get_orientation() const;
+   void set_orientation(const SWGF::TEXT_KIND target);
+   unsigned int get_font_width() const;
+   unsigned int get_font_height() const;
+   void set_position(const unsigned int x,const unsigned int y);
+   void set_size(const unsigned int width,const unsigned int height);
+   void set_setting(const unsigned int width,const unsigned int height,const SWGF::TEXT_KIND kind);
+   void load_font(Image *font);
+   void load_font(Image &font);
+   void load_font(const char *name);
+   void print(const char target);
+   void print(const char *target);
+   void print(const unsigned int x,const unsigned int y,const char target);
+   void print(const unsigned int x,const unsigned int y,const char *target);
+   void destroy_image();
+   void destroy_font();
+  };
+
+ }
+
+ namespace Common
+ {
+
+  class Timer
+  {
+   private:
+   double interval;
+   time_t start;
+   public:
+   Timer();
+   ~Timer();
+   void set_timer(const double seconds);
+   bool check_timer();
+  };
+
+  class Collision
+  {
+   private:
+   SWGF::BOX first;
+   SWGF::BOX second;
+   bool check_horizontal_collision() const;
+   bool check_vertical_collision() const;
+   public:
+   Collision();
+   ~Collision();
+   void set_target(const SWGF::BOX &first_target,const SWGF::BOX &second_target);
+   bool check_collision() const;
+   bool check_collision(const SWGF::BOX &first_target,const SWGF::BOX &second_target);
+  };
+
+ }
+
+ namespace Filesystem
+ {
+  bool delete_file(const char *name);
+  bool file_exist(const char *name);
+ }
+
+ namespace Tools
+ {
+  SWGF::BOX generate_box(const unsigned int x,const unsigned int y,const unsigned int width,const unsigned int height);
+  void quit();
+  bool enable_logging(const char *name);
+  void randomize();
+  unsigned int get_random(const unsigned int number);
+  unsigned int get_texture_size();
+ }
+
+}
+
+#endif
