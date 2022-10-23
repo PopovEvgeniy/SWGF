@@ -58,8 +58,7 @@
       </li>
       <li><a href="#mozTocId221410">Part 5. Other important things</a>
         <ul>
-          <li><a href="#mozTocId242569">Chapter 1. Sound</a></li>
-          <li><a href="#mozTocId111652">Chapter 2. Multimedia</a></li>
+          <li><a href="#mozTocId111652">Chapter 1. Audio</a></li>
         </ul>
       </li>
       <li><a href="#mozTocId209024">Part 6. Misc</a>
@@ -93,9 +92,8 @@
           <li><a href="#mozTocId318160">Chapter 2. Internal classes</a></li>
           <li><a href="#mozTocId293644">Chapter 3. Base graphics subsystem</a></li>
           <li><a href="#mozTocId472209">Chapter 4. Game–pad</a></li>
-          <li><a href="#mozTocId213518">Chapter 5. Sound</a></li>
-          <li><a href="#mozTocId311042">Chapter 6. Multimedia</a></li>
-          <li><a href="#mozTocId804583">Chapter 7. Input</a></li>
+          <li><a href="#mozTocId311042">Chapter 5. Audio</a></li>
+          <li><a href="#mozTocId804583">Chapter 6. Input</a></li>
         </ul>
       </li>
       <li><a href="#mozTocId78453">Version history</a></li>
@@ -249,7 +247,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++
       <li><a href="http://mingw-w64.org"><big>MINGW–w64</big></a></li>
       <li><a href="http://openwatcom.org"><big>Open Watcom 1.9</big></a></li>
       <li><big><a href="https://open-watcom.github.io">Open Watcom V2 Fork</a></big></li>
-      <li><big><a href="https://www.digitalmars.com">Digital Mars C++</a></big></li>
       <li><big><a href="https://edn.embarcadero.com/article/20633">Borland's C++
             Compiler 5.5</a><br>
         </big></li>
@@ -268,9 +265,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++
       <li><big>Visual C++ 2017</big></li>
       <li><big>Visual C++ 2019</big></li>
       <li><big>Visual C++ 2022</big></li>
-      <li><big>Ñ++ Builder 5<br>
+      <li><big>C++ Builder 5<br>
         </big></li>
-      <li><big>Ñ++ Builder 6<br>
+      <li><big>C++ Builder 6<br>
         </big></li>
       <li><big>Ñ++ Builder 2006<br>
         </big></li>
@@ -312,13 +309,11 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++
     <big> <br style="text-decoration: underline;">
       <span style="text-decoration: underline;">Windows 95 support</span><br>
       <br>
-    </big><big>One of follow compilers need for Windows 95 support:<br>
-    </big>
+    </big><big>One of follow compilers need for Windows 95 support:</big><br>
     <ul>
-      <li><big>Digital Mars C++</big></li>
       <li><big>Visual C++ 6</big></li>
       <li><big>Borland's C++ Compiler 5.5</big></li>
-      <li><big>Ñ++ Builder 5</big></li>
+      <li><big>C++ Builder 5</big></li>
     </ul>
     <big> </big><big><br style="text-decoration: underline;">
       <span style="text-decoration: underline;"> Windows XP support</span><br>
@@ -336,7 +331,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
-
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -1100,93 +1094,35 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++
     </big>
     <h1><a class="mozTocH1" name="mozTocId221410"></a><big>Part 5. Other
         important things</big></h1>
-    <big></big>
-    <h2><a class="mozTocH2" name="mozTocId242569"></a><big>Chapter 1. Sound</big></h2>
-    <big><br>
-      <span style="text-decoration: underline;">Simple sound subsystem</span><br>
+    <big> </big>
+    <h2><a class="mozTocH2" name="mozTocId111652"></a><big>Chapter 1. Audio</big></h2>
+    <big><span style="text-decoration: underline;">Some words about the
+        subsystem</span><br>
       <br>
-      Sound subsystem intend for playing <a href="https://en.wikipedia.org/wiki/Wav">Waveform
-        Audio File Format</a> sounds.<br>
+      Audio subsystem intend for playing <a href="https://en.wikipedia.org/wiki/Wav">Waveform
+        Audio File Format</a> and <a href="https://en.wikipedia.org/wiki/MP3">MP3</a>
+      audio.<br>
+      <span style="text-decoration: underline;"></span></big><big><br style="text-decoration: underline;">
+      <span style="text-decoration: underline;">Working with audio</span><br>
       <br>
-      <span style="text-decoration: underline;">Working with sound</span><br>
-      <br>
-      Sound subsystem implemented as few macros.<br>
-      <br>
-      <span style="font-style: italic;">SOUND_STOP</span> stop playing all
-      sounds. It didn't take arguments.<br>
-      <br>
-      <span style="font-style: italic;">SOUND_PLAY</span> play a sound once. It
-      takes string literal as argument.<br>
-      <br>
-      <span style="font-style: italic;">MUSIC_PLAY</span> play a sound in loop.
-      It takes string literal as argument.<br>
-    </big>
-    <h2><a class="mozTocH2" name="mozTocId111652"></a><big>Chapter 2. Multimedia</big></h2>
-    <big><span style="text-decoration: underline;">Improve your game</span><br>
-      <br>
-      Multimedia subsystem intend for playing audio and video.<br>
-      <br>
-      <span style="text-decoration: underline;">Supported formats</span><br>
-      <br>
-      You can see a list of supported formats below.<br>
-      <br>
-    </big>
-    <table style="text-align: left; width: 246px; height: 149px;" cellspacing="2"
-      cellpadding="2" border="1">
-      <tbody>
-        <tr>
-          <td style="vertical-align: top;"><big>Format<br>
-            </big></td>
-          <td style="vertical-align: top;"><big>Type<br>
-            </big></td>
-        </tr>
-        <tr>
-          <td style="vertical-align: top;"><big>WAVE<br>
-            </big></td>
-          <td style="vertical-align: top;"><big>Audio<br>
-            </big></td>
-        </tr>
-        <tr>
-          <td style="vertical-align: top;"><big>MPEG–3<br>
-            </big></td>
-          <td style="vertical-align: top;"><big>Audio<br>
-            </big></td>
-        </tr>
-        <tr>
-          <td style="vertical-align: top;"><big>MPEG–1<br>
-            </big></td>
-          <td style="vertical-align: top;"><big>Video<br>
-            </big></td>
-        </tr>
-        <tr>
-          <td style="vertical-align: top;"><big>MPEG–2<br>
-            </big></td>
-          <td style="vertical-align: top;"><big>Video<br>
-            </big></td>
-        </tr>
-      </tbody>
-    </table>
-    <big><br style="text-decoration: underline;">
-      <span style="text-decoration: underline;">Working with multimedia</span><br>
-      <br>
-      Just use <span style="font-style: italic;">Multimedia</span> class to
-      work with multimedia. It declared in <span style="font-style: italic;">Misc</span>
+      Just use <span style="font-style: italic;">Audio</span> class to work
+      with audio. It declared in <span style="font-style: italic;">Misc</span>
       sub-namespace Let's look at public methods.<br>
       <span style="font-style: italic;"></span><br>
-      <span style="font-style: italic;">void Multimedia::load(const char
-        *target);</span> – Load a multimedia file.<br>
+      <span style="font-style: italic;">void Audio::load(const char *target);</span>
+      – Load a target file.<br>
       <br>
-      <span style="font-style: italic;">void Multimedia::play();</span> – Play a
-      content of the target file.<br>
+      <span style="font-style: italic;">void Audio::play();</span> – Play the
+      audio.<br>
       <br>
-      <span style="font-style: italic;">void Multimedia::play_loop();</span> –
+      <span style="font-style: italic;">void Audio::play_loop();</span> –
       Checking play status and restart play if needed.<br>
       <br>
-      <span style="font-style: italic;">void Multimedia::stop();</span> – Stop
-      playing a content of the target file.<br>
+      <span style="font-style: italic;">void Audio::stop();</span> – Stop
+      playing the audio.<br>
       <br style="font-style: italic;">
-      <span style="font-style: italic;">bool Multimedia::check_playing();</span>
-      – Return true if the multimedia resource is playing.<br>
+      <span style="font-style: italic;">bool Audio::check_playing();</span> –
+      Return true if the audio is playing.<br>
     </big><big> </big> <big> </big>
     <h1><a name="mozTocId209024" class="mozTocH1"></a><big>Part 6. Misc</big></h1>
     <h2><a name="mozTocId608755" class="mozTocH2"></a><big>Chapter 1. File
@@ -1933,17 +1869,13 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++
     <big> </big>
     <h2><a name="mozTocId472209" class="mozTocH2"></a><big>Chapter 4. Game–pad</big></h2>
     <big> Game–pad subsystem working over <a href="https://msdn.microsoft.com/ru-ru/library/windows/desktop/dd757116%28v=vs.85%29.aspx">Joystick
-Multimedia API</a>.<br>
+Multimedia API</a>.</big><big><br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId213518"></a><big>Chapter 5. Sound</big></h2>
-    <big>Sound subsystem working over <a href="https://msdn.microsoft.com/ru-ru/library/windows/desktop/dd743606%28v=vs.85%29.aspx">Windows
-        Multimedia</a>.<br>
-    </big>
-    <h2><a class="mozTocH2" name="mozTocId311042"></a><big>Chapter 6. Multimedia</big></h2>
-    <big>Multimedia subsystem working over <a href="https://learn.microsoft.com/en-us/previous-versions//ms709461%28v=vs.85%29">Media
+    <h2><a class="mozTocH2" name="mozTocId311042"></a><big>Chapter 5. Audio</big></h2>
+    <big>Audio subsystem working over <a href="https://learn.microsoft.com/en-us/previous-versions//ms709461%28v=vs.85%29">Media
         Control Interface (MCI)</a>.<br>
     </big>
-    <h2><a name="mozTocId804583" class="mozTocH2"></a><big>Chapter 7. Input</big></h2>
+    <h2><a name="mozTocId804583" class="mozTocH2"></a><big>Chapter 6. Input</big></h2>
     <big> <span style="text-decoration: underline;"> Input back–end</span><br>
       <br>
       Keyboard and mouse input subsystems are simple. It works over standard
@@ -1978,7 +1910,10 @@ Multimedia API</a>.<br>
       6.3.9 – 6.4 – Multimedia subsystem improved.<br>
       6.4.1 – Small changes.<br>
       6.4.2 – Small bug fixed.<br>
-      6.4.3 – Small changes.<br>
+      6.4.4 – 6.4.6 – Small changes.<br>
+      6.4.7 – 6.4.9 – Multimedia subsystem improved.<br>
+      6.5 – Multimedia subsystem removed and new subsystem added.<br>
+      6.5.1 – Simple sound subsystem removed.<br>
     </big><big> </big> <big> </big>
     <p></p>
   </body>

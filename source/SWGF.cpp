@@ -964,12 +964,12 @@ namespace SWGF
  namespace Misc
  {
 
-  Multimedia::Multimedia()
+  Audio::Audio()
   {
    target=0;
   }
 
-  Multimedia::~Multimedia()
+  Audio::~Audio()
   {
    if (target!=0)
    {
@@ -979,7 +979,7 @@ namespace SWGF
 
   }
 
-  void Multimedia::open(const char *name)
+  void Audio::open(const char *name)
   {
    MCI_OPEN_PARMSA setting;
    setting.dwCallback=0;
@@ -994,7 +994,7 @@ namespace SWGF
 
   }
 
-  void Multimedia::close()
+  void Audio::close()
   {
    if (target!=0)
    {
@@ -1004,20 +1004,7 @@ namespace SWGF
 
   }
 
-  void Multimedia::play_media()
-  {
-   MCI_PLAY_PARMS setting;
-   setting.dwCallback=0;
-   setting.dwFrom=0;
-   setting.dwTo=0;
-   if (target!=0)
-   {
-    mciSendCommand(target,MCI_PLAY,MCI_FROM,reinterpret_cast<DWORD_PTR>(&setting));
-   }
-
-  }
-
-  bool Multimedia::check_playing()
+  bool Audio::check_playing()
   {
    MCI_STATUS_PARMS status;
    status.dwCallback=0;
@@ -1035,7 +1022,7 @@ namespace SWGF
    return status.dwReturn==MCI_MODE_PLAY;
   }
 
-  void Multimedia::stop()
+  void Audio::stop()
   {
    if (target!=0)
    {
@@ -1044,13 +1031,20 @@ namespace SWGF
 
   }
 
-  void Multimedia::play()
+  void Audio::play()
   {
-   this->stop();
-   this->play_media();
+   MCI_PLAY_PARMS setting;
+   setting.dwCallback=0;
+   setting.dwFrom=0;
+   setting.dwTo=0;
+   if (target!=0)
+   {
+    mciSendCommand(target,MCI_PLAY,MCI_FROM,reinterpret_cast<DWORD_PTR>(&setting));
+   }
+
   }
 
-  void Multimedia::play_loop()
+  void Audio::play_loop()
   {
    if (this->check_playing()==false)
    {
@@ -1059,7 +1053,7 @@ namespace SWGF
 
   }
 
-  void Multimedia::load(const char *name)
+  void Audio::load(const char *name)
   {
    this->stop();
    this->close();

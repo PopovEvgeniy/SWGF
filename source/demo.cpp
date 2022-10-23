@@ -4,7 +4,7 @@ int main()
 {
  char perfomance[8];
  SWGF::Common::Timer timer;
- SWGF::Misc::Multimedia media;
+ SWGF::Misc::Audio media;
  SWGF::Input::Keyboard keyboard;
  SWGF::Input::Gamepad gamepad;
  SWGF::Input::Mouse mouse;

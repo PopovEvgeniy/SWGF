@@ -43,18 +43,6 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #ifndef SWGF_H
 #define SWGF_H
 
-#if defined _MSC_VER && _MSC_VER>=1400
-  #pragma warning(disable : 4996)
-#endif
-
-#if !defined __GNUC__
- #pragma comment(lib,"kernel32.lib")
- #pragma comment(lib,"user32.lib")
- #pragma comment(lib,"gdi32.lib")
- #pragma comment(lib,"opengl32.lib")
- #pragma comment(lib,"winmm.lib")
-#endif
-
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,9 +54,21 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #include <mmsystem.h>
 #include <GL\gl.h>
 
-#define SOUND_STOP PlaySound(NULL,NULL,SND_ASYNC)
-#define SOUND_PLAY(sound) PlaySound(TEXT(sound),NULL,SND_FILENAME|SND_NODEFAULT|SND_ASYNC)
-#define MUSIC_PLAY(music) PlaySound(TEXT(music),NULL,SND_FILENAME|SND_NODEFAULT|SND_ASYNC|SND_LOOP)
+#if defined _MSC_VER && _MSC_VER>=1400
+  #pragma warning(disable : 4996)
+#endif
+
+#if defined _MSC_VER && _MSC_VER<=1200
+  typedef DWORD DWORD_PTR;
+#endif
+
+#if !defined __GNUC__
+ #pragma comment(lib,"kernel32.lib")
+ #pragma comment(lib,"user32.lib")
+ #pragma comment(lib,"gdi32.lib")
+ #pragma comment(lib,"opengl32.lib")
+ #pragma comment(lib,"winmm.lib")
+#endif
 
 namespace SWGF
 {
@@ -494,16 +494,15 @@ typedef enum
  namespace Misc
  {
 
-  class Multimedia
+  class Audio
   {
    private:
    unsigned int target;
    void open(const char *name);
    void close();
-   void play_media();
    public:
-   Multimedia();
-   ~Multimedia();
+   Audio();
+   ~Audio();
    bool check_playing();
    void stop();
    void play();
