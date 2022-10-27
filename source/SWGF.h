@@ -43,23 +43,8 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #ifndef SWGF_H
 #define SWGF_H
 
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <limits.h>
-#include <new>
-#include <windows.h>
-#include <mmsystem.h>
-#include <GL\gl.h>
-
-#if defined _MSC_VER && _MSC_VER>=1400
+#if defined _MSC_VER && _MSC_VER>=1500
   #pragma warning(disable : 4996)
-#endif
-
-#if defined _MSC_VER && _MSC_VER<=1200
-  typedef DWORD DWORD_PTR;
 #endif
 
 #if !defined __GNUC__
@@ -67,8 +52,24 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
  #pragma comment(lib,"user32.lib")
  #pragma comment(lib,"gdi32.lib")
  #pragma comment(lib,"opengl32.lib")
- #pragma comment(lib,"winmm.lib")
+ #pragma comment(lib,"ole32.lib")
+ #pragma comment(lib,"strmiids.lib")
+ #pragma comment(lib,"xinput.lib")
 #endif
+
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <limits.h>
+#include <cwchar>
+#include <new>
+#include <windows.h>
+#include <unknwn.h>
+#include <dshow.h>
+#include <xinput.h>
+#include <GL\gl.h>
 
 namespace SWGF
 {
@@ -108,51 +109,24 @@ typedef enum
 
  typedef enum
  {
-  GAMEPAD_NONE=0,
-  GAMEPAD_UP=1,
-  GAMEPAD_DOWN=2,
-  GAMEPAD_LEFT=3,
-  GAMEPAD_RIGHT=4,
-  GAMEPAD_UPLEFT=5,
-  GAMEPAD_UPRIGHT=6,
-  GAMEPAD_DOWNLEFT=7,
-  GAMEPAD_DOWNRIGHT=8
- } GAMEPAD_DPAD;
+  GAMEPAD_LEFT_TRIGGER=0,
+  GAMEPAD_RIGHT_TRIGGER=1
+ } GAMEPAD_TRIGGERS;
 
  typedef enum
  {
-  GAMEPAD_BUTTON1=JOY_BUTTON1,
-  GAMEPAD_BUTTON2=JOY_BUTTON2,
-  GAMEPAD_BUTTON3=JOY_BUTTON3,
-  GAMEPAD_BUTTON4=JOY_BUTTON4,
-  GAMEPAD_BUTTON5=JOY_BUTTON5,
-  GAMEPAD_BUTTON6=JOY_BUTTON6,
-  GAMEPAD_BUTTON7=JOY_BUTTON7,
-  GAMEPAD_BUTTON8=JOY_BUTTON8,
-  GAMEPAD_BUTTON9=JOY_BUTTON9,
-  GAMEPAD_BUTTON10=JOY_BUTTON10,
-  GAMEPAD_BUTTON11=JOY_BUTTON11,
-  GAMEPAD_BUTTON12=JOY_BUTTON12,
-  GAMEPAD_BUTTON113=JOY_BUTTON13,
-  GAMEPAD_BUTTON14=JOY_BUTTON14,
-  GAMEPAD_BUTTON15=JOY_BUTTON15,
-  GAMEPAD_BUTTON16=JOY_BUTTON16,
-  GAMEPAD_BUTTON17=JOY_BUTTON17,
-  GAMEPAD_BUTTON18=JOY_BUTTON18,
-  GAMEPAD_BUTTON19=JOY_BUTTON19,
-  GAMEPAD_BUTTON20=JOY_BUTTON20,
-  GAMEPAD_BUTTON21=JOY_BUTTON21,
-  GAMEPAD_BUTTON22=JOY_BUTTON22,
-  GAMEPAD_BUTTON23=JOY_BUTTON23,
-  GAMEPAD_BUTTON24=JOY_BUTTON24,
-  GAMEPAD_BUTTON25=JOY_BUTTON25,
-  GAMEPAD_BUTTON26=JOY_BUTTON26,
-  GAMEPAD_BUTTON27=JOY_BUTTON27,
-  GAMEPAD_BUTTON28=JOY_BUTTON28,
-  GAMEPAD_BUTTON29=JOY_BUTTON29,
-  GAMEPAD_BUTTON30=JOY_BUTTON30,
-  GAMEPAD_BUTTON31=JOY_BUTTON31,
-  GAMEPAD_BUTTON32=JOY_BUTTON32
+  GAMEPAD_UP=XINPUT_GAMEPAD_DPAD_UP,
+  GAMEPAD_DOWN=XINPUT_GAMEPAD_DPAD_DOWN,
+  GAMEPAD_LEFT=XINPUT_GAMEPAD_DPAD_LEFT,
+  GAMEPAD_RIGHT=XINPUT_GAMEPAD_DPAD_RIGHT,
+  GAMEPAD_A=XINPUT_GAMEPAD_A,
+  GAMEPAD_B=XINPUT_GAMEPAD_B,
+  GAMEPAD_X=XINPUT_GAMEPAD_X,
+  GAMEPAD_Y=XINPUT_GAMEPAD_Y,
+  GAMEPAD_LEFT_BUMPER=XINPUT_GAMEPAD_LEFT_SHOULDER,
+  GAMEPAD_RIGHT_BUMPER=XINPUT_GAMEPAD_RIGHT_SHOULDER,
+  GAMEPAD_START=XINPUT_GAMEPAD_START,
+  GAMEPAD_BACK=XINPUT_GAMEPAD_BACK
  } GAMEPAD_BUTTONS;
 
  typedef struct
@@ -175,12 +149,10 @@ typedef enum
   class Synchronization
   {
    private:
-   HANDLE event;
-   MMRESULT timer;
-   void create_event();
-   void timer_setup(const unsigned int delay);
+   HANDLE timer;
    protected:
-   void create_timer(const unsigned int delay);
+   void create_timer();
+   void set_timer(const unsigned long int interval);
    void wait_timer();
    public:
    Synchronization();
@@ -387,6 +359,17 @@ typedef enum
 
  };
 
+  class Unicode_Convertor
+  {
+   private:
+   Buffer<wchar_t> target;
+   void convert_string(const char *source);
+   public:
+   Unicode_Convertor();
+   ~Unicode_Convertor();
+   wchar_t *convert(const char *source);
+  };
+
   class Resizer
   {
    private:
@@ -494,20 +477,49 @@ typedef enum
  namespace Misc
  {
 
-  class Audio
+  class Multimedia
   {
    private:
-   unsigned int target;
-   void open(const char *name);
-   void close();
+   IGraphBuilder *loader;
+   IMediaControl *player;
+   IMediaSeeking *controler;
+   IVideoWindow *video;
+   void com_setup();
+   void set_screen_mode();
+   void load_content(const wchar_t *target);
+   void open(const wchar_t *target);
+   bool is_play();
+   void rewind();
+   void play_content();
+   void create_loader();
+   void create_player();
+   void create_controler();
+   void create_video_player();
    public:
-   Audio();
-   ~Audio();
+   Multimedia();
+   ~Multimedia();
+   void initialize();
    bool check_playing();
    void stop();
    void play();
    void play_loop();
-   void load(const char *name);
+   void load(const char *target);
+   void initialize(const char *target);
+  };
+
+  class Memory
+  {
+   private:
+   MEMORYSTATUSEX memory;
+   void get_status();
+   public:
+   Memory();
+   ~Memory();
+   unsigned long long int get_total_physical();
+   unsigned long long int get_free_physical();
+   unsigned long long int get_total_virtual();
+   unsigned long long int get_free_virtual();
+   unsigned long int get_usage();
   };
 
  }
@@ -553,33 +565,41 @@ typedef enum
   class Gamepad
   {
    private:
-   JOYINFOEX current;
-   JOYINFOEX preversion;
-   JOYCAPS configuration;
+   XINPUT_STATE current;
+   XINPUT_STATE preversion;
+   XINPUT_VIBRATION vibration;
    unsigned int active;
-   bool read_configuration();
-   bool read_state();
    void clear_state();
-   bool check_current_state(const unsigned long int button) const;
-   bool check_preversion_state(const unsigned long int button) const;
+   bool read_state();
+   bool write_state();
+   void set_motor(const unsigned short int left,const unsigned short int right);
+   bool check_current_button(const SWGF::GAMEPAD_BUTTONS button) const;
+   bool check_preversion_button(const SWGF::GAMEPAD_BUTTONS button) const;
+   bool check_current_trigger(const SWGF::GAMEPAD_TRIGGERS trigger) const;
+   bool check_preversion_trigger(const SWGF::GAMEPAD_TRIGGERS trigger) const;
    public:
    Gamepad();
    ~Gamepad();
-   unsigned int get_amount();
-   unsigned int get_button_amount();
-   void update();
-   unsigned long int get_sticks_amount();
    void set_active(const unsigned int gamepad);
-   SWGF::GAMEPAD_DPAD get_dpad() const;
-   SWGF::GAMEPAD_DIRECTION get_stick_x(const SWGF::GAMEPAD_STICKS stick);
-   SWGF::GAMEPAD_DIRECTION get_stick_y(const SWGF::GAMEPAD_STICKS stick);
-   SWGF::GAMEPAD_DIRECTION get_left_stick_x();
-   SWGF::GAMEPAD_DIRECTION get_left_stick_y();
-   SWGF::GAMEPAD_DIRECTION get_right_stick_x();
-   SWGF::GAMEPAD_DIRECTION get_right_stick_y();
-   bool check_hold(const SWGF::GAMEPAD_BUTTONS button) const;
-   bool check_press(const SWGF::GAMEPAD_BUTTONS button) const;
-   bool check_release(const SWGF::GAMEPAD_BUTTONS button) const;
+   unsigned int get_active() const;
+   bool check_connection();
+   void update();
+   bool check_button_hold(const SWGF::GAMEPAD_BUTTONS button);
+   bool check_button_press(const SWGF::GAMEPAD_BUTTONS button);
+   bool check_button_release(const SWGF::GAMEPAD_BUTTONS button);
+   bool check_trigger_hold(const SWGF::GAMEPAD_TRIGGERS trigger);
+   bool check_trigger_press(const SWGF::GAMEPAD_TRIGGERS trigger);
+   bool check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger);
+   unsigned char get_left_trigger() const;
+   unsigned char get_right_trigger() const;
+   bool set_vibration(const unsigned short int left,const unsigned short int right);
+   bool disable_vibration();
+   SWGF::GAMEPAD_DIRECTION get_stick_x(const SWGF::GAMEPAD_STICKS stick) const;
+   SWGF::GAMEPAD_DIRECTION get_stick_y(const SWGF::GAMEPAD_STICKS stick) const;
+   SWGF::GAMEPAD_DIRECTION get_left_stick_x() const;
+   SWGF::GAMEPAD_DIRECTION get_left_stick_y() const;
+   SWGF::GAMEPAD_DIRECTION get_right_stick_x() const;
+   SWGF::GAMEPAD_DIRECTION get_right_stick_y() const;
   };
 
  }
@@ -630,7 +650,7 @@ typedef enum
  namespace Graphics
  {
 
-  class Screen:public Core::FPS, public Core::Render, public Internal::Display, public Internal::Engine, public Internal::WINGL, public Internal::Synchronization
+  class Screen: public Core::FPS, public Core::Render, public Internal::Display, public Internal::Engine, public Internal::WINGL, public Internal::Synchronization
  {
    private:
    void check_video_mode();

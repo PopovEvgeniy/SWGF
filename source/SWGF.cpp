@@ -82,26 +82,7 @@ namespace
  const unsigned int RECTANGLE_VERTEXES=4;
  const unsigned char IMAGE_COLOR=32;
 
- unsigned char Keys[KEYBOARD]={KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,
-                               KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE};
-
+ unsigned char Keys[KEYBOARD]={KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE,KEY_RELEASE};
  unsigned char Buttons[MOUSE]={KEY_RELEASE,KEY_RELEASE,KEY_RELEASE};
 }
 
@@ -163,57 +144,46 @@ namespace SWGF
 
   Synchronization::Synchronization()
   {
-   event=NULL;
-   timer=0;
+   timer=NULL;
   }
 
   Synchronization::~Synchronization()
   {
-   if (timer!=0)
+   if (timer!=NULL)
    {
-    timeKillEvent(timer);
-    timer=0;
-   }
-   if (event!=NULL)
-   {
-    CloseHandle(event);
-    event=NULL;
+    CancelWaitableTimer(timer);
+    CloseHandle(timer);
+    timer=NULL;
    }
 
   }
 
-  void Synchronization::create_event()
+  void Synchronization::create_timer()
   {
-   event=CreateEvent(NULL,TRUE,FALSE,NULL);
-   if (event==NULL)
+   timer=CreateWaitableTimer(NULL,FALSE,NULL);
+   if (timer==NULL)
    {
-    SWGF::Halt("Can't create synchronization event");
+    SWGF::Halt("Can't create synchronization timer");
    }
 
   }
 
-  void Synchronization::timer_setup(const unsigned int delay)
+  void Synchronization::set_timer(const unsigned long int interval)
   {
-   timer=timeSetEvent(delay,0,reinterpret_cast<LPTIMECALLBACK>(event),0,TIME_PERIODIC|TIME_CALLBACK_EVENT_SET);
-   if (timer==0)
+   LARGE_INTEGER start;
+   start.QuadPart=0;
+   if (SetWaitableTimer(timer,&start,interval,NULL,NULL,FALSE)==FALSE)
    {
-    SWGF::Halt("Can't set timer setting");
+    SWGF::Halt("Can't set timer");
    }
 
-  }
-
-  void Synchronization::create_timer(const unsigned int delay)
-  {
-   this->create_event();
-   this->timer_setup(delay);
   }
 
   void Synchronization::wait_timer()
   {
-   if (event!=NULL)
+   if (timer!=NULL)
    {
-    WaitForSingleObjectEx(event,INFINITE,TRUE);
-    ResetEvent(event);
+    WaitForSingleObjectEx(timer,INFINITE,TRUE);
    }
 
   }
@@ -226,12 +196,12 @@ namespace SWGF
 
   Display::~Display()
   {
-   ChangeDisplaySettings(NULL,0);
+   ChangeDisplaySettingsEx(NULL,NULL,NULL,0,NULL);
   }
 
   void Display::set_video_mode()
   {
-   if (ChangeDisplaySettings(&display,CDS_FULLSCREEN)!=DISP_CHANGE_SUCCESSFUL)
+   if (ChangeDisplaySettingsEx(NULL,&display,NULL,CDS_FULLSCREEN,NULL)!=DISP_CHANGE_SUCCESSFUL)
    {
     SWGF::Halt("Can't change video mode");
    }
@@ -240,7 +210,7 @@ namespace SWGF
 
   void Display::get_video_mode()
   {
-   if (EnumDisplaySettings(NULL,ENUM_CURRENT_SETTINGS,&display)==FALSE)
+   if (EnumDisplaySettingsEx(NULL,ENUM_CURRENT_SETTINGS,&display,EDS_RAWMODE)==FALSE)
    {
     SWGF::Halt("Can't get display setting");
    }
@@ -279,7 +249,6 @@ namespace SWGF
 
   Engine::Engine()
   {
-   memset(&window_class,0,sizeof(WNDCLASSEX));
    window_class.lpszClassName=TEXT("SWGF");
    window_class.style=CS_OWNDC;
    window_class.cbSize=sizeof(WNDCLASSEX);
@@ -317,8 +286,7 @@ namespace SWGF
 
   void Engine::get_instance()
   {
-   window_class.hInstance=GetModuleHandle(NULL);
-   if (window_class.hInstance==NULL)
+   if (GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,NULL,&window_class.hInstance)==FALSE)
    {
     SWGF::Halt("Can't get the application instance");
    }
@@ -521,6 +489,35 @@ namespace SWGF
   double get_end_offset(const double current,const double total)
   {
    return (1.0/total)*current;
+  }
+
+  Unicode_Convertor::Unicode_Convertor()
+  {
+   target.set_length(0);
+  }
+
+  Unicode_Convertor::~Unicode_Convertor()
+  {
+   target.destroy_buffer();
+  }
+
+  void Unicode_Convertor::convert_string(const char *source)
+  {
+   size_t index;
+   for (index=0;index<target.get_length();++index)
+   {
+    target[index]=std::btowc(source[index]);
+   }
+
+  }
+
+  wchar_t *Unicode_Convertor::convert(const char *source)
+  {
+   target.set_length(strlen(source)+1);
+   target.create_buffer();
+   target.fill_buffer(0);
+   this->convert_string(source);
+   return target.get_buffer();
   }
 
   Resizer::Resizer()
@@ -964,87 +961,216 @@ namespace SWGF
  namespace Misc
  {
 
-  Audio::Audio()
-  {
-   target=0;
-  }
-
-  Audio::~Audio()
-  {
-   if (target!=0)
+   Multimedia::Multimedia()
    {
-    mciSendCommand(target,MCI_STOP,MCI_WAIT,0);
-    mciSendCommand(target,MCI_CLOSE,MCI_WAIT,0);
+    loader=NULL;
+    player=NULL;
+    controler=NULL;
+    video=NULL;
    }
 
-  }
-
-  void Audio::open(const char *name)
-  {
-   MCI_OPEN_PARMSA setting;
-   setting.dwCallback=0;
-   setting.wDeviceID=0;
-   setting.lpstrDeviceType=NULL;
-   setting.lpstrAlias=NULL;
-   setting.lpstrElementName=name;
-   if (mciSendCommandA(target,MCI_OPEN,MCI_OPEN_ELEMENT|MCI_WAIT,reinterpret_cast<DWORD_PTR>(&setting))==0)
+   Multimedia::~Multimedia()
    {
-    target=setting.wDeviceID;
+    if (player!=NULL)
+   {
+    player->Stop();
+    player->Release();
+    player=NULL;
    }
-
-  }
-
-  void Audio::close()
-  {
-   if (target!=0)
+   if (video!=NULL)
    {
-    mciSendCommand(target,MCI_CLOSE,MCI_WAIT,0);
-    target=0;
+    video->Release();
+    video=NULL;
    }
-
+   if (controler!=NULL)
+   {
+    controler->Release();
+    controler=NULL;
+   }
+   if (loader!=NULL)
+   {
+    loader->Release();
+    loader=NULL;
+   }
+   CoUninitialize();
   }
 
-  bool Audio::check_playing()
+  void Multimedia::com_setup()
   {
-   MCI_STATUS_PARMS status;
-   status.dwCallback=0;
-   status.dwTrack=0;
-   status.dwItem=MCI_STATUS_MODE;
-   status.dwReturn=MCI_MODE_STOP;
-   if (target!=0)
+   if (CoInitializeEx(NULL,COINIT_APARTMENTTHREADED)!=S_OK)
    {
-    if (mciSendCommand(target,MCI_STATUS,MCI_STATUS_ITEM|MCI_WAIT,reinterpret_cast<DWORD_PTR>(&status))!=0)
+    if (CoInitializeEx(NULL,COINIT_APARTMENTTHREADED)!=S_FALSE)
     {
-     status.dwReturn=MCI_MODE_STOP;
+     SWGF::Halt("Can't initialize COM");
     }
 
    }
-   return status.dwReturn==MCI_MODE_PLAY;
+
   }
 
-  void Audio::stop()
+  void Multimedia::set_screen_mode()
   {
-   if (target!=0)
+   if (video!=NULL)
    {
-    mciSendCommand(target,MCI_STOP,MCI_WAIT,0);
+    video->put_FullScreenMode(OATRUE);
    }
 
   }
 
-  void Audio::play()
+  void Multimedia::load_content(const wchar_t *target)
   {
-   MCI_PLAY_PARMS setting;
-   setting.dwCallback=0;
-   setting.dwFrom=0;
-   setting.dwTo=0;
-   if (target!=0)
+   if (loader!=NULL)
    {
-    mciSendCommand(target,MCI_PLAY,MCI_FROM,reinterpret_cast<DWORD_PTR>(&setting));
+    loader->RenderFile(target,NULL);
    }
 
   }
 
-  void Audio::play_loop()
+  void Multimedia::open(const wchar_t *target)
+  {
+   this->load_content(target);
+   this->set_screen_mode();
+  }
+
+  bool Multimedia::is_play()
+  {
+   long long int current,total;
+   current=0;
+   total=0;
+   if (controler!=NULL)
+   {
+    if (controler->GetPositions(&current,&total)!=S_OK)
+    {
+     current=0;
+     total=0;
+    }
+
+   }
+   return current<total;
+  }
+
+  void Multimedia::rewind()
+  {
+   long long int position;
+   position=0;
+   if (controler!=NULL)
+   {
+    controler->SetPositions(&position,AM_SEEKING_AbsolutePositioning,NULL,AM_SEEKING_NoPositioning);
+   }
+
+  }
+
+  void Multimedia::play_content()
+  {
+   if (player!=NULL)
+   {
+    player->Run();
+   }
+
+  }
+
+  void Multimedia::create_loader()
+  {
+   if (loader==NULL)
+   {
+    if (CoCreateInstance(CLSID_FilterGraph,NULL,CLSCTX_INPROC_SERVER,IID_IGraphBuilder,reinterpret_cast<void**>(&loader))!=S_OK)
+    {
+     loader=NULL;
+     SWGF::Halt("Can't create a multimedia loader");
+    }
+
+   }
+
+  }
+
+  void Multimedia::create_player()
+  {
+   if (player==NULL)
+   {
+    if (loader->QueryInterface(IID_IMediaControl,reinterpret_cast<void**>(&player))!=S_OK)
+    {
+     player=NULL;
+     SWGF::Halt("Can't create a multimedia player");
+    }
+
+   }
+
+  }
+
+  void Multimedia::create_controler()
+  {
+   if (controler==NULL)
+   {
+    if (loader->QueryInterface(IID_IMediaSeeking,reinterpret_cast<void**>(&controler))!=S_OK)
+    {
+     controler=NULL;
+     SWGF::Halt("Can't create a player controler");
+    }
+
+   }
+
+  }
+
+  void Multimedia::create_video_player()
+  {
+   if (video==NULL)
+   {
+    if (loader->QueryInterface(IID_IVideoWindow,reinterpret_cast<void**>(&video))!=S_OK)
+    {
+     video=NULL;
+     SWGF::Halt("Can't create a video player");
+    }
+
+   }
+
+  }
+
+  void Multimedia::initialize()
+  {
+   this->com_setup();
+   this->create_loader();
+   this->create_player();
+   this->create_controler();
+   this->create_video_player();
+  }
+
+  bool Multimedia::check_playing()
+  {
+   OAFilterState state;
+   bool playing;
+   playing=false;
+   if (player!=NULL)
+   {
+    if (player->GetState(INFINITE,&state)!=E_FAIL)
+    {
+     if (state==State_Running)
+     {
+      playing=this->is_play();
+     }
+
+    }
+
+   }
+   return playing;
+  }
+
+  void Multimedia::stop()
+  {
+   if (player!=NULL)
+   {
+    player->Stop();
+   }
+
+  }
+
+  void Multimedia::play()
+  {
+   this->stop();
+   this->rewind();
+   this->play_content();
+  }
+
+  void Multimedia::play_loop()
   {
    if (this->check_playing()==false)
    {
@@ -1053,11 +1179,81 @@ namespace SWGF
 
   }
 
-  void Audio::load(const char *name)
+  void Multimedia::load(const char *target)
   {
+   Core::Unicode_Convertor convertor;
    this->stop();
-   this->close();
-   this->open(name);
+   this->open(convertor.convert(target));
+  }
+
+  void Multimedia::initialize(const char *target)
+  {
+   this->initialize();
+   this->load(target);
+  }
+
+  Memory::Memory()
+  {
+   memory.dwLength=sizeof(MEMORYSTATUSEX);
+   memory.dwMemoryLoad=0;
+   memory.ullAvailExtendedVirtual=0;
+   memory.ullAvailPageFile=0;
+   memory.ullAvailPhys=0;
+   memory.ullAvailVirtual=0;
+   memory.ullTotalPageFile=0;
+   memory.ullTotalPhys=0;
+   memory.ullTotalVirtual=0;
+  }
+
+  Memory::~Memory()
+  {
+
+  }
+
+  void Memory::get_status()
+  {
+   if (GlobalMemoryStatusEx(&memory)==FALSE)
+   {
+    memory.dwMemoryLoad=0;
+    memory.ullAvailExtendedVirtual=0;
+    memory.ullAvailPageFile=0;
+    memory.ullAvailPhys=0;
+    memory.ullAvailVirtual=0;
+    memory.ullTotalPageFile=0;
+    memory.ullTotalPhys=0;
+    memory.ullTotalVirtual=0;
+   }
+
+  }
+
+  unsigned long long int Memory::get_total_physical()
+  {
+   this->get_status();
+   return memory.ullTotalPhys;
+  }
+
+  unsigned long long int Memory::get_free_physical()
+  {
+   this->get_status();
+   return memory.ullAvailPhys;
+  }
+
+  unsigned long long int Memory::get_total_virtual()
+  {
+   this->get_status();
+   return memory.ullTotalVirtual;
+  }
+
+  unsigned long long int Memory::get_free_virtual()
+  {
+   this->get_status();
+   return memory.ullAvailVirtual;
+  }
+
+  unsigned long int Memory::get_usage()
+  {
+   this->get_status();
+   return memory.dwMemoryLoad;
   }
 
  }
@@ -1211,13 +1407,18 @@ namespace SWGF
 
   Gamepad::Gamepad()
   {
-   active=0;
-   memset(&configuration,0,sizeof(JOYCAPS));
-   memset(&current,0,sizeof(JOYINFOEX));
-   current.dwSize=sizeof(JOYINFOEX);
-   current.dwFlags=JOY_RETURNALL;
-   current.dwPOV=JOY_POVCENTERED;
+   current.dwPacketNumber=0;
+   current.Gamepad.bLeftTrigger=0;
+   current.Gamepad.bRightTrigger=0;
+   current.Gamepad.sThumbLX=0;
+   current.Gamepad.sThumbLY=0;
+   current.Gamepad.sThumbRX=0;
+   current.Gamepad.sThumbRY=0;
+   current.Gamepad.wButtons=0;
+   vibration.wLeftMotorSpeed=0;
+   vibration.wRightMotorSpeed=0;
    preversion=current;
+   active=0;
   }
 
   Gamepad::~Gamepad()
@@ -1225,50 +1426,85 @@ namespace SWGF
 
   }
 
-  bool Gamepad::read_configuration()
+  void Gamepad::clear_state()
   {
-   return joyGetDevCaps(static_cast<size_t>(active),&configuration,sizeof(JOYCAPS))==JOYERR_NOERROR;
+   current.dwPacketNumber=0;
+   current.Gamepad.bLeftTrigger=0;
+   current.Gamepad.bRightTrigger=0;
+   current.Gamepad.sThumbLX=0;
+   current.Gamepad.sThumbLY=0;
+   current.Gamepad.sThumbRX=0;
+   current.Gamepad.sThumbRY=0;
+   current.Gamepad.wButtons=0;
+   preversion=current;
   }
 
   bool Gamepad::read_state()
   {
-   return joyGetPosEx(active,&current)==JOYERR_NOERROR;
+   return XInputGetState(active,&current)==ERROR_SUCCESS;
   }
 
-  void Gamepad::clear_state()
+  bool Gamepad::write_state()
   {
-   memset(&configuration,0,sizeof(JOYCAPS));
-   memset(&current,0,sizeof(JOYINFOEX));
-   current.dwSize=sizeof(JOYINFOEX);
-   current.dwFlags=JOY_RETURNALL;
-   current.dwPOV=JOY_POVCENTERED;
-   preversion=current;
+   return XInputSetState(active,&vibration)==ERROR_SUCCESS;
   }
 
-  bool Gamepad::check_current_state(const unsigned long int button) const
+  void Gamepad::set_motor(const unsigned short int left,const unsigned short int right)
   {
-   return (current.dwButtons&button)!=0;
+   vibration.wLeftMotorSpeed=left;
+   vibration.wRightMotorSpeed=right;
   }
 
-  bool Gamepad::check_preversion_state(const unsigned long int button) const
+  bool Gamepad::check_current_button(const SWGF::GAMEPAD_BUTTONS button) const
   {
-   return (preversion.dwButtons&button)!=0;
+   return (current.Gamepad.wButtons&button)!=0;
   }
 
-  unsigned int Gamepad::get_amount()
+  bool Gamepad::check_preversion_button(const SWGF::GAMEPAD_BUTTONS button) const
   {
-   return joyGetNumDevs();
+   return (preversion.Gamepad.wButtons&button)!=0;
   }
 
-  unsigned int Gamepad::get_button_amount()
+  bool Gamepad::check_current_trigger(const SWGF::GAMEPAD_TRIGGERS trigger) const
   {
-   unsigned int button_amount;
-   button_amount=0;
-   if (this->read_configuration()==true)
+   bool check;
+   check=current.Gamepad.bLeftTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+   if (trigger==GAMEPAD_RIGHT_TRIGGER)
    {
-    button_amount=configuration.wNumButtons;
+    check=current.Gamepad.bRightTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
    }
-   return button_amount;
+   return check;
+  }
+
+  bool Gamepad::check_preversion_trigger(const SWGF::GAMEPAD_TRIGGERS trigger) const
+  {
+   bool check;
+   check=preversion.Gamepad.bLeftTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+   if (trigger==GAMEPAD_RIGHT_TRIGGER)
+   {
+    check=preversion.Gamepad.bRightTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+   }
+   return check;
+  }
+
+  void Gamepad::set_active(const unsigned int gamepad)
+  {
+   if (gamepad<4)
+   {
+    this->clear_state();
+    active=gamepad;
+   }
+
+  }
+
+  unsigned int Gamepad::get_active() const
+  {
+   return active;
+  }
+
+  bool Gamepad::check_connection()
+  {
+   return this->read_state();
   }
 
   void Gamepad::update()
@@ -1281,185 +1517,115 @@ namespace SWGF
 
   }
 
-  unsigned long int Gamepad::get_sticks_amount()
+  bool Gamepad::check_button_hold(const SWGF::GAMEPAD_BUTTONS button)
   {
-   unsigned long int sticks_amount;
-   sticks_amount=0;
-   if (this->read_configuration()==true)
-   {
-    if (configuration.wNumAxes>1)
-    {
-     sticks_amount=configuration.wNumAxes/2;
-    }
-
-   }
-   return sticks_amount;
+   return this->check_current_button(button);
   }
 
-  void Gamepad::set_active(const unsigned int gamepad)
+  bool Gamepad::check_button_press(const SWGF::GAMEPAD_BUTTONS button)
   {
-   if (gamepad<this->get_amount())
-   {
-    this->clear_state();
-    active=gamepad;
-   }
-
+   return (this->check_current_button(button)==true) && (this->check_preversion_button(button)==false);
   }
 
-  SWGF::GAMEPAD_DPAD Gamepad::get_dpad() const
+  bool Gamepad::check_button_release(const SWGF::GAMEPAD_BUTTONS button)
   {
-   SWGF::GAMEPAD_DPAD dpad;
-   dpad=SWGF::GAMEPAD_NONE;
-   switch (current.dwPOV)
-   {
-    case JOY_POVFORWARD:
-    dpad=SWGF::GAMEPAD_UP;
-    break;
-    case JOY_POVBACKWARD:
-    dpad=SWGF::GAMEPAD_DOWN;
-    break;
-    case JOY_POVLEFT:
-    dpad=SWGF::GAMEPAD_LEFT;
-    break;
-    case JOY_POVRIGHT:
-    dpad=GAMEPAD_RIGHT;
-    break;
-    case JOYSTICK_UPLEFT:
-    dpad=SWGF::GAMEPAD_UPLEFT;
-    break;
-    case JOYSTICK_UPRIGHT:
-    dpad=SWGF::GAMEPAD_UPRIGHT;
-    break;
-    case JOYSTICK_DOWNLEFT:
-    dpad=SWGF::GAMEPAD_DOWNLEFT;
-    break;
-    case JOYSTICK_DOWNRIGHT:
-    dpad=SWGF::GAMEPAD_DOWNRIGHT;
-    break;
-    default:
-    ;
-    break;
-   }
-   return dpad;
+   return (this->check_current_button(button)==false) && (this->check_preversion_button(button)==true);
   }
 
-  SWGF::GAMEPAD_DIRECTION Gamepad::get_stick_x(const SWGF::GAMEPAD_STICKS stick)
+  bool Gamepad::check_trigger_hold(const SWGF::GAMEPAD_TRIGGERS trigger)
+  {
+   return this->check_current_trigger(trigger);
+  }
+
+  bool Gamepad::check_trigger_press(const SWGF::GAMEPAD_TRIGGERS trigger)
+  {
+   return (this->check_current_trigger(trigger)==true) && (this->check_preversion_trigger(trigger)==false);
+  }
+
+  bool Gamepad::check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger)
+  {
+   return (this->check_current_trigger(trigger)==false) && (this->check_preversion_trigger(trigger)==true);
+  }
+
+  unsigned char Gamepad::get_left_trigger() const
+  {
+   return current.Gamepad.bLeftTrigger;
+  }
+
+  unsigned char Gamepad::get_right_trigger() const
+  {
+   return current.Gamepad.bRightTrigger;
+  }
+
+  bool Gamepad::set_vibration(const unsigned short int left,const unsigned short int right)
+  {
+   this->set_motor(left,right);
+   return this->write_state();
+  }
+
+  bool Gamepad::disable_vibration()
+  {
+   return this->set_vibration(0,0);
+  }
+
+  SWGF::GAMEPAD_DIRECTION Gamepad::get_stick_x(const SWGF::GAMEPAD_STICKS stick) const
   {
    SWGF::GAMEPAD_DIRECTION directional;
-   unsigned long int control;
+   short int control;
    directional=SWGF::GAMEPAD_NEUTRAL_DIRECTION;
    if (stick==SWGF::GAMEPAD_LEFT_STICK)
    {
-    if (this->get_sticks_amount()>0)
-    {
-     control=(configuration.wXmax-configuration.wXmin)/2;
-     if (current.dwXpos<control)
-     {
-      directional=GAMEPAD_NEGATIVE_DIRECTION;
-     }
-     if (current.dwXpos>control)
-     {
-      directional=GAMEPAD_POSITIVE_DIRECTION;
-     }
-
-    }
-
+    control=SHRT_MAX-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+    if (current.Gamepad.sThumbLX>=control) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
+    if (current.Gamepad.sThumbLX<=-1*control) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
    }
    if (stick==SWGF::GAMEPAD_RIGHT_STICK)
    {
-    if (this->get_sticks_amount()>1)
-    {
-     control=(configuration.wZmax-configuration.wZmin)/2;
-     if (current.dwZpos<control)
-     {
-      directional=GAMEPAD_NEGATIVE_DIRECTION;
-     }
-     if (current.dwZpos>control)
-     {
-      directional=GAMEPAD_POSITIVE_DIRECTION;
-     }
-
-    }
-
+    control=SHRT_MAX-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+    if (current.Gamepad.sThumbRX>=control) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
+    if (current.Gamepad.sThumbRX<=-1*control) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
    }
    return directional;
   }
 
-  SWGF::GAMEPAD_DIRECTION Gamepad::get_stick_y(const SWGF::GAMEPAD_STICKS stick)
+  SWGF::GAMEPAD_DIRECTION Gamepad::get_stick_y(const SWGF::GAMEPAD_STICKS stick) const
   {
+   short int control;
    SWGF::GAMEPAD_DIRECTION directional;
-   unsigned long int control;
-   directional=SWGF::GAMEPAD_NEUTRAL_DIRECTION;
+   directional=GAMEPAD_NEUTRAL_DIRECTION;
    if (stick==SWGF::GAMEPAD_LEFT_STICK)
    {
-    if (this->get_sticks_amount()>0)
-    {
-     control=(configuration.wYmax-configuration.wYmin)/2;
-     if (current.dwYpos<control)
-     {
-      directional=GAMEPAD_NEGATIVE_DIRECTION;
-     }
-     if (current.dwYpos>control)
-     {
-      directional=GAMEPAD_POSITIVE_DIRECTION;
-     }
-
-    }
-
+    control=SHRT_MAX-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+    if (current.Gamepad.sThumbLY>=control) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
+    if (current.Gamepad.sThumbLY<=-1*control) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
    }
-   if (stick==SWGF::GAMEPAD_RIGHT_STICK)
+   if (stick==GAMEPAD_RIGHT_STICK)
    {
-    if (this->get_sticks_amount()>1)
-    {
-     control=(configuration.wRmax-configuration.wRmin)/2;
-     if (current.dwRpos<control)
-     {
-      directional=GAMEPAD_NEGATIVE_DIRECTION;
-     }
-     if (current.dwRpos>control)
-     {
-      directional=GAMEPAD_POSITIVE_DIRECTION;
-     }
-
-    }
-
+    control=SHRT_MAX-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+    if (current.Gamepad.sThumbRY>=control) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
+    if (current.Gamepad.sThumbRY<=-1*control) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
    }
    return directional;
   }
 
-  SWGF::GAMEPAD_DIRECTION Gamepad::get_left_stick_x()
+  SWGF::GAMEPAD_DIRECTION Gamepad::get_left_stick_x() const
   {
    return this->get_stick_x(SWGF::GAMEPAD_LEFT_STICK);
   }
 
-  SWGF::GAMEPAD_DIRECTION Gamepad::get_left_stick_y()
+  SWGF::GAMEPAD_DIRECTION Gamepad::get_left_stick_y() const
   {
    return this->get_stick_y(SWGF::GAMEPAD_LEFT_STICK);
   }
 
-  SWGF::GAMEPAD_DIRECTION Gamepad::get_right_stick_x()
+  SWGF::GAMEPAD_DIRECTION Gamepad::get_right_stick_x() const
   {
    return this->get_stick_x(SWGF::GAMEPAD_RIGHT_STICK);
   }
 
-  SWGF::GAMEPAD_DIRECTION Gamepad::get_right_stick_y()
+  SWGF::GAMEPAD_DIRECTION Gamepad::get_right_stick_y() const
   {
    return this->get_stick_y(SWGF::GAMEPAD_RIGHT_STICK);
-  }
-
-  bool Gamepad::check_hold(const SWGF::GAMEPAD_BUTTONS button) const
-  {
-   return this->check_current_state(button);
-  }
-
-  bool Gamepad::check_press(const SWGF::GAMEPAD_BUTTONS button) const
-  {
-   return (this->check_current_state(button)==true) && (this->check_preversion_state(button)==false);
-  }
-
-  bool Gamepad::check_release(const SWGF::GAMEPAD_BUTTONS button) const
-  {
-   return (this->check_current_state(button)==false) && (this->check_preversion_state(button)==true);
   }
 
  }
@@ -1659,7 +1825,8 @@ namespace SWGF
    this->prepare_engine();
    this->set_render(this->get_context(),this->get_depth());
    this->start_render(this->get_display_width(),this->get_display_height());
-   this->create_timer(17);
+   this->create_timer();
+   this->set_timer(17);
   }
 
   void Screen::clear_screen()

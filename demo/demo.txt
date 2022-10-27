@@ -9,4 +9,6 @@ Left mouse button - Exit from demo
 Controls for gamepad
 
 D-pad or left stick - Move
-X - Exit from demo
+Left trigger - Turn on a gamepad vibration
+Right trigger - Turn off a gamepad vibration
+A - Exit from demo

@@ -4,10 +4,10 @@ int main()
 {
  char perfomance[8];
  SWGF::Common::Timer timer;
- SWGF::Misc::Audio media;
  SWGF::Input::Keyboard keyboard;
  SWGF::Input::Gamepad gamepad;
  SWGF::Input::Mouse mouse;
+ SWGF::Misc::Multimedia media;
  SWGF::Graphics::Screen screen;
  SWGF::Graphics::Background space;
  SWGF::Graphics::Sprite ship;
@@ -23,8 +23,9 @@ int main()
  text.set_position(text.get_font_width(),text.get_font_height());
  mouse.hide();
  timer.set_timer(1);
- memset(perfomance,0,8);
+ media.initialize();
  media.load("space.mp3");
+ memset(perfomance,0,8);
  while(screen.sync())
  {
   gamepad.update();
@@ -53,59 +54,50 @@ int main()
   {
    ship.increase_x(2);
   }
-  if (gamepad.check_hold(SWGF::GAMEPAD_BUTTON2)==true)
+  if (gamepad.check_button_hold(SWGF::GAMEPAD_A)==true)
   {
    break;
   }
-  switch (gamepad.get_dpad())
-  {
-   case SWGF::GAMEPAD_UP:
-   ship.decrease_y();
-   break;
-   case SWGF::GAMEPAD_DOWN:
-   ship.increase_y();
-   break;
-   case SWGF::GAMEPAD_UPLEFT:
-   ship.decrease_y();
-   ship.decrease_x();
-   break;
-   case SWGF::GAMEPAD_UPRIGHT:
-   ship.decrease_y();
-   ship.increase_x();
-   break;
-   case SWGF::GAMEPAD_DOWNLEFT:
-   ship.increase_y();
-   ship.decrease_x();
-   break;
-   case SWGF::GAMEPAD_DOWNRIGHT:
-   ship.increase_y();
-   ship.increase_x();
-   break;
-   case SWGF::GAMEPAD_LEFT:
-   ship.decrease_x();
-   break;
-   case SWGF::GAMEPAD_RIGHT:
-   ship.increase_x();
-   break;
-   default:
-   ;
-   break;
-  }
-  if (gamepad.get_stick_x(SWGF::GAMEPAD_LEFT_STICK)==SWGF::GAMEPAD_NEGATIVE_DIRECTION)
-  {
-   ship.decrease_x();
-  }
-  if (gamepad.get_stick_x(SWGF::GAMEPAD_LEFT_STICK)==SWGF::GAMEPAD_POSITIVE_DIRECTION)
-  {
-   ship.increase_x();
-  }
-  if (gamepad.get_stick_y(SWGF::GAMEPAD_LEFT_STICK)==SWGF::GAMEPAD_NEGATIVE_DIRECTION)
+  if (gamepad.check_button_hold(SWGF::GAMEPAD_UP)==true)
   {
    ship.decrease_y();
   }
-  if (gamepad.get_stick_y(SWGF::GAMEPAD_LEFT_STICK)==SWGF::GAMEPAD_POSITIVE_DIRECTION)
+  if (gamepad.check_button_hold(SWGF::GAMEPAD_DOWN)==true)
   {
    ship.increase_y();
+  }
+  if (gamepad.check_button_hold(SWGF::GAMEPAD_LEFT)==true)
+  {
+   ship.decrease_x();
+  }
+  if (gamepad.check_button_hold(SWGF::GAMEPAD_RIGHT)==true)
+  {
+   ship.increase_x();
+  }
+
+  if (gamepad.get_left_stick_x()==SWGF::GAMEPAD_NEGATIVE_DIRECTION)
+  {
+   ship.decrease_x();
+  }
+  if (gamepad.get_left_stick_x()==SWGF::GAMEPAD_POSITIVE_DIRECTION)
+  {
+   ship.increase_x();
+  }
+  if (gamepad.get_left_stick_y()==SWGF::GAMEPAD_NEGATIVE_DIRECTION)
+  {
+   ship.decrease_y();
+  }
+  if (gamepad.get_left_stick_y()==SWGF::GAMEPAD_POSITIVE_DIRECTION)
+  {
+   ship.increase_y();
+  }
+  if (gamepad.check_trigger_hold(SWGF::GAMEPAD_LEFT_TRIGGER)==true)
+  {
+   gamepad.set_vibration(USHRT_MAX,USHRT_MAX);
+  }
+  if (gamepad.check_trigger_hold(SWGF::GAMEPAD_RIGHT_TRIGGER)==true)
+  {
+   gamepad.disable_vibration();
   }
   if (ship.get_x()>screen.get_width())
   {

@@ -1,10 +1,10 @@
 Project Description
 
-Simple windows game framework is the advanced fork of Neon game development kit.
+Simple windows game framework is the advanced fork of Eugene game development kit.
 
 License
 
-Neon game development kit distributed under Zlib license.
+Simple windows game framework distributed under Zlib license.
 
 Features
 
@@ -23,4 +23,4 @@ Features
  Collision detector.
  Integrated fps counter.
  Powerful input subsystem: keyboard, mouse, game-pad.
- Audio subsystem for playing audio and music.
+ Simple multimedia subsystem for playing audio and video.
