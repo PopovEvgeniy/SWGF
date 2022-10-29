@@ -304,7 +304,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       of your favorite compiler for more information about compiler
       optimization.<br>
       <br>
-      <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
+      <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -371,7 +371,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     <big> <span style="text-decoration: underline;"> Introduce to base graphics
         subsystem</span><br>
       <br>
-      Base graphics subsystem do rendering game scene. This subsystem using <a
+      Base graphics subsystem do rendering game scene. This subsystem using <a
         href="http://opengl.org">OPENGL</a> for render. Most modern video–card
       support hardware accelerated OPENGL. Software emulated OPENGL will
       activate if </big><big>hardware acceleration not available.</big><br>
@@ -581,7 +581,8 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         *name,const SWGF::IMAGE_KIND kind,const unsigned int frames);</span> –
       Load background </big><big>from target file</big><big>.<br>
       <br>
-      <span style="font-style: italic;">void Background::load(</span></big><big
+      <span style="font-style: italic;">void Background::load(</span></big><big
+
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -817,11 +818,11 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       and <span style="font-style: italic;">Animation</span>. Let's look at
       public methods.<br>
       <br>
-    </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
+    </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
-      <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
+      <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -1212,11 +1213,11 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;">void quit();</span> </big><big>–</big><big>
       Exit from your program and return user to operating system.<br>
       <br>
-      <span style="font-style: italic;">bool enable_logging(const char *name); </span></big><big>–</big><big><span
+      <span style="font-style: italic;">bool enable_logging(const char *name); </span></big><big>–</big><big><span
         style="font-style: italic;"></span> Enable redirecting error messages to
       a log file and return false if the operation failed.<br>
       <br>
-      <span style="font-style: italic;">void randomize(); </span></big><big>–</big><big><span
+      <span style="font-style: italic;">void randomize(); </span></big><big>–</big><big><span
         style="font-style: italic;"></span> Initialize random number generator.<br>
       <br>
       <span style="font-style: italic;">unsigned int get_random(const int
@@ -1774,7 +1775,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Triggers identifiers look as predefined constants. You can see it below.<br>
       <br>
     </big>
-    <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+    <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -1837,17 +1838,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       <span style="font-style: italic;">unsigned int Gamepad::get_active()
         const;</span> – Return identifer of current active game-pad.<br>
-      <br>
-      <span style="font-style: italic;">bool Gamepad::is_wireless();</span> –
-      Return true if current active game-pad is the wireless game-pad.<br>
-      <br>
-      <span style="font-style: italic;">GAMEPAD_BATTERY_TYPE
-        Gamepad::get_battery_type();</span> – Return battery type of wireless
-      game-pad.<br>
-      <br>
-      <span style="font-style: italic;">GAMEPAD_BATTERY_LEVEL
-        Gamepad::get_battery_level();</span> – Return battery level of wireless
-      game-pad.<br>
       <span style="font-style: italic;"></span><br>
       <span style="font-style: italic;">bool Gamepad::check_connection();</span>
       – Return true if active game-pad is connected.<br>
@@ -1888,11 +1878,11 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       right analog trigger.<br>
       <br>
       <span style="font-style: italic;">GAMEPAD_DIRECTION
-        Gamepad::get_stick_x(const SWGF::GAMEPAD_TRIGGERS stick) const;</span> –
+        Gamepad::get_stick_x(const SWGF::GAMEPAD_STICKS stick) const;</span> –
       Return x-direction of specific stick.<br>
       <br>
       <span style="font-style: italic;">GAMEPAD_DIRECTION
-        Gamepad::get_stick_y(const SWGF::GAMEPAD_TRIGGERS stick) const;</span> –
+        Gamepad::get_stick_y(const SWGF::GAMEPAD_STICKS stick) const;</span> –
       Return y-direction of specific stick.<br>
       <br>
       <span style="font-style: italic;">GAMEPAD_DIRECTION
@@ -2052,6 +2042,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.5.3 – Small changes.<br>
       6.5.4 – Game-pad subsystem ported from Black game development kit 4.1.4.<br>
       6.5.5 – 6.6.6 – Game-pad subsystem improved.<br>
+      6.6.6.1 – Documentation updated.<br>
     </big><big> </big>
     <p></p>
   </body>
