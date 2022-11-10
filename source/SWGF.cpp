@@ -1469,7 +1469,7 @@ namespace SWGF
   {
    bool check;
    check=current.Gamepad.bLeftTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
-   if (trigger==GAMEPAD_RIGHT_TRIGGER)
+   if (trigger==SWGF::GAMEPAD_RIGHT_TRIGGER)
    {
     check=current.Gamepad.bRightTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
    }
@@ -1480,7 +1480,7 @@ namespace SWGF
   {
    bool check;
    check=preversion.Gamepad.bLeftTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
-   if (trigger==GAMEPAD_RIGHT_TRIGGER)
+   if (trigger==SWGF::GAMEPAD_RIGHT_TRIGGER)
    {
     check=preversion.Gamepad.bRightTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
    }
@@ -1592,7 +1592,7 @@ namespace SWGF
   {
    short int control;
    SWGF::GAMEPAD_DIRECTION directional;
-   directional=GAMEPAD_NEUTRAL_DIRECTION;
+   directional=SWGF::GAMEPAD_NEUTRAL_DIRECTION;
    if (stick==SWGF::GAMEPAD_LEFT_STICK)
    {
     control=SHRT_MAX-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
