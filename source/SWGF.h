@@ -594,6 +594,8 @@ typedef enum
    unsigned char get_right_trigger() const;
    bool set_vibration(const unsigned short int left,const unsigned short int right);
    bool disable_vibration();
+   unsigned short int get_left_motor() const;
+   unsigned short int get_right_motor() const;
    SWGF::GAMEPAD_DIRECTION get_stick_x(const SWGF::GAMEPAD_STICKS stick) const;
    SWGF::GAMEPAD_DIRECTION get_stick_y(const SWGF::GAMEPAD_STICKS stick) const;
    SWGF::GAMEPAD_DIRECTION get_left_stick_x() const;

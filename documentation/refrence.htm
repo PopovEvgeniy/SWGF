@@ -372,6 +372,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         subsystem</span><br>
       <br>
       Base graphics subsystem do rendering game scene. This subsystem using <a
+
         href="http://opengl.org">OPENGL</a> for render. Most modern video–card
       support hardware accelerated OPENGL. Software emulated OPENGL will
       activate if </big><big>hardware acceleration not available.</big><br>
@@ -1910,6 +1911,14 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;">bool Gamepad::disable_vibration();</span>
       – Disable vibration of active game-pad. Return false if operation was
       fail.<br>
+      <br>
+      <span style="font-style: italic;">nsigned short int
+        Gamepad::get_left_motor() const;</span> – Return vibration level of left
+      rumble motor.<br>
+      <br>
+      <span style="font-style: italic;">nsigned short int
+        Gamepad::get_right_motor() const;</span> – Return vibration level of
+      right rumble motor.<br>
     </big>
     <h1><a name="mozTocId309127" class="mozTocH1"></a><big>Part 9. Internal
         details of the engine subsystems</big></h1>
@@ -2044,6 +2053,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.5.5 – 6.6.6 – Game-pad subsystem improved.<br>
       6.6.6.1 – Documentation updated.<br>
       6.6.7 – Small changes.<br>
+      6.6.8 – Game-pad subsystem improved.<br>
     </big><big> </big>
     <p></p>
   </body>

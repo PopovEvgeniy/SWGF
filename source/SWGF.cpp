@@ -1568,6 +1568,16 @@ namespace SWGF
    return this->set_vibration(0,0);
   }
 
+  unsigned short int Gamepad::get_left_motor() const
+  {
+   return vibration.wLeftMotorSpeed;
+  }
+
+  unsigned short int Gamepad::get_right_motor() const
+  {
+   return vibration.wRightMotorSpeed;
+  }
+
   SWGF::GAMEPAD_DIRECTION Gamepad::get_stick_x(const SWGF::GAMEPAD_STICKS stick) const
   {
    SWGF::GAMEPAD_DIRECTION directional;
