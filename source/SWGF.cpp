@@ -1581,39 +1581,33 @@ namespace SWGF
   SWGF::GAMEPAD_DIRECTION Gamepad::get_stick_x(const SWGF::GAMEPAD_STICKS stick) const
   {
    SWGF::GAMEPAD_DIRECTION directional;
-   short int control;
    directional=SWGF::GAMEPAD_NEUTRAL_DIRECTION;
    if (stick==SWGF::GAMEPAD_LEFT_STICK)
    {
-    control=SHRT_MAX-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-    if (current.Gamepad.sThumbLX>=control) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
-    if (current.Gamepad.sThumbLX<=-1*control) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
+    if (current.Gamepad.sThumbLX>=(SHRT_MAX-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
+    if (current.Gamepad.sThumbLX<=(XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE-SHRT_MAX)) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
    }
-   if (stick==SWGF::GAMEPAD_RIGHT_STICK)
+   else
    {
-    control=SHRT_MAX-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
-    if (current.Gamepad.sThumbRX>=control) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
-    if (current.Gamepad.sThumbRX<=-1*control) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
+    if (current.Gamepad.sThumbRX>=(SHRT_MAX-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
+    if (current.Gamepad.sThumbRX<=(XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE-SHRT_MAX)) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
    }
    return directional;
   }
 
   SWGF::GAMEPAD_DIRECTION Gamepad::get_stick_y(const SWGF::GAMEPAD_STICKS stick) const
   {
-   short int control;
    SWGF::GAMEPAD_DIRECTION directional;
    directional=SWGF::GAMEPAD_NEUTRAL_DIRECTION;
    if (stick==SWGF::GAMEPAD_LEFT_STICK)
    {
-    control=SHRT_MAX-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-    if (current.Gamepad.sThumbLY>=control) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
-    if (current.Gamepad.sThumbLY<=-1*control) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
+    if (current.Gamepad.sThumbLY>=(SHRT_MAX-XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
+    if (current.Gamepad.sThumbLY<=(XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE-SHRT_MAX)) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
    }
-   if (stick==GAMEPAD_RIGHT_STICK)
+   else
    {
-    control=SHRT_MAX-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
-    if (current.Gamepad.sThumbRY>=control) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
-    if (current.Gamepad.sThumbRY<=-1*control) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
+    if (current.Gamepad.sThumbRY>=(SHRT_MAX-XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)) directional=SWGF::GAMEPAD_POSITIVE_DIRECTION;
+    if (current.Gamepad.sThumbRY<=(XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE-SHRT_MAX)) directional=SWGF::GAMEPAD_NEGATIVE_DIRECTION;
    }
    return directional;
   }
