@@ -214,7 +214,7 @@
       <tbody>
         <tr>
           <td><big>Operating system </big></td>
-          <td><big>Windows XP or higher </big></td>
+          <td><big>Windows Vista or higher </big></td>
         </tr>
         <tr>
           <td><big>System type </big></td>
@@ -230,7 +230,7 @@
         </tr>
         <tr>
           <td colspan="1" rowspan="2"><big>Processor </big></td>
-          <td><big>Intel Pentium III 1400 Mhz for 32–bit system </big></td>
+          <td><big>Intel Pentium 4 for 32–bit system </big></td>
         </tr>
         <tr>
           <td><big>Intel Core 2 Duo for 64–bit system </big></td>
@@ -258,10 +258,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <li><big>Visual C++ 2017</big></li>
       <li><big>Visual C++ 2019</big></li>
       <li><big>Visual C++ 2022</big></li>
-      <li><big>C++ Builder 2010</big></li>
-      <li><big>C++ Builder XE</big></li>
-      <li><big>C++ Builder XE2</big></li>
-      <li><big>C++ Builder XE3</big></li>
       <li><big>C++ Builder XE4</big></li>
       <li><big>C++ Builder XE5</big></li>
       <li><big>C++ Builder XE6</big></li>
@@ -276,36 +272,26 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     </ul>
     <h2><a name="mozTocId56069" class="mozTocH2"></a><big>Chapter 7. Platform
         specific notes</big></h2>
-    <big><span style="text-decoration: underline;"> Windows XP support</span><br>
+    <big><span style="text-decoration: underline;"> Windows Vista support</span><br>
       <br>
-      You need one of follow compilers for <a href="https://en.wikipedia.org/wiki/Windows_XP">Windows
-        XP</a> support:<br>
+      You need one of follow compilers for <a href="https://en.wikipedia.org/wiki/Windows_Vista">Windows
+        Vista</a> support:<br>
       <br>
     </big>
     <ul>
       <li><big>TDM–GCC</big></li>
       <li><big>Visual C++ 2008</big></li>
-      <li><big>C++ Builder 2010</big></li>
+      <li><big>C++ Builder XE4<br>
+        </big></li>
     </ul>
     <big><br>
-      <span style="text-decoration: underline;">Old processors support</span><br>
-      <br>
-      &nbsp;You need Visual C++ 2008 or C++ Builder 2010 for old processors
-      support.<br>
-      <br>
-      <span style="text-decoration: underline;">Additional software</span><br>
-      <br>
-      You need Service Pack 3 for Windows XP and <a href="https://www.microsoft.com/en-us/download/details.aspx?id=8109">DirectX
-        End-User Runtime</a> if you game will run under Windows XP.<br>
-      <span style="text-decoration: underline;"></span></big><big><br>
-      <span style="text-decoration: underline;"> Compiler optimization</span><br>
+    </big><big><span style="text-decoration: underline;">Compiler optimization</span><br>
       <br>
       Disable all compiler optimization for correct working. See documentation
       of your favorite compiler for more information about compiler
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
-
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -373,6 +359,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         subsystem</span><br>
       <br>
       Base graphics subsystem do rendering game scene. This subsystem using <a
+
         href="http://opengl.org">OPENGL</a> for render. Most modern video–card
       support hardware accelerated OPENGL. Software emulated OPENGL will
       activate if </big><big>hardware acceleration not available.</big><br>
@@ -1221,10 +1208,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Exit from your program and return user to operating system.<br>
       <br>
       <span style="font-style: italic;">bool enable_logging(const char *name); </span></big><big>–</big><big><span
+
         style="font-style: italic;"></span> Enable redirecting error messages to
       a log file and return false if the operation failed.<br>
       <br>
       <span style="font-style: italic;">void randomize(); </span></big><big>–</big><big><span
+
         style="font-style: italic;"></span> Initialize random number generator.<br>
       <br>
       <span style="font-style: italic;">unsigned int get_random(const int
@@ -2061,6 +2050,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.6.7 – Small changes.<br>
       6.6.8 – 6.7 – Game-pad subsystem improved.<br>
       6.7.1 – Source code synced with Eugene game development kit 6.6.1.<br>
+      6.7.2 – Synchronization timer back-ported from Gray game development kit
+      2.3.5.<br>
+      6.7.3 – Windows XP support removed.<br>
+      6.7.4 – 6.7.5 – Small changes.<br>
     </big><big> </big>
     <p></p>
   </body>

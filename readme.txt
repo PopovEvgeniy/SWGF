@@ -1,6 +1,6 @@
 Project Description
 
-Simple windows game framework is the advanced fork of Eugene game development kit.
+Simple windows game framework is the advanced fork of Eugene game development kit. It intend for Windows Vista or higher.
 
 License
 
