@@ -1032,7 +1032,9 @@ namespace SWGF
   {
    if (video!=NULL)
    {
-    video->put_FullScreenMode(OATRUE);
+    video->put_FullScreenMode(OAFALSE);
+    video->put_AutoShow(OAFALSE);
+    video->put_WindowStyle(WS_POPUP);
    }
 
   }
@@ -1082,6 +1084,10 @@ namespace SWGF
 
   void Multimedia::play_content()
   {
+   if (video!=NULL)
+   {
+    video->put_WindowState(SW_MAXIMIZE);
+   }
    if (player!=NULL)
    {
     player->Run();
@@ -1179,6 +1185,10 @@ namespace SWGF
    if (player!=NULL)
    {
     player->Stop();
+   }
+   if (video!=NULL)
+   {
+    video->put_WindowState(SW_HIDE);
    }
 
   }

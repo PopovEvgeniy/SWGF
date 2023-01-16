@@ -292,6 +292,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
+
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -359,7 +360,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         subsystem</span><br>
       <br>
       Base graphics subsystem do rendering game scene. This subsystem using <a
-
         href="http://opengl.org">OPENGL</a> for render. Most modern video–card
       support hardware accelerated OPENGL. Software emulated OPENGL will
       activate if </big><big>hardware acceleration not available.</big><br>
@@ -1178,7 +1178,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Checking play status and restart play if needed.<br>
       <br>
       <span style="font-style: italic;"> void Multimedia::stop();</span> – Stop
-      playing a content of the target file.<br>
+      playing a content of the target file and close video if needed.<br>
       <br>
       <span style="font-style: italic;"> bool Multimedia::check_playing();</span>
       – Return true if the multimedia resource is playing.</big><br>
@@ -2037,14 +2037,15 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     <big> </big>
     <h2><a name="mozTocId692266" class="mozTocH2"></a><big>Chapter 6. Multimedia</big></h2>
     <big> Multimedia subsystem working over <a href="https://docs.microsoft.com/en-us/windows/desktop/DirectShow/directshow">DirectShow</a>.
-      It is available as part of <a href="https://docs.microsoft.com/en-us/windows/desktop/directx-sdk--august-2009-">DirectX</a>.
+      It is available as part of <a href="https://en.wikipedia.org/wiki/DirectX">DirectX</a>.
       DirectX is pre–installed by default under modern versions of Windows. </big>
     <h1><a name="mozTocId78453" class="mozTocH1"></a><big>Version history</big></h1>
     <big> 0.1 – 6.3.6 – Old branch.<br>
       6.3.7 – 6.5.1 – Experimental branch.<br>
       6.5.2 – Source code synced with Eugene game development kit 6.5.7.<br>
       6.5.3 – Small changes.<br>
-      6.5.4 – Game-pad subsystem ported from Black game development kit 4.1.4.<br>
+      6.5.4 – Game-pad subsystem back-ported from Black game development kit
+      4.1.4.<br>
       6.5.5 – 6.6.6 – Game-pad subsystem improved.<br>
       6.6.6.1 – Documentation updated.<br>
       6.6.7 – Small changes.<br>
@@ -2054,6 +2055,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       2.3.5.<br>
       6.7.3 – Windows XP support removed.<br>
       6.7.4 – 6.7.5 – Small changes.<br>
+      6.7.6 – Source code synced with Eugene game development kit 6.6.6.<br>
     </big><big> </big>
     <p></p>
   </body>
