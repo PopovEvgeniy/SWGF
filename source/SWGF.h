@@ -493,16 +493,15 @@ typedef enum
    IMediaSeeking *controler;
    IVideoWindow *video;
    void com_setup();
-   void set_screen_mode();
+   void disable_video();
    void load_content(const wchar_t *target);
-   void open(const wchar_t *target);
    bool is_play();
    void rewind();
    void play_content();
    void create_loader();
    void create_player();
    void create_controler();
-   void create_video_player();
+   void get_video_instance();
    public:
    Multimedia();
    ~Multimedia();
