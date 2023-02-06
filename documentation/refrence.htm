@@ -166,7 +166,7 @@
     <big> <span style="text-decoration: underline;"> Simple windows game
         framework license</span><br>
       <br>
-      Copyright (C) 2016 – 2023 Popov Evgeniy Alekseyevich<br>
+      Copyright (C) 2015 – 2023 Popov Evgeniy Alekseyevich<br>
       <br>
       This software is provided 'as–is', without any express or implied<br>
       warranty. In no event will the authors be held liable for any damages<br>
@@ -292,7 +292,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
-
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -1047,7 +1046,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       &nbsp; <span style="font-style: italic;"> unsigned int y;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int width;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int height;</span><br
-
         style="font-style: italic;">
       <span style="font-style: italic;"> } BOX;</span><br>
       <br>
@@ -1726,7 +1724,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -1785,7 +1782,11 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       with game–pad. Let's look at public methods.<br>
       <br>
       <span style="font-style: italic;">void Gamepad::set_active(const unsigned
-        int gamepad);</span> – Set current active game-pad.<br>
+        int gamepad);</span> – Set current active game-pad. Always call it after
+      get amount of connected game-pads.<br>
+      <br>
+      <span style="font-style: italic;">unsigned int Gamepad::get_amount();</span>
+      – Return amount of connected game-pads.<br>
       <br>
       <span style="font-style: italic;">unsigned int Gamepad::get_active()
         const;</span> – Return identifer of current active game-pad.<br>
@@ -1794,7 +1795,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       – Return true if active game-pad is connected.<br>
       <br>
       <span style="font-style: italic;">void Gamepad::update();</span> – Update
-      internal game-pad state. Always call it before call another methods.<br>
+      game-pad state.<br>
       <br>
       <span style="font-style: italic;">bool Gamepad::check_button_hold(const
         SWGF::GAMEPAD_BUTTONS button);</span> – Return true if a button of
@@ -2012,6 +2013,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.7.6 – Source code synced with Eugene game development kit 6.6.6.<br>
       6.7.7 – Source code synced with Eugene game development kit 6.7.<br>
       6.7.8 – Source code synced with Eugene game development kit 6.7.1.<br>
+      6.7.9 – 6.8 – Game-pad subsystem improved.<br>
     </big><big> </big>
     <p></p>
   </body>
