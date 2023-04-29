@@ -299,6 +299,14 @@ typedef enum
   double v;
  } Point;
 
+ typedef enum
+ {
+  MIRROR_NONE=0,
+  HORIZONTAL_MIRROR=1,
+  VERTICAL_MIRROR=2,
+  MIRROR_BOTH=3
+ } MIRROR_KIND;
+
  double get_start_offset(const double current,const double total);
  double get_end_offset(const double current,const double total);
 
@@ -428,7 +436,7 @@ typedef enum
    protected:
    Vertex vertex[4];
    Point point[4];
-   void set_data();
+   void set_data(const Core::MIRROR_KIND kind);
    unsigned int get_total_width() const;
    unsigned int get_total_height() const;
    public:
@@ -457,7 +465,7 @@ typedef enum
    void enable_transparent();
    void disable_transparent();
    void prepare(const unsigned int *buffer);
-   void draw();
+   void draw(const Core::MIRROR_KIND kind);
    void destroy_texture();
    bool is_texture_exist() const;
   };
@@ -746,6 +754,7 @@ typedef enum
   class Billboard
   {
    private:
+   Core::MIRROR_KIND mirror;
    bool transparent;
    unsigned int current_x;
    unsigned int current_y;
@@ -781,6 +790,10 @@ typedef enum
    unsigned int get_width() const;
    unsigned int get_height() const;
    SWGF::BOX get_box() const;
+   void disable_mirror();
+   void horizontal_mirror();
+   void vertical_mirror();
+   void complex_mirror();
    void draw();
    void draw(const unsigned int x,const unsigned int y);
    void draw(const bool transparency);
@@ -856,6 +869,10 @@ typedef enum
    void load(Image &background);
    void load(const char *name,const SWGF::IMAGE_KIND kind,const unsigned int frames);
    void load(const char *name);
+   void disable_mirror();
+   void horizontal_mirror();
+   void vertical_mirror();
+   void complex_mirror();
    void set_target(const unsigned int target);
    void step();
    void draw();
@@ -896,6 +913,10 @@ typedef enum
    void print(const char *target);
    void print(const unsigned int x,const unsigned int y,const char target);
    void print(const unsigned int x,const unsigned int y,const char *target);
+   void disable_mirror();
+   void horizontal_mirror();
+   void vertical_mirror();
+   void complex_mirror();
    void destroy_image();
    void destroy_font();
   };

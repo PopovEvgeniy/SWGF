@@ -292,6 +292,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
+
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -537,6 +538,18 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;"> void Background::prepare(const unsigned
         int width,const unsigned int heigt);</span> – Prepare for drawing.<br>
       <br>
+      <span style="font-style: italic;">void Background::disable_mirror();</span>
+      – Disable background mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Background::horizontal_mirror();</span>
+      – Set horizontal background mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Background::vertical_mirror();</span>
+      – Set vertical background mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Background::complex_mirror();</span>
+      – Set both horizontal and vertical background mirroring mode.<br>
+      <br>
       <span style="font-style: italic;"> void Background::set_target(const
         unsigned int target);</span> – Set target frame in scrollable
       background.<br>
@@ -692,6 +705,18 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     </big><big><span style="font-style: italic;">SWGF::BOX Billboard::get_box()
         const;</span> – Return collision related information.<br>
       <br>
+      <span style="font-style: italic;">void Billboard::disable_mirror();</span>
+      – Disable sprite mirroring mode.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">void Billboard::horizontal_mirror();</span>
+      – Set horizontal sprite mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Billboard::vertical_mirror();</span>
+      – Set vertical sprite mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Billboard::complex_mirror();</span>
+      – Set both horizontal and vertical sprite mirroring mode.<br>
+      <br>
     </big><big> </big><big><span style="font-style: italic;">void
         Billboard::draw();</span> – Draw a sprite.<br>
       <br>
@@ -806,6 +831,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       public methods.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
@@ -946,6 +972,18 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;"> void Text::print(const unsigned int
         x,const unsigned int y,const char *target);</span> – Draw text at
       specific position.<br>
+      <br>
+      <span style="font-style: italic;">void Text::disable_mirror();</span> –
+      Disable text mirroring mode.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">void Text::horizontal_mirror();</span> –
+      Set horizontal text mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Text::vertical_mirror();</span> –
+      Set vertical text mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Text::complex_mirror();</span> –
+      Set both horizontal and vertical text mirroring mode.<br>
       <br>
       <span style="font-style: italic;"> void Text::destroy_image();</span> –
       Destroy a font image.<br>
@@ -1724,6 +1762,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2014,6 +2053,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.7.7 – Source code synced with Eugene game development kit 6.7.<br>
       6.7.8 – Source code synced with Eugene game development kit 6.7.1.<br>
       6.7.9 – 6.8 – Game-pad subsystem improved.<br>
+      6.8.1 – Source code synced with Eugene game development kit 6.7.6.<br>
     </big><big> </big>
     <p></p>
   </body>
