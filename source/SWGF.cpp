@@ -932,6 +932,10 @@ namespace SWGF
    glDisable(GL_POINT_SMOOTH);
    glDisable(GL_LINE_SMOOTH);
    glDisable(GL_POLYGON_SMOOTH);
+   glDisable(GL_POLYGON_OFFSET_POINT);
+   glDisable(GL_POLYGON_OFFSET_LINE);
+   glDisable(GL_POLYGON_OFFSET_FILL);
+   glDisable(GL_POLYGON_STIPPLE);
    glDisable(GL_DITHER);
    glDisable(GL_LOGIC_OP);
    glDisable(GL_FOG);
@@ -980,28 +984,28 @@ namespace SWGF
    glDepthMask(GL_FALSE);
   }
 
- void Render::set_matrix_setting()
- {
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  glMatrixMode(GL_TEXTURE);
-  glLoadIdentity();
- }
+  void Render::set_matrix_setting()
+  {
+   glMatrixMode(GL_MODELVIEW);
+   glLoadIdentity();
+   glMatrixMode(GL_TEXTURE);
+   glLoadIdentity();
+  }
 
- void Render::set_perspective(const unsigned int width,const unsigned int height)
- {
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(0.0,static_cast<double>(width),static_cast<double>(height),0.0,0.0,1.0);
-  glViewport(0,0,width,height);
- }
+  void Render::set_perspective(const unsigned int width,const unsigned int height)
+  {
+   glMatrixMode(GL_PROJECTION);
+   glLoadIdentity();
+   glOrtho(0.0,static_cast<double>(width),static_cast<double>(height),0.0,0.0,1.0);
+   glViewport(0,0,width,height);
+  }
 
   void Render::create_render(const unsigned int width,const unsigned int height)
   {
+   this->set_perspective(width,height);
    this->set_perfomance_setting();
    this->set_render_hints();
    this->set_common_setting();
-   this->set_perspective(width,height);
    this->set_matrix_setting();
    this->disable_depth_buffer();
    MAXIMUM_TEXTURE_SIZE=this->get_maximum_texture_size();
