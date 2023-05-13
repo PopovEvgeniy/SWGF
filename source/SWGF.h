@@ -494,7 +494,7 @@ typedef enum
  namespace Misc
  {
 
-  class Multimedia
+  class Audio
   {
    private:
    IGraphBuilder *loader;
@@ -512,8 +512,8 @@ typedef enum
    void create_controler();
    void get_video_instance();
    public:
-   Multimedia();
-   ~Multimedia();
+   Audio();
+   ~Audio();
    void initialize();
    bool check_playing();
    void stop();

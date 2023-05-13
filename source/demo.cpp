@@ -7,7 +7,7 @@ int main()
  SWGF::Input::Keyboard keyboard;
  SWGF::Input::Gamepad gamepad;
  SWGF::Input::Mouse mouse;
- SWGF::Misc::Multimedia media;
+ SWGF::Misc::Audio media;
  SWGF::Graphics::Screen screen;
  SWGF::Graphics::Background space;
  SWGF::Graphics::Sprite ship;
