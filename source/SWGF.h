@@ -601,12 +601,12 @@ typedef enum
    unsigned int get_active() const;
    bool check_connection();
    void update();
-   bool check_button_hold(const SWGF::GAMEPAD_BUTTONS button);
-   bool check_button_press(const SWGF::GAMEPAD_BUTTONS button);
-   bool check_button_release(const SWGF::GAMEPAD_BUTTONS button);
-   bool check_trigger_hold(const SWGF::GAMEPAD_TRIGGERS trigger);
-   bool check_trigger_press(const SWGF::GAMEPAD_TRIGGERS trigger);
-   bool check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger);
+   bool check_button_hold(const SWGF::GAMEPAD_BUTTONS button) const;
+   bool check_button_press(const SWGF::GAMEPAD_BUTTONS button) const;
+   bool check_button_release(const SWGF::GAMEPAD_BUTTONS button) const;
+   bool check_trigger_hold(const SWGF::GAMEPAD_TRIGGERS trigger) const;
+   bool check_trigger_press(const SWGF::GAMEPAD_TRIGGERS trigger) const;
+   bool check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger) const;
    unsigned char get_left_trigger() const;
    unsigned char get_right_trigger() const;
    bool set_vibration(const unsigned short int left,const unsigned short int right);

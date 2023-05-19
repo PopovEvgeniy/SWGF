@@ -1626,32 +1626,32 @@ namespace SWGF
 
   }
 
-  bool Gamepad::check_button_hold(const SWGF::GAMEPAD_BUTTONS button)
+  bool Gamepad::check_button_hold(const SWGF::GAMEPAD_BUTTONS button) const
   {
    return this->check_current_button(button);
   }
 
-  bool Gamepad::check_button_press(const SWGF::GAMEPAD_BUTTONS button)
+  bool Gamepad::check_button_press(const SWGF::GAMEPAD_BUTTONS button) const
   {
    return (this->check_current_button(button)==true) && (this->check_preversion_button(button)==false);
   }
 
-  bool Gamepad::check_button_release(const SWGF::GAMEPAD_BUTTONS button)
+  bool Gamepad::check_button_release(const SWGF::GAMEPAD_BUTTONS button) const
   {
    return (this->check_current_button(button)==false) && (this->check_preversion_button(button)==true);
   }
 
-  bool Gamepad::check_trigger_hold(const SWGF::GAMEPAD_TRIGGERS trigger)
+  bool Gamepad::check_trigger_hold(const SWGF::GAMEPAD_TRIGGERS trigger) const
   {
    return this->check_current_trigger(trigger);
   }
 
-  bool Gamepad::check_trigger_press(const SWGF::GAMEPAD_TRIGGERS trigger)
+  bool Gamepad::check_trigger_press(const SWGF::GAMEPAD_TRIGGERS trigger) const
   {
    return (this->check_current_trigger(trigger)==true) && (this->check_preversion_trigger(trigger)==false);
   }
 
-  bool Gamepad::check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger)
+  bool Gamepad::check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger) const
   {
    return (this->check_current_trigger(trigger)==false) && (this->check_preversion_trigger(trigger)==true);
   }
