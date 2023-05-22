@@ -214,11 +214,7 @@
       <tbody>
         <tr>
           <td><big>Operating system </big></td>
-          <td><big>Windows Vista or higher </big></td>
-        </tr>
-        <tr>
-          <td><big>System type </big></td>
-          <td><big>32 or 64 bits </big></td>
+          <td><big>Windows XP or higher </big></td>
         </tr>
         <tr>
           <td><big>Minimum color depth </big></td>
@@ -272,7 +268,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     </ul>
     <h2><a name="mozTocId56069" class="mozTocH2"></a><big>Chapter 7. Platform
         specific notes</big></h2>
-    <big><span style="text-decoration: underline;"> Windows Vista support</span><br>
+    <big><span style="text-decoration: underline;">Windows XP support</span><br>
+      <br>
+      You need TDM–GCC for <a href="https://en.wikipedia.org/wiki/Windows_XP">Windows
+        XP</a> support.<span style="text-decoration: underline;"><br>
+        <br>
+        Windows Vista support</span><br>
       <br>
       You need one of follow compilers for <a href="https://en.wikipedia.org/wiki/Windows_Vista">Windows
         Vista</a> support:<br>
@@ -1841,8 +1842,8 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       active game-pad is pressed.<br>
       <br>
       <span style="font-style: italic;">bool
-        Gamepad::check_button_released(const SWGF::GAMEPAD_BUTTONS button) const;</span>
-      – Return true if a button of active game-pad is released.<br>
+        Gamepad::check_button_released(const SWGF::GAMEPAD_BUTTONS button)
+        const;</span> – Return true if a button of active game-pad is released.<br>
       <br>
       <span style="font-style: italic;">bool Gamepad::check_trigger_hold(const
         SWGF::GAMEPAD_TRIGGERS trigger) const;</span> – Return true if specific
@@ -1853,8 +1854,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       trigger of active game-pad is pressed.<br>
       <br>
       <span style="font-style: italic;">bool
-        Gamepad::check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger) const;</span>
-      – Return true if specific trigger of active game-pad is released.<br>
+        Gamepad::check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger)
+        const;</span> – Return true if specific trigger of active game-pad is
+      released.<br>
       <span style="font-style: italic;"></span><br>
       <span style="font-style: italic;">unsigned char
         Gamepad::get_left_trigger() const;</span> – Return current value of left
@@ -2059,6 +2061,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.9 – Source code synced with Eugene game development kit 6.8.7.<br>
       6.9.1 – Source code synced with Black game development kit 4.4.7.<br>
       6.9.2 – Source code synced with Eugene game development kit 6.9.2.<br>
+      6.9.3 – Source code synced with Neon game development kit 6.2.6.<br>
     </big><big> </big>
     <p></p>
   </body>
