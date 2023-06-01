@@ -575,6 +575,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
+
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -866,6 +867,17 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;">void Sheet::load(const char *name,const
         unsigned int row_amount,const unsigned int column_amount);</span> – Load
       a sprite sheet from tagret file.<br>
+      <br>
+      <span style="font-style: italic;">Sheet* Sheet::get_handle();</span> –
+      Return the handle to sprite sheet.<br>
+      <br>
+      <span style="font-style: italic;">void Sheet::clone(Sheet *target);</span>
+      – Create copy of the sprite sheet if the image storage of target sprite
+      sheet is not empty.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">void Sheet::clone(Sheet &amp;target);</span>
+      – Create copy of the sprite sheet if the image storage of target sprite
+      sheet is not empty.<br>
       <br>
       <span style="text-decoration: underline;"> Sprite sheet texture</span><br>
       <br>
@@ -2055,7 +2067,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.9.1 – Source code synced with Black game development kit 4.4.7.<br>
       6.9.2 – Source code synced with Eugene game development kit 6.9.2.<br>
       6.9.3 – Source code synced with Neon game development kit 6.2.6.<br>
-      6.9.4 – Synchronization timer improved. </big><big> </big>
+      6.9.4 – Synchronization timer improved.<br>
+      6.9.5 – Source code synced with Eugene game development kit 6.9.4.<br>
+    </big><big> </big>
     <p></p>
   </body>
 </html>
