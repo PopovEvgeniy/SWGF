@@ -1270,6 +1270,19 @@ namespace SWGF
 
   }
 
+  void Audio::play(const bool loop)
+  {
+   if (loop==true)
+   {
+    this->play_loop();
+   }
+   else
+   {
+    this->play();
+   }
+
+  }
+
   void Audio::load(const char *target)
   {
    Core::Unicode_Convertor convertor;
@@ -2729,6 +2742,15 @@ namespace SWGF
    this->set_sprite_frame();
   }
 
+  void Sprite::destroy()
+  {
+   billboard.destroy_texture();
+   this->destroy_image();
+   this->reset_billboard_setting();
+   this->reset_animation_setting();
+   this->reset_sprite_setting();
+  }
+
   void Sprite::clone(Sprite *target)
   {
    if (target!=NULL)
@@ -2752,15 +2774,6 @@ namespace SWGF
   void Sprite::clone(Sprite &target)
   {
    this->clone(target.get_handle());
-  }
-
-  void Sprite::destroy()
-  {
-   billboard.destroy_texture();
-   this->destroy_image();
-   this->reset_billboard_setting();
-   this->reset_animation_setting();
-   this->reset_sprite_setting();
   }
 
   Sheet::Sheet()
@@ -2850,6 +2863,15 @@ namespace SWGF
    return columns;
   }
 
+  void Sheet::destroy()
+  {
+   billboard.destroy_texture();
+   this->destroy_image();
+   this->reset_billboard_setting();
+   this->reset_animation_setting();
+   this->reset_sheet_setting();
+  }
+
   void Sheet::clone(Sheet *target)
   {
    if (target!=NULL)
@@ -2876,15 +2898,6 @@ namespace SWGF
   void Sheet::clone(Sheet &target)
   {
    this->clone(target.get_handle());
-  }
-
-  void Sheet::destroy()
-  {
-   billboard.destroy_texture();
-   this->destroy_image();
-   this->reset_billboard_setting();
-   this->reset_animation_setting();
-   this->reset_sheet_setting();
   }
 
   void Sheet::select(const unsigned int row,const unsigned int column)
