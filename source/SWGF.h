@@ -287,13 +287,13 @@ typedef enum
  namespace Core
  {
 
-  typedef struct
+ typedef struct
  {
   int x;
   int y;
  } Vertex;
 
-  typedef struct
+ typedef struct
  {
   double u;
   double v;
@@ -307,12 +307,17 @@ typedef enum
   MIRROR_BOTH=3
  } MIRROR_KIND;
 
+ typedef enum
+ {
+  RED_COMPONENT=16,
+  GREEN_COMPONENT=8,
+  BLUE_COMPONENT=0,
+  ALPHA_COMPONENT=24
+ } PIXEL_COMPONENT;
+
  double get_start_offset(const double current,const double total);
  double get_end_offset(const double current,const double total);
- unsigned int get_red(const unsigned int pixel);
- unsigned int get_green(const unsigned int pixel);
- unsigned int get_blue(const unsigned int pixel);
- unsigned int get_alpha(const unsigned int pixel);
+ unsigned int get_pixel_component(const unsigned int pixel,const Core::PIXEL_COMPONENT component);
  unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha);
 
  template <class DATA_TYPE>

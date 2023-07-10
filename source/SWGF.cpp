@@ -531,24 +531,9 @@ namespace SWGF
    return (1.0/total)*current;
   }
 
-  unsigned int get_red(const unsigned int pixel)
+  unsigned int get_pixel_component(const unsigned int pixel,const Core::PIXEL_COMPONENT component)
   {
-   return (pixel >> 16) & 0xFF;
-  }
-
-  unsigned int get_green(const unsigned int pixel)
-  {
-   return (pixel >> 8) & 0xFF;
-  }
-
-  unsigned int get_blue(const unsigned int pixel)
-  {
-   return pixel & 0xFF;
-  }
-
-  unsigned int get_alpha(const unsigned int pixel)
-  {
-   return (pixel >> 24) & 0xFF;
+   return (pixel >> component) & 0xFF;
   }
 
   unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha)
@@ -649,10 +634,10 @@ namespace SWGF
    second=target[this->get_source_offset(next_x,source_y)];
    third=target[this->get_source_offset(source_x,next_y)];
    last=target[this->get_source_offset(next_x,next_y)];
-   red=(Core::get_red(first)+Core::get_red(second)+Core::get_red(third)+Core::get_red(last)+1)/4;
-   green=(Core::get_green(first)+Core::get_green(second)+Core::get_green(third)+Core::get_green(last)+1)/4;
-   blue=(Core::get_blue(first)+Core::get_blue(second)+Core::get_blue(third)+Core::get_blue(last)+1)/4;
-   alpha=(Core::get_alpha(first)+Core::get_alpha(second)+Core::get_alpha(third)+Core::get_alpha(last)+1)/4;
+   red=(Core::get_pixel_component(first,Core::RED_COMPONENT)+Core::get_pixel_component(second,Core::RED_COMPONENT)+get_pixel_component(third,Core::RED_COMPONENT)+get_pixel_component(last,Core::RED_COMPONENT)+1)/4;
+   green=(Core::get_pixel_component(first,Core::GREEN_COMPONENT)+Core::get_pixel_component(second,Core::GREEN_COMPONENT)+get_pixel_component(third,Core::GREEN_COMPONENT)+get_pixel_component(last,Core::GREEN_COMPONENT)+1)/4;
+   blue=(Core::get_pixel_component(first,Core::BLUE_COMPONENT)+Core::get_pixel_component(second,Core::BLUE_COMPONENT)+get_pixel_component(third,Core::BLUE_COMPONENT)+get_pixel_component(last,Core::BLUE_COMPONENT)+1)/4;
+   alpha=(Core::get_pixel_component(first,Core::ALPHA_COMPONENT)+Core::get_pixel_component(second,Core::ALPHA_COMPONENT)+get_pixel_component(third,Core::ALPHA_COMPONENT)+get_pixel_component(last,Core::ALPHA_COMPONENT)+1)/4;
    return Core::make_pixel(red,green,blue,alpha);
   }
 
