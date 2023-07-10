@@ -309,6 +309,11 @@ typedef enum
 
  double get_start_offset(const double current,const double total);
  double get_end_offset(const double current,const double total);
+ unsigned int get_red(const unsigned int pixel);
+ unsigned int get_green(const unsigned int pixel);
+ unsigned int get_blue(const unsigned int pixel);
+ unsigned int get_alpha(const unsigned int pixel);
+ unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha);
 
  template <class DATA_TYPE>
  class Buffer
@@ -399,6 +404,9 @@ typedef enum
    size_t get_source_offset(const unsigned int x,const unsigned int y) const;
    unsigned int get_source_x(const unsigned int target_x) const;
    unsigned int get_source_y(const unsigned int target_y) const;
+   unsigned int get_next_x(const unsigned int target_x) const;
+   unsigned int get_next_y(const unsigned int target_y) const;
+   unsigned int blend_pixels(const unsigned int *target,const unsigned int x,const unsigned int y) const;
    void load_image(const unsigned int *target);
    void scale_image(const unsigned int *target);
    void resize_image(const unsigned int *target);

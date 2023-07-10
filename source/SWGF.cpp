@@ -531,6 +531,31 @@ namespace SWGF
    return (1.0/total)*current;
   }
 
+  unsigned int get_red(const unsigned int pixel)
+  {
+   return (pixel >> 16) & 0xFF;
+  }
+
+  unsigned int get_green(const unsigned int pixel)
+  {
+   return (pixel >> 8) & 0xFF;
+  }
+
+  unsigned int get_blue(const unsigned int pixel)
+  {
+   return pixel & 0xFF;
+  }
+
+  unsigned int get_alpha(const unsigned int pixel)
+  {
+   return (pixel >> 24) & 0xFF;
+  }
+
+  unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha)
+  {
+   return (alpha << 24)+(red << 16)+(green << 8)+blue;
+  }
+
   Unicode_Convertor::Unicode_Convertor()
   {
    target.set_length(0);
@@ -591,6 +616,46 @@ namespace SWGF
    return (target_y*y_ratio)/UCHAR_MAX;
   }
 
+  unsigned int Resizer::get_next_x(const unsigned int target_x) const
+  {
+   unsigned int next_x;
+   next_x=this->get_source_x(target_x)+1;
+   if (next_x>=source_width)
+   {
+    next_x=source_width-1;
+   }
+   return next_x;
+  }
+
+  unsigned int Resizer::get_next_y(const unsigned int target_y) const
+  {
+   unsigned int next_y;
+   next_y=this->get_source_y(target_y)+1;
+   if (next_y>=source_height)
+   {
+    next_y=source_height-1;
+   }
+   return next_y;
+  }
+
+  unsigned int Resizer::blend_pixels(const unsigned int *target,const unsigned int x,const unsigned int y) const
+  {
+   unsigned int source_x,source_y,next_x,next_y,first,second,third,last,red,green,blue,alpha;
+   source_x=this->get_source_x(x);
+   source_y=this->get_source_y(y);
+   next_x=this->get_next_x(x);
+   next_y=this->get_next_y(y);
+   first=target[this->get_source_offset(source_x,source_y)];
+   second=target[this->get_source_offset(next_x,source_y)];
+   third=target[this->get_source_offset(source_x,next_y)];
+   last=target[this->get_source_offset(next_x,next_y)];
+   red=(Core::get_red(first)+Core::get_red(second)+Core::get_red(third)+Core::get_red(last)+1)/4;
+   green=(Core::get_green(first)+Core::get_green(second)+Core::get_green(third)+Core::get_green(last)+1)/4;
+   blue=(Core::get_blue(first)+Core::get_blue(second)+Core::get_blue(third)+Core::get_blue(last)+1)/4;
+   alpha=(Core::get_alpha(first)+Core::get_alpha(second)+Core::get_alpha(third)+Core::get_alpha(last)+1)/4;
+   return Core::make_pixel(red,green,blue,alpha);
+  }
+
   void Resizer::load_image(const unsigned int *target)
   {
    size_t index;
@@ -609,7 +674,7 @@ namespace SWGF
    y=0;
    for (index=0;index<image.get_length();++index)
    {
-    image[index]=target[this->get_source_offset(this->get_source_x(x),this->get_source_y(y))];
+    image[index]=this->blend_pixels(target,x,y);
     ++x;
     if (x==target_width)
     {
