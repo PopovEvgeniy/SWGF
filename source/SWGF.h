@@ -287,13 +287,13 @@ typedef enum
  namespace Core
  {
 
- typedef struct
+  typedef struct
  {
   int x;
   int y;
  } Vertex;
 
- typedef struct
+  typedef struct
  {
   double u;
   double v;
@@ -307,18 +307,8 @@ typedef enum
   MIRROR_BOTH=3
  } MIRROR_KIND;
 
- typedef enum
- {
-  RED_COMPONENT=16,
-  GREEN_COMPONENT=8,
-  BLUE_COMPONENT=0,
-  ALPHA_COMPONENT=24
- } PIXEL_COMPONENT;
-
  double get_start_offset(const double current,const double total);
  double get_end_offset(const double current,const double total);
- unsigned int get_pixel_component(const unsigned int pixel,const Core::PIXEL_COMPONENT component);
- unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha);
 
  template <class DATA_TYPE>
  class Buffer
@@ -404,20 +394,12 @@ typedef enum
    unsigned int source_height;
    unsigned int target_width;
    unsigned int target_height;
-   unsigned int x_ratio;
-   unsigned int y_ratio;
    size_t get_source_offset(const unsigned int x,const unsigned int y) const;
-   unsigned int get_source_x(const unsigned int target_x) const;
-   unsigned int get_source_y(const unsigned int target_y) const;
-   unsigned int get_next_x(const unsigned int target_x) const;
-   unsigned int get_next_y(const unsigned int target_y) const;
-   unsigned int blend_pixels(const unsigned int *target,const unsigned int x,const unsigned int y) const;
    void load_image(const unsigned int *target);
    void scale_image(const unsigned int *target);
    void resize_image(const unsigned int *target);
    void set_setting(const unsigned int width,const unsigned int height);
    void correct_size(const unsigned int limit);
-   void calculate_scale_ratio();
    void calculate_size();
    void create_texture();
    public:

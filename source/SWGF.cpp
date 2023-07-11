@@ -531,16 +531,6 @@ namespace SWGF
    return (1.0/total)*current;
   }
 
-  unsigned int get_pixel_component(const unsigned int pixel,const Core::PIXEL_COMPONENT component)
-  {
-   return (pixel >> component) & 0xFF;
-  }
-
-  unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha)
-  {
-   return (alpha << 24)+(red << 16)+(green << 8)+blue;
-  }
-
   Unicode_Convertor::Unicode_Convertor()
   {
    target.set_length(0);
@@ -575,8 +565,6 @@ namespace SWGF
    image.set_length(0);
    source_width=0;
    source_height=0;
-   x_ratio=0;
-   y_ratio=0;
    target_width=1;
    target_height=1;
   }
@@ -589,56 +577,6 @@ namespace SWGF
   size_t Resizer::get_source_offset(const unsigned int x,const unsigned int y) const
   {
    return static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(source_width);
-  }
-
-  unsigned int Resizer::get_source_x(const unsigned int target_x) const
-  {
-   return (target_x*x_ratio)/UCHAR_MAX;
-  }
-
-  unsigned int Resizer::get_source_y(const unsigned int target_y) const
-  {
-   return (target_y*y_ratio)/UCHAR_MAX;
-  }
-
-  unsigned int Resizer::get_next_x(const unsigned int target_x) const
-  {
-   unsigned int next_x;
-   next_x=this->get_source_x(target_x)+1;
-   if (next_x>=source_width)
-   {
-    next_x=source_width-1;
-   }
-   return next_x;
-  }
-
-  unsigned int Resizer::get_next_y(const unsigned int target_y) const
-  {
-   unsigned int next_y;
-   next_y=this->get_source_y(target_y)+1;
-   if (next_y>=source_height)
-   {
-    next_y=source_height-1;
-   }
-   return next_y;
-  }
-
-  unsigned int Resizer::blend_pixels(const unsigned int *target,const unsigned int x,const unsigned int y) const
-  {
-   unsigned int source_x,source_y,next_x,next_y,first,second,third,last,red,green,blue,alpha;
-   source_x=this->get_source_x(x);
-   source_y=this->get_source_y(y);
-   next_x=this->get_next_x(x);
-   next_y=this->get_next_y(y);
-   first=target[this->get_source_offset(source_x,source_y)];
-   second=target[this->get_source_offset(next_x,source_y)];
-   third=target[this->get_source_offset(source_x,next_y)];
-   last=target[this->get_source_offset(next_x,next_y)];
-   red=(Core::get_pixel_component(first,Core::RED_COMPONENT)+Core::get_pixel_component(second,Core::RED_COMPONENT)+get_pixel_component(third,Core::RED_COMPONENT)+get_pixel_component(last,Core::RED_COMPONENT)+1)/4;
-   green=(Core::get_pixel_component(first,Core::GREEN_COMPONENT)+Core::get_pixel_component(second,Core::GREEN_COMPONENT)+get_pixel_component(third,Core::GREEN_COMPONENT)+get_pixel_component(last,Core::GREEN_COMPONENT)+1)/4;
-   blue=(Core::get_pixel_component(first,Core::BLUE_COMPONENT)+Core::get_pixel_component(second,Core::BLUE_COMPONENT)+get_pixel_component(third,Core::BLUE_COMPONENT)+get_pixel_component(last,Core::BLUE_COMPONENT)+1)/4;
-   alpha=(Core::get_pixel_component(first,Core::ALPHA_COMPONENT)+Core::get_pixel_component(second,Core::ALPHA_COMPONENT)+get_pixel_component(third,Core::ALPHA_COMPONENT)+get_pixel_component(last,Core::ALPHA_COMPONENT)+1)/4;
-   return Core::make_pixel(red,green,blue,alpha);
   }
 
   void Resizer::load_image(const unsigned int *target)
@@ -654,12 +592,14 @@ namespace SWGF
   void Resizer::scale_image(const unsigned int *target)
   {
    size_t index;
-   unsigned int x,y;
+   unsigned int x,y,x_ratio,y_ratio;
    x=0;
    y=0;
+   x_ratio=(source_width*UCHAR_MAX)/target_width;
+   y_ratio=(source_height*UCHAR_MAX)/target_height;
    for (index=0;index<image.get_length();++index)
    {
-    image[index]=this->blend_pixels(target,x,y);
+    image[index]=target[this->get_source_offset((x*x_ratio)/UCHAR_MAX,(y*y_ratio)/UCHAR_MAX)];
     ++x;
     if (x==target_width)
     {
@@ -703,12 +643,6 @@ namespace SWGF
 
   }
 
-  void Resizer::calculate_scale_ratio()
-  {
-   x_ratio=(source_width*UCHAR_MAX)/target_width;
-   y_ratio=(source_height*UCHAR_MAX)/target_height;
-  }
-
   void Resizer::calculate_size()
   {
    while (target_width<source_width)
@@ -735,7 +669,6 @@ namespace SWGF
    this->set_setting(width,height);
    this->calculate_size();
    this->correct_size(limit);
-   this->calculate_scale_ratio();
    this->create_texture();
    this->resize_image(target);
   }
