@@ -606,7 +606,8 @@ namespace SWGF
   void Resizer::load_image(const unsigned int *target)
   {
    size_t index;
-   for (index=0;index<image.get_length();++index)
+   image[0]=target[0];
+   for (index=image.get_length()-1;index>0;--index)
    {
     image[index]=target[index];
    }
@@ -2271,7 +2272,8 @@ namespace SWGF
    size_t index;
    if (target!=NULL)
    {
-    for (index=0;index<image.get_length();++index)
+    image[0]=target[0];
+    for (index=image.get_length()-1;index>0;--index)
     {
      image[index]=target[index];
     }
