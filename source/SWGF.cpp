@@ -2030,13 +2030,16 @@ namespace SWGF
 
   bool Screen::update()
   {
+   bool run;
+   run=false;
    if (this->get_context()!=NULL)
    {
     this->Swap();
     this->update_counter();
     this->clear_stage();
+    run=this->process_message();
    }
-   return this->process_message();
+   return run;
   }
 
   bool Screen::sync()
