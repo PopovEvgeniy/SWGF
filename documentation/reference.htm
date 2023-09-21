@@ -351,6 +351,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         subsystem</span><br>
       <br>
       Base graphics subsystem do rendering game scene. This subsystem using <a
+
         href="http://opengl.org">OPENGL</a> for render. Most modern video–card
       support hardware accelerated OPENGL. Software emulated OPENGL will
       activate if </big><big>hardware acceleration not available.</big><br>
@@ -573,6 +574,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
+
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -606,12 +608,13 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="text-decoration: underline;"> Background texture</span><br>
       <br>
       Background don't draw if background texture is don't exist. Background
-      texture will automatically create after call load_background method.<br>
+      texture will automatically create after call <i>load_background</i>
+      method.<br>
       <br>
       <span style="text-decoration: underline;"> Important notice</span><br>
       <br>
       Always call <span style="font-style: italic;">prepare</span> method after
-      set background setting or load background.<br>
+       load background.<br>
     </big>
     <h2><a name="mozTocId309905" class="mozTocH2"></a><big>Chapter 7. Base
         sprite subsystem</big></h2>
@@ -824,10 +827,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       public methods.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -1949,7 +1954,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     <big><br style="text-decoration: underline;">
       <span style="text-decoration: underline;"> Core classes</span><br>
       <br>
-      All engine core classes declared in <span style="font-style: italic;">Core</span>
+      All engine core classes and functions declared in <span style="font-style: italic;">Core</span>
       sub–namespace.<br>
       <br>
     </big> <big><span style="font-style: italic;"> FPS</span> implement fps
@@ -2044,13 +2049,15 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.3.7 – 6.5.1 – Experimental branch.<br>
       6.5.2 – Source code synced with Eugene game development kit 6.5.7.<br>
       6.5.3 – Small changes.<br>
-      6.5.4 – Game-pad subsystem back-ported from Black game development kit 4.1.4.<br>
+      6.5.4 – Game-pad subsystem back-ported from Black game development kit
+      4.1.4.<br>
       6.5.5 – 6.6.6 – Game-pad subsystem improved.<br>
       6.6.6.1 – Documentation updated.<br>
       6.6.7 – Small changes.<br>
       6.6.8 – 6.7 – Game-pad subsystem improved.<br>
       6.7.1 – Source code synced with Eugene game development kit 6.6.1.<br>
-      6.7.2 – Synchronization timer back-ported from Gray game development kit 2.3.5.<br>
+      6.7.2 – Synchronization timer back-ported from Gray game development kit
+      2.3.5.<br>
       6.7.3 – Windows XP support removed.<br>
       6.7.4 – 6.7.5 – Small changes.<br>
       6.7.6 – Source code synced with Eugene game development kit 6.6.6.<br>
@@ -2098,7 +2105,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.2.4 – Source code synced with Eugene game development kit 7.3.3.<br>
       7.2.5 – Source code synced with Eugene game development kit 7.3.4.<br>
       7.2.6 – Source code synced with Eugene game development kit 7.3.5.<br>
-    <big> </big>
-    <p></p>
+      7.2.7 – 7.2.8 – Small changes.<br>
+      7.2.9 – Image resizer improved.<br>
+      <big> </big>
+      <p></p>
+    </big>
   </body>
 </html>
