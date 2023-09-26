@@ -409,7 +409,6 @@ typedef enum
    unsigned int get_source_y(const unsigned int target_y) const;
    unsigned int get_next_x(const unsigned int target_x) const;
    unsigned int get_next_y(const unsigned int target_y) const;
-   unsigned int blend_pixels(const unsigned int *target,const unsigned int x,const unsigned int y) const;
    void upscale_image(const unsigned int *target);
    void downscale_image(const unsigned int *target);
    void load_image(const unsigned int *target);
