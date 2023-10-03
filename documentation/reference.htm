@@ -55,6 +55,7 @@
           <li><a href="#mozTocId853711">Chapter 2. Abnormal program termination</a></li>
           <li><a href="#mozTocId656377">Chapter 3. Timer</a></li>
           <li><a href="#mozTocId381935">Chapter 4. Collision</a></li>
+          <li><a href="#mozTocId828077">Chapter 5. Tile–map</a></li>
         </ul>
       </li>
       <li><a href="#mozTocId611237">Part 5. Other important things</a>
@@ -286,6 +287,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
+
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -351,7 +353,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         subsystem</span><br>
       <br>
       Base graphics subsystem do rendering game scene. This subsystem using <a
-
         href="http://opengl.org">OPENGL</a> for render. Most modern video–card
       support hardware accelerated OPENGL. Software emulated OPENGL will
       activate if </big><big>hardware acceleration not available.</big><br>
@@ -815,7 +816,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       <span style="text-decoration: underline;"> Row and column</span><br>
       <br>
-      First row is 1. First column is 1.<br>
+      First row index is 1. First column index is 1.<br>
     </big><big><br>
     </big><big><span style="text-decoration: underline;"> Work with sprite sheet
         subsystem</span><br>
@@ -1092,6 +1093,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       &nbsp; <span style="font-style: italic;"> unsigned int y;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int width;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int height;</span><br
+
         style="font-style: italic;">
       <span style="font-style: italic;"> } BOX;</span><br>
       <br>
@@ -1112,6 +1114,57 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;"> bool Collision::check_collision(const
         SWGF::BOX &amp;first_target,const SWGF::BOX &amp;second_target);</span>
       – Set collision targets and check collision between it.<br>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId828077"></a><big>Chapter 5. Tile–map</big></h2>
+    <big><span style="text-decoration: underline;">A few words about tile-map</span><br>
+      <br>
+      The tile–map is tile matrix. A tile is a small non–transparent sprite. A
+      tile–map is very useful thing for level background.<br>
+      <br style="text-decoration: underline;">
+      <span style="text-decoration: underline;">Rows and columns</span><br>
+      <br>
+      First row index is 0. First column index is 0.<br>
+      <br>
+      <span style="text-decoration: underline;">Work with tile-map</span><br>
+      <br>
+      <span style="font-style: italic;">Tilemap</span> class provide easy access
+      to the tile–map. It is a simple class with few methods. Let's look at
+      public methods.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">void Tilemap::initialize(const unsigned
+        int tile_width,const unsigned int tile_height);</span> – Initialize the
+      subsystem.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned int Tilemap::get_tile_width()
+        const;</span> – Return the tile width in pixels.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned int Tilemap::get_tile_height()
+        const;</span> – Return the tile height in pixels.<br>
+      <br>
+      <span style="font-style: italic;">unsigned int Tilemap::get_x(const
+        unsigned int row) const;</span> – Get x-coordinate from target row.<br>
+      <br>
+      <span style="font-style: italic;">unsigned int Tilemap::get_y(const
+        unsigned int column) const;</span> – Get y-coordinate from target
+      column.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned int Tilemap::get_row(const
+        unsigned int x) const;</span> – Get the row from x-coordinate.<br>
+      <br>
+      <span style="font-style: italic;">unsigned int Tilemap::get_column(const
+        unsigned int y) const;</span> – Get the column from y-coordinate.<br>
+      <br>
+      <span style="font-style: italic;">unsigned int
+        Tilemap::get_row_amount(const unsigned int viewport_width) const;</span>
+      – Get amount of maximum visible rows.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">unsigned int
+        Tilemap::get_column_amount(const unsigned int viewport_width) const;</span>
+      – Get amount of maximum visible columns.<br>
+      <br>
+      <span style="font-style: italic;">SWGF::BOX Tilemap::get_box(const
+        unsigned int row,const unsigned int column) const;</span> – Return
+      collision related information.<br>
     </big>
     <h1><a name="mozTocId611237" class="mozTocH1"></a><big>Part 5. Other
         important things</big></h1>
@@ -1773,6 +1826,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2049,15 +2103,13 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.3.7 – 6.5.1 – Experimental branch.<br>
       6.5.2 – Source code synced with Eugene game development kit 6.5.7.<br>
       6.5.3 – Small changes.<br>
-      6.5.4 – Game-pad subsystem back-ported from Black game development kit
-      4.1.4.<br>
+      6.5.4 – Game-pad subsystem back-ported from Black game development kit 4.1.4.<br>
       6.5.5 – 6.6.6 – Game-pad subsystem improved.<br>
       6.6.6.1 – Documentation updated.<br>
       6.6.7 – Small changes.<br>
       6.6.8 – 6.7 – Game-pad subsystem improved.<br>
       6.7.1 – Source code synced with Eugene game development kit 6.6.1.<br>
-      6.7.2 – Synchronization timer back-ported from Gray game development kit
-      2.3.5.<br>
+      6.7.2 – Synchronization timer back-ported from Gray game development kit 2.3.5.<br>
       6.7.3 – Windows XP support removed.<br>
       6.7.4 – 6.7.5 – Small changes.<br>
       6.7.6 – Source code synced with Eugene game development kit 6.6.6.<br>
@@ -2110,6 +2162,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.3.1 – Small changes.<br>
       7.3.2 – 7.3.5 – Image resizer improved.<br>
       7.3.6 – Source code synced with Eugene game development kit 7.3.7.<br>
+      7.3.7 – Source code synced with Eugene game development kit 7.4.4.<br>
       <big> </big>
       <p></p>
     </big>
