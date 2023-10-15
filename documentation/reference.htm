@@ -1037,7 +1037,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       <span style="text-decoration: underline;"> Important remark</span><br>
       <br>
-      A new will image replace current image if current image already exist.
+      A new image will replace current image if current image already exist.
       Incorrect images will ignore and don't load.<br>
       <br>
       <span style="text-decoration: underline;"> Supported format</span><br>
@@ -1055,48 +1055,62 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     <big></big>
     <h2><a id="mozTocId178104" class="mozTocH2"></a><big>Chapter 1. The
         sub–namespace</big></h2>
-    <big>
-      All subsystems in this section declared in <span style="font-style: italic;">Transformation</span>
+    <big> All subsystems in this section declared in <span style="font-style: italic;">Transformation</span>
       sub–namespace.<br>
     </big>
     <h2><a id="mozTocId728523" class="mozTocH2"></a><big>Chapter 2. Cartesian
         coordinates and screen coordinates.</big></h2>
-    <big><span style="text-decoration: underline;">
-        Cartesian coordinates</span><br>
+    <big><span style="text-decoration: underline;"> Cartesian coordinates</span><br>
       <br>
       Cartesian coordinates start at center of the screen. Look to this picture
       to understand it.<br>
       <br>
       <img style="width: 107px; height: 111px;" alt="" src="cartesian_system.png"><br>
       <br>
-      <span style="text-decoration: underline;">
-        Convert cartesian coordinates to screen coordinates and convert screen
-        coordinates to cartsian coordinates.</span><br>
+      <span style="text-decoration: underline;"> Cartesian coordinates to screen
+        coordinates conversion and screen coordinates to cartsian coordinates
+        conversion</span><br>
       <br>
       You can convert cartesian coordinates to screen coordinates. You can also
       convert screen coordinates to cartesian coordinates.<br>
-      Just use <span style="font-style: italic;">Coordinates</span> for doing
-      it. Let's look at public methods.<br>
+      Just use <span style="font-style: italic;">Coordinates</span> class for
+      doing it. Let's look at public methods.<br>
       <br>
-      <span style="font-style: italic;">
-        void Coordinates::initialize(const int viewport_width,const int
-        viewport_height);</span> – Initialize the subsystem.<br>
+      <span style="font-style: italic;"> void Coordinates::initialize(const int
+        viewport_width,const int viewport_height);</span> – Initialize the
+      subsystem.<br>
       <br>
-      <span style="font-style: italic;">
-        int Coordinates::get_screen_x(const int x) const;</span> – Convert
-      cartesian x-coordinate to screen x-coordinate.<br>
+      <span style="font-style: italic;">int
+        Coordinates::get_lowest_cartesian_x() const;</span> – Return lowest
+      allowable cartesian x-coordinate.<br>
       <br>
-      <span style="font-style: italic;">
-        int Coordinates::get_screen_y(const int x) const;</span> – Convert
-      cartesian y-coordinate to screen y-coordinate.<br>
+      <span style="font-style: italic;">int
+        Coordinates::get_highest_cartesian_x() const;</span> – Return highest
+      allowable cartesian x-coordinate.<br>
+      <br>
+      <span style="font-style: italic;">int
+        Coordinates::get_lowest_cartesian_y() const;</span> – Return lowest
+      allowable cartesian y-coordinate.<br>
+      <br>
+      <span style="font-style: italic;">int
+        Coordinates::get_highest_cartesian_y() const;</span> – Return highest
+      allowable cartesian y-coordinate.<br>
+      <br>
+      <span style="font-style: italic;"> int Coordinates::get_screen_x(const int
+        x) const;</span> – Convert cartesian x-coordinate to screen
+      x-coordinate.<br>
+      <br>
+      <span style="font-style: italic;"> int Coordinates::get_screen_y(const int
+        x) const;</span> – Convert cartesian y-coordinate to screen
+      y-coordinate.<br>
       <br style="font-style: italic;">
-      <span style="font-style: italic;">
-        int Coordinates::get_cartesian_x(const int x) const;</span> – Convert
-      screen x-coordinate to cartesian x-coordinate.<br>
+      <span style="font-style: italic;"> int Coordinates::get_cartesian_x(const
+        int x) const;</span> – Convert screen x-coordinate to cartesian
+      x-coordinate.<br>
       <br>
-      <span style="font-style: italic;">
-        int Coordinates::get_cartesian_y(const int x) const;</span> – Convert
-      screen y-coordinate to cartesian y-coordinate.<br>
+      <span style="font-style: italic;"> int Coordinates::get_cartesian_y(const
+        int x) const;</span> – Convert screen y-coordinate to cartesian
+      y-coordinate.<br>
     </big> <big> </big>
     <h1><a name="mozTocId64443" class="mozTocH1"></a><big>Part 5. Common things</big></h1>
     <h2><a name="mozTocId597525" class="mozTocH2"></a><big>Chapter 1. The
@@ -1876,6 +1890,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2215,6 +2230,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.3.8 – Source code synced with Eugene game development kit 7.4.5.<br>
       7.3.9 – Source code synced with Eugene game development kit 7.5.<br>
       7.4 – Source code synced with Eugene game development kit 7.5.3.<br>
+      7.4.1 – Source code synced with Eugene game development kit 7.5.4.<br>
       <big> </big>
       <p></p>
     </big>
