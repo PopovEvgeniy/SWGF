@@ -335,8 +335,8 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     <h2><a name="mozTocId312970" class="mozTocH2"></a><big>Chapter 1. Coordinate
         system</big></h2>
     <big><br>
-      The engine uses standard coordinate system. Coordinates start at top–left
-      corner. Look to this picture to understand it.<br>
+      The engine uses standard coordinate system by default. Coordinates start
+      at top–left corner. Look to this picture to understand it.<br>
       <br>
       <img style="width: 107px; height: 111px;" alt="" src="coordinate_system.png">
     </big>
@@ -581,7 +581,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -1058,8 +1057,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     <big> All subsystems in this section declared in <span style="font-style: italic;">Transformation</span>
       sub–namespace.<br>
     </big>
-    <h2><a id="mozTocId728523" class="mozTocH2"></a><big>Chapter 2. Cartesian
-        coordinates and screen coordinates.</big></h2>
+    <h2><big>Chapter 2. Cartesian coordinates and screen coordinates</big></h2>
     <big><span style="text-decoration: underline;"> Cartesian coordinates</span><br>
       <br>
       Cartesian coordinates start at center of the screen. Look to this picture
@@ -1096,12 +1094,20 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         Coordinates::get_highest_cartesian_y() const;</span> – Return highest
       allowable cartesian y-coordinate.<br>
       <br>
+      <span style="font-style: italic;">bool
+        Coordinates::check_cartesian_x(const int x) const;</span> – Return true
+      if the cartesian x-coordinate is valid.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">bool
+        Coordinates::check_cartesian_y(const int y) const;</span> – Return true
+      if the cartesian y-coordinate is valid.<br>
+      <br>
       <span style="font-style: italic;"> int Coordinates::get_screen_x(const int
         x) const;</span> – Convert cartesian x-coordinate to screen
       x-coordinate.<br>
       <br>
       <span style="font-style: italic;"> int Coordinates::get_screen_y(const int
-        x) const;</span> – Convert cartesian y-coordinate to screen
+        y) const;</span> – Convert cartesian y-coordinate to screen
       y-coordinate.<br>
       <br style="font-style: italic;">
       <span style="font-style: italic;"> int Coordinates::get_cartesian_x(const
@@ -1109,7 +1115,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       x-coordinate.<br>
       <br>
       <span style="font-style: italic;"> int Coordinates::get_cartesian_y(const
-        int x) const;</span> – Convert screen y-coordinate to cartesian
+        int y) const;</span> – Convert screen y-coordinate to cartesian
       y-coordinate.<br>
     </big> <big> </big>
     <h1><a name="mozTocId64443" class="mozTocH1"></a><big>Part 5. Common things</big></h1>
@@ -1158,6 +1164,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       &nbsp; <span style="font-style: italic;"> unsigned int y;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int width;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int height;</span><br
+
         style="font-style: italic;">
       <span style="font-style: italic;"> } BOX;</span><br>
       <br>
@@ -2231,6 +2238,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.3.9 – Source code synced with Eugene game development kit 7.5.<br>
       7.4 – Source code synced with Eugene game development kit 7.5.3.<br>
       7.4.1 – Source code synced with Eugene game development kit 7.5.4.<br>
+      7.4.2 – Source code synced with Eugene game development kit 7.5.8.<br>
       <big> </big>
       <p></p>
     </big>
