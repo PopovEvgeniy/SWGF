@@ -43,17 +43,20 @@
           <li><a href="#mozTocId904725">Chapter 5. Image kind</a></li>
           <li><a href="#mozTocId738557">Chapter 6. Background</a></li>
           <li><a href="#mozTocId309905">Chapter 7. Base sprite subsystem</a></li>
-          <li><a href="#mozTocId662651">Chapter 8. Ordinary sprites</a></li>
+          <li><a href="#mozTocId662651"> Chapter 8. Ordinary sprites</a></li>
           <li><a href="#mozTocId146800">Chapter 9. Sprite sheet</a></li>
           <li><a href="#mozTocId752257">Chapter 10. Text</a></li>
           <li><a href="#mozTocId67980">Chapter 11. Loading images</a></li>
         </ul>
       </li>
-      <li><a href="#mozTocId532116">Part 4. Transformation</a>
+      <li><a href="#mozTocId99230">Part 4. Transformation</a>
         <ul>
-          <li><a href="#mozTocId178104">Chapter 1. The sub–namespace</a></li>
-          <li><a href="#mozTocId728523">Chapter 2. Cartesian coordinates and
-              screen coordinates.</a></li>
+          <li><a href="#mozTocId248613">Chapter 1. The sub–namespace</a></li>
+          <li><a href="#mozTocId462005">Chapter 2. Cartesian coordinates and
+              screen coordinates</a></li>
+          <li><a href="#mozTocId251950">Chapter 3. Cartesian coordinates and
+              isometric coordinates</a></li>
+          <li><a href="#mozTocId143616">Chapter 4. Isometric level </a></li>
         </ul>
       </li>
       <li><a href="#mozTocId64443">Part 5. Common things</a>
@@ -79,12 +82,12 @@
           <li><a href="#mozTocId573582">Chapter 3. Resource manager</a></li>
         </ul>
       </li>
-      <li><a href="#mozTocId590919">Part 8. Binary files</a>
+      <li><a href="#mozTocId590919"> Part 8. Binary files</a>
         <ul>
           <li><a href="#mozTocId200879">Chapter 1. The sub–namespace</a></li>
-          <li><a href="#mozTocId961921">Chapter 2. Base binary file subsystem</a></li>
-          <li><a href="#mozTocId424835">Chapter 3. File reader</a></li>
-          <li><a href="#mozTocId511135">Chapter 4. File writer</a></li>
+          <li><a href="#mozTocId961921"> Chapter 2. Base binary file subsystem</a></li>
+          <li><a href="#mozTocId424835"> Chapter 3. File reader</a></li>
+          <li><a href="#mozTocId511135"> Chapter 4. File writer</a></li>
         </ul>
       </li>
       <li><a href="#mozTocId291572">Part 9. Input</a>
@@ -1059,14 +1062,16 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       the correct format. I recommend use <a href="https://www.gimp.org">GIMP</a>
       for doing it. It is a powerful image editor.<br>
     </big>
-    <h1><a id="mozTocId532116" class="mozTocH1"></a><big>Part 4. Transformation</big></h1>
+    <h1><a class="mozTocH1" name="mozTocId99230"></a><a id="mozTocId532116" class="mozTocH1"></a><big>Part
+        4. Transformation</big></h1>
     <big></big>
-    <h2><a id="mozTocId178104" class="mozTocH2"></a><big>Chapter 1. The
-        sub–namespace</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId248613"></a><a id="mozTocId178104" class="mozTocH2"></a><big>Chapter
+        1. The sub–namespace</big></h2>
     <big> All subsystems in this section declared in <span style="font-style: italic;">Transformation</span>
       sub–namespace.<br>
     </big>
-    <h2><big>Chapter 2. Cartesian coordinates and screen coordinates</big></h2>
+    <h2><a class="mozTocH2" name="mozTocId462005"></a><big>Chapter 2. Cartesian
+        coordinates and screen coordinates</big></h2>
     <big><span style="text-decoration: underline;"> Cartesian coordinates</span><br>
       <br>
       Cartesian coordinates start at center of the screen. Look to this picture
@@ -1132,7 +1137,74 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;"> int Coordinates::get_cartesian_y(const
         int y) const;</span> – Convert screen y-coordinate to cartesian
       y-coordinate.<br>
-    </big> <big> </big>
+    </big>
+    <h2><a class="mozTocH2" name="mozTocId251950"></a><big>Chapter 3. Cartesian
+        coordinates and isometric coordinates</big></h2>
+    <big><span style="text-decoration: underline;">A few words about isometric</span><br>
+      <br>
+      <a href="https://en.wikipedia.org/wiki/Isometric_projection">Isometric</a>
+      is very popular way for pseudo-3D games. Many old-school games are
+      isometric games.<br>
+      <br>
+    </big><big><span style="text-decoration: underline;">Cartesian coordinates
+        to isometric coordinates conversion and isometric coordinates to
+        cartsian coordinates conversion</span><br>
+      <br>
+      You can convert cartesian coordinates to isometric coordinates. You can
+      also convert isometric coordinates to cartesian coordinates.<br>
+      Just use <span style="font-style: italic;">Isometric</span> class for
+      doing it. Let's look at public methods.<br>
+      <br>
+    </big><big><span style="font-style: italic;">void
+        Isometric::set_target(const int x,const int y);</span> – Set target
+      point.<br>
+      <br>
+    </big><big><span style="font-style: italic;">int
+        Isometric::get_isometric_x() const;</span> – Convert x-coordinate of
+      target point from cartesian system to isometric system.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">int Isometric::get_isometric_y() const;</span>
+      – </big><big>Convert y-coordinate of target point from cartesian system
+      to isometric system.</big><br>
+    <big> <br>
+      <span style="font-style: italic;">int Isometric::get_cartesian_x(const int
+        x) const;</span> – </big><big>Convert x-coordinate of target point from
+      isometric system to cartesian system.</big><br>
+    <big> <br style="font-style: italic;">
+      <span style="font-style: italic;">int Isometric::get_cartesian_y(const int
+        y) const;</span> – </big><big>Convert y-coordinate of target point from
+      isometric system to cartesian system.</big>
+    <h2><a class="mozTocH2" name="mozTocId143616"></a><big>Chapter 4. Isometric
+        level<br>
+      </big></h2>
+    <big><span style="text-decoration: underline;"></span> Isometric level
+      subsystem intend for help you to create an isometric levels. Just use <span
+        style="font-style: italic;">World</span> class for doing it. Let's look
+      at public methods.<br>
+      <br>
+      <span style="font-style: italic;">void World::initialize(const int
+        tile_width,const int tile_height);</span> – Initialize the subsystem.<br>
+      <br>
+      <span style="font-style: italic;">int World::get_target_x(const int row,</span></big><big
+      style="font-style: italic;">const int column</big><big><span style="font-style: italic;">)
+        const;</span> – Get target cartesian x-coordinate from the row and
+      column.<br>
+      <br>
+      <span style="font-style: italic;">int World::get_target_y(const int row</span></big><big
+
+      style="font-style: italic;">,</big><big style="font-style: italic;">const
+      int column</big><big><span style="font-style: italic;">) const;</span> –
+      Get target cartesian y-coordinate </big><big>from the row and column.<br>
+      <br>
+    </big><big><span style="font-style: italic;">int World::get_row(const int x,</span></big><big
+      style="font-style: italic;">const int y</big><big><span style="font-style: italic;">)
+        const;</span> – Get the row from target point.<br>
+      <br>
+      <span style="font-style: italic;">int World::get_column(const int y</span></big><big
+      style="font-style: italic;">,</big><big style="font-style: italic;">const
+      int y</big><big><span style="font-style: italic;">) const;</span> – Get
+      the column</big><big> from target point.</big><br>
+    <big> </big>
     <h1><a name="mozTocId64443" class="mozTocH1"></a><big>Part 5. Common things</big></h1>
     <h2><a name="mozTocId597525" class="mozTocH2"></a><big>Chapter 1. The
         sub–namespace</big></h2>
@@ -2207,7 +2279,8 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.6.7 – Small changes.<br>
       6.6.8 – 6.7 – Game-pad subsystem improved.<br>
       6.7.1 – Source code synced with Eugene game development kit 6.6.1.<br>
-      6.7.2 – Synchronization timer back-ported from Gray game development kit 2.3.5.<br>
+      6.7.2 – Synchronization timer back-ported from Gray game development kit
+      2.3.5.<br>
       6.7.3 – Windows XP support removed.<br>
       6.7.4 – 6.7.5 – Small changes.<br>
       6.7.6 – Source code synced with Eugene game development kit 6.6.6.<br>
@@ -2278,8 +2351,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.5.2 – Source code synced with Eugene game development kit 7.7.4.<br>
       7.5.3 – Source code synced with Eugene game development kit 7.7.5.<br>
       7.5.4 – Source code synced with Eugene game development kit 7.7.6.<br>
-      <big> </big>
-      <p></p>
-    </big>
+    </big><big> 7.5.5 – Source code synced with Eugene game development kit 7.8.</big><br>
   </body>
 </html>
