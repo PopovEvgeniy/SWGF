@@ -298,7 +298,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
-
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -592,7 +591,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -1157,23 +1155,40 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big><big><span style="font-style: italic;">void
         Isometric::set_target(const int x,const int y);</span> – Set target
-      point.<br>
+      point.</big><big><span style="font-style: italic;"></span></big><big><br>
       <br>
-    </big><big><span style="font-style: italic;">int
-        Isometric::get_isometric_x() const;</span> – Convert x-coordinate of
-      target point from cartesian system to isometric system.<br>
+      <span style="font-style: italic;">int Isometric::get_isometric_x() const;</span>
+      – Convert x-coordinate of target point from cartesian system to isometric
+      system.<br>
       <br style="font-style: italic;">
       <span style="font-style: italic;">int Isometric::get_isometric_y() const;</span>
-      – </big><big>Convert y-coordinate of target point from cartesian system
-      to isometric system.</big><br>
-    <big> <br>
+      – Convert y-coordinate of target point from cartesian system to isometric
+      system.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">int Isometric::get_cartesian_x() const;</span>
+      – Convert x-coordinate of target point from isometric system to cartesian
+      system.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">int Isometric::get_cartesian_y() const;</span>
+      – Convert y-coordinate of target point from isometric system to cartesian
+      system.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">int Isometric::get_isometric_x(const int
+        x,const int y);</span> – Set target point and convert x-coordinate from
+      cartesian system to isometric system.<br>
+      <br>
+      <span style="font-style: italic;">int Isometric::get_isometric_y(const int
+        x,const int y);</span> – Set target point and convert y-coordinatefrom
+      cartesian system to isometric system.<br>
+      <br style="font-style: italic;">
       <span style="font-style: italic;">int Isometric::get_cartesian_x(const int
-        x) const;</span> – </big><big>Convert x-coordinate of target point from
-      isometric system to cartesian system.</big><br>
-    <big> <br style="font-style: italic;">
+        x,const int y);</span> – Set target point and convert x-coordinatefrom
+      isometric system to cartesian system.<br>
+      <br>
       <span style="font-style: italic;">int Isometric::get_cartesian_y(const int
-        y) const;</span> – </big><big>Convert y-coordinate of target point from
-      isometric system to cartesian system.</big>
+        x,const int y);</span> – Set target point and convert y-coordinate from
+      isometric system to cartesian system.<br>
+    </big>
     <h2><a class="mozTocH2" name="mozTocId143616"></a><big>Chapter 4. Isometric
         level<br>
       </big></h2>
@@ -1191,7 +1206,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       column.<br>
       <br>
       <span style="font-style: italic;">int World::get_target_y(const int row</span></big><big
-
       style="font-style: italic;">,</big><big style="font-style: italic;">const
       int column</big><big><span style="font-style: italic;">) const;</span> –
       Get target cartesian y-coordinate </big><big>from the row and column.<br>
@@ -1996,7 +2010,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2279,8 +2292,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.6.7 – Small changes.<br>
       6.6.8 – 6.7 – Game-pad subsystem improved.<br>
       6.7.1 – Source code synced with Eugene game development kit 6.6.1.<br>
-      6.7.2 – Synchronization timer back-ported from Gray game development kit
-      2.3.5.<br>
+      6.7.2 – Synchronization timer back-ported from Gray game development kit 2.3.5.<br>
       6.7.3 – Windows XP support removed.<br>
       6.7.4 – 6.7.5 – Small changes.<br>
       6.7.6 – Source code synced with Eugene game development kit 6.6.6.<br>
@@ -2351,6 +2363,8 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.5.2 – Source code synced with Eugene game development kit 7.7.4.<br>
       7.5.3 – Source code synced with Eugene game development kit 7.7.5.<br>
       7.5.4 – Source code synced with Eugene game development kit 7.7.6.<br>
-    </big><big> 7.5.5 – Source code synced with Eugene game development kit 7.8.</big><br>
+    </big><big> 7.5.5 – Source code synced with Eugene game development kit 7.8.<br>
+      7.5.6 – Source code synced with Eugene game development kit 7.8.1.<br>
+    </big>
   </body>
 </html>
