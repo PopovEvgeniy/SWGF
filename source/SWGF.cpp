@@ -3554,6 +3554,8 @@ namespace SWGF
 
   World::World()
   {
+   surface_width=1;
+   surface_height=1;
    half_tile_width=1;
    half_tile_height=1;
   }
@@ -3563,7 +3565,7 @@ namespace SWGF
 
   }
 
-  void World::initialize(const int tile_width,const int tile_height)
+  void World::initialize(const int tile_width,const int tile_height,const int screen_width,const int screen_height)
   {
    if (tile_width>1)
    {
@@ -3572,6 +3574,14 @@ namespace SWGF
    if (tile_height>1)
    {
     half_tile_height=tile_height/2;
+   }
+   if (screen_width>1)
+   {
+    surface_width=screen_width;
+   }
+   if (screen_height>1)
+   {
+    surface_height=screen_height;
    }
 
   }
@@ -3606,6 +3616,33 @@ namespace SWGF
     column/=2;
    }
    return column;
+  }
+
+  int World::get_row_amount() const
+  {
+   int amount;
+   amount=surface_width/half_tile_width;
+   if ((surface_width%half_tile_width)!=0)
+   {
+    ++amount;
+   }
+   return amount;
+  }
+
+  int World::get_column_amount() const
+  {
+   int amount;
+   amount=surface_height/half_tile_height;
+   if ((surface_height%half_tile_height)!=0)
+   {
+    ++amount;
+   }
+   return amount;
+  }
+
+  int World::get_tile_amount() const
+  {
+   return this->get_row_amount()*this->get_column_amount();
   }
 
  }
