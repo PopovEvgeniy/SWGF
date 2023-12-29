@@ -397,6 +397,7 @@ namespace SWGF
    {
     if (GetMessage(&Message,window,0,0)==TRUE)
     {
+     TranslateMessage(&Message);
      DispatchMessage(&Message);
     }
     else
