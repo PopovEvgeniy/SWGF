@@ -298,7 +298,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
-
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -847,6 +846,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       and <span style="font-style: italic;">Animation</span>. Let's look at
       public methods.<br>
       <br>
+      <span style="font-style: italic;">bool Sheet::check_row(const unsigned int
+        target) const;</span> – Return true if target row is valid.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">bool Sheet::check_column(const unsigned
+        int target) const;</span> – Return true if target column is valid.<br>
+      <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
@@ -1217,10 +1222,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Get target cartesian y-coordinate </big><big>from the row and column.<br>
       <br>
     </big><big><span style="font-style: italic;">int World::get_row(const int x,</span></big><big
+
       style="font-style: italic;">const int y</big><big><span style="font-style: italic;">)
         const;</span> – Get the row from target point.<br>
       <br>
       <span style="font-style: italic;">int World::get_column(const int y</span></big><big
+
       style="font-style: italic;">,</big><big style="font-style: italic;">const
       int y</big><big><span style="font-style: italic;">) const;</span> – Get
       the column</big><big> from target point.<br>
@@ -2025,7 +2032,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2385,6 +2391,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.5.8 – Source code synced with Eugene game development kit 7.8.4.<br>
       7.5.9 – Source code synced with Eugene game development kit 7.8.5.<br>
       7.6 – Source code synced with Eugene game development kit 7.8.6.<br>
+      7.6.1 – Source code synced with Eugene game development kit 7.8.8.<br>
     </big>
   </body>
 </html>
