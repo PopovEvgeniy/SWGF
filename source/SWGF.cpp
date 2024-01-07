@@ -3269,8 +3269,6 @@ namespace SWGF
   {
    text.set_size(0,0);
    orientation=SWGF::HORIZONTAL_TEXT;
-   current_x=0;
-   current_y=0;
   }
 
   Text::~Text()
@@ -3293,7 +3291,7 @@ namespace SWGF
 
   void Text::restore_position()
   {
-   text.set_position(current_x,current_y);
+   text.go_start();
   }
 
   SWGF::TEXT_KIND Text::get_orientation() const
@@ -3318,9 +3316,8 @@ namespace SWGF
 
   void Text::set_position(const unsigned int x,const unsigned int y)
   {
-   current_x=x;
-   current_y=y;
-   text.set_position(current_x,current_y);
+   text.set_start(x,y);
+   text.set_position(x,y);
   }
 
   void Text::set_size(const unsigned int width,const unsigned int height)

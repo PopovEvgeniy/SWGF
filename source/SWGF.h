@@ -926,8 +926,6 @@ typedef enum
    private:
    Graphics::Sheet text;
    SWGF::TEXT_KIND orientation;
-   unsigned int current_x;
-   unsigned int current_y;
    void increase_position();
    void restore_position();
    public:
