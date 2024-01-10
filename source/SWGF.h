@@ -896,6 +896,7 @@ typedef enum
    public:
    Background();
    ~Background();
+   Background* get_handle();
    void prepare(const Screen *screen);
    void prepare(Screen &screen);
    void prepare(const unsigned int width,const unsigned int height);
@@ -916,6 +917,7 @@ typedef enum
    void draw(const unsigned int target);
    void destroy_image();
    void destroy();
+   bool is_last_frame() const;
    unsigned int get_frame() const;
    unsigned int get_frames() const;
    unsigned int get_width() const;

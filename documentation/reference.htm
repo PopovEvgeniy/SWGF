@@ -541,6 +541,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       Just use <span style="font-style: italic;">Background</span> class to
       work with background. Let's look at public methods.<br>
+      <br>
+      <span style="font-style: italic;">Background* Background::get_handle();</span>
+      – Return the handle to background object.<br>
     </big><big><br style="font-style: italic;">
       <span style="font-style: italic;"> void Background::prepare(const Screen
         *screen);</span> – Prepare for drawing.<br>
@@ -609,6 +612,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       <span style="font-style: italic;"> void Background::destroy();</span> –
       Destroy a background image and destroy a background texture.<br>
+      <br>
+      <span style="font-style: italic;">bool Background::is_last_frame() const;</span>
+      – Return true if current frame of scrollable background is last frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Background::get_frame()
         const;</span> – Return current frame in scrollable background.<br>
@@ -1216,7 +1222,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       </big></h2>
     <big><span style="text-decoration: underline;"></span> Isometric level
       subsystem intend for help you to create an isometric levels. Just use <span
-
         style="font-style: italic;">World</span> class for doing it. Let's look
       at public methods.<br>
       <br>
@@ -2320,15 +2325,13 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.3.7 – 6.5.1 – Experimental branch.<br>
       6.5.2 – Source code synced with Eugene game development kit 6.5.7.<br>
       6.5.3 – Small changes.<br>
-      6.5.4 – Game-pad subsystem back-ported from Black game development kit
-      4.1.4.<br>
+      6.5.4 – Game-pad subsystem back-ported from Black game development kit 4.1.4.<br>
       6.5.5 – 6.6.6 – Game-pad subsystem improved.<br>
       6.6.6.1 – Documentation updated.<br>
       6.6.7 – Small changes.<br>
       6.6.8 – 6.7 – Game-pad subsystem improved.<br>
       6.7.1 – Source code synced with Eugene game development kit 6.6.1.<br>
-      6.7.2 – Synchronization timer back-ported from Gray game development kit
-      2.3.5.<br>
+      6.7.2 – Synchronization timer back-ported from Gray game development kit 2.3.5.<br>
       6.7.3 – Windows XP support removed.<br>
       6.7.4 – 6.7.5 – Small changes.<br>
       6.7.6 – Source code synced with Eugene game development kit 6.6.6.<br>
@@ -2409,6 +2412,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.6.2 – Source code synced with Eugene game development kit 7.8.9.<br>
       7.6.3 – Source code synced with Eugene game development kit 7.9.<br>
       7.6.4 – Source code synced with Eugene game development kit 7.9.1.<br>
+      7.6.5 – Source code synced with Eugene game development kit 7.9.2.<br>
     </big>
   </body>
 </html>
