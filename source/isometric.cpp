@@ -4,7 +4,7 @@ int main()
 {
  int x,y,row,column;
  SWGF::Graphics::Screen screen;
- SWGF::Graphics::Background sky;
+ SWGF::Graphics::Scene sky;
  SWGF::Graphics::Sprite ground;
  SWGF::Graphics::Text text;
  SWGF::Transformation::Coordinates cartesian;

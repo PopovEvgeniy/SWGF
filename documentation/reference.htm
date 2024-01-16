@@ -42,12 +42,13 @@
           <li><a href="#mozTocId501089">Chapter 4. Animation subsystem</a></li>
           <li><a href="#mozTocId904725">Chapter 5. Image kind</a></li>
           <li><a href="#mozTocId738557">Chapter 6. Background</a></li>
-          <li><a href="#mozTocId309905">Chapter 7. Base sprite subsystem</a></li>
-          <li><a href="#mozTocId662651"> Chapter 8. Ordinary sprites</a></li>
-          <li><a href="#mozTocId477705">Chapter 9. Static sprites</a></li>
-          <li><a href="#mozTocId146800">Chapter 10. Sprite sheet</a></li>
-          <li><a href="#mozTocId752257">Chapter 11. Text</a></li>
-          <li><a href="#mozTocId67980">Chapter 12. Loading images</a></li>
+          <li><a href="#mozTocId515277">Chapter 7. Static background</a></li>
+          <li><a href="#mozTocId309905">Chapter 8. Base sprite subsystem</a></li>
+          <li><a href="#mozTocId662651"> Chapter 9. Ordinary sprites</a></li>
+          <li><a href="#mozTocId477705">Chapter 10. Static sprites</a></li>
+          <li><a href="#mozTocId146800">Chapter 11. Sprite sheet</a></li>
+          <li><a href="#mozTocId752257">Chapter 12. Text</a></li>
+          <li><a href="#mozTocId67980">Chapter 13. Loading images</a></li>
         </ul>
       </li>
       <li><a href="#mozTocId99230">Part 4. Transformation</a>
@@ -364,7 +365,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         subsystem</span><br>
       <br>
       Base graphics subsystem do rendering game scene. This subsystem using <a
-
         href="http://opengl.org">OPENGL</a> for render. Most modern video–card
       support hardware accelerated OPENGL. Software emulated OPENGL will
       activate if </big><big>hardware acceleration not available.</big><br>
@@ -599,7 +599,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -636,15 +635,87 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="text-decoration: underline;"> Background texture</span><br>
       <br>
       Background don't draw if background texture is don't exist. Background
-      texture will automatically create after call <i>load_background</i>
-      method.<br>
+      texture will automatically create after call <i>load</i> method.<br>
       <br>
       <span style="text-decoration: underline;"> Important notice</span><br>
       <br>
       Always call <span style="font-style: italic;">prepare</span> method after
       load background.<br>
     </big>
-    <h2><a name="mozTocId309905" class="mozTocH2"></a><big>Chapter 7. Base
+    <h2><a class="mozTocH2" name="mozTocId515277"></a><big>Chapter 7. Static
+        background</big></h2>
+    <big><span style="text-decoration: underline;">A few words about static
+        background</span><br>
+      <br>
+      The static background is simple kind of backgrounds. It contain one frame
+      only.<br>
+    </big><big><br>
+      <span style="text-decoration: underline;"> Work with background</span><br>
+      <br>
+      Just use <span style="font-style: italic;">Scene</span> class to work
+      with static background. Let's look at public methods.<br>
+      <br>
+      <span style="font-style: italic;">Scene* Scene::get_handle();</span> –
+      Return the handle to background object.<br>
+    </big><big><br style="font-style: italic;">
+      <span style="font-style: italic;"> void Scene::prepare(const Screen
+        *screen);</span> – Prepare for drawing.<br>
+      <br>
+      <span style="font-style: italic;"> void Scene::prepare(Screen
+        &amp;screen);</span> – Prepare for drawing.<br>
+      <br>
+      <span style="font-style: italic;"> void Scene::prepare(const unsigned int
+        width,const unsigned int heigt);</span> – Prepare for drawing.<br>
+      <br>
+      <span style="font-style: italic;">void Scene::disable_mirror();</span> –
+      Disable background mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Scene::horizontal_mirror();</span>
+      – Set horizontal background mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Scene::vertical_mirror();</span> –
+      Set vertical background mirroring mode.<br>
+      <br>
+      <span style="font-style: italic;">void Scene::complex_mirror();</span> –
+      Set both horizontal and vertical background mirroring mode.<br>
+      <span style="font-style: italic;"></span><span style="font-style: italic;"></span></big><big><br>
+      <span style="font-style: italic;"> void Scene::load(Image *background);</span>
+      – Load static background from the buffer.<br>
+      <br>
+      <span style="font-style: italic;"> void Scene::load(Image
+        &amp;background);</span> – Load static background </big><big>from the
+      buffer</big><big>.<br>
+      <br>
+    </big><big><span style="font-style: italic;">void Scene::load(</span></big><big
+      style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
+      – Load static background from target file.</big><br>
+    <big><br>
+      <span style="font-style: italic;"> void Scene::draw();</span> – Draw a
+      background.<br>
+      <span style="font-style: italic;"></span><br>
+      <span style="font-style: italic;"> void Scene::destroy_image();</span> –
+      Destroy a background image.<br>
+      <br>
+      <span style="font-style: italic;"> void Scene::destroy();</span> – Destroy
+      a background image and destroy a background texture.<br>
+      <span style="font-style: italic;"></span><br>
+      <span style="font-style: italic;"> unsigned int Scene::get_width() const;</span>
+      – Return the width of the background.<br>
+      <br>
+      <span style="font-style: italic;"> unsigned int Scene::get_height() const;</span>
+      – Return the height of the background.<br>
+      <span style="font-style: italic;"></span><br>
+      <span style="text-decoration: underline;"> Background texture</span><br>
+      <br>
+      Background don't draw if background texture is don't exist. Background
+      texture will automatically create after call <span style="font-style: italic;">load</span>
+      method.<br>
+      <br>
+      <span style="text-decoration: underline;"> Important notice</span><br>
+      <br>
+      Always call <span style="font-style: italic;">prepare</span> method after
+      load background.</big><br>
+    <h2><a name="mozTocId309905" class="mozTocH2"></a><big>Chapter 8. Base
         sprite subsystem</big></h2>
     <big> </big><big><span style="text-decoration: underline;">Small important
         thing</span><br>
@@ -767,7 +838,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         int x, const unsigned int y);</i> – Set transparent mode and draw a
       sprite at target position.</big><br>
     <big> </big>
-    <h2><a name="mozTocId662651" class="mozTocH2"></a><big> Chapter 8. Ordinary
+    <h2><a name="mozTocId662651" class="mozTocH2"></a><big> Chapter 9. Ordinary
         sprites</big></h2>
     <big><span style="text-decoration: underline;"> Sprite types</span><br>
       <br>
@@ -843,7 +914,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Sprite will don't draw if sprite texture is don't exist. Sprite texture
       will automatically create when load or clone sprite.<br>
     </big>
-    <h2><a class="mozTocH2" name="mozTocId477705"></a><big>Chapter 9. Static
+    <h2><a class="mozTocH2" name="mozTocId477705"></a><big>Chapter 10. Static
         sprites</big></h2>
     <big><span style="text-decoration: underline;">A few words about static
         sprite</span><br>
@@ -886,7 +957,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Sprite will don't draw if sprite texture is don't exist. Sprite texture
       will automatically create when load or clone sprite.</big><br>
     <big> </big>
-    <h2><a name="mozTocId146800" class="mozTocH2"></a><big>Chapter 10. Sprite
+    <h2><a name="mozTocId146800" class="mozTocH2"></a><big>Chapter 11. Sprite
         sheet</big></h2>
     <big><span style="text-decoration: underline;"> Some words about sprite
         sheet</span><br>
@@ -917,10 +988,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         int target) const;</span> – Return true if target column is valid.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -978,7 +1051,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       sheet texture will automatically create after call <span style="font-style: italic;">load_sheet</span>
       method.<br>
     </big>
-    <h2><a name="mozTocId752257" class="mozTocH2"></a><big>Chapter 11. Text</big></h2>
+    <h2><a name="mozTocId752257" class="mozTocH2"></a><big>Chapter 12. Text</big></h2>
     <big><span style="text-decoration: underline;"> How to draw a text?</span><br>
       <br>
       Just use text subsystem to draw a text. This subsystem need a font for
@@ -1087,7 +1160,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;"> void Text::destroy_font();</span> –
       Destroy a font image and destroy a font texture.<br>
     </big><big> </big>
-    <h2><a name="mozTocId67980" class="mozTocH2"></a><big>Chapter 12. Loading
+    <h2><a name="mozTocId67980" class="mozTocH2"></a><big>Chapter 13. Loading
         images</big></h2>
     <big><span style="text-decoration: underline;"> Load an image from files</span><br>
       <br>
@@ -1349,7 +1422,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       &nbsp; <span style="font-style: italic;"> unsigned int y;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int width;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int height;</span><br
-
         style="font-style: italic;">
       <span style="font-style: italic;"> } BOX;</span><br>
       <br>
@@ -2461,5 +2533,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.6.4 – Source code synced with Eugene game development kit 7.9.1.<br>
       7.6.5 – Source code synced with Eugene game development kit 7.9.2.<br>
       7.6.6 – Source code synced with Eugene game development kit 7.9.3.<br>
+      7.6.7 – Source code synced with Eugene game development kit 7.9.4.<br>
+    </big>
   </body>
 </html>

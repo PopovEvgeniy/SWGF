@@ -9,7 +9,7 @@ int main()
  SWGF::Input::Mouse mouse;
  SWGF::Misc::Audio media;
  SWGF::Graphics::Screen screen;
- SWGF::Graphics::Background space;
+ SWGF::Graphics::Scene space;
  SWGF::Graphics::Sprite ship;
  SWGF::Graphics::Text text;
  SWGF::Tools::enable_logging("log.txt");

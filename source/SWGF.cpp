@@ -3354,6 +3354,100 @@ namespace SWGF
    return stage.get_kind();
   }
 
+  Scene::Scene()
+  {
+   stage.set_position(0,0);
+  }
+
+  Scene::~Scene()
+  {
+   stage.destroy();
+  }
+
+  Scene* Scene::get_handle()
+  {
+   return this;
+  }
+
+  void Scene::prepare(const Screen *screen)
+  {
+   if (screen!=NULL)
+   {
+    stage.set_size(screen->get_width(),screen->get_height());
+   }
+
+  }
+
+  void Scene::prepare(const unsigned int width,const unsigned int height)
+  {
+   stage.set_size(width,height);
+  }
+
+  void Scene::prepare(Screen &screen)
+  {
+   this->prepare(screen.get_handle());
+  }
+
+  void Scene::load(Image *background)
+  {
+   this->load(background);
+  }
+
+  void Scene::load(Image &background)
+  {
+   this->load(background.get_handle());
+  }
+
+  void Scene::load(const char *name)
+  {
+   stage.load(name);
+  }
+
+  void Scene::disable_mirror()
+  {
+   stage.disable_mirror();
+  }
+
+  void Scene::horizontal_mirror()
+  {
+   stage.horizontal_mirror();
+  }
+
+  void Scene::vertical_mirror()
+  {
+   stage.vertical_mirror();
+  }
+
+  void Scene::complex_mirror()
+  {
+   stage.complex_mirror();
+  }
+
+  void Scene::draw()
+  {
+   stage.draw(false);
+  }
+
+  void Scene::destroy_image()
+  {
+   stage.destroy_image();
+  }
+
+  void Scene::destroy()
+  {
+   stage.destroy();
+  }
+
+  unsigned int Scene::get_width() const
+  {
+   return stage.get_width();
+  }
+
+  unsigned int Scene::get_height() const
+  {
+   return stage.get_height();
+  }
+
   Text::Text()
   {
    text.set_size(0,0);
