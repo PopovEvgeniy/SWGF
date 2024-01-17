@@ -300,6 +300,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       optimization.<br>
       <br>
       <span style="text-decoration: underline;"> Note for Visual C++ users</span><br
+
         style="text-decoration: underline;">
       <br>
       Disable pre–compiled headers before start compilation. Old Visual C++
@@ -599,6 +600,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
+
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -988,12 +990,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         int target) const;</span> – Return true if target column is valid.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
-
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
-
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -1090,6 +1090,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       <span style="font-style: italic;"> Text</span> class provide a simple
       interface to text subsystem. Let's look at public methods.<br>
+      <br>
+      <span style="font-style: italic;">Text* Text::get_handle();</span> –
+      Return the handle to text drawing subsystem.<br>
       <br>
       <span style="font-style: italic;"> SWGF::TEXT_KIND Text::get_orientation()
         const;</span> – Get current text orientation.<br>
@@ -1233,6 +1236,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Just use <span style="font-style: italic;">Coordinates</span> class for
       doing it. Let's look at public methods.<br>
       <br>
+      <span style="font-style: italic;">Coordinates* Coordinates::get_handle();</span>
+      – Return the handle to coordinates conversion subsystem.<br>
+      <br>
       <span style="font-style: italic;"> void Coordinates::initialize(const int
         viewport_width,const int viewport_height);</span> – Initialize the
       subsystem.<br>
@@ -1300,6 +1306,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Just use <span style="font-style: italic;">Isometric</span> class for
       doing it. Let's look at public methods.<br>
       <br>
+      <span style="font-style: italic;">Isometric* Isometric::get_handle();</span>
+      – Return the handle to isometric subsystem.<br>
+      <br>
     </big><big><span style="font-style: italic;">void
         Isometric::set_target(const int x,const int y);</span> – Set target
       point.</big><big><span style="font-style: italic;"></span></big><big><br>
@@ -1343,6 +1352,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       subsystem intend for help you to create an isometric levels. Just use <span
         style="font-style: italic;">World</span> class for doing it. Let's look
       at public methods.<br>
+      <br>
+      <span style="font-style: italic;">World* World::get_handle();</span> –
+      Return the handle to isometric level subsystem.<br>
       <br>
       <span style="font-style: italic;">void World::initialize(const int
         tile_width,const int tile_height,const int screen_width,const int
@@ -1394,6 +1406,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
     <h2><a name="mozTocId656377" class="mozTocH2"></a><big>Chapter 3. Timer</big></h2>
     <big> Timer is a very useful thing. Just use <span style="font-style: italic;">Timer</span>
       class to work with the timer. Let's look at public methods.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">Timer* Timer::get_handle();</span> –
+      Return the handle to the timer.<br>
       <br>
       <span style="font-style: italic;"> void Timer::set_timer(const double
         seconds); </span>– Set timer interval and initialize start point.<br>
@@ -1430,6 +1445,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;"> Collision</span> class provide easy
       access to collision detector. It is a simple class with few methods. Let's
       look at public methods.<br>
+      <br>
+      <span style="font-style: italic;">Collision* Collision::get_handle();</span>
+      – Return the handle to the collision detector.<br>
     </big><br>
     <big><span style="font-style: italic;">void Collision::set_target(const
         SWGF::BOX &amp;first_target,const SWGF::BOX &amp;second_target);</span>
@@ -1458,6 +1476,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;">Tilemap</span> class provide easy access
       to the tile–map. It is a simple class with few methods. Let's look at
       public methods.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">Tilemap* Tilemap::get_handle();</span> –
+      Return the handle to tile-map subsystem.<br>
       <br style="font-style: italic;">
       <span style="font-style: italic;">void Tilemap::initialize(const unsigned
         int tile_width,const unsigned int tile_height);</span> – Initialize the
@@ -2167,7 +2188,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2534,6 +2554,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.6.5 – Source code synced with Eugene game development kit 7.9.2.<br>
       7.6.6 – Source code synced with Eugene game development kit 7.9.3.<br>
       7.6.7 – Source code synced with Eugene game development kit 7.9.4.<br>
+      7.6.8 – Source code synced with Eugene game development kit 7.9.5.<br>
     </big>
   </body>
 </html>

@@ -3459,6 +3459,11 @@ namespace SWGF
    text.destroy();
   }
 
+  Text* Text::get_handle()
+  {
+   return this;
+  }
+
   void Text::increase_position()
   {
    if (orientation==SWGF::HORIZONTAL_TEXT)
@@ -3616,6 +3621,11 @@ namespace SWGF
 
   }
 
+  Coordinates* Coordinates::get_handle()
+  {
+   return this;
+  }
+
   void Coordinates::initialize(const int viewport_width,const int viewport_height)
   {
    if (viewport_width>1)
@@ -3700,6 +3710,11 @@ namespace SWGF
 
   }
 
+  Isometric* Isometric::get_handle()
+  {
+   return this;
+  }
+
   void Isometric::set_target(const int x,const int y)
   {
    target_x=x;
@@ -3779,6 +3794,11 @@ namespace SWGF
   World::~World()
   {
 
+  }
+
+  World* World::get_handle()
+  {
+   return this;
   }
 
   void World::initialize(const int tile_width,const int tile_height,const int screen_width,const int screen_height)
@@ -3877,6 +3897,11 @@ namespace SWGF
 
   }
 
+  Timer* Timer::get_handle()
+  {
+   return this;
+  }
+
   void Timer::set_timer(const double seconds)
   {
    interval=seconds;
@@ -3911,6 +3936,11 @@ namespace SWGF
   Collision::~Collision()
   {
 
+  }
+
+  Collision* Collision::get_handle()
+  {
+   return this;
   }
 
   bool Collision::check_horizontal_collision() const
@@ -3949,6 +3979,11 @@ namespace SWGF
   Tilemap::~Tilemap()
   {
 
+  }
+
+  Tilemap* Tilemap::get_handle()
+  {
+   return this;
   }
 
   void Tilemap::initialize(const unsigned int tile_width,const unsigned int tile_height)
