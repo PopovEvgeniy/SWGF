@@ -671,6 +671,7 @@ typedef enum
    public:
    Input_File();
    ~Input_File();
+   Input_File* get_handle();
    void open(const char *name);
    void read(void *buffer,const size_t length);
   };
@@ -680,6 +681,7 @@ typedef enum
    public:
    Output_File();
    ~Output_File();
+   Output_File* get_handle();
    void open(const char *name);
    void create_temp();
    void write(const void *buffer,const size_t length);
