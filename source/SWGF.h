@@ -474,7 +474,7 @@ typedef enum
   {
    private:
    unsigned int texture;
-   void load_texture(const unsigned int width,const unsigned int height,const unsigned int *buffer);
+   void load_texture(const unsigned int width,const unsigned int height,const void *buffer);
    void create_texture(const unsigned int *buffer);
    void delete_texture();
    void check_texture();
@@ -719,7 +719,7 @@ typedef enum
    Screen* get_handle();
   };
 
-   class Image
+  class Image
   {
    private:
    Core::Buffer<unsigned char> data;
