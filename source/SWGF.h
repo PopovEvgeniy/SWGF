@@ -476,7 +476,6 @@ typedef enum
    unsigned int texture;
    void load_texture(const unsigned int width,const unsigned int height,const void *buffer);
    void create_texture(const unsigned int *buffer);
-   void delete_texture();
    void check_texture();
    void load_data();
    void draw_rectangle();
@@ -485,9 +484,9 @@ typedef enum
    ~Rectangle();
    void enable_transparent();
    void disable_transparent();
+   void destroy_texture();
    void prepare(const unsigned int *buffer);
    void draw(const Core::MIRROR_KIND kind);
-   void destroy_texture();
    bool is_texture_exist() const;
   };
 
