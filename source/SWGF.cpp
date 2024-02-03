@@ -3114,7 +3114,7 @@ namespace SWGF
    {
     if (this->check_column(column)==true)
     {
-     target+=(row-1)+(column-1)*rows;
+     target=row+column*rows;
     }
 
    }
