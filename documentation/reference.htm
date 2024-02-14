@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="content-type" content="text/html; charset=charset=windows-1251">
+    <meta http-equiv="content-type" content="text/html; charset=windows-1251">
     <title>Programmer reference</title>
   </head>
   <body>
+    <p> </p>
     <p> </p>
     <p> <big> </big> </p>
     <div>
@@ -347,7 +347,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       The engine uses standard coordinate system by default. Coordinates start
       at top–left corner. Look to this picture to understand it.<br>
       <br>
-      <img style="width: 107px; height: 111px;" alt="" src="coordinate_system.png">
+      <img style="width: 107px; height: 111px;" alt="" src="oordinate_system.png">
     </big>
     <h2><a name="mozTocId544184" class="mozTocH2"></a><big>Chapter 2. A game
         cycle</big></h2>
@@ -490,12 +490,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       methods.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Animation::get_frames()
-        const;</span> – Return amount of frames in scrollable background or
-      animated sprite.<br>
+        const;</span> – Return amount of frames.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Animation::get_frame()
-        const;</span> – Return current frame in scrollable background or
-      animated sprite.<br>
+        const;</span> – Return current frame.<br>
       <br>
       <span style="font-style: italic;">bool Animation::is_last_frame() const;</span>
       – Return true if current frame is last frame.<br>
@@ -511,11 +509,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
           <td><big>Image kind<br>
             </big></td>
           <td><big>Description </big></td>
-        </tr>
-        <tr>
-          <td><big>STATIC_IMAGE </big></td>
-          <td><big>Normal background or normal sprite<br>
-            </big></td>
         </tr>
         <tr>
           <td><big>HORIZONTAL_ANIMATED </big></td>
@@ -536,11 +529,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       game has a background. The background will stretch to screen resolution
       before rendering the game scene.<br>
       <br>
-      There are two background kinds: normal background and scrolling
-      background. The scrolling background is a big image with few frames.
-      Horizontal orientated scrolling background look like horizontal orientated
-      photo ribbon. Vertical orientated scrolling background look like vertical
-      orientated photo ribbon.<br>
+      There are two background kinds: horizontal orientated scrolling
+      background and vertical orientated scrolling background. The scrolling
+      background is a big image with few frames. Horizontal orientated
+      scrolling background look like horizontal orientated photo ribbon.
+      Vertical orientated scrolling background look like vertical orientated
+      photo ribbon.<br>
     </big><big><br>
       <span style="text-decoration: underline;"> Work with background</span><br>
       <br>
@@ -576,12 +570,11 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       background.<br>
       <br>
       <span style="font-style: italic;"> void Background::step();</span> –
-      Increase number of target frame in scrollable background. Set it to 1 if
-      number of target frame more than frame amount.<br>
+      Increase number of target frame. Set it to 1 if number of target frame
+      more than frame amount.<br>
       <br>
       <span style="font-style: italic;"> void Background::set_setting(const
-        SWGF::IMAGE_KIND kind,const unsigned int frames);</span> – Set setting.
-      Last argument will ignore if background is not scrollable.<br>
+        SWGF::IMAGE_KIND kind,const unsigned int frames);</span> – Set setting.<br>
       <br>
       <span style="font-style: italic;"> void Background::load(Image
         *background,const SWGF::IMAGE_KIND kind,const unsigned int frames);</span>
@@ -590,19 +583,13 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;"> void Background::load(Image
         &amp;background,const SWGF::IMAGE_KIND kind,const unsigned int frames);</span>
       – Load background </big><big>from the buffer</big><big>.<br>
-      <br>
-      <span style="font-style: italic;"> void Background::load(Image
-        *background);</span> – Load normal background from the buffer.<br>
-      <br>
-      <span style="font-style: italic;"> void Background::load(Image
-        &amp;background);</span> – Load normal background </big><big>from the
-      buffer</big><big>.<br>
-      <br>
+      <span style="font-style: italic;"></span></big><big><br>
       <span style="font-style: italic;">void Background::load(const char
         *name,const SWGF::IMAGE_KIND kind,const unsigned int frames);</span> –
       Load background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
+
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -610,7 +597,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       a background.<br>
       <br>
       <span style="font-style: italic;">void Background::draw(const unsigned int
-        target);</span> – Draw target frame in scrollable background.<br>
+        target);</span> – Draw target frame.<br>
       <br>
       <span style="font-style: italic;"> void Background::destroy_image();</span>
       – Destroy a background image.<br>
@@ -619,13 +606,13 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Destroy a background image and destroy a background texture.<br>
       <br>
       <span style="font-style: italic;">bool Background::is_last_frame() const;</span>
-      – Return true if current frame of scrollable background is last frame.<br>
+      – Return true if current frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Background::get_frame()
-        const;</span> – Return current frame in scrollable background.<br>
+        const;</span> – Return current frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Background::get_frames()
-        const;</span> – Return frame amount in scrollable background.<br>
+        const;</span> – Return frame amount.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Background::get_width()
         const;</span> – Return the width of the background.<br>
@@ -691,6 +678,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       buffer</big><big>.<br>
       <br>
     </big><big><span style="font-style: italic;">void Scene::load(</span></big><big
+
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load static background from target file.</big><br>
     <big><br>
@@ -852,8 +840,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         sprites</big></h2>
     <big><span style="text-decoration: underline;"> Sprite types</span><br>
       <br>
-      There are two kinds of ordinary sprites: normal sprites and strip. The
-      strip is an animated sprite. Do you remember an analog camera? <br>
+      There are two kinds of ordinary sprites: </big><big>horizontal strip and
+      vertical strip</big><big>. The strip is an animated sprite. Do you
+      remember an analog camera? <br>
       Strip look like photo ribbon. Horizontal strip look like the horizontal
       orientated photo ribbon.<br>
       Vertical strip look like the vertical orientated photo ribbon.<br>
@@ -871,36 +860,26 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       <span style="font-style: italic;"> void Sprite::set_setting(const
         SWGF::IMAGE_KIND kind,const unsigned int frames);</span> – Set sprite
-      settings. Last argument will ignore if sprite not animated.<br>
+      settings.<br>
       <br>
       <span style="font-style: italic;"> void Sprite::load(Image *buffer,const
         SWGF::IMAGE_KIND kind,const unsigned int frames);</span> – Load a sprite
       from the buffer and set it setting.<br>
-      <br>
-      <span style="font-style: italic;"> void Sprite::load(Image *buffer);</span>
-      – Load a normal sprite </big><big>from the buffer</big><big>.<br>
-      <br>
+      <span style="font-style: italic;"></span></big><big><br>
       <span style="font-style: italic;"> void Sprite::load(Image
         &amp;buffer,const SWGF::IMAGE_KIND kind,const unsigned int frames);</span>
       – Load a sprite </big><big>from the buffer</big><big> and set it setting.<br>
-      <br>
-      <span style="font-style: italic;"> void Sprite::load(Image &amp;buffer);</span>
-      – Load a normal sprite </big><big>from the buffer</big><big>.<br>
-      <br>
+      <span style="font-style: italic;"></span></big><big><br>
       <span style="font-style: italic;">void Sprite::load(const char *name,const
         SWGF::IMAGE_KIND kind,const unsigned int frames);</span> – Load a sprite
     </big><big>from target file</big><big> and set it setting.<br>
-      <br>
-      <span style="font-style: italic;">void Sprite::load(</span></big><big style="font-style: italic;">const
-      char *name</big><big><span style="font-style: italic;">);</span> – Load a
-      normal sprite from target file.<br>
-      <br>
+      <span style="font-style: italic;"></span></big><big><br>
       <span style="font-style: italic;"> void Sprite::set_target(const unsigned
-        int target);</span> – Set target frame in strip.<br>
+        int target);</span> – Set target frame.<br>
       <br>
       <span style="font-style: italic;"> void Sprite::step();</span> – Increase
-      number of target frame in strip. Set it to 1 if number of target frame
-      more than frame amount.<br>
+      number of target. Set it to 1 if number of target frame more than frame
+      amount.<br>
       <br>
       <span style="font-style: italic;"> SWGF::IMAGE_KIND Sprite::get_kind()
         const;</span> – Get sprite type.<br>
@@ -998,10 +977,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         int target) const;</span> – Return true if target column is valid.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -2202,6 +2183,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2583,6 +2565,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.8 – Source code synced with Eugene game development kit 8.1.7.<br>
       7.8.1 – Source code synced with Eugene game development kit 8.1.8.<br>
       7.8.2 – Source code synced with Eugene game development kit 8.1.9.<br>
-    </big>
+      7.8.3 – Source code synced with Eugene game development kit8.2.1.<br>
   </body>
 </html>

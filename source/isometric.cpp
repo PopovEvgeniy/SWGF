@@ -5,7 +5,7 @@ int main()
  int x,y,row,column;
  SWGF::Graphics::Screen screen;
  SWGF::Graphics::Scene sky;
- SWGF::Graphics::Sprite ground;
+ SWGF::Graphics::Cartoon ground;
  SWGF::Graphics::Text text;
  SWGF::Transformation::Coordinates cartesian;
  SWGF::Transformation::World level;

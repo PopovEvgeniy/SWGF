@@ -2799,7 +2799,7 @@ namespace SWGF
 
   Sprite::Sprite()
   {
-   current_kind=SWGF::STATIC_IMAGE;
+   current_kind=SWGF::HORIZONTAL_ANIMATED;
   }
 
   Sprite::~Sprite()
@@ -2809,22 +2809,18 @@ namespace SWGF
 
   void Sprite::reset_sprite_setting()
   {
-   current_kind=SWGF::STATIC_IMAGE;
+   current_kind=SWGF::HORIZONTAL_ANIMATED;
   }
 
   void Sprite::set_sprite_setting()
   {
-   switch (current_kind)
+   if (current_kind==SWGF::HORIZONTAL_ANIMATED)
    {
-    case SWGF::HORIZONTAL_ANIMATED:
     this->set_size(this->get_image_width()/this->get_frames(),this->get_image_height());
-    break;
-    case SWGF::VERTICAL_ANIMATED:
+   }
+   else
+   {
     this->set_size(this->get_image_width(),this->get_image_height()/this->get_frames());
-    break;
-    default:
-    this->set_size(this->get_image_width(),this->get_image_height());
-    break;
    }
 
   }
@@ -2840,17 +2836,13 @@ namespace SWGF
 
   void Sprite::set_sprite_frame()
   {
-   switch(current_kind)
+   if (current_kind==SWGF::HORIZONTAL_ANIMATED)
    {
-    case SWGF::HORIZONTAL_ANIMATED:
     billboard.set_horizontal_offset(static_cast<double>(this->get_frame()),static_cast<double>(this->get_frames()));
-    break;
-    case SWGF::VERTICAL_ANIMATED:
+   }
+   else
+   {
     billboard.set_vertical_offset(static_cast<double>(this->get_frame()),static_cast<double>(this->get_frames()));
-    break;
-    default:
-    billboard.set_horizontal_offset(1.0,1.0);
-    break;
    }
 
   }
@@ -2875,10 +2867,7 @@ namespace SWGF
   void Sprite::set_setting(const SWGF::IMAGE_KIND kind,const unsigned int frames)
   {
    this->reset_animation_setting();
-   if (kind!=SWGF::STATIC_IMAGE)
-   {
-    this->set_frames(frames);
-   }
+   this->set_frames(frames);
    this->set_kind(kind);
   }
 
@@ -2893,19 +2882,9 @@ namespace SWGF
 
   }
 
-  void Sprite::load(Image *buffer)
-  {
-   this->load(buffer,SWGF::STATIC_IMAGE,1);
-  }
-
   void Sprite::load(Image &buffer,const SWGF::IMAGE_KIND kind,const unsigned int frames)
   {
    this->load(buffer.get_handle(),kind,frames);
-  }
-
-  void Sprite::load(Image &buffer)
-  {
-   this->load(buffer.get_handle());
   }
 
   void Sprite::load(const char *name,const SWGF::IMAGE_KIND kind,const unsigned int frames)
@@ -2914,11 +2893,6 @@ namespace SWGF
    picture.load_tga(name);
    this->load(picture,kind,frames);
    picture.destroy_image();
-  }
-
-  void Sprite::load(const char *name)
-  {
-   this->load(name,SWGF::STATIC_IMAGE,1);
   }
 
   void Sprite::set_target(const unsigned int target)
@@ -3277,29 +3251,14 @@ namespace SWGF
    stage.load(background,kind,frames);
   }
 
-  void Background::load(Image *background)
-  {
-   this->load(background,SWGF::STATIC_IMAGE,1);
-  }
-
   void Background::load(Image &background,const SWGF::IMAGE_KIND kind,const unsigned int frames)
   {
    this->load(background.get_handle(),kind,frames);
   }
 
-  void Background::load(Image &background)
-  {
-   this->load(background.get_handle());
-  }
-
   void Background::load(const char *name,const SWGF::IMAGE_KIND kind,const unsigned int frames)
   {
    stage.load(name,kind,frames);
-  }
-
-  void Background::load(const char *name)
-  {
-   stage.load(name);
   }
 
   void Background::disable_mirror()
