@@ -789,6 +789,10 @@ namespace SWGF
    total_height=0;
    current_x=0;
    current_y=0;
+   current_row=1.0f;
+   row_amount=1.0f;
+   current_column=1.0f;
+   column_amount=1.0f;
    vertex[0].x=0;
    vertex[0].y=0;
    vertex[1].x=0;
@@ -798,13 +802,14 @@ namespace SWGF
    vertex[3].x=0;
    vertex[3].y=0;
    point[0].u=0.0f;
-   point[0].v=1.0f;
-   point[1].u=1.0f;
-   point[1].v=1.0f;
-   point[2].u=1.0f;
+   point[0].v=0.0f;
+   point[1].u=0.0f;
+   point[1].v=0.0f;
+   point[2].u=0.0f;
    point[2].v=0.0f;
    point[3].u=0.0f;
    point[3].v=0.0f;
+   mirror=Core::MIRROR_NONE;
   }
 
   Shape::~Shape()
@@ -812,52 +817,16 @@ namespace SWGF
 
   }
 
-  void Shape::set_data(const Core::MIRROR_KIND kind)
+  void Shape::set_data()
   {
-   switch (kind)
-   {
-    case Core::HORIZONTAL_MIRROR:
-    vertex[0].x=current_x+target_width;
-    vertex[0].y=current_y+target_height;
-    vertex[1].x=current_x;
-    vertex[1].y=current_y+target_height;
-    vertex[2].x=current_x;
-    vertex[2].y=current_y;
-    vertex[3].x=current_x+target_width;
-    vertex[3].y=current_y;
-    break;
-    case Core::VERTICAL_MIRROR:
-    vertex[0].x=current_x;
-    vertex[0].y=current_y;
-    vertex[1].x=current_x+target_width;
-    vertex[1].y=current_y;
-    vertex[2].x=current_x+target_width;
-    vertex[2].y=current_y+target_height;
-    vertex[3].x=current_x;
-    vertex[3].y=current_y+target_height;
-    break;
-    case Core::MIRROR_BOTH:
-    vertex[0].x=current_x+target_width;
-    vertex[0].y=current_y;
-    vertex[1].x=current_x;
-    vertex[1].y=current_y;
-    vertex[2].x=current_x;
-    vertex[2].y=current_y+target_height;
-    vertex[3].x=current_x+target_width;
-    vertex[3].y=current_y+target_height;
-    break;
-    default:
-    vertex[0].x=current_x;
-    vertex[0].y=current_y+target_height;
-    vertex[1].x=current_x+target_width;
-    vertex[1].y=current_y+target_height;
-    vertex[2].x=current_x+target_width;
-    vertex[2].y=current_y;
-    vertex[3].x=current_x;
-    vertex[3].y=current_y;
-    break;
-   }
-
+   vertex[0].x=current_x;
+   vertex[0].y=current_y+target_height;
+   vertex[1].x=current_x+target_width;
+   vertex[1].y=current_y+target_height;
+   vertex[2].x=current_x+target_width;
+   vertex[2].y=current_y;
+   vertex[3].x=current_x;
+   vertex[3].y=current_y;
   }
 
   unsigned int Shape::get_total_width() const
@@ -868,6 +837,59 @@ namespace SWGF
   unsigned int Shape::get_total_height() const
   {
    return total_height;
+  }
+
+  void Shape::set_mirror(const Core::MIRROR_KIND kind)
+  {
+   mirror=kind;
+  }
+
+  void Shape::choose()
+  {
+   switch (mirror)
+   {
+    case Core::HORIZONTAL_MIRROR:
+    point[0].u=Core::get_end_offset(current_row,row_amount);
+    point[0].v=Core::get_end_offset(current_column,column_amount);
+    point[1].u=Core::get_start_offset(current_row,row_amount);
+    point[1].v=Core::get_end_offset(current_column,column_amount);
+    point[2].u=Core::get_start_offset(current_row,row_amount);
+    point[2].v=Core::get_start_offset(current_column,column_amount);
+    point[3].u=Core::get_end_offset(current_row,row_amount);
+    point[3].v=Core::get_start_offset(current_column,column_amount);
+    break;
+    case Core::VERTICAL_MIRROR:
+    point[0].u=Core::get_start_offset(current_row,row_amount);
+    point[0].v=Core::get_start_offset(current_column,column_amount);
+    point[1].u=Core::get_end_offset(current_row,row_amount);
+    point[1].v=Core::get_start_offset(current_column,column_amount);
+    point[2].u=Core::get_end_offset(current_row,row_amount);
+    point[2].v=Core::get_end_offset(current_column,column_amount);
+    point[3].u=Core::get_start_offset(current_row,row_amount);
+    point[3].v=Core::get_end_offset(current_column,column_amount);
+    break;
+    case Core::MIRROR_BOTH:
+    point[0].u=Core::get_end_offset(current_row,row_amount);
+    point[0].v=Core::get_start_offset(current_column,column_amount);
+    point[1].u=Core::get_start_offset(current_row,row_amount);
+    point[1].v=Core::get_start_offset(current_column,column_amount);
+    point[2].u=Core::get_start_offset(current_row,row_amount);
+    point[2].v=Core::get_end_offset(current_column,column_amount);
+    point[3].u=Core::get_end_offset(current_row,row_amount);
+    point[3].v=Core::get_end_offset(current_column,column_amount);
+    break;
+    default:
+    point[0].u=Core::get_start_offset(current_row,row_amount);
+    point[0].v=Core::get_end_offset(current_column,column_amount);
+    point[1].u=Core::get_end_offset(current_row,row_amount);
+    point[1].v=Core::get_end_offset(current_column,column_amount);
+    point[2].u=Core::get_end_offset(current_row,row_amount);
+    point[2].v=Core::get_start_offset(current_column,column_amount);
+    point[3].u=Core::get_start_offset(current_row,row_amount);
+    point[3].v=Core::get_start_offset(current_column,column_amount);
+    break;
+   }
+
   }
 
   void Shape::set_total_size(const unsigned int width,const unsigned int height)
@@ -890,14 +912,10 @@ namespace SWGF
 
   void Shape::set_tile_offset(const float row,const float rows,const float column,const float columns)
   {
-   point[0].u=Core::get_start_offset(row,rows);
-   point[0].v=Core::get_end_offset(column,columns);
-   point[1].u=Core::get_end_offset(row,rows);
-   point[1].v=Core::get_end_offset(column,columns);
-   point[2].u=Core::get_end_offset(row,rows);
-   point[2].v=Core::get_start_offset(column,columns);
-   point[3].u=Core::get_start_offset(row,rows);
-   point[3].v=Core::get_start_offset(column,columns);
+   current_row=row;
+   row_amount=rows;
+   current_column=column;
+   column_amount=columns;
   }
 
   void Shape::set_horizontal_offset(const float current,const float total)
@@ -1014,8 +1032,10 @@ namespace SWGF
   {
    if (texture!=0)
    {
-    this->set_data(kind);
+    this->set_mirror(kind);
+    this->set_data();
     this->load_data();
+    this->choose();
     this->draw_rectangle();
    }
 
@@ -1069,7 +1089,6 @@ namespace SWGF
    glDisable(GL_TEXTURE_GEN_T);
    glDisable(GL_TEXTURE_1D);
    glDisable(GL_DEPTH_TEST);
-   glDisable(GL_CULL_FACE);
    glDisable(GL_MAP1_COLOR_4);
    glDisable(GL_MAP1_INDEX);
    glDisable(GL_MAP1_NORMAL);
@@ -1088,6 +1107,7 @@ namespace SWGF
    glDisable(GL_MAP2_TEXTURE_COORD_4);
    glDisable(GL_MAP2_VERTEX_3);
    glDisable(GL_MAP2_VERTEX_4);
+   glEnable(GL_CULL_FACE);
    glEnable(GL_TEXTURE_2D);
    glEnable(GL_ALPHA_TEST);
    glEnable(GL_BLEND);
@@ -1109,6 +1129,8 @@ namespace SWGF
 
   void Render::set_common_setting()
   {
+   glFrontFace(GL_CCW);
+   glCullFace(GL_BACK);
    glShadeModel(GL_FLAT);
    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
    glAlphaFunc(GL_GREATER,0.1f);
