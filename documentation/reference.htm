@@ -346,7 +346,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       The engine uses standard coordinate system by default. Coordinates start
       at top–left corner. Look to this picture to understand it.<br>
       <br>
-      <img style="width: 107px; height: 111px;" alt="" src="oordinate_system.png">
+      <img style="width: 107px; height: 111px;" alt="" src="coordinate_system.png">
     </big>
     <h2><a name="mozTocId544184" class="mozTocH2"></a><big>Chapter 2. A game
         cycle</big></h2>
@@ -495,6 +495,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       <span style="font-style: italic;">bool Animation::is_last_frame() const;</span>
       – Return true if current frame is last frame.<br>
+      <br>
+      <span style="font-style: italic;">bool Animation::check_frame(const
+        unsigned int target) const;</span> – Return true if target frame is
+      valid.<br>
     </big>
     <h2><a name="mozTocId904725" class="mozTocH2"></a><big>Chapter 5. Image kind</big></h2>
     <big></big>
@@ -586,7 +590,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load a background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -674,7 +677,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         &amp;background);</span> – Load a background </big><big>from the buffer</big><big>.<br>
       <br>
     </big><big><span style="font-style: italic;">void Scene::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load a background from target file.</big><br>
     <big><br>
@@ -973,10 +975,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         int target) const;</span> – Return true if target column is valid.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -1354,12 +1358,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Get target cartesian y-coordinate </big><big>from the row and column.<br>
       <br>
     </big><big><span style="font-style: italic;">int World::get_row(const int x,</span></big><big
-
       style="font-style: italic;">const int y</big><big><span style="font-style: italic;">)
         const;</span> – Get the row from target point.<br>
       <br>
       <span style="font-style: italic;">int World::get_column(const int y</span></big><big
-
       style="font-style: italic;">,</big><big style="font-style: italic;">const
       int y</big><big><span style="font-style: italic;">) const;</span> – Get
       the column</big><big> from target point.<br>
@@ -2179,6 +2181,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2455,8 +2458,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       6.3.7 – 6.5.1 – Experimental branch.<br>
       6.5.2 – Source code synced with Eugene game development kit 6.5.7.<br>
       6.5.3 – Small changes.<br>
-      6.5.4 – Game-pad subsystem back-ported from Black game development kit
-      4.1.4.<br>
+      6.5.4 – Game-pad subsystem back-ported from Black game development kit 4.1.4.<br>
       6.5.5 – 6.6.6 – Game-pad subsystem improved.<br>
       6.6.6.1 – Documentation updated.<br>
       6.6.7 – Small changes.<br>
@@ -2569,6 +2571,8 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.8.8 – Source code synced with Eugene game development kit 8.2.6.<br>
       7.8.9 – Source code synced with Eugene game development kit 8.2.8.<br>
       7.9 – Source code synced with Eugene game development kit 8.3.<br>
-    </big>
+      7.9.1 – Source code synced with Eugene game development kit 8.3.1.<br>
+      7.9.2 – Source code synced with Eugene game development kit 8.3.2.<br>
+    </big><big> 7.9.3 – Source code synced with Eugene game development kit 8.3.3.</big><br>
   </body>
 </html>
