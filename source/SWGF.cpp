@@ -3321,6 +3321,11 @@ namespace SWGF
    return stage.is_last_frame();
   }
 
+  bool Background::check_frame(const unsigned int target) const
+  {
+   return stage.check_frame(target);
+  }
+
   unsigned int Background::get_frame() const
   {
    return stage.get_frame();
