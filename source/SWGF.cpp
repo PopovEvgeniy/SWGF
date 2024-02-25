@@ -372,7 +372,7 @@ namespace SWGF
    {
     SWGF::Halt("Can't create window");
    }
-
+   UpdateWindow(window);
   }
 
   HDC Engine::get_context()
