@@ -407,6 +407,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <span style="font-style: italic;"> bool Screen::update();</span> – Show
       current back–buffer content on screen. Return false if a game is
       terminated. This method ignoring fps limit and need high processor usage.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">bool Screen::sync(const bool limit);</span>
+      – Show current back–buffer content on screen. Return false if a game is
+      terminated.<br>
       <br>
       <span style="font-style: italic;"> bool Screen::is_ready();</span> –
       Return true if the subsystem is already initialized.<br>
@@ -981,12 +985,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         int target) const;</span> – Return true if target column is valid.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
-
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
-
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -1343,7 +1345,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       </big></h2>
     <big><span style="text-decoration: underline;"></span> Isometric level
       subsystem intend for help you to create an isometric levels. Just use <span
-
         style="font-style: italic;">World</span> class for doing it. Let's look
       at public methods.<br>
       <br>
@@ -2188,6 +2189,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2587,6 +2589,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       7.9.8 – Source code synced with Neon game development kit 5.3.2.<br>
       7.9.9 – Source code synced with Neon game development kit 5.3.3.<br>
       8.0 – Source code synced with Eugene game development kit 8.4.1.<br>
+      8.0.1 – Source code synced with Eugene game development kit 8.4.2.<br>
     </big>
   </body>
 </html>

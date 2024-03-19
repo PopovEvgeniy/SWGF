@@ -703,6 +703,7 @@ typedef enum
    void initialize(const unsigned int width,const unsigned int height);
    bool update();
    bool sync();
+   bool sync(const bool limit);
    bool is_ready();
    bool is_accelerated() const;
    bool is_software() const;
