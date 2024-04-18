@@ -533,7 +533,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       Background is a big image. It is like decoration in theater stage. Any
       game has a background. The background will stretch to screen resolution
-      before rendering the game scene.<br>
+      before rendering the game scene. Background transparency is disabled.<br>
       <br>
       There are two background kinds: horizontal orientated scrolling background
       and vertical orientated scrolling background. It is a big image with few
@@ -594,7 +594,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load a background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -686,7 +685,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         &amp;background);</span> – Load a background </big><big>from the buffer</big><big>.<br>
       <br>
     </big><big><span style="font-style: italic;">void Scene::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load a background from target file.</big><br>
     <big><br>
@@ -1193,11 +1191,13 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       A new image will replace current image if current image already exist.
       Incorrect images will ignore and don't load.<br>
+      Source image will convert to <a href="https://en.wikipedia.org/wiki/RGBA">RGBA</a>
+      format. Pixels equal to top-left pixel will mark as transparent.<br>
       <br>
       <span style="text-decoration: underline;"> Supported format</span><br>
     </big>
     <p><big> All loading images must have correct specification. You can load an
-        image from 32 bit </big><big><a href="https://en.wikipedia.org/wiki/Truevision_TGA">Truevision
+        image from 24 bit </big><big><a href="https://en.wikipedia.org/wiki/Truevision_TGA">Truevision
           TGA</a> pictures. </big></p>
     <big><span style="text-decoration: underline;"> Recommend software</span><br>
       <br>
@@ -2595,6 +2595,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       8.0.4 – Source code synced with Eugene game development kit 8.4.5.<br>
       8.0.5 – Source code synced with Eugene game development kit 8.4.6.<br>
       8.0.6 – Source code synced with Eugene game development kit 8.4.8.<br>
+      8.0.7 – Source code synced with Eugene game development kit 8.5.<br>
     </big>
   </body>
 </html>
