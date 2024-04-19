@@ -316,6 +316,7 @@ typedef enum
  float get_end_offset(const float current,const float total);
  unsigned int get_pixel_component(const unsigned int pixel,const Core::PIXEL_COMPONENT component);
  unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha);
+ size_t get_offset(const unsigned int x,const unsigned int y,const unsigned int width);
 
  template <class DATA_TYPE>
  class Buffer
@@ -356,6 +357,16 @@ typedef enum
    for (index=0;index<length;++index)
    {
     buffer[index]=value;
+   }
+
+  }
+
+  void copy_data(const DATA_TYPE *target)
+  {
+   size_t index;
+   for (index=0;index<length;++index)
+   {
+    buffer[index]=target[index];
    }
 
   }
@@ -404,7 +415,6 @@ typedef enum
    unsigned int x_ratio;
    unsigned int y_ratio;
    unsigned int normalization;
-   size_t get_source_offset(const unsigned int x,const unsigned int y) const;
    unsigned int get_x_difference(const unsigned int x) const;
    unsigned int get_y_difference(const unsigned int y) const;
    unsigned int get_source_x(const unsigned int x) const;
