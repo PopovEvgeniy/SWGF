@@ -3345,7 +3345,7 @@ namespace SWGF
 
   void Background::load(Image &background,const SWGF::IMAGE_KIND kind,const unsigned int frames)
   {
-   this->load(background.get_handle(),kind,frames);
+   stage.load(background,kind,frames);
   }
 
   void Background::load(const char *name,const SWGF::IMAGE_KIND kind,const unsigned int frames)
@@ -3480,7 +3480,7 @@ namespace SWGF
 
   void Scene::load(Image &background)
   {
-   stage.load(background.get_handle());
+   stage.load(background);
   }
 
   void Scene::load(const char *name)
@@ -3621,7 +3621,7 @@ namespace SWGF
 
   void Text::load_font(Image &font)
   {
-   this->load_font(font.get_handle());
+   text.load(font,16,16);
   }
 
   void Text::load_font(const char *name)
