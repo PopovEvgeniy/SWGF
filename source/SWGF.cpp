@@ -2242,15 +2242,6 @@ namespace SWGF
    original.destroy_buffer();
   }
 
-  void Image::flip_image(const Core::MIRROR_KIND mirror)
-  {
-   if (data.get_buffer()!=NULL)
-   {
-    this->mirror_image(mirror);
-   }
-
-  }
-
   void Image::uncompress_tga_data(const unsigned char *target)
   {
    size_t index,position,amount;
@@ -2375,21 +2366,6 @@ namespace SWGF
   Image* Image::get_handle()
   {
    return this;
-  }
-
-  void Image::horizontal_mirror()
-  {
-   this->flip_image(Core::HORIZONTAL_MIRROR);
-  }
-
-  void Image::vertical_mirror()
-  {
-   this->flip_image(Core::VERTICAL_MIRROR);
-  }
-
-  void Image::complex_mirror()
-  {
-   this->flip_image(Core::MIRROR_BOTH);
   }
 
   void Image::destroy_image()
