@@ -242,23 +242,23 @@ namespace SWGF
 
   }
 
-  void Display::set_setting(const unsigned long int width,const unsigned long int height)
+  void Display::set_setting(const unsigned int width,const unsigned int height)
   {
    display.dmPelsWidth=width;
    display.dmPelsHeight=height;
   }
 
-  unsigned long int Display::get_depth() const
+  unsigned int Display::get_depth() const
   {
    return display.dmBitsPerPel;
   }
 
-  unsigned long int Display::get_display_width() const
+  unsigned int Display::get_display_width() const
   {
    return display.dmPelsWidth;
   }
 
-  unsigned long int Display::get_display_height() const
+  unsigned int Display::get_display_height() const
   {
    return display.dmPelsHeight;
   }
@@ -2057,7 +2057,7 @@ namespace SWGF
 
   }
 
-  void Screen::set_resolution(const unsigned long int width,const unsigned long int height)
+  void Screen::set_resolution(const unsigned int width,const unsigned int height)
   {
    this->get_video_mode();
    this->correct_depth();
