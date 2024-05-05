@@ -2192,7 +2192,7 @@ namespace SWGF
    height=0;
   }
 
-  size_t Image::get_target_position(const unsigned int x,const unsigned int y,const Core::MIRROR_KIND mirror)
+  size_t Image::get_source_position(const unsigned int x,const unsigned int y,const Core::MIRROR_KIND mirror) const
   {
    size_t position;
    switch (mirror)
@@ -2227,7 +2227,7 @@ namespace SWGF
    {
     for (x=0;x<width;++x)
     {
-     position=this->get_target_position(x,y,mirror);
+     position=this->get_source_position(x,y,mirror);
      data[index]=original[position];
      data[index+1]=original[position+1];
      data[index+2]=original[position+2];
