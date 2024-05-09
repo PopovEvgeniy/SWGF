@@ -4010,7 +4010,7 @@ namespace SWGF
    return ((first.y+first.height)>=second.y) && (first.y<=(second.y+second.height));
   }
 
-  void Collision::set_target(const SWGF::BOX &first_target,const SWGF::BOX &second_target)
+  void Collision::set_target(const SWGF::BOX first_target,const SWGF::BOX second_target)
   {
    first=first_target;
    second=second_target;
@@ -4021,7 +4021,7 @@ namespace SWGF
    return this->check_horizontal_collision() && this->check_vertical_collision();
   }
 
-  bool Collision::check_collision(const SWGF::BOX &first_target,const SWGF::BOX &second_target)
+  bool Collision::check_collision(const SWGF::BOX first_target,const SWGF::BOX second_target)
   {
    this->set_target(first_target,second_target);
    return this->check_collision();
