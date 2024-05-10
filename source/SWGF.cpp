@@ -1880,16 +1880,6 @@ namespace SWGF
 
   }
 
-  FILE *Binary_File::get_target()
-  {
-   return target;
-  }
-
-  void Binary_File::set_target(FILE *point)
-  {
-   target=point;
-  }
-
   void Binary_File::close()
   {
    if (target!=NULL)
@@ -1909,17 +1899,6 @@ namespace SWGF
 
   }
 
-  long int Binary_File::get_position()
-  {
-   long int position;
-   position=0;
-   if (target!=NULL)
-   {
-    position=ftell(target);
-   }
-   return position;
-  }
-
   long int Binary_File::get_length()
   {
    long int length;
@@ -1933,15 +1912,14 @@ namespace SWGF
    return length;
   }
 
+  long int Binary_File::get_position()
+  {
+   return (target==NULL) ? 0:ftell(target);
+  }
+
   bool Binary_File::check_error()
   {
-   int error;
-   error=0;
-   if (target!=NULL)
-   {
-    error=ferror(target);
-   }
-   return error!=0;
+   return (target==NULL) ? true:(ferror(target)!=0);
   }
 
   bool Binary_File::is_open() const
@@ -1967,16 +1945,16 @@ namespace SWGF
   void Input_File::open(const char *name)
   {
    this->close();
-   this->set_target(fopen(name,"rb"));
+   target=fopen(name,"rb");
   }
 
   void Input_File::read(void *buffer,const size_t length)
   {
-   if (this->get_target()!=NULL)
+   if (this->target!=NULL)
    {
     if (buffer!=NULL)
     {
-     fread(buffer,sizeof(char),length,this->get_target());
+     fread(buffer,sizeof(char),length,target);
     }
 
    }
@@ -2001,22 +1979,22 @@ namespace SWGF
   void Output_File::open(const char *name)
   {
    this->close();
-   this->set_target(fopen(name,"wb"));
+   target=fopen(name,"wb");
   }
 
   void Output_File::create_temp()
   {
    this->close();
-   this->set_target(tmpfile());
+   target=tmpfile();
   }
 
   void Output_File::write(const void *buffer,const size_t length)
   {
-   if (this->get_target()!=NULL)
+   if (this->target!=NULL)
    {
     if (buffer!=NULL)
     {
-     fwrite(buffer,sizeof(char),length,this->get_target());
+     fwrite(buffer,sizeof(char),length,target);
     }
 
    }
@@ -2025,9 +2003,9 @@ namespace SWGF
 
   void Output_File::flush()
   {
-   if (this->get_target()!=NULL)
+   if (target!=NULL)
    {
-    fflush(this->get_target());
+    fflush(target);
    }
 
   }
