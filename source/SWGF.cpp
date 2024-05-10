@@ -142,7 +142,7 @@ namespace SWGF
   {
    if (lpParam!=NULL)
    {
-    SetEvent(reinterpret_cast<HANDLE>(lpParam));
+    SetEvent(lpParam);
    }
 
   }
@@ -180,7 +180,7 @@ namespace SWGF
 
   void Synchronization::timer_setup(const unsigned int delay)
   {
-   if (CreateTimerQueueTimer(&timer,NULL,Internal::set_event,reinterpret_cast<PVOID>(event),0,delay,WT_EXECUTEINTIMERTHREAD)==FALSE)
+   if (CreateTimerQueueTimer(&timer,NULL,Internal::set_event,event,0,delay,WT_EXECUTEINTIMERTHREAD)==FALSE)
    {
     timer=NULL;
     SWGF::Halt("Can't set timer setting");
