@@ -393,10 +393,6 @@ namespace SWGF
      TranslateMessage(&Message);
      DispatchMessage(&Message);
     }
-    else
-    {
-     break;
-    }
 
    }
    return run;
