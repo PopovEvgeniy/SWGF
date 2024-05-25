@@ -96,9 +96,6 @@ namespace SWGF
   {
    switch (Message)
    {
-    case WM_PAINT:
-    ValidateRect(window,NULL);
-    break;
     case WM_CREATE:
     run=true;
     break;
