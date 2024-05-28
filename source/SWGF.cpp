@@ -2113,7 +2113,7 @@ namespace SWGF
    return this->is_software_render();
   }
 
-  unsigned long int Screen::get_color() const
+  unsigned int Screen::get_color() const
   {
    return this->get_depth();
   }
