@@ -142,18 +142,8 @@ namespace SWGF
    return DefWindowProc(window,Message,wParam,lParam);
   }
 
-  VOID CALLBACK set_event(PVOID lpParam,BOOLEAN TimerOrWaitFired)
-  {
-   if (lpParam!=NULL)
-   {
-    SetEvent(lpParam);
-   }
-
-  }
-
   Synchronization::Synchronization()
   {
-   event=NULL;
    timer=NULL;
   }
 
@@ -161,49 +151,39 @@ namespace SWGF
   {
    if (timer!=NULL)
    {
-    DeleteTimerQueueTimer(NULL,timer,event);
+    CancelWaitableTimer(timer);
+    CloseHandle(timer);
     timer=NULL;
    }
-   if (event!=NULL)
+
+  }
+
+  void Synchronization::create_timer()
+  {
+   timer=CreateWaitableTimer(NULL,FALSE,NULL);
+   if (timer==NULL)
    {
-    CloseHandle(event);
-    event=NULL;
+    SWGF::Halt("Can't create synchronization timer");
    }
 
   }
 
-  void Synchronization::create_event()
+  void Synchronization::set_timer(const unsigned long int interval)
   {
-   event=CreateEvent(NULL,TRUE,FALSE,NULL);
-   if (event==NULL)
+   LARGE_INTEGER start;
+   start.QuadPart=0;
+   if (SetWaitableTimer(timer,&start,interval,NULL,NULL,FALSE)==FALSE)
    {
-    SWGF::Halt("Can't create synchronization event");
+    SWGF::Halt("Can't set timer");
    }
 
-  }
-
-  void Synchronization::timer_setup(const unsigned int delay)
-  {
-   if (CreateTimerQueueTimer(&timer,NULL,Internal::set_event,event,0,delay,WT_EXECUTEINTIMERTHREAD)==FALSE)
-   {
-    timer=NULL;
-    SWGF::Halt("Can't set timer setting");
-   }
-
-  }
-
-  void Synchronization::create_timer(const unsigned int delay)
-  {
-   this->create_event();
-   this->timer_setup(delay);
   }
 
   void Synchronization::wait_timer()
   {
-   if (event!=NULL)
+   if (timer!=NULL)
    {
-    WaitForSingleObjectEx(event,INFINITE,TRUE);
-    ResetEvent(event);
+    WaitForSingleObjectEx(timer,INFINITE,TRUE);
    }
 
   }
@@ -2041,7 +2021,8 @@ namespace SWGF
    this->prepare_engine();
    this->set_render(this->get_context());
    this->start_render(this->get_display_width(),this->get_display_height());
-   this->create_timer(17);
+   this->create_timer();
+   this->set_timer(17);
   }
 
   void Screen::clear_screen()

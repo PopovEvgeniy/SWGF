@@ -149,17 +149,14 @@ typedef enum
   typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code taken from wglext.h by The Khronos Group Inc
 
   LRESULT CALLBACK Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
-  VOID CALLBACK set_event(PVOID lpParam,BOOLEAN TimerOrWaitFired);
 
   class Synchronization
   {
    private:
-   HANDLE event;
    HANDLE timer;
-   void create_event();
-   void timer_setup(const unsigned int delay);
    protected:
-   void create_timer(const unsigned int delay);
+   void create_timer();
+   void set_timer(const unsigned long int interval);
    void wait_timer();
    public:
    Synchronization();
