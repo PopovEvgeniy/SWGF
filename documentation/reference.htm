@@ -471,6 +471,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         Picture::get_image_height() const;</span> – Return image height in
       pixels.<br>
       <br>
+      <span style="font-style: italic;">size_t Picture::get_pixel_amount()
+        const;</span> – Return amount of image pixels.<br>
+      <br>
     </big><big><span style="font-style: italic;">size_t
         Picture::get_image_lenght() const;</span> – Return image length in
       bytes.</big><br>
@@ -594,7 +597,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load a background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -984,12 +986,10 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         int target) const;</span> – Return true if target column is valid.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
-
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
-
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -1348,7 +1348,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       </big></h2>
     <big><span style="text-decoration: underline;"></span> Isometric level
       subsystem intend for help you to create an isometric levels. Just use <span
-
         style="font-style: italic;">World</span> class for doing it. Let's look
       at public methods.<br>
       <br>
@@ -1436,7 +1435,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       &nbsp; <span style="font-style: italic;"> unsigned int y;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int width;</span><br style="font-style: italic;">
       &nbsp; <span style="font-style: italic;"> unsigned int height;</span><br
-
         style="font-style: italic;">
       <span style="font-style: italic;"> } BOX;</span><br>
       <br>
@@ -1658,12 +1656,11 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       functions. All these functions declared in <span style="font-style: italic;">Resource</span>
       sub–namespace.<br>
       <br>
-      <span style="font-style: italic;">create</span>
-      function create a single resource or array of resources. It has two
-      form. First form create a single resource. First form takes a handle to
-      resource handle as arguments. Second form create array of resources.
-      Second form takes a handle to resource handle and resource amount as
-      arguments.<br>
+      <span style="font-style: italic;">create</span> function create a single
+      resource or array of resources. It has two form. First form create a
+      single resource. First form takes a handle to resource handle as
+      arguments. Second form create array of resources. Second form takes a
+      handle to resource handle and resource amount as arguments.<br>
       <br>
       <span style="font-style: italic;"> destroy</span> function delete resource
       if it already exists. This function takes resource handle as argument.<br>
@@ -2641,6 +2638,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       8.3.8 – Source code synced with Eugene game development kit 8.8.7.<br>
       8.3.9 – Source code synced with Eugene game development kit 8.8.8.<br>
       8.4 – Source code synced with Black game development kit 5.8.7.<br>
+      8.4.1 – Source code synced with Black game development kit 5.8.8.<br>
     </big>
   </body>
 </html>

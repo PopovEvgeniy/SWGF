@@ -2365,6 +2365,7 @@ namespace SWGF
    image=NULL;
    image_width=0;
    image_height=0;
+   pixels=0;
   }
 
   void Picture::set_image_size(const unsigned int width,const unsigned int height)
@@ -2436,6 +2437,11 @@ namespace SWGF
   unsigned int Picture::get_image_width() const
   {
    return image_width;
+  }
+
+  size_t Picture::get_pixel_amount() const
+  {
+   return pixels;
   }
 
   unsigned int Picture::get_image_height() const
