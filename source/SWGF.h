@@ -569,7 +569,8 @@ typedef enum
   class Keyboard
   {
    private:
-   Core::Buffer<unsigned char> preversion;
+   unsigned char *preversion;
+   void prepare();
    bool check_state(const unsigned char code,const unsigned char state);
    public:
    Keyboard();
