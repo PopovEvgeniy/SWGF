@@ -306,86 +306,11 @@ typedef enum
   ALPHA_COMPONENT=24
  } PIXEL_COMPONENT;
 
- float get_start_offset(const float current,const float total);
- float get_end_offset(const float current,const float total);
- unsigned int get_pixel_component(const unsigned int pixel,const Core::PIXEL_COMPONENT component);
- unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha);
- size_t get_offset(const unsigned int x,const unsigned int y,const unsigned int width);
-
- template <class DATA_TYPE>
- class Buffer
- {
-  private:
-  DATA_TYPE *buffer;
-  size_t length;
-  public:
-
-  Buffer()
-  {
-   buffer=NULL;
-   length=0;
-  }
-
-  ~Buffer()
-  {
-   Resource::destroy_array(buffer);
-   buffer=NULL;
-   length=0;
-  }
-
-  void set_length(const size_t amount)
-  {
-   length=amount;
-  }
-
-  void destroy_buffer()
-  {
-   Resource::destroy_array(buffer);
-   buffer=NULL;
-   length=0;
-  }
-
-  void fill_buffer(const DATA_TYPE value)
-  {
-   size_t index;
-   for (index=0;index<length;++index)
-   {
-    buffer[index]=value;
-   }
-
-  }
-
-  void copy_data(const DATA_TYPE *target)
-  {
-   size_t index;
-   for (index=0;index<length;++index)
-   {
-    buffer[index]=target[index];
-   }
-
-  }
-
-  void create_buffer()
-  {
-   Resource::create(&buffer,length);
-  }
-
-  size_t get_length() const
-  {
-   return length;
-  }
-
-  DATA_TYPE *get_buffer()
-  {
-   return buffer;
-  }
-
-  DATA_TYPE& operator[](const size_t index)
-  {
-   return buffer[index];
-  }
-
- };
+  float get_start_offset(const float current,const float total);
+  float get_end_offset(const float current,const float total);
+  unsigned int get_pixel_component(const unsigned int pixel,const Core::PIXEL_COMPONENT component);
+  unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha);
+  size_t get_offset(const unsigned int x,const unsigned int y,const unsigned int width);
 
   class Unicode_Convertor
   {

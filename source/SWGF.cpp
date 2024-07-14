@@ -2367,9 +2367,6 @@ namespace SWGF
   {
    Resource::destroy_array(image);
    image=NULL;
-   image_width=0;
-   image_height=0;
-   pixels=0;
   }
 
   void Picture::set_image_size(const unsigned int width,const unsigned int height)
