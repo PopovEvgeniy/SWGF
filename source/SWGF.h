@@ -234,7 +234,8 @@ typedef enum
    }
    catch (...)
    {
-    SWGF::Halt("Can't allocate memory");
+    puts("Can't allocate memory");
+    exit(EXIT_FAILURE);
    }
 
   }
@@ -248,7 +249,8 @@ typedef enum
    }
    catch (...)
    {
-    SWGF::Halt("Can't allocate memory");
+    puts("Can't allocate memory");
+    exit(EXIT_FAILURE);
    }
 
   }
