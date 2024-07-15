@@ -249,6 +249,7 @@ namespace SWGF
 
   Engine::Engine()
   {
+   memset(&window_class,0,sizeof(WNDCLASSEX));
    window_class.lpszClassName=TEXT("SWGF");
    window_class.style=CS_OWNDC;
    window_class.cbSize=sizeof(WNDCLASSEX);
