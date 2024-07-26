@@ -856,8 +856,6 @@ namespace SWGF
 
   void Rectangle::load_texture(const unsigned int width,const unsigned int height,const void *buffer)
   {
-   glPixelStorei(GL_PACK_ALIGNMENT,4);
-   glPixelStorei(GL_UNPACK_ALIGNMENT,4);
    glGenTextures(1,&texture);
    glBindTexture(GL_TEXTURE_2D,texture);
    glTexEnvi(GL_TEXTURE_ENV,GL_TEXTURE_ENV_MODE,GL_REPLACE);
@@ -974,6 +972,22 @@ namespace SWGF
    return maximum_size;
   }
 
+  void Render::set_image_setting()
+  {
+   glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+   glPixelStorei(GL_UNPACK_SWAP_BYTES,0);
+   glPixelStorei(GL_UNPACK_LSB_FIRST,0);
+   glPixelStorei(GL_UNPACK_ROW_LENGTH,0);
+   glPixelStorei(GL_UNPACK_SKIP_PIXELS,0);
+   glPixelStorei(GL_UNPACK_SKIP_ROWS,0);
+   glPixelStorei(GL_PACK_ALIGNMENT,4);
+   glPixelStorei(GL_PACK_SWAP_BYTES,0);
+   glPixelStorei(GL_PACK_LSB_FIRST,0);
+   glPixelStorei(GL_PACK_ROW_LENGTH,0);
+   glPixelStorei(GL_PACK_SKIP_PIXELS,0);
+   glPixelStorei(GL_PACK_SKIP_ROWS,0);
+  }
+
   void Render::set_perfomance_setting()
   {
    glDisable(GL_POINT_SMOOTH);
@@ -1074,6 +1088,7 @@ namespace SWGF
 
   void Render::create_render(const unsigned int width,const unsigned int height)
   {
+   this->set_image_setting();
    this->set_perspective(width,height);
    this->set_perfomance_setting();
    this->set_render_hints();
