@@ -597,7 +597,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       Load a background </big><big>from target file</big><big>.<br>
       <br>
       <span style="font-style: italic;">void Background::load(</span></big><big
-
       style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);</span>
       – Load normal background from target file.<br>
       <br>
@@ -996,10 +995,12 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
         int target) const;</span> – Return true if target column is valid.<br>
       <br>
     </big><big style="font-style: italic;"> unsigned int Sheet::get_row(</big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return row of target frame.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Sheet::get_column(</span></big><big
+
       style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">)
         const;</span> – Return</big><big> column</big><big> </big><big>of
       target frame</big><big>.<br>
@@ -1105,6 +1106,9 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
       <span style="font-style: italic;"> void Text::set_orientation(const
         SWGF::TEXT_KIND target);</span> – Set current text orientation.<br>
+      <br style="font-style: italic;">
+      <span style="font-style: italic;">bool Text::is_font_load() const;</span>
+      – Return true if the font is already loaded.<br>
       <br>
       <span style="font-style: italic;"> unsigned int Text::get_font_width()
         const;</span> – Get current font width in pixels.<br>
@@ -2208,7 +2212,6 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2660,6 +2663,7 @@ C++ Redistributable Packages</a> if you game code compiled under Visual C++.
       8.5.2 – Source code synced with Eugene game development kit 9.0.3.<br>
       8.5.3 – Source code synced with Eugene game development kit 9.0.4.<br>
       8.5.4 – Source code synced with Eugene game development kit 9.0.5.<br>
+      8.5.5 – Source code synced with Eugene game development kit 9.0.6.<br>
     </big>
   </body>
 </html>
