@@ -847,7 +847,6 @@ namespace SWGF
   {
    if (texture!=0)
    {
-    glBindTexture(GL_TEXTURE_2D,0);
     glDeleteTextures(1,&texture);
     texture=0;
    }
@@ -885,7 +884,7 @@ namespace SWGF
   {
    if (glGetError()!=GL_NO_ERROR)
    {
-    SWGF::Halt("Can't create the target texture");
+    texture=0;
    }
 
   }
@@ -922,7 +921,6 @@ namespace SWGF
   {
    if (texture!=0)
    {
-    glBindTexture(GL_TEXTURE_2D,0);
     glDeleteTextures(1,&texture);
     texture=0;
    }
