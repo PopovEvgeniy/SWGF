@@ -1,18 +1,18 @@
 Project Description
 
-Simple windows game framework is the advanced fork of Eugene game development kit. It intend for Windows Vista or higher.
+Simple windows game framework is an ultra-fast 2D game engine for Windows XP or higher. It uses OPENGL for rendering.
 
 License
 
-Simple windows game framework distributed under Zlib license.
+Eugene game development kit is distributed under a Zlib license.
 
 Features
 
- Minimum external dependencies: only OPENGL and standard Windows API libraries.
- Don’t need to link the main program with the engine binary file. The engine is just source code files with all engine codes.
+ Minimum external dependencies: only DirectX, OPENGL and standard Windows API libraries.
+ You don't need to link a main program with the engine binary file. The engine is just the source code files.
  Wide range of supported compilers.
- Two render back-end: hardware accelerated OPENGL and software emulated OPENGL.
- Easy to use object-orientated API
+ Two render backends: hardware-accelerated OPENGL and software OPENGL.
+ Easy-to-use object-oriented API
  Animated and static sprites.
  Scrollable and static backgrounds.
  Sprite-sheets.
@@ -26,5 +26,5 @@ Features
  Timers.
  Collision detector.
  Integrated fps counter.
- Powerful input subsystem: keyboard, mouse, game-pad.
- Simple sound subsystem for playing music and sound.
+ Powerful input subsystem: keyboard, mouse, gamepad.
+ Simple audio subsystem for playing music and sounds.

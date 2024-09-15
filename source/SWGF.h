@@ -1,5 +1,5 @@
 /*
-Simple windows game framework made by Popov Evgeniy Alekseyevich
+Simple windows game framework was made by Popov Evgeniy Alekseyevich
 Some code taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL/wglext.h) by The Khronos Group Inc
 
 Simple windows game framework license
@@ -146,7 +146,7 @@ typedef enum
  namespace Internal
  {
 
-  typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code taken from wglext.h by The Khronos Group Inc
+  typedef BOOL (WINAPI * PFNWGLSWAPINTERVALEXTPROC) (int interval); // This code is taken from wglext.h by The Khronos Group Inc
 
   LRESULT CALLBACK Process_Message(HWND window,UINT Message,WPARAM wParam,LPARAM lParam);
 
