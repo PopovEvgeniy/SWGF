@@ -4,7 +4,7 @@ Simple windows game framework is an ultra-fast 2D game engine for Windows XP or 
 
 License
 
-Eugene game development kit is distributed under a Zlib license.
+Simple windows game framework is distributed under a Zlib license.
 
 Features
 
