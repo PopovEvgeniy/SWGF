@@ -228,9 +228,9 @@
         EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
         MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
         IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-        CLAIM, &nbsp;&nbsp; DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
-        CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
-        THE MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.</big><br>
+        CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+        TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+        MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.</big><br>
     </p>
     <h2><a class="mozTocH2" name="mozTocId336772"></a><big>Chapter 4. System
         requirements</big></h2>
@@ -853,12 +853,12 @@
         Set the sprite position to the start position.<br>
         <br>
       </big><big><span style="font-style: italic;">void Billboard::go_start_x();</span>
-        – Set </big><big>the x-coordinate of</big><big> sprite position to </big><big>x-coordinate
-        of</big><big> start position.<br>
+        – Set </big><big>the x-coordinate of</big><big> the sprite position to
+      </big><big>the x-coordinate of</big><big> the start position.<br>
         <br>
       </big><big><span style="font-style: italic;">void Billboard::go_start_y();</span>
-        – Set the </big><big>y-coordinate of</big><big> sprite position to </big><big>y-coordinate
-        of</big><big> start position.</big><br>
+        – Set the </big><big>y-coordinate of</big><big> the sprite position to
+      </big><big>the y-coordinate of</big><big> the start position.</big><br>
       <br>
       <big><span style="font-style: italic;">void Billboard::draw();</span> –
         Draw a sprite.<br>
@@ -1161,17 +1161,17 @@
           *name);</span> – Load a font from the target file.<br>
         <br>
         <span style="font-style: italic;"> void Text::print(const char target);</span>
-        – Draw a single character in the current position.<br>
+        – Draw a single character at the current position.<br>
         <br>
         <span style="font-style: italic;"> void Text::print(const char *target);</span>
         – Draw a text at the current position.<br>
         <br>
         <span style="font-style: italic;"> void Text::print(const unsigned int
           x, const unsigned int y, const char target);</span> – Draw a single
-        character in the specific position.<br>
+        character at the specific position.<br>
         <br>
         <span style="font-style: italic;"> void Text::print(const unsigned int
-          x, const unsigned int y, const char *target);</span> – Draw a text in
+          x, const unsigned int y, const char *target);</span> – Draw a text at
         the specific position.<br>
         <br>
         <span style="font-style: italic;">void Text::disable_mirror();</span> –
@@ -1406,7 +1406,6 @@
         column.<br>
         <br>
         <span style="font-style: italic;">int World::get_target_y(const int row</span></big><big
-
         style="font-style: italic;">,</big><big style="font-style: italic;">
         const int column</big><big><span style="font-style: italic;">) const;</span>
         – Get the target Cartesian y-coordinate </big><big>from the row and
@@ -1473,8 +1472,8 @@
         <br>
         <span style="text-decoration: underline;"> Collision detail</span><br>
       </big></p>
-    <p><big>The detector uses the bounding box collision method to detect
-        collisions. The collision-related information is stored in a custom data
+    <p><big>The detector uses the bounding box collision method to detect a
+        collision. The collision-related information is stored in a custom data
         type.<br>
         <br>
         <span style="font-style: italic;"> typedef struct</span><span style="font-style: italic;"><br>
@@ -1691,7 +1690,7 @@
       <big> </big></p>
     <h2><a class="mozTocH2" name="mozTocId59386"></a><big>Chapter 2. Tools</big></h2>
     <p><big>This module is implemented as a few functions</big><big>. All these
-        functions are declared in <span style="font-style: italic;">Tools</span>
+        functions are declared in the <span style="font-style: italic;">Tools</span>
         sub-namespace.<br>
         <br>
         <span style="font-style: italic;">void quit();</span> </big><big>–</big><big>
@@ -1721,12 +1720,13 @@
         resource manager is implemented as a few template functions. All these
         functions are declared in <span style="font-style: italic;">Resource</span>
         sub-namespace.<br>
-        <br>
-        <span style="font-style: italic;">create</span> create a single resource
-        or an array of resources. It has two forms. First, create a single
-        resource. First form takes a handle to resource handle as arguments.
-        Second form: create an array of resources. The second form takes a
-        handle to resource handle and resource amount as arguments.</big></p>
+        <br style="font-style: italic;">
+        <span style="font-style: italic;">create</span>
+        creates a resources. The first form of this function creates a single
+        resource. It takes a handle to a resource handle as an argument. The
+        second form creates an array of resources. It takes a handle to a
+        resource handle and a resource amount.<br>
+      </big></p>
     <p><big><span style="font-style: italic;"> destroy</span> delete a resource
         if it already exists. This function takes resource handle as an
         argument.</big></p>
@@ -2269,7 +2269,6 @@
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2461,8 +2460,8 @@
         calculate the correct texture size.<br>
         <span style="font-style: italic;"> Rectangle</span> is intended to draw
         a textured rectangle.<br>
-        <span style="font-style: italic;"> Shape</span> is the base class of the <span
-          style="font-style: italic;">Rectangle</span> class.<br>
+        <span style="font-style: italic;"> Shape</span> is the base class of the
+        <span style="font-style: italic;">Rectangle</span> class.<br>
       </big></p>
     <h2><a class="mozTocH2" name="mozTocId293644"></a><big>Chapter 3. Base
         graphics subsystem</big></h2>
@@ -2724,6 +2723,6 @@
       8.5.7: Source code synced with Eugene game development kit 9.0.8.<br>
       8.5.8: Source code synced with Eugene game development kit 9.0.9.<br>
       8.5.9: Source code synced with Eugene game development kit 9.1.<br>
-      8.5.9.1 – 8.5.9.2: Documentation updated.</big><br>
+      8.5.9.1 – 8.5.9.3: Documentation updated.</big><br>
   </body>
 </html>
