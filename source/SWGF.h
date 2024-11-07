@@ -314,13 +314,13 @@ typedef enum
   unsigned int make_pixel(const unsigned int red,const unsigned int green,const unsigned int blue,const unsigned int alpha);
   size_t get_offset(const unsigned int x,const unsigned int y,const unsigned int width);
 
-  class Unicode_Convertor
+  class Unicode_Converter
   {
    private:
    wchar_t *target;
    public:
-   Unicode_Convertor();
-   ~Unicode_Convertor();
+   Unicode_Converter();
+   ~Unicode_Converter();
    wchar_t *convert(const char *source);
   };
 

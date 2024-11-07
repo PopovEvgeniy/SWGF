@@ -505,18 +505,18 @@ namespace SWGF
    return static_cast<size_t>(x)+static_cast<size_t>(y)*static_cast<size_t>(width);
   }
 
-  Unicode_Convertor::Unicode_Convertor()
+  Unicode_Converter::Unicode_Converter()
   {
    target=NULL;
   }
 
-  Unicode_Convertor::~Unicode_Convertor()
+  Unicode_Converter::~Unicode_Converter()
   {
    Resource::destroy_array(target);
    target=NULL;
   }
 
-  wchar_t *Unicode_Convertor::convert(const char *source)
+  wchar_t *Unicode_Converter::convert(const char *source)
   {
    size_t length;
    length=strlen(source);
@@ -1367,9 +1367,9 @@ namespace SWGF
 
   void Audio::load(const char *target)
   {
-   Core::Unicode_Convertor convertor;
+   Core::Unicode_Converter converter;
    this->stop();
-   this->load_content(convertor.convert(target));
+   this->load_content(converter.convert(target));
   }
 
   void Audio::initialize(const char *target)
@@ -3121,7 +3121,7 @@ namespace SWGF
    column=1;
    if (target>rows)
    {
-    if (target<=this->get_frames())
+    if (this->check_frame(target)==true)
     {
      column+=(target-1)/rows;
     }
