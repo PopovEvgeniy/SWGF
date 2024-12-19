@@ -24,7 +24,7 @@
           <li><a href="#mozTocId491993">Chapter 6. Compilers</a></li>
           <li><a href="#mozTocId56069">Chapter 7. Platform-specific notes</a></li>
           <li><a href="#mozTocId914689">Chapter 8. The engine namespace</a></li>
-          <li><a href="#mozTocId417277">Chapter 9. Custom date types</a></li>
+          <li><a href="#mozTocId417277">Chapter 9. Custom data types</a></li>
         </ul>
       </li>
       <li><a href="#mozTocId859712">Part 2. Base things</a>
@@ -349,7 +349,7 @@
       </big><big>All the engine classes are declared in a few nested namespaces.<br>
       </big></p>
     <h2><a class="mozTocH2" name="mozTocId417277"></a><big>Chapter 9. Custom
-        date types</big></h2>
+        data types</big></h2>
     <p><big>Almost all custom data types are declared in the <span style="font-style: italic;">SWGF</span>
         namespace.<br>
       </big></p>
@@ -706,7 +706,6 @@
           background); -</span> Load a background </big><big>from the buffer.</big><big><br>
         <br>
       </big><big><span style="font-style: italic;">void Scene::load(</span></big><big
-
         style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);
           -</span> Load a background from the target file.</big><br>
       <big><br>
@@ -956,6 +955,7 @@
         <br>
         Just use the <span style="font-style: italic;">Cartoon</span> class to
         work with a static sprite. It is derived from two classes: </big><big><span
+
           style="font-style: italic;">billboard</span> and <span style="font-style: italic;">picture.
           </span></big><big>Let's look at the publicly available methods.<br>
         <br>
@@ -1207,11 +1207,11 @@
         <br>
         <span style="font-style: italic;"> </span></big><big><span style="font-style: italic;">unsigned
           char *</span></big><big><span style="font-style: italic;">Image::load(const
-          char *name); -</span> Load a Truevision TGA image and return handle to
+          char *name); -</span> Load a Truevision TGA image and return the handle to
         the image buffer.<br>
         <br>
         <span style="font-style: italic;">unsigned char *Image::get_data(); -</span>
-        Return handle to the image buffer.<br>
+        Return the handle to the image buffer.<br>
         <br>
         <span style="font-style: italic;"> unsigned int Image::get_width()
           const; -</span> Return the width of the current image.<br>
@@ -1692,7 +1692,7 @@
         file. <br>
         <br>
         All functions take the target file name as an argument and return false
-        if the operation was failed.</big><br>
+        if the operation failed.</big><br>
       <big> </big></p>
     <h2><a class="mozTocH2" name="mozTocId59386"></a><big>Chapter 2. Tools</big></h2>
     <p><big>This module is implemented as a few functions</big><big>. All these
@@ -1703,8 +1703,8 @@
         Exit from your program and return the user to the operating system.<br>
         <br>
         <span style="font-style: italic;">bool enable_logging(const char *name);
-          -</span></big><big></big><big> Enable redirecting error messages to a
-        log file and return false if the operation was failed.<br>
+          -</span></big><big> Enable redirecting error messages to a log file
+        and return false if the operation failed.<br>
         <br>
         <span style="font-style: italic;">void randomize(); -</span></big><big></big><big>
         Initialize the random number generator.<br>
@@ -2274,6 +2274,7 @@
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2484,7 +2485,7 @@
       <big style="text-decoration: underline;">Vertex arrays and texture
         coordinate arrays</big><br>
       <big> </big><br>
-      <big>Any rectangle needs four vertexes and four texture coordinates.</big><br>
+      <big>Any rectangle needs four vertices and four texture coordinates.</big><br>
       <big>A single vertex represents the following custom data type:</big><br>
       <big> </big><br>
       <big style="font-style: italic;">typedef struct Vertex</big><big style="font-style: italic;"><br>
@@ -2737,6 +2738,7 @@
       8.6.2.1: The documentation has been updated.<br>
       8.6.3: The source code synced with the Eugene game development kit 9.2.3.<br>
       8.6.4: The source code synced with the Eugene game development kit 9.2.4.<br>
+      8.6.4.1: The documentation has been updated.<br>
     </big>
   </body>
 </html>
