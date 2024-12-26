@@ -183,7 +183,7 @@ namespace SWGF
   {
    if (timer!=NULL)
    {
-    WaitForSingleObjectEx(timer,INFINITE,TRUE);
+    WaitForSingleObjectEx(timer,INFINITE,FALSE);
    }
 
   }
