@@ -363,7 +363,8 @@
         understand it.</big></p>
     <p><img style="width: 107px; height: 111px;" alt="" src="coordinate_system.png"><br>
     </p>
-    <h2><a class="mozTocH2" name="mozTocId544184"></a><big>Chapter 2. A game loop</big><br>
+    <h2><a class="mozTocH2" name="mozTocId544184"></a><big>Chapter 2. A game
+        loop</big><br>
     </h2>
     <p><big>What is the main point in your game? A game loop. You can see the
         structure of a typical game loop below.</big></p>
@@ -706,6 +707,7 @@
           background); -</span> Load a background </big><big>from the buffer.</big><big><br>
         <br>
       </big><big><span style="font-style: italic;">void Scene::load(</span></big><big
+
         style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);
           -</span> Load a background from the target file.</big><br>
       <big><br>
@@ -1136,7 +1138,12 @@
           const; -</span> Get the current font width in pixels.<br>
         <br>
         <span style="font-style: italic;"> unsigned int Text::get_font_height()
-          const; -</span> Get the current font height in pixels.<br>
+          const; -</span> Get the current font height in pixels.</big></p>
+    <p><big><span style="font-style: italic;">unsigned int Text::get_x() const;
+          -</span> Get the x-coordinate of the text output position.<br>
+        <br>
+        <span style="font-style: italic;">unsigned int Text::get_y() const; -</span>
+        Get the y-coordinate of the text output position.<br>
         <br>
         <span style="font-style: italic;"> void Text::set_position(const
           unsigned int x, const unsigned int y); -</span> Set the output
@@ -1572,7 +1579,6 @@
         <br>
       </big><big style="font-style: italic;">unsigned int </big><big style="font-style: italic;">Tilemap::get_column_amount(const
         </big><big style="font-style: italic;">unsigned int viewport_width</big><big><span
-
           style="font-style: italic;">) const; -</span> Get the maximum number
         of the visible columns.<br>
         <br>
@@ -1590,6 +1596,7 @@
         Return true if the column is valid.<br>
         <br>
         <span style="font-style: italic;">SWGF::BOX Tilemap::get_box(</span></big><big
+
         style="font-style: italic;">const </big><big style="font-style: italic;">unsigned
         int row,const unsigned int column</big><big><span style="font-style: italic;">)
           const; -</span> Return the collision-related information.<br>
@@ -2272,6 +2279,7 @@
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
+
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2737,6 +2745,7 @@
       8.6.4: The source code synced with the Eugene game development kit 9.2.4.<br>
       8.6.4.1-8.6.4.5: The documentation has been updated.<br>
       8.6.5: The small changes.<br>
+      8.6.6: The source code synced with the Eugene game development kit 9.2.6.<br>
     </big>
   </body>
 </html>
