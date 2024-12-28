@@ -242,23 +242,23 @@
     <table border="1">
       <tbody>
         <tr>
-          <td><big>Operating system </big></td>
-          <td><big>Windows XP or higher </big></td>
+          <td><big>Operating system</big></td>
+          <td><big>Windows XP or higher</big></td>
         </tr>
         <tr>
           <td><big>Minimum color depth </big></td>
-          <td><big>16 bits </big></td>
+          <td><big>16 bits</big></td>
         </tr>
         <tr>
           <td><big>Sound card </big></td>
-          <td><big>Any sound card </big></td>
+          <td><big>Any sound card</big></td>
         </tr>
         <tr>
-          <td colspan="1" rowspan="2"><big>Processor </big></td>
+          <td colspan="1" rowspan="2"><big>Processor</big></td>
           <td><big>Intel Pentium 4 MHz for 32-bit systems </big></td>
         </tr>
         <tr>
-          <td><big>Intel Core 2 Duo for 64-bit systems </big></td>
+          <td><big>Intel Core 2 Duo for 64-bit systems</big></td>
         </tr>
       </tbody>
     </table>
@@ -538,11 +538,11 @@
           <td><big>Description </big></td>
         </tr>
         <tr>
-          <td><big>HORIZONTAL_ANIMATED </big></td>
-          <td><big>The horizontal scrolling background or the horizontal strip </big></td>
+          <td><big>HORIZONTAL_ANIMATED</big></td>
+          <td><big>The horizontal scrolling background or the horizontal strip</big></td>
         </tr>
         <tr>
-          <td><big>VERTICAL_ANIMATED </big></td>
+          <td><big>VERTICAL_ANIMATED</big></td>
           <td><big>The vertical scrolling background or the vertical strip<br>
             </big></td>
         </tr>
@@ -707,7 +707,6 @@
           background); -</span> Load a background </big><big>from the buffer.</big><big><br>
         <br>
       </big><big><span style="font-style: italic;">void Scene::load(</span></big><big
-
         style="font-style: italic;">const char *name</big><big><span style="font-style: italic;">);
           -</span> Load a background from the target file.</big><br>
       <big><br>
@@ -1105,12 +1104,12 @@
           <td><big>Description </big></td>
         </tr>
         <tr>
-          <td><big>HORIZONTAL_TEXT </big></td>
+          <td><big>HORIZONTAL_TEXT</big></td>
           <td><big>The horizontally oriented text<br>
             </big></td>
         </tr>
         <tr>
-          <td><big>VERTICAL_TEXT </big></td>
+          <td><big>VERTICAL_TEXT</big></td>
           <td><big>The vertically oriented text</big></td>
         </tr>
       </tbody>
@@ -1173,17 +1172,18 @@
         <br>
         <span style="font-style: italic;"> void Text::print(const char target);
           -</span> Draw a single character at the current position.<br>
-        <br>
-        <span style="font-style: italic;"> void Text::print(const char *target);
-          -</span> Draw a text at the current position.<br>
-        <br>
+        <span style="font-style: italic;"></span><br>
         <span style="font-style: italic;"> void Text::print(const unsigned int
           x, const unsigned int y, const char target); -</span> Draw a single
         character at the specific position.<br>
         <br>
-        <span style="font-style: italic;"> void Text::print(const unsigned int
+        <span style="font-style: italic;">size_t Text::print(const char
+          *target); -</span> Draw a text at the current position and return the
+        text length.<br>
+        <br>
+        <span style="font-style: italic;">size_t Text::print(const unsigned int
           x, const unsigned int y, const char *target); -</span> Draw a text at
-        the specific position.<br>
+        the specific position and return the text length.<br>
         <br>
         <span style="font-style: italic;">void Text::disable_mirror(); -</span>
         Disable text mirroring mode.<br>
@@ -1441,7 +1441,7 @@
         <br>
         <span style="font-style: italic;">int World::get_tile_amount() const; -</span>
         Get the maximum number of the visible isometric tiles.<br>
-      </big><big></big><big></big></p>
+      </big></p>
     <h1><a class="mozTocH1" name="mozTocId64443"></a><big>Part 5. Common things</big></h1>
     <h2><a class="mozTocH2" name="mozTocId597525"></a><big>Chapter 1. The
         sub-namespace</big></h2>
@@ -1596,7 +1596,6 @@
         Return true if the column is valid.<br>
         <br>
         <span style="font-style: italic;">SWGF::BOX Tilemap::get_box(</span></big><big
-
         style="font-style: italic;">const </big><big style="font-style: italic;">unsigned
         int row,const unsigned int column</big><big><span style="font-style: italic;">)
           const; -</span> Return the collision-related information.<br>
@@ -1682,7 +1681,7 @@
         <br>
         <span style="font-style: italic;"> bool Audio::check_playing(); -</span>
         Return true if the sound resource is playing.</big></p>
-    <big></big>
+    
     <p><big> </big></p>
     <h1><a class="mozTocH1" name="mozTocId209024"></a><big>Part 7. Misc</big></h1>
     <h2><a class="mozTocH2" name="mozTocId608755"></a><big>Chapter 1. File
@@ -1705,21 +1704,21 @@
         functions are declared in the <span style="font-style: italic;">Tools</span>
         sub-namespace.<br>
         <br>
-        <span style="font-style: italic;">void quit(); -</span></big><big></big><big>
+        <span style="font-style: italic;">void quit(); -</span></big><big>
         Exit from your program and return the user to the operating system.<br>
         <br>
         <span style="font-style: italic;">bool enable_logging(const char *name);
           -</span></big><big> Enable redirecting error messages to a log file
         and return false if the operation failed.<br>
         <br>
-        <span style="font-style: italic;">void randomize(); -</span></big><big></big><big>
+        <span style="font-style: italic;">void randomize(); -</span></big><big>
         Initialize the random number generator.<br>
         <br>
         <span style="font-style: italic;">unsigned int get_random(const unsigned
-          int number); -</span></big><big></big><big> Return a random value
+          int number); -</span></big><big> Return a random value
         between zero and the number.<br>
         <br>
-        <span style="font-style: italic;"> unsigned int get_texture_size(); -</span></big><big></big><big>
+        <span style="font-style: italic;"> unsigned int get_texture_size(); -</span></big><big>
         Return the maximum width or height of the texture.<br>
         <br>
         <span style="font-style: italic;">SWGF::BOX generate_box(const unsigned
@@ -1857,243 +1856,243 @@
     <table border="1">
       <tbody>
         <tr>
-          <td><big>Key </big></td>
+          <td><big>Key</big></td>
           <td><big>Code </big></td>
-          <td><big>Key </big></td>
+          <td><big>Key</big></td>
           <td><big>Code </big></td>
-          <td><big>Key </big></td>
+          <td><big>Key</big></td>
           <td><big>Code </big></td>
         </tr>
         <tr>
-          <td><big>Escape </big></td>
-          <td><big>1 </big></td>
-          <td><big>A </big></td>
-          <td><big>30 </big></td>
-          <td><big>F1 </big></td>
-          <td><big>59 </big></td>
+          <td><big>Escape</big></td>
+          <td><big>1</big></td>
+          <td><big>A</big></td>
+          <td><big>30</big></td>
+          <td><big>F1</big></td>
+          <td><big>59</big></td>
         </tr>
         <tr>
-          <td><big>! or 1 </big></td>
-          <td><big>2 </big></td>
-          <td><big>S </big></td>
-          <td><big>31 </big></td>
+          <td><big>! or 1</big></td>
+          <td><big>2</big></td>
+          <td><big>S</big></td>
+          <td><big>31</big></td>
           <td><big>F2</big></td>
-          <td><big>60 </big></td>
+          <td><big>60</big></td>
         </tr>
         <tr>
-          <td><big>@ or 2 </big></td>
-          <td><big>3 </big></td>
-          <td><big>D </big></td>
-          <td><big>32 </big></td>
+          <td><big>@ or 2</big></td>
+          <td><big>3</big></td>
+          <td><big>D</big></td>
+          <td><big>32</big></td>
           <td><big>F3</big></td>
-          <td><big>61 </big></td>
+          <td><big>61</big></td>
         </tr>
         <tr>
-          <td><big># or 3 </big></td>
-          <td><big>4 </big></td>
-          <td><big>F </big></td>
-          <td><big>33 </big></td>
+          <td><big># or 3</big></td>
+          <td><big>4</big></td>
+          <td><big>F</big></td>
+          <td><big>33</big></td>
           <td><big>F4</big></td>
-          <td><big>62 </big></td>
+          <td><big>62</big></td>
         </tr>
         <tr>
-          <td><big>$ or 4 </big></td>
-          <td><big>5 </big></td>
-          <td><big>G </big></td>
-          <td><big>34 </big></td>
+          <td><big>$ or 4</big></td>
+          <td><big>5</big></td>
+          <td><big>G</big></td>
+          <td><big>34</big></td>
           <td><big>F5</big></td>
-          <td><big>63 </big></td>
+          <td><big>63</big></td>
         </tr>
         <tr>
-          <td><big>% or 5 </big></td>
-          <td><big>6 </big></td>
-          <td><big>H </big></td>
-          <td><big>35 </big></td>
+          <td><big>% or 5</big></td>
+          <td><big>6</big></td>
+          <td><big>H</big></td>
+          <td><big>35</big></td>
           <td><big>F6</big></td>
-          <td><big>64 </big></td>
+          <td><big>64</big></td>
         </tr>
         <tr>
-          <td><big>^ or 6 </big></td>
-          <td><big>7 </big></td>
-          <td><big>J </big></td>
-          <td><big>36 </big></td>
+          <td><big>^ or 6</big></td>
+          <td><big>7</big></td>
+          <td><big>J</big></td>
+          <td><big>36</big></td>
           <td><big>F7</big></td>
-          <td><big>65 </big></td>
+          <td><big>65</big></td>
         </tr>
         <tr>
-          <td><big>&amp; or 7 </big></td>
-          <td><big>8 </big></td>
-          <td><big>K </big></td>
-          <td><big>37 </big></td>
+          <td><big>&amp; or 7</big></td>
+          <td><big>8</big></td>
+          <td><big>K</big></td>
+          <td><big>37</big></td>
           <td><big>F8</big></td>
-          <td><big>66 </big></td>
+          <td><big>66</big></td>
         </tr>
         <tr>
-          <td><big>* or 8 </big></td>
-          <td><big>9 </big></td>
-          <td><big>L </big></td>
-          <td><big>38 </big></td>
+          <td><big>* or 8</big></td>
+          <td><big>9</big></td>
+          <td><big>L</big></td>
+          <td><big>38</big></td>
           <td><big>F9</big></td>
-          <td><big>67 </big></td>
+          <td><big>67</big></td>
         </tr>
         <tr>
-          <td><big>(or 9). </big></td>
-          <td><big>10 </big></td>
-          <td><big>: or;</big></td>
-          <td><big>39 </big></td>
+          <td><big>( or 9</big></td>
+          <td><big>10</big></td>
+          <td><big>: or ;</big></td>
+          <td><big>39</big></td>
           <td><big>F10</big></td>
-          <td><big>68 </big></td>
+          <td><big>68</big></td>
         </tr>
         <tr>
-          <td><big>0 or) </big></td>
-          <td><big>11 </big></td>
-          <td><big>" or' </big></td>
-          <td><big>40 </big></td>
+          <td><big>0 or )</big></td>
+          <td><big>11</big></td>
+          <td><big>" or ' </big></td>
+          <td><big>40</big></td>
           <td><big>F11</big></td>
-          <td><big>133 </big></td>
+          <td><big>133</big></td>
         </tr>
         <tr>
-          <td><big>_ or | </big></td>
-          <td><big>12 </big></td>
-          <td><big>~ or` </big></td>
-          <td><big>41 </big></td>
+          <td><big>_ or |</big></td>
+          <td><big>12</big></td>
+          <td><big>~ or ` </big></td>
+          <td><big>41</big></td>
           <td><big>F12</big></td>
-          <td><big>134 </big></td>
+          <td><big>134</big></td>
         </tr>
         <tr>
-          <td><big>+ or = </big></td>
-          <td><big>13 </big></td>
-          <td><big>Left Shift </big></td>
-          <td><big>42 </big></td>
-          <td><big>Num Lock </big></td>
-          <td><big>69 </big></td>
+          <td><big>+ or =</big></td>
+          <td><big>13</big></td>
+          <td><big>Left Shift</big></td>
+          <td><big>42</big></td>
+          <td><big>Num Lock</big></td>
+          <td><big>69</big></td>
         </tr>
         <tr>
           <td><big>Backspace </big></td>
-          <td><big>14 </big></td>
-          <td><big>| or \ </big></td>
-          <td><big>43 </big></td>
-          <td><big>Scroll Lock </big></td>
-          <td><big>70 </big></td>
+          <td><big>14</big></td>
+          <td><big>| or \</big></td>
+          <td><big>43</big></td>
+          <td><big>Scroll Lock</big></td>
+          <td><big>70</big></td>
         </tr>
         <tr>
-          <td><big>Tab </big></td>
-          <td><big>15 </big></td>
-          <td><big>Z </big></td>
-          <td><big>44 </big></td>
-          <td><big>Home or 7 </big></td>
-          <td><big>71 </big></td>
+          <td><big>Tab</big></td>
+          <td><big>15</big></td>
+          <td><big>Z</big></td>
+          <td><big>44</big></td>
+          <td><big>Home or 7</big></td>
+          <td><big>71</big></td>
         </tr>
         <tr>
-          <td><big>Q </big></td>
-          <td><big>16 </big></td>
-          <td><big>X </big></td>
-          <td><big>45 </big></td>
-          <td><big>Up or 8 </big></td>
-          <td><big>72 </big></td>
+          <td><big>Q</big></td>
+          <td><big>16</big></td>
+          <td><big>X</big></td>
+          <td><big>45</big></td>
+          <td><big>Up or 8</big></td>
+          <td><big>72</big></td>
         </tr>
         <tr>
-          <td><big>W </big></td>
-          <td><big>17 </big></td>
-          <td><big>C </big></td>
-          <td><big>46 </big></td>
-          <td><big>Page up or 9 </big></td>
-          <td><big>73 </big></td>
+          <td><big>W</big></td>
+          <td><big>17</big></td>
+          <td><big>C</big></td>
+          <td><big>46</big></td>
+          <td><big>Page up or 9</big></td>
+          <td><big>73</big></td>
         </tr>
         <tr>
-          <td><big>E </big></td>
-          <td><big>18 </big></td>
-          <td><big>V </big></td>
-          <td><big>47 </big></td>
-          <td><big>Gray – </big></td>
-          <td><big>74 </big></td>
+          <td><big>E</big></td>
+          <td><big>18</big></td>
+          <td><big>V</big></td>
+          <td><big>47</big></td>
+          <td><big>Gray –</big></td>
+          <td><big>74</big></td>
         </tr>
         <tr>
-          <td><big>R </big></td>
-          <td><big>19 </big></td>
-          <td><big>B </big></td>
-          <td><big>48 </big></td>
-          <td><big>Left or 4 </big></td>
-          <td><big>75 </big></td>
+          <td><big>R</big></td>
+          <td><big>19</big></td>
+          <td><big>B</big></td>
+          <td><big>48</big></td>
+          <td><big>Left or 4</big></td>
+          <td><big>75</big></td>
         </tr>
         <tr>
-          <td><big>T </big></td>
-          <td><big>20 </big></td>
-          <td><big>N </big></td>
-          <td><big>49 </big></td>
-          <td><big>Center or 5 </big></td>
-          <td><big>76 </big></td>
+          <td><big>T</big></td>
+          <td><big>20</big></td>
+          <td><big>N</big></td>
+          <td><big>49</big></td>
+          <td><big>Center or 5</big></td>
+          <td><big>76</big></td>
         </tr>
         <tr>
-          <td><big>Y </big></td>
-          <td><big>21 </big></td>
-          <td><big>M </big></td>
-          <td><big>50 </big></td>
-          <td><big>Right or 6 </big></td>
-          <td><big>77 </big></td>
+          <td><big>Y</big></td>
+          <td><big>21</big></td>
+          <td><big>M</big></td>
+          <td><big>50</big></td>
+          <td><big>Right or 6</big></td>
+          <td><big>77</big></td>
         </tr>
         <tr>
-          <td><big>U </big></td>
-          <td><big>22 </big></td>
-          <td><big>&lt; or </big></td>
-          <td><big>51 </big></td>
+          <td><big>U</big></td>
+          <td><big>22</big></td>
+          <td><big>&lt; or ,</big></td>
+          <td><big>51</big></td>
           <td><big>Gray + </big></td>
-          <td><big>78 </big></td>
+          <td><big>78</big></td>
         </tr>
         <tr>
-          <td><big>I </big></td>
-          <td><big>23 </big></td>
-          <td><big>&gt; or. </big></td>
-          <td><big>52 </big></td>
-          <td><big>End or 1 </big></td>
-          <td><big>79 </big></td>
+          <td><big>I</big></td>
+          <td><big>23</big></td>
+          <td><big>&gt; or .</big></td>
+          <td><big>52</big></td>
+          <td><big>End or 1</big></td>
+          <td><big>79</big></td>
         </tr>
         <tr>
-          <td><big>O </big></td>
-          <td><big>24 </big></td>
-          <td><big>? </big></td>
-          <td><big>53 </big></td>
-          <td><big>Down or 2 </big></td>
-          <td><big>80 </big></td>
+          <td><big>O</big></td>
+          <td><big>24</big></td>
+          <td><big>?</big></td>
+          <td><big>53</big></td>
+          <td><big>Down or 2</big></td>
+          <td><big>80</big></td>
         </tr>
         <tr>
-          <td><big>P </big></td>
-          <td><big>25 </big></td>
-          <td><big>Right shift </big></td>
-          <td><big>54 </big></td>
+          <td><big>P</big></td>
+          <td><big>25</big></td>
+          <td><big>Right shift</big></td>
+          <td><big>54</big></td>
           <td><big>Page down or 3 </big></td>
-          <td><big>81 </big></td>
+          <td><big>81</big></td>
         </tr>
         <tr>
-          <td><big>{ or [ </big></td>
-          <td><big>26 </big></td>
+          <td><big>{ or [</big></td>
+          <td><big>26</big></td>
           <td><big>Print Screen or * </big></td>
-          <td><big>55 </big></td>
-          <td><big>Insert or 0 </big></td>
-          <td><big>82 </big></td>
+          <td><big>55</big></td>
+          <td><big>Insert or 0</big></td>
+          <td><big>82</big></td>
         </tr>
         <tr>
-          <td><big>} or ] </big></td>
-          <td><big>27 </big></td>
-          <td><big>Alt </big></td>
-          <td><big>56 </big></td>
-          <td><big>Delete or. </big></td>
-          <td><big>83 </big></td>
+          <td><big>} or ]</big></td>
+          <td><big>27</big></td>
+          <td><big>Alt</big></td>
+          <td><big>56</big></td>
+          <td><big>Delete or . </big></td>
+          <td><big>83</big></td>
         </tr>
         <tr>
-          <td><big>Enter </big></td>
-          <td><big>28 </big></td>
-          <td><big>Spacebar </big></td>
-          <td><big>57 </big></td>
+          <td><big>Enter</big></td>
+          <td><big>28</big></td>
+          <td><big>Spacebar</big></td>
+          <td><big>57</big></td>
           <td><big> </big><br>
           </td>
           <td><big> </big><br>
           </td>
         </tr>
         <tr>
-          <td><big>Control </big></td>
-          <td><big>29 </big></td>
-          <td><big>Caps Lock </big></td>
+          <td><big>Control</big></td>
+          <td><big>29</big></td>
+          <td><big>Caps Lock</big></td>
           <td><big>58 </big></td>
           <td><big> </big><br>
           </td>
@@ -2149,15 +2148,15 @@
       <tbody>
         <tr>
           <td><big>Mouse button code </big></td>
-          <td><big>Button </big></td>
+          <td><big>Button</big></td>
         </tr>
         <tr>
-          <td><big>MOUSE_LEFT </big></td>
-          <td><big>Left button </big></td>
+          <td><big>MOUSE_LEFT</big></td>
+          <td><big>Left button</big></td>
         </tr>
         <tr>
-          <td><big>MOUSE_RIGHT </big></td>
-          <td><big>Right button </big></td>
+          <td><big>MOUSE_RIGHT</big></td>
+          <td><big>Right button</big></td>
         </tr>
         <tr>
           <td><big>MOUSE_MIDDLE </big></td>
@@ -2186,42 +2185,42 @@
     <table border="1">
       <tbody>
         <tr>
-          <td><big>Button code </big></td>
-          <td><big>Description </big></td>
+          <td><big>Button code</big></td>
+          <td><big>Description</big></td>
         </tr>
         <tr>
-          <td><big>GAMEPAD_UP </big></td>
-          <td><big>D–Pad up </big></td>
+          <td><big>GAMEPAD_UP</big></td>
+          <td><big>D–Pad up</big></td>
         </tr>
         <tr>
-          <td><big>GAMEPAD_DOWN </big></td>
+          <td><big>GAMEPAD_DOWN</big></td>
           <td><big>D–Pad down </big></td>
         </tr>
         <tr>
-          <td><big>GAMEPAD_LEFT </big></td>
-          <td><big>D–Pad left </big></td>
+          <td><big>GAMEPAD_LEFT</big></td>
+          <td><big>D–Pad left</big></td>
         </tr>
         <tr>
-          <td><big>GAMEPAD_RIGHT </big></td>
-          <td><big>D–Pad right </big></td>
+          <td><big>GAMEPAD_RIGHT</big></td>
+          <td><big>D–Pad right</big></td>
         </tr>
         <tr>
-          <td><big>GAMEPAD_A </big></td>
-          <td><big>A </big><br>
+          <td><big>GAMEPAD_A</big></td>
+          <td><big>A</big><br>
           </td>
         </tr>
         <tr>
-          <td><big>GAMEPAD_B </big></td>
-          <td><big>B&nbsp;</big><br>
+          <td><big>GAMEPAD_B</big></td>
+          <td><big>B</big><br>
           </td>
         </tr>
         <tr>
-          <td><big>GAMEPAD_X </big></td>
-          <td><big>X </big></td>
+          <td><big>GAMEPAD_X</big></td>
+          <td><big>X</big></td>
         </tr>
         <tr>
-          <td><big>GAMEPAD_Y </big></td>
-          <td><big>Y </big></td>
+          <td><big>GAMEPAD_Y</big></td>
+          <td><big>Y</big></td>
         </tr>
         <tr>
           <td style="vertical-align: top;"><big>GAMEPAD_LEFT_BUMPER<br>
@@ -2279,7 +2278,6 @@
       <br>
     </big>
     <table style="text-align: left; width: 366px; height: 91px;" cellspacing="2"
-
       cellpadding="2" border="1">
       <tbody>
         <tr>
@@ -2311,24 +2309,24 @@
     <table border="1">
       <tbody>
         <tr>
-          <td><big>Value </big></td>
+          <td><big>Value</big></td>
           <td><big>X–direction </big></td>
           <td><big>Y–direction </big></td>
         </tr>
         <tr>
           <td><big>GAMEPAD_NEUTRAL_DIRECTION </big></td>
-          <td><big>Neutral </big></td>
-          <td><big>Neutral </big></td>
+          <td><big>Neutral</big></td>
+          <td><big>Neutral</big></td>
         </tr>
         <tr>
           <td><big>GAMEPAD_POSITIVE_DIRECTION </big></td>
-          <td><big>Right </big></td>
-          <td><big>Up </big></td>
+          <td><big>Right</big></td>
+          <td><big>Up</big></td>
         </tr>
         <tr>
           <td><big>GAMEPAD_NEGATIVE_DIRECTION </big></td>
-          <td><big>Left </big></td>
-          <td><big>Down </big></td>
+          <td><big>Left</big></td>
+          <td><big>Down</big></td>
         </tr>
       </tbody>
     </table>
@@ -2530,16 +2528,16 @@
     <table border="1">
       <tbody>
         <tr>
-          <td><big>Key/button state </big></td>
+          <td><big>Key/button state</big></td>
           <td><big>Description </big></td>
         </tr>
         <tr>
-          <td><big>KEY_PRESSED </big></td>
+          <td><big>KEY_PRESSED</big></td>
           <td><big>A key or button is pressed or held. </big></td>
         </tr>
         <tr>
           <td><big>KEY_RELEASED </big></td>
-          <td><big>A key or button was released. </big></td>
+          <td><big>A key or button was released.</big></td>
         </tr>
       </tbody>
     </table>
@@ -2746,6 +2744,7 @@
       8.6.4.1-8.6.4.5: The documentation has been updated.<br>
       8.6.5: The small changes.<br>
       8.6.6: The source code synced with the Eugene game development kit 9.2.6.<br>
+      8.6.7: The source code synced with the Eugene game development kit 9.2.7.<br>
     </big>
   </body>
 </html>
