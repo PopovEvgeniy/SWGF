@@ -8,7 +8,7 @@ int main()
  SWGF::Graphics::Cartoon ground;
  SWGF::Graphics::Text text;
  SWGF::Transformation::Coordinates cartesian;
- SWGF::Transformation::Entity level;
+ SWGF::Transformation::Level level;
  SWGF::Input::Keyboard keyboard;
  keyboard.initialize();
  screen.initialize();
