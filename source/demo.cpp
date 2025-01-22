@@ -3,6 +3,7 @@
 int main()
 {
  char perfomance[8];
+ bool limit;
  SWGF::Common::Timer timer;
  SWGF::Input::Keyboard keyboard;
  SWGF::Input::Gamepad gamepad;
@@ -27,7 +28,8 @@ int main()
  media.initialize();
  media.load("space.mp3");
  memset(perfomance,0,8);
- while(screen.sync())
+ limit=true;
+ while(screen.sync(limit))
  {
   gamepad.update();
   media.play_loop();
@@ -54,6 +56,14 @@ int main()
   if (keyboard.check_hold(62)==true)
   {
    space.complex_mirror();
+  }
+  if (keyboard.check_hold(63)==true)
+  {
+   limit=true;
+  }
+  if (keyboard.check_hold(64)==true)
+  {
+   limit=false;
   }
   if (keyboard.check_hold(72)==true)
   {
