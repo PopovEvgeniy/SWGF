@@ -6,7 +6,7 @@ int main()
  SWGF::Graphics::Text text;
  SWGF::Graphics::Sheet tile;
  SWGF::Input::Keyboard keyboard;
- SWGF::Map::Tilemap tilemap;
+ SWGF::Common::Tilemap tilemap;
  unsigned int row,column,row_amount,column_amount;
  keyboard.initialize();
  screen.initialize();
