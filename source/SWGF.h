@@ -381,6 +381,7 @@ typedef enum
    public:
    Shape();
    ~Shape();
+   void set_texture_coordinates(const size_t index,const float u,const float v);
    void set_total_size(const unsigned int width,const unsigned int height);
    void set_size(const unsigned int width,const unsigned int height);
    void set_position(const unsigned int x,const unsigned int y);
@@ -727,6 +728,7 @@ typedef enum
    public:
    Billboard();
    ~Billboard();
+   void set_texture_coordinates(const size_t index,const float u,const float v);
    void set_transparent(const bool enabled);
    bool get_transparent() const;
    void set_width(const unsigned int width);
