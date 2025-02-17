@@ -913,8 +913,7 @@ typedef enum
    float u_speed;
    float v_speed;
    void calculate_offset();
-   void reset_u_offset();
-   void reset_v_offset();
+   void reset_offset();
    void set_texture_coordinates();
    public:
    Parallax();

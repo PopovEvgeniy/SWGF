@@ -3521,17 +3521,12 @@ namespace SWGF
    v_offset+=v_speed;
   }
 
-  void Parallax::reset_u_offset()
+  void Parallax::reset_offset()
   {
    if (u_offset>1.0f)
    {
     u_offset=0.0f;
    }
-
-  }
-
-  void Parallax::reset_v_offset()
-  {
    if (v_offset>1.0f)
    {
     v_offset=0.0f;
@@ -3637,8 +3632,7 @@ namespace SWGF
   void Parallax::draw()
   {
    this->calculate_offset();
-   this->reset_u_offset();
-   this->reset_v_offset();
+   this->reset_offset();
    this->set_texture_coordinates();
    stage.draw(false);
   }
