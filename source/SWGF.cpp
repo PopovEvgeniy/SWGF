@@ -2682,6 +2682,24 @@ namespace SWGF
 
   }
 
+  unsigned int Billboard::increase_x(const unsigned int increment)
+  {
+   if (billboard.is_texture_exist()==true)
+   {
+    current_x+=increment;
+   }
+   return current_x;
+  }
+
+  unsigned int Billboard::increase_y(const unsigned int increment)
+  {
+   if (billboard.is_texture_exist()==true)
+   {
+    current_y+=increment;
+   }
+   return current_y;
+  }
+
   unsigned int Billboard::decrease_x(const unsigned int decrement)
   {
    if (billboard.is_texture_exist()==true)
@@ -2708,67 +2726,25 @@ namespace SWGF
    return current_y;
   }
 
-  unsigned int Billboard::decrease_x()
-  {
-   if (billboard.is_texture_exist()==true)
-   {
-    if (current_x>0)
-    {
-     --current_x;
-    }
-
-   }
-   return current_x;
-  }
-
-  unsigned int Billboard::decrease_y()
-  {
-   if (billboard.is_texture_exist()==true)
-   {
-    if (current_y>0)
-    {
-     --current_y;
-    }
-
-   }
-   return current_y;
-  }
-
-  unsigned int Billboard::increase_x(const unsigned int increment)
-  {
-   if (billboard.is_texture_exist()==true)
-   {
-    current_x+=increment;
-   }
-   return current_x;
-  }
-
-  unsigned int Billboard::increase_y(const unsigned int increment)
-  {
-   if (billboard.is_texture_exist()==true)
-   {
-    current_y+=increment;
-   }
-   return current_y;
-  }
-
   unsigned int Billboard::increase_x()
   {
-   if (billboard.is_texture_exist()==true)
-   {
-    ++current_x;
-   }
-   return current_x;
+   return this->increase_x(1);
   }
 
 
   unsigned int Billboard::increase_y()
   {
-   if (billboard.is_texture_exist()==true)
-   {
-    ++current_y;
-   }
-   return current_y;
+   return this->increase_y(1);
+  }
+
+  unsigned int Billboard::decrease_x()
+  {
+   return this->decrease_x(1);
+  }
+
+  unsigned int Billboard::decrease_y()
+  {
+   return this->decrease_y(1);
   }
 
   unsigned int Billboard::get_start_x() const
