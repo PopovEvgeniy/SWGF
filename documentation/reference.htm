@@ -334,8 +334,10 @@
   <span style="font-style: italic;">unsigned int Screen::get_height() const; -</span> Return the screen height in pixels.<br>
   <br>
   <span style="font-style: italic;">bool Screen::check_x(const unsigned int x) const; -</span> Return true if the x-coordinate is valid.<br>
-  <br></big> <big><span style="font-style: italic;">bool Screen::check_y(const unsigned int y) const; -</span> Return true if the y-coordinate is valid.</big><br>
+  <br></big> <big><span style="font-style: italic;">bool Screen::check_y(const unsigned int y) const; -</span> Return true if the y-coordinate is valid.<br></big></p>
+  <p><big><span style="font-style: italic;">bool Screen::check_horizontal_border(const SWGF::BOX target) const; -</span> Return true if a game object is collided with the horizontal screen border.<br>
   <br>
+  <span style="font-style: italic;">bool Screen::check_vertical_border(const SWGF::BOX target) const; -</span> Return true if a game object is collided with the vertical screen border.<br></big><br>
   <big><span style="font-style: italic;">Screen *Screen::get_handle(); -</span> Return the handle to the base graphics subsystem object.</big></p>
   <h2><a class="mozTocH2" name="mozTocId289525" id="mozTocId289525"></a><big>Chapter 3. Picture subsystem</big></h2>
   <p><big><span style="text-decoration: underline;">An important subsystem</span><br>
@@ -1655,8 +1657,8 @@
   </table>
   <h2><a class="mozTocH2" name="mozTocId692266" id="mozTocId692266"></a><big>Chapter 6. Audio</big></h2>
   <p><big>The audio subsystem is working over <a href="https://docs.microsoft.com/en-us/windows/desktop/DirectShow/directshow">DirectShow</a>. It is available as part of <a href="https://en.wikipedia.org/wiki/DirectX">DirectX</a>. DirectX is pre-installed by default under the modern versions of Windows.</big></p>
-  <h1><a class="mozTocH1" name="mozTocId670307" id="mozTocId670307"></a><big>Version history<br></big></h1><big>
-  0.1-6.3.6: The old branch.<br>
+  <h1><a class="mozTocH1" name="mozTocId670307" id="mozTocId670307"></a><big>Version history<br></big></h1>
+  <big>0.1-6.3.6: The old branch.<br>
   6.3.7-6.5.1: The experimental branch.<br>
   6.5.2: The source code synced with the Eugene game development kit 6.5.7.<br>
   6.5.3: The small changes.<br>
@@ -1877,6 +1879,7 @@
   8.8.8: The source code synced with the Eugene game development kit 9.5.3.<br>
   8.8.9: The source code synced with the Eugene game development kit 9.5.4.<br>
   8.9: The source code synced with the Eugene game development kit 9.5.5.<br>
-  8.9.1: The source code synced with the Eugene game development kit 9.5.6.<br></big>
+  8.9.1: The source code synced with the Eugene game development kit 9.5.6.<br>
+  8.9.2: The source code synced with the Eugene game development kit 9.5.7.<br></big>
 </body>
 </html>
