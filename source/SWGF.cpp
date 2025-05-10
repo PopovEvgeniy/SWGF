@@ -163,7 +163,7 @@ namespace SWGF
    timer=CreateWaitableTimer(NULL,FALSE,NULL);
    if (timer==NULL)
    {
-    SWGF::Halt("Can't create synchronization timer");
+    SWGF::Halt("Can't create the synchronization timer");
    }
 
   }
@@ -174,7 +174,7 @@ namespace SWGF
    start.QuadPart=0;
    if (SetWaitableTimer(timer,&start,interval,NULL,NULL,FALSE)==FALSE)
    {
-    SWGF::Halt("Can't set timer");
+    SWGF::Halt("Can't set the timer");
    }
 
   }
@@ -203,7 +203,7 @@ namespace SWGF
   {
    if (ChangeDisplaySettingsEx(NULL,&display,NULL,CDS_FULLSCREEN,NULL)!=DISP_CHANGE_SUCCESSFUL)
    {
-    SWGF::Halt("Can't change video mode");
+    SWGF::Halt("Can't change the video mode");
    }
 
   }
@@ -212,7 +212,7 @@ namespace SWGF
   {
    if (EnumDisplaySettingsEx(NULL,ENUM_CURRENT_SETTINGS,&display,EDS_RAWMODE)==FALSE)
    {
-    SWGF::Halt("Can't get display setting");
+    SWGF::Halt("Can't get the display settings");
    }
 
   }
@@ -294,7 +294,7 @@ namespace SWGF
    window_class.hbrBackground=CreateSolidBrush(RGB(0,0,0));
    if (window_class.hbrBackground==NULL)
    {
-    SWGF::Halt("Can't set background color");
+    SWGF::Halt("Can't set the background color");
    }
 
   }
@@ -323,7 +323,7 @@ namespace SWGF
   {
    if (RegisterClassEx(&window_class)==0)
    {
-    SWGF::Halt("Can't register window class");
+    SWGF::Halt("Can't register the window class");
    }
 
   }
@@ -333,7 +333,7 @@ namespace SWGF
    context=GetWindowDC(window);
    if (context==NULL)
    {
-    SWGF::Halt("Can't take window context");
+    SWGF::Halt("Can't take the window context");
    }
 
   }
@@ -343,7 +343,7 @@ namespace SWGF
    window=CreateWindowEx(WS_EX_APPWINDOW,window_class.lpszClassName,NULL,WS_VISIBLE|WS_POPUP,0,0,GetSystemMetrics(SM_CXSCREEN),GetSystemMetrics(SM_CYSCREEN),NULL,NULL,window_class.hInstance,NULL);
    if (window==NULL)
    {
-    SWGF::Halt("Can't create window");
+    SWGF::Halt("Can't the create window");
    }
    UpdateWindow(window);
   }
@@ -479,6 +479,14 @@ namespace SWGF
 
  namespace Core
  {
+
+  void set_camera(const float x,const float y,const float viewport_width,const float view_height,const float screen_width,const float screen_height)
+  {
+   glMatrixMode(GL_MODELVIEW);
+   glLoadIdentity();
+   glTranslatef(-1.0f*x,-1.0f*y,0.0f);
+   glScalef(screen_width/viewport_width,screen_height/view_height,1.0f);
+  }
 
   float get_start_offset(const float current,const float total)
   {
@@ -2172,6 +2180,306 @@ namespace SWGF
   Screen* Screen::get_handle()
   {
    return this;
+  }
+
+  Camera::Camera()
+  {
+   screen_width=1;
+   screen_height=1;
+   viewport_width=1;
+   viewport_height=1;
+   x_offset=0;
+   y_offset=0;
+   highest_x_offset=0;
+   highest_y_offset=0;
+  }
+
+  Camera::~Camera()
+  {
+
+  }
+
+  void Camera::calculate_limits()
+  {
+   highest_x_offset=((screen_width-viewport_width)*screen_width)/viewport_width;
+   highest_y_offset=((screen_height-viewport_height)*screen_height)/viewport_height;
+  }
+
+  bool Camera::check_viewport_width(const unsigned int width) const
+  {
+   return (width>0) && (width<=screen_width);
+  }
+
+  bool Camera::check_viewport_heigth(const unsigned int height) const
+  {
+   return (height>0) && (height<=screen_height);
+  }
+
+  void Camera::set_viewport_width(const unsigned int width)
+  {
+   if (this->check_viewport_width(width)==true)
+   {
+    viewport_width=width;
+   }
+   else
+   {
+    viewport_width=screen_width;
+   }
+
+  }
+
+  void Camera::set_viewport_heigth(const unsigned int height)
+  {
+   if (this->check_viewport_heigth(height)==true)
+   {
+    viewport_height=height;
+   }
+   else
+   {
+    viewport_height=screen_height;
+   }
+
+  }
+
+  Camera* Camera::get_handle()
+  {
+   return this;
+  }
+
+  unsigned int Camera::get_x() const
+  {
+   return x_offset;
+  }
+
+  unsigned int Camera::get_y() const
+  {
+   return y_offset;
+  }
+
+  unsigned int Camera::get_screen_width() const
+  {
+   return screen_width;
+  }
+
+  unsigned int Camera::get_screen_height() const
+  {
+   return screen_height;
+  }
+
+  unsigned int Camera::get_viewport_width() const
+  {
+   return viewport_width;
+  }
+
+  unsigned int Camera::get_viewport_height() const
+  {
+   return viewport_height;
+  }
+
+  unsigned int Camera::get_highest_x() const
+  {
+   unsigned int highest_x;
+   highest_x=x_offset+viewport_width;
+   if (highest_x>=highest_x_offset)
+   {
+    highest_x=screen_width;
+   }
+   return highest_x;
+  }
+
+  unsigned int Camera::get_highest_y() const
+  {
+   unsigned int highest_y;
+   highest_y=y_offset+viewport_height;
+   if (highest_y>=highest_y_offset)
+   {
+    highest_y=screen_height;
+   }
+   return highest_y;
+  }
+
+  unsigned int Camera::get_highest_x_offset() const
+  {
+   return highest_x_offset;
+  }
+
+  unsigned int Camera::get_highest_y_offset() const
+  {
+   return highest_y_offset;
+  }
+
+  unsigned int Camera::get_world_x(const unsigned int screen_x)
+  {
+   return (screen_x*viewport_width)/screen_width+x_offset;
+  }
+
+  unsigned int Camera::get_world_y(const unsigned int screen_y)
+  {
+   return (screen_y*viewport_height)/screen_height+y_offset;
+  }
+
+  unsigned int Camera::get_screen_x(const unsigned int world_x)
+  {
+   unsigned int target_x;
+   if (world_x>x_offset)
+   {
+    target_x=world_x-x_offset;
+   }
+   else
+   {
+    target_x=world_x;
+   }
+   return (target_x*screen_width)/viewport_width;
+  }
+
+  unsigned int Camera::get_screen_y(const unsigned int world_y)
+  {
+   unsigned int target_y;
+   if (world_y>y_offset)
+   {
+    target_y=world_y-y_offset;
+   }
+   else
+   {
+    target_y=world_y;
+   }
+   return (target_y*screen_height)/viewport_height;
+  }
+
+  unsigned int Camera::set_x(const unsigned int x)
+  {
+   if (x<highest_x_offset)
+   {
+    x_offset=x;
+   }
+   else
+   {
+    x_offset=highest_x_offset;
+   }
+   return x_offset;
+  }
+
+  unsigned int Camera::set_y(const unsigned int y)
+  {
+   if (y<highest_y_offset)
+   {
+    y_offset=y;
+   }
+   else
+   {
+    y_offset=highest_y_offset;
+   }
+   return y_offset;
+  }
+
+  void Camera::initialize(const unsigned int width,const unsigned int height)
+  {
+   if (width>0)
+   {
+    screen_width=width;
+   }
+   if (height>0)
+   {
+    screen_height=height;
+   }
+
+  }
+
+  void Camera::initialize(Screen *screen)
+  {
+   if (screen!=NULL)
+   {
+    this->initialize(screen->get_width(),screen->get_height());
+   }
+
+  }
+
+  void Camera::initialize(Screen &screen)
+  {
+   this->initialize(screen.get_handle());
+  }
+
+  void Camera::set_viewport(const unsigned int width,const unsigned int height)
+  {
+   this->set_viewport_width(width);
+   this->set_viewport_heigth(height);
+   this->calculate_limits();
+  }
+
+  void Camera::set_offset(const unsigned int x,const unsigned int y)
+  {
+   this->set_x(x);
+   this->set_y(y);
+  }
+
+  unsigned int Camera::increase_x(const unsigned int increment)
+  {
+   return this->set_x(x_offset+increment);
+  }
+
+  unsigned int Camera::increase_y(const unsigned int increment)
+  {
+   return this->set_y(y_offset+increment);
+  }
+
+  unsigned int Camera::decrease_x(const unsigned int decrement)
+  {
+   if (x_offset>=decrement)
+   {
+    x_offset-=decrement;
+   }
+   return x_offset;
+  }
+
+  unsigned int Camera::decrease_y(const unsigned int decrement)
+  {
+   if (y_offset>=decrement)
+   {
+    y_offset-=decrement;
+   }
+   return y_offset;
+  }
+
+  unsigned int Camera::increase_x()
+  {
+   return this->increase_x(1);
+  }
+
+  unsigned int Camera::increase_y()
+  {
+   return this->increase_y(1);
+  }
+
+  unsigned int Camera::decrease_x()
+  {
+   return this->decrease_x(1);
+  }
+
+  unsigned int Camera::decrease_y()
+  {
+   return this->decrease_y(1);
+  }
+
+  bool Camera::check_horizontal_border(const SWGF::BOX target) const
+  {
+   return (target.x+target.width)>=this->get_highest_x();
+  }
+
+  bool Camera::check_vertical_border(const SWGF::BOX target) const
+  {
+   return (target.y+target.height)>=this->get_highest_y();
+  }
+
+  void Camera::update()
+  {
+   Core::set_camera(static_cast<float>(x_offset),static_cast<float>(y_offset),static_cast<float>(viewport_width),static_cast<float>(viewport_height),static_cast<float>(screen_width),static_cast<float>(screen_height));
+  }
+
+  void Camera::reset()
+  {
+   this->set_offset(0,0);
+   this->set_viewport(screen_width,screen_height);
+   this->update();
   }
 
   Image::Image()
