@@ -312,8 +312,8 @@
   <br>
   <span style="font-style: italic;">void Screen::clear_screen(); -</span> Clear the screen. Fill it with black color.<br>
   <br>
-  <span style="font-style: italic;">void Screen::initialize(); -</span> Initializes the base graphic subsystem with the default screen resolution.<br>
-  <br></big> <big style="font-style: italic;">void Screen::initialize(const unsigned int width,</big> <big style="font-style: italic;">const unsigned int height</big><big><span style="font-style: italic;">); -</span> Initializes the base graphic subsystem with the custom screen resolution.<br>
+  <span style="font-style: italic;">void Screen::initialize(); -</span> Initialize the base graphic subsystem with the default screen resolution.<br>
+  <br></big> <big style="font-style: italic;">void Screen::initialize(const unsigned int width,</big> <big style="font-style: italic;">const unsigned int height</big><big><span style="font-style: italic;">); -</span> Initialize the base graphic subsystem with the custom screen resolution.<br>
   <br></big> <big><span style="font-style: italic;">bool Screen::sync(); -</span> Show the current content of the back buffer on the screen. Return false if a game is terminated. This method uses the FPS limits and waits between frames.<br>
   <br>
   <span style="font-style: italic;">bool Screen::update(); -</span> Show the current content of the back buffer on the screen. Return false if a game is terminated. This method ignores the FPS limit and needs high processor usage.<br>
@@ -700,7 +700,7 @@
   <span style="font-style: italic;">bool Sheet::check_row(const unsigned int target) const; -</span> Return true if the target row is valid.<br>
   <br>
   <span style="font-style: italic;">bool Sheet::check_column(const unsigned int target) const; -</span> Return true if the target column is valid.<br>
-  <br></big> <big style="font-style: italic;">unsigned int Sheet::get_row(</big><big style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">) const; -</span> Return the row of the the target frame.<br>
+  <br></big> <big style="font-style: italic;">unsigned int Sheet::get_row(</big><big style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">) const; -</span> Return the row of the target frame.<br>
   <br>
   <span style="font-style: italic;">unsigned int Sheet::get_column(</span></big><big style="font-style: italic;">const unsigned int target</big><big><span style="font-style: italic;">) const; -</span> Return</big> <big>column</big> <big>of the target frame</big><big>.<br>
   <br></big> <big><span style="font-style: italic;">unsigned int Sheet::calculate(const unsigned int row, const unsigned int column) const; -</span> Calculate the frame by row and column.<br>
@@ -913,7 +913,7 @@
   <br>
   <span style="text-decoration: underline;">Important remark</span><br>
   <br>
-  Always set the viewport size after initialize the camera. Always update the camera before drawing.</big>
+  Always set the viewport size after initializing the camera. Always update the camera before drawing.</big>
   <h1><a class="mozTocH1" name="mozTocId130685" id="mozTocId130685"></a><big>Part 4. Transformation</big></h1>
   <h2><a class="mozTocH2" name="mozTocId679493" id="mozTocId679493"></a><a id="mozTocId833933" class="mozTocH2" name="mozTocId833933"></a><big>Chapter 1. The sub-namespace</big></h2>
   <p><big>All classes in this section are declared in the <span style="font-style: italic;">Transformation</span> sub-namespace.<br></big></p>
@@ -1966,6 +1966,7 @@
   8.9.2: The source code synced with the Eugene game development kit 9.5.7.<br>
   8.9.3: The source code synced with the Black game development kit 7.3.3.<br>
   8.9.4: The source code synced with the Black game development kit 7.3.5.<br>
-  8.9.5: The source code synced with the Black game development kit 7.3.8.<br></big>
+  8.9.5: The source code synced with the Black game development kit 7.3.8.<br>
+  8.9.6: The source code synced with the Black game development kit 7.3.9.<br></big>
 </body>
 </html>
