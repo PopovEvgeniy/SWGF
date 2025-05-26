@@ -5,7 +5,6 @@ int main()
  SWGF::Graphics::Screen screen;
  SWGF::Graphics::Scene city;
  SWGF::Graphics::Cartoon punk;
- SWGF::Graphics::Text text;
  SWGF::Graphics::Camera camera;
  SWGF::Input::Keyboard keyboard;
  SWGF::Input::Mouse mouse;
@@ -14,7 +13,6 @@ int main()
  screen.initialize(640,480);
  city.load("city.tga");
  punk.load("punk.tga");
- text.load_font("font.tga");
  city.prepare(screen);
  camera.initialize(screen);
  camera.set_viewport(320,screen.get_height());
