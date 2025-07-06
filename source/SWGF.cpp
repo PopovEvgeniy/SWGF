@@ -247,6 +247,11 @@ namespace SWGF
    return display.dmPelsHeight;
   }
 
+  unsigned int Display::get_display_rate() const
+  {
+   return display.dmDisplayFrequency;
+  }
+
   Engine::Engine()
   {
    memset(&window_class,0,sizeof(WNDCLASSEX));
@@ -2157,6 +2162,11 @@ namespace SWGF
   unsigned int Screen::get_height() const
   {
    return this->get_display_height();
+  }
+
+  unsigned int Screen::get_rate() const
+  {
+   return this->get_display_rate();
   }
 
   bool Screen::check_x(const unsigned int x) const
