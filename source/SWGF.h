@@ -541,8 +541,6 @@ typedef enum
    unsigned int active;
    void clear_state();
    bool read_state();
-   bool write_state();
-   void set_motor(const unsigned short int left,const unsigned short int right);
    bool check_current_button(const SWGF::GAMEPAD_BUTTONS button) const;
    bool check_preversion_button(const SWGF::GAMEPAD_BUTTONS button) const;
    bool check_current_trigger(const SWGF::GAMEPAD_TRIGGERS trigger) const;

@@ -1674,17 +1674,6 @@ namespace SWGF
    return XInputGetState(active,&current)==ERROR_SUCCESS;
   }
 
-  bool Gamepad::write_state()
-  {
-   return XInputSetState(active,&vibration)==ERROR_SUCCESS;
-  }
-
-  void Gamepad::set_motor(const unsigned short int left,const unsigned short int right)
-  {
-   vibration.wLeftMotorSpeed=left;
-   vibration.wRightMotorSpeed=right;
-  }
-
   bool Gamepad::check_current_button(const SWGF::GAMEPAD_BUTTONS button) const
   {
    return (current.Gamepad.wButtons&button)!=0;
@@ -1808,8 +1797,9 @@ namespace SWGF
 
   bool Gamepad::set_vibration(const unsigned short int left,const unsigned short int right)
   {
-   this->set_motor(left,right);
-   return this->write_state();
+   vibration.wLeftMotorSpeed=left;
+   vibration.wRightMotorSpeed=right;
+   return XInputSetState(active,&vibration)==ERROR_SUCCESS;
   }
 
   bool Gamepad::disable_vibration()
