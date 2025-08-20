@@ -158,11 +158,6 @@
       Add it to your project.<br>
       Add this directive to your code: <i>#include "SWGF.h"</i><br>
       Yes. This is really all you need to do.<br>
-      <br>
-      <u>Feedback</u><br>
-      <br>
-      Send me an <a href="mailto:tuzik87@inbox.ru">email</a> if you want to
-      contact me.<br>
     </big>
     <h2><a id="mozTocId372945" class="mozTocH2"></a><big>Chapter 2. A special
         thanks</big></h2>
@@ -1303,10 +1298,10 @@
         Chapter 14. Text</big></h2>
     <big>
       <u><br>
-        How do I draw a text?</u><br>
+        How to print a text?</u><br>
       <br>
-      Just use the text subsystem to draw a text. This subsystem needs a font
-      for text drawing. You must load a font before starting to draw the
+      Just use the text subsystem to print a text. This subsystem needs a font
+      for text printing. You must load a font before starting to print the
       text. The font is just a sprite sheet with 16 rows and 16 columns.<br>
       <u><br>
         Valid characters</u><br>
@@ -1398,19 +1393,19 @@
       target file.<br>
       <br>
       <i>
-        void Text::print(const char target); -</i> Draw a single character at
+        void Text::print(const char target); -</i> Print a single character at
       the current position.<br>
       <br>
       <i>
         void Text::print(const unsigned int x, const unsigned int y, const char
-        target); -</i> Draw a single character at the specific position.<br>
+        target); -</i> Print a single character at the specific position.<br>
       <i><br>
-        size_t Text::print(const char *target); -</i> Draw a text at the current
+        size_t Text::print(const char *target); -</i> Print a text at the current
       position and return the text length.<br>
       <br>
       <i>
         size_t Text::print(const unsigned int x, const unsigned int y, const
-        char *target); -</i> Draw a text at the specific position and return the
+        char *target); -</i> Print a text at the specific position and return the
       text length.<br>
       <br>
       <i>
@@ -2806,6 +2801,19 @@
       <i><br>
         unsigned short int Gamepad::get_right_motor() const; -</i> Return the
       vibration level of the right rumble motor.<br>
+      <i><br>
+        short int Gamepad::get_left_stick_horizontal_axis() const; -</i> Return the
+      current value of the left stick horizontal axis.<br>
+      <i><br>
+        short int Gamepad::get_left_stick_vertical_axis() const; -</i> Return the
+      current value of the left stick vertical axis.<br>      
+      <i><br>
+        short int Gamepad::get_right_stick_horizontal_axis() const; -</i> Return the
+      current value of the right stick horizontal axis.<br>
+      <i><br>
+        short int Gamepad::get_right_stick_vertical_axis() const; -</i> Return the
+      current value of the right stick vertical axis.<br>
+      <br>
     </big>
     <h1><a id="mozTocId682137" class="mozTocH1"></a><big>
         Part 10. Internal details of the engine subsystems</big></h1>
@@ -3186,6 +3194,7 @@
       9.0.4: The source code synced with the Eugene game development kit 9.6.9.<br>
       9.0.5: The source code synced with the Black game development kit 7.5.6.<br>
       9.0.5.1-9.0.5.3: The documentation has been updated.<br>
+      9.0.6: The source code synced with the Black game development kit 7.5.7.<br>
     </big>
   </body>
 </html>

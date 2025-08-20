@@ -1817,6 +1817,26 @@ namespace SWGF
    return vibration.wRightMotorSpeed;
   }
 
+  short int Gamepad::get_left_stick_horizontal_axis() const
+  {
+   return current.Gamepad.sThumbLX;
+  }
+
+  short int Gamepad::get_left_stick_vertical_axis() const
+  {
+   return current.Gamepad.sThumbLY;
+  }
+
+  short int Gamepad::get_right_stick_horizontal_axis() const
+  {
+   return current.Gamepad.sThumbRX;
+  }
+
+  short int Gamepad::get_right_stick_vertical_axis() const
+  {
+   return current.Gamepad.sThumbRY;
+  }
+
   SWGF::GAMEPAD_DIRECTION Gamepad::get_stick_x(const SWGF::GAMEPAD_STICKS stick) const
   {
    SWGF::GAMEPAD_DIRECTION directional;
