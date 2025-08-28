@@ -67,7 +67,7 @@
           <li><a href="#mozTocId850151">Chapter 2. Abnormal program termination</a></li>
           <li><a href="#mozTocId954140">Chapter 3. Timer</a></li>
           <li><a href="#mozTocId378420">Chapter 4. Collision</a></li>
-          <li><a href="#mozTocId884830">Chapter 5. Tile map</a></li>
+          <li><a href="#mozTocId884830">Chapter 5. Tilemap</a></li>
         </ol>
       </li>
       <li><a href="#mozTocId543676">Part 6. Other important things</a>
@@ -406,8 +406,7 @@
       <br>
       The base graphics subsystem does render a game scene. This subsystem
       uses <a href="http://opengl.org">OPENGL</a> for rendering. All modern
-      video cards support
-      hardware-accelerated OPENGL. The software OPENGL will be activated if
+      video cards support hardware-accelerated OPENGL. The software implementation will be activated if
       the acceleration is not available.<br>
       <br>
       <u>
@@ -1338,7 +1337,7 @@
       Let's look at the publicly available methods.<br>
       <br>
       <i>
-        Text *Text::get_handle(); -</i> Return the handle to the text drawing subsystem.<br>
+        Text *Text::get_handle(); -</i> Return the handle to the text printing subsystem.<br>
       <br>
       <i>
         SWGF::TEXT_KIND Text::get_orientation() const; -</i> Get the current text orientation.<br>
@@ -1703,7 +1702,7 @@
         A few words about isometric games</u><br>
       <br>
       <a href="https://en.wikipedia.org/wiki/Isometric_projection">
-        Isometry</a> is a very popular way for pseudo-3D games. Many old-school
+        Isometric projection</a> is a very popular way for pseudo-3D games. Many old-school
       games are isometric games.<br>
       <u><br>
         Coordinates conversion</u><br>
@@ -1854,27 +1853,27 @@
       between them.<br>
     </big>
     <h2><a id="mozTocId884830" class="mozTocH2"></a><big>
-        Chapter 5. Tile map</big></h2>
+        Chapter 5. Tilemap</big></h2>
     <big>
       <br>
       <u>
-        A few words about tile maps</u><br>
+        A few words about a tilemap</u><br>
       <br>
-      The tile map is a tile matrix. A tile is a small, non-transparent sprite.
-      A tile map is a very useful thing for the background.<br>
+      The tilemap is a tile matrix. A tile is a small, non-transparent sprite.
+      A tilemap is a very useful thing for the background.<br>
       <br>
       <u>
         Rows and columns</u><br>
       <br>
       The first row index is 0. The first column index is 0.<br>
       <u><br>
-        Work with the tile map</u><br>
+        Work with the tilemap</u><br>
       <br>
-      The <i>Tilemap</i> class provides easy access to the tile map. It is a
+      The <i>Tilemap</i> class provides easy access to the tilemap. It is a
       simple class with few methods. Let's look at the publicly available methods.<br>
       <br>
       <i>
-        Tilemap *Tilemap::get_handle(); -</i> Return the handle to the tile-map subsystem.<br>
+        Tilemap *Tilemap::get_handle(); -</i> Return the handle to the tilemap subsystem.<br>
       <br>
       <i>
         void Tilemap::initialize(const unsigned int tile_width, const unsigned
@@ -3195,6 +3194,7 @@
       9.0.5: The source code synced with the Black game development kit 7.5.6.<br>
       9.0.5.1-9.0.5.3: The documentation has been updated.<br>
       9.0.6: The source code synced with the Black game development kit 7.5.7.<br>
+      9.0.6.1: The documentation has been updated.<br>
     </big>
   </body>
 </html>
