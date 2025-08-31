@@ -4087,26 +4087,6 @@ namespace SWGF
    return this->print(target);
   }
 
-  void Text::disable_mirror()
-  {
-   text.disable_mirror();
-  }
-
-  void Text::horizontal_mirror()
-  {
-   text.horizontal_mirror();
-  }
-
-  void Text::vertical_mirror()
-  {
-   text.vertical_mirror();
-  }
-
-  void Text::complex_mirror()
-  {
-   text.complex_mirror();
-  }
-
   void Text::destroy_image()
   {
    text.destroy_image();
