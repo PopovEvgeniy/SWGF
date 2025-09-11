@@ -1,5 +1,5 @@
 /*
-Simple windows game framework was made by Popov Evgeniy Alekseyevich
+Simple Windows Game Framework was made by Popov Evgeniy Alekseyevich
 Some code taken from wglext.h(https://www.khronos.org/registry/OpenGL/api/GL/wglext.h) by The Khronos Group Inc
 
 The Simple Windows Game Framework license
@@ -226,7 +226,7 @@ namespace SWGF
 
   }
 
-  void Display::set_setting(const unsigned int width,const unsigned int height)
+  void Display::set_settings(const unsigned int width,const unsigned int height)
   {
    display.dmPelsWidth=width;
    display.dmPelsHeight=height;
@@ -634,7 +634,7 @@ namespace SWGF
 
   }
 
-  void Resizer::set_setting(const unsigned int width,const unsigned int height)
+  void Resizer::set_settings(const unsigned int width,const unsigned int height)
   {
    source_width=width;
    source_height=height;
@@ -701,7 +701,7 @@ namespace SWGF
 
   void Resizer::make_texture(const unsigned int *target,const unsigned int width,const unsigned int height,const unsigned int limit)
   {
-   this->set_setting(width,height);
+   this->set_settings(width,height);
    this->calculate_size();
    this->correct_size(limit);
    if (this->is_dont_need_resize()==false)
@@ -1009,7 +1009,7 @@ namespace SWGF
    return maximum_size;
   }
 
-  void Render::set_image_setting()
+  void Render::set_image_settings()
   {
    glPixelStorei(GL_UNPACK_ALIGNMENT,4);
    glPixelStorei(GL_UNPACK_SWAP_BYTES,0);
@@ -1025,7 +1025,7 @@ namespace SWGF
    glPixelStorei(GL_PACK_SKIP_ROWS,0);
   }
 
-  void Render::set_perfomance_setting()
+  void Render::set_perfomance_settings()
   {
    glDisable(GL_POINT_SMOOTH);
    glDisable(GL_LINE_SMOOTH);
@@ -1089,7 +1089,7 @@ namespace SWGF
    glHint(GL_PERSPECTIVE_CORRECTION_HINT,GL_NICEST);
   }
 
-  void Render::set_common_setting()
+  void Render::set_common_settings()
   {
    glDrawBuffer(GL_BACK);
    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
@@ -1107,7 +1107,7 @@ namespace SWGF
    glDisable(GL_DEPTH_TEST);
   }
 
-  void Render::set_matrix_setting()
+  void Render::set_matrix_settings()
   {
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
@@ -1125,12 +1125,12 @@ namespace SWGF
 
   void Render::create_render(const unsigned int width,const unsigned int height)
   {
-   this->set_image_setting();
+   this->set_image_settings();
    this->set_perspective(width,height);
-   this->set_perfomance_setting();
+   this->set_perfomance_settings();
    this->set_render_hints();
-   this->set_common_setting();
-   this->set_matrix_setting();
+   this->set_common_settings();
+   this->set_matrix_settings();
    this->disable_depth_buffer();
    MAXIMUM_TEXTURE_SIZE=this->get_maximum_texture_size();
   }
@@ -2071,7 +2071,7 @@ namespace SWGF
   {
    this->get_video_mode();
    this->correct_depth();
-   this->set_setting(width,height);
+   this->set_settings(width,height);
    this->set_video_mode();
   }
 
@@ -2441,6 +2441,12 @@ namespace SWGF
    Core::set_camera(static_cast<float>(x_offset),static_cast<float>(y_offset),static_cast<float>(viewport_width),static_cast<float>(viewport_height),static_cast<float>(screen_width),static_cast<float>(screen_height));
   }
 
+  void Camera::update(const unsigned int x,const unsigned int y)
+  {
+   this->set_offset(x,y);
+   this->update();
+  }
+
   void Camera::reset()
   {
    this->set_offset(0,0);
@@ -2771,7 +2777,7 @@ namespace SWGF
 
   }
 
-  void Animation::reset_animation_setting()
+  void Animation::reset_animation_settings()
   {
    frame=1;
    frames=1;
@@ -2863,7 +2869,7 @@ namespace SWGF
    billboard.draw(mirror);
   }
 
-  void Billboard::reset_billboard_setting()
+  void Billboard::reset_billboard_settings()
   {
    transparent=true;
    current_x=0;
@@ -3145,12 +3151,12 @@ namespace SWGF
 
   }
 
-  void Sprite::reset_sprite_setting()
+  void Sprite::reset_sprite_settings()
   {
    current_kind=SWGF::HORIZONTAL_ANIMATED;
   }
 
-  void Sprite::set_sprite_setting()
+  void Sprite::set_sprite_settings()
   {
    if (current_kind==SWGF::HORIZONTAL_ANIMATED)
    {
@@ -3167,7 +3173,7 @@ namespace SWGF
   {
    if (this->is_storage_empty()==false)
    {
-    this->set_sprite_setting();
+    this->set_sprite_settings();
    }
 
   }
@@ -3204,7 +3210,7 @@ namespace SWGF
 
   void Sprite::set_settings(const SWGF::IMAGE_KIND kind,const unsigned int frames)
   {
-   this->reset_animation_setting();
+   this->reset_animation_settings();
    this->set_frames(frames);
    this->set_kind(kind);
   }
@@ -3248,9 +3254,9 @@ namespace SWGF
   {
    billboard.destroy_texture();
    this->destroy_image();
-   this->reset_billboard_setting();
-   this->reset_animation_setting();
-   this->reset_sprite_setting();
+   this->reset_billboard_settings();
+   this->reset_animation_settings();
+   this->reset_sprite_settings();
   }
 
   void Sprite::clone(Sprite *target)
@@ -3298,7 +3304,7 @@ namespace SWGF
    this->load_image(buffer);
    if (this->is_storage_empty()==false)
    {
-    this->reset_billboard_setting();
+    this->reset_billboard_settings();
     this->prepare(this->get_image_width(),this->get_image_height(),this->get_image());
     this->set_size(this->get_image_width(),this->get_image_height());
    }
@@ -3321,7 +3327,7 @@ namespace SWGF
   {
    billboard.destroy_texture();
    this->destroy_image();
-   this->reset_billboard_setting();
+   this->reset_billboard_settings();
   }
 
   void Cartoon::clone(Cartoon *target)
@@ -3359,7 +3365,7 @@ namespace SWGF
 
   }
 
-  void Sheet::reset_sheet_setting()
+  void Sheet::reset_sheet_settings()
   {
    rows=1;
    columns=1;
@@ -3437,9 +3443,9 @@ namespace SWGF
   {
    billboard.destroy_texture();
    this->destroy_image();
-   this->reset_billboard_setting();
-   this->reset_animation_setting();
-   this->reset_sheet_setting();
+   this->reset_billboard_settings();
+   this->reset_animation_settings();
+   this->reset_sheet_settings();
   }
 
   void Sheet::clone(Sheet *target)
@@ -3510,7 +3516,7 @@ namespace SWGF
      {
       rows=row_amount;
       columns=column_amount;
-      this->reset_animation_setting();
+      this->reset_animation_settings();
       this->set_frames(rows*columns);
       this->set_target(1);
       this->prepare_sheet();
