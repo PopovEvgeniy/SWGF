@@ -1,6 +1,6 @@
 The project description.
 
-Simple Windows Game Framework is an ultra-fast 2D game engine for Windows XP or higher. It uses OPENGL for rendering.
+Simple Windows Game Framework is an ultra-fast 2D game engine for Windows XP or higher. It uses OpenGL for rendering.
 
 The license.
 
