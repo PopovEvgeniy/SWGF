@@ -1040,11 +1040,11 @@
    <i> void Text::set_settings(const unsigned int width, const unsigned int
     height, const SWGF::TEXT_KIND kind); -</i> Set the text output settings.<br>
    <br>
-   <i> void Text::load_font(Image *font); -</i> Load a font from the buffer.<br>
+   <i>bool Text::load_font(Image *font); -</i> Load a font from the buffer and return true if it is loaded.<br>
    <i><br>
-    void Text::load_font(Image &amp;font); -</i> Load a font from the buffer.<br>
+    bool Text::load_font(Image &amp;font); -</i> Load a font from the buffer and return true if it is loaded.<br>
    <i><br>
-    void Text::load_font(const char *name); -</i> Load a font from the target file.<br>
+    bool Text::load_font(const char *name); -</i> Load a font from the target file and return true if it is loaded.<br>
    <br>
    <i> void Text::print(const char target); -</i> Print a single character at the current position.<br>
    <br>
@@ -2467,6 +2467,7 @@
    9.0.9: The source code synced with the Eugene Game Development Kit 9.7.2.<br>
    9.1: The source code synced with the Eugene Game Development Kit 9.7.3.<br>
    9.1.1: The source code synced with the Eugene Game Development Kit 9.7.4.<br>
+   9.1.2: The source code synced with the Eugene Game Development Kit 9.7.4.<br>
   </big>
  </body>
 </html>
