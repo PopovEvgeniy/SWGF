@@ -3236,10 +3236,11 @@ namespace SWGF
    return this->load(picture,kind,frames);
   }
 
-  void Sprite::set_target(const unsigned int target)
+  unsigned int Sprite::set_target(const unsigned int target)
   {
    this->set_frame(target);
    this->set_sprite_frame();
+   return this->get_frame();
   }
 
   void Sprite::step()
@@ -3487,14 +3488,11 @@ namespace SWGF
 
   }
 
-  void Sheet::set_target(const unsigned int target)
+  unsigned int Sheet::set_target(const unsigned int target)
   {
    this->set_frame(target);
-   if (this->check_frame(target)==true)
-   {
-    this->select(this->get_row(target),this->get_column(target));
-   }
-
+   this->select(this->get_row(this->get_frame()),this->get_column(this->get_frame()));
+   return this->get_frame();
   }
 
   void Sheet::step()
