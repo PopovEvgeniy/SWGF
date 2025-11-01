@@ -941,6 +941,7 @@ namespace SWGF
    if (glIsEnabled(GL_ALPHA_TEST)==GL_FALSE)
    {
     glEnable(GL_ALPHA_TEST);
+    glEnable(GL_BLEND);
    }
 
   }
@@ -950,6 +951,7 @@ namespace SWGF
    if (glIsEnabled(GL_ALPHA_TEST)==GL_TRUE)
    {
     glDisable(GL_ALPHA_TEST);
+    glDisable(GL_BLEND);
    }
 
   }
@@ -1026,7 +1028,6 @@ namespace SWGF
   void Render::set_perfomance_settings()
   {
    glDisable(GL_TEXTURE_1D);
-   glDisable(GL_BLEND);
    glDisable(GL_TEXTURE_GEN_Q);
    glDisable(GL_TEXTURE_GEN_R);
    glDisable(GL_TEXTURE_GEN_S);
@@ -1069,6 +1070,7 @@ namespace SWGF
    glDisable(GL_MAP2_VERTEX_3);
    glDisable(GL_MAP2_VERTEX_4);
    glEnable(GL_TEXTURE_2D);
+   glEnable(GL_BLEND);
    glEnable(GL_ALPHA_TEST);
    glEnableClientState(GL_VERTEX_ARRAY);
    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -1092,6 +1094,7 @@ namespace SWGF
    glDrawBuffer(GL_BACK);
    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
    glShadeModel(GL_FLAT);
+   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
    glAlphaFunc(GL_GREATER,0.6f);
    glClearColor(0.0,0.0,0.0,0.0);
   }
@@ -1124,8 +1127,8 @@ namespace SWGF
   {
    this->set_image_settings();
    this->set_perspective(width,height);
-   this->set_perfomance_settings();
    this->set_render_hints();
+   this->set_perfomance_settings();
    this->set_common_settings();
    this->set_matrix_settings();
    this->disable_depth_buffer();
@@ -3097,6 +3100,21 @@ namespace SWGF
   void Billboard::complex_mirror()
   {
    mirror=Core::MIRROR_BOTH;
+  }
+
+  bool Billboard::is_horizontally_mirrored() const
+  {
+   return mirror==Core::HORIZONTAL_MIRROR;
+  }
+
+  bool Billboard::is_vertically_mirrored() const
+  {
+   return mirror==Core::VERTICAL_MIRROR;
+  }
+
+  bool Billboard::is_complex_mirrored() const
+  {
+   return mirror==Core::MIRROR_BOTH;
   }
 
   void Billboard::go_start()
