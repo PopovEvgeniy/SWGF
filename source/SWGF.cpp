@@ -2118,8 +2118,8 @@ namespace SWGF
    if (this->get_context()!=NULL)
    {
     this->Swap();
-    this->update_counter();
     this->clear_stage();
+    this->update_counter();
    }
    if (limit==true)
    {
