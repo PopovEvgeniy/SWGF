@@ -636,9 +636,9 @@ typedef enum
    void clear_screen();
    void initialize();
    void initialize(const unsigned int width,const unsigned int height);
-   bool update();
-   bool sync();
    bool sync(const bool limit);
+   bool sync();
+   bool update();
    bool is_ready();
    bool is_accelerated() const;
    bool is_software() const;
