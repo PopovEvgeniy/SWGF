@@ -3805,6 +3805,11 @@ namespace SWGF
    return stage.is_complex_mirrored();
   }
 
+  bool Scene::is_mirrored() const
+  {
+   return stage.is_mirrored();
+  }
+
   void Scene::draw()
   {
    stage.draw(false);
