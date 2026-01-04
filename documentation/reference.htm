@@ -43,11 +43,12 @@
           <li><a href="#mozTocId273396">Chapter 10. The base sprite subsystem</a></li>
           <li><a href="#mozTocId533283">Chapter 11. The ordinary sprites</a></li>
           <li><a href="#mozTocId412464">Chapter 12. The ribbons</a></li>
-          <li><a href="#mozTocId177040">Chapter 13. The static sprites</a></li>
-          <li><a href="#mozTocId780996">Chapter 14. The sprite sheet</a></li>
-          <li><a href="#mozTocId443802">Chapter 15. The text</a></li>
-          <li><a href="#mozTocId886167">Chapter 16. Loading an image</a></li>
-          <li><a href="#mozTocId979441">Chapter 17. The camera</a></li>
+          <li><a href="#mozTocId839836">Chapter 13. The tier</a></li>
+          <li><a href="#mozTocId177040">Chapter 14. The static sprites</a></li>
+          <li><a href="#mozTocId780996">Chapter 15. The sprite sheet</a></li>
+          <li><a href="#mozTocId443802">Chapter 16. The text</a></li>
+          <li><a href="#mozTocId886167">Chapter 17. Loading an image</a></li>
+          <li><a href="#mozTocId979441">Chapter 18. The camera</a></li>
         </ol>
       </li>
       <li><a href="#mozTocId365228">Part 4. The transformation</a>
@@ -870,7 +871,7 @@
       <br>
       <i>void Ribbon::clone(Ribbon *target); -</i> Create a copy of the sprite if the storage of the target sprite is not empty.<br>
       <br>
-      <i>void Sprite::clone(Ribbon &amp;target); -</i> Create a copy of the sprite if the storage of the target sprite is not empty.<br>
+      <i>void Ribbon::clone(Ribbon &amp;target); -</i> Create a copy of the sprite if the storage of the target sprite is not empty.<br>
       <br>
       <i>void Ribbon::destroy(); -</i> Destroy a sprite image and destroy the texture.<br>
       <br>
@@ -878,7 +879,38 @@
       <br>
       A sprite doesn't draw if the sprite texture doesn't exist. It will automatically be created when you load or clone a sprite.<br>
     </big>
-    <h2><a id="mozTocId177040" class="mozTocH2"></a><big> Chapter 13. The static sprites</big></h2>
+    <h2><a id="mozTocId839836" class="mozTocH2"></a><big>Chapter 13. The tier</big></h2>
+    <big><u>A few words about the tier.</u><br>
+      <br>
+      The tier is a vertical strip.<br>
+      <u><br>
+        Work with the tier.</u><br>
+      <br>
+      Just use the <i>Tier</i> class to work with a tier. It is derived from three classes: <i>Billboard</i>, <i>Animation</i>, and <i>Picture</i>. Let's look at the publicly available methods.<br>
+      <i> <br>
+        bool Tier::load(Image *buffer, const unsigned int frames);</i> - Load a sprite from the buffer and return true if it is loaded.<br>
+      <i> <br>
+        bool Tier::load(Image &amp;buffer, const unsigned int frames);</i> - Load a sprite from the buffer and return true if it is loaded.<br>
+      <br>
+      <i>bool Tier::load(const char *name, const unsigned int frames);</i> - Load a sprite from the target file and return true if it is loaded.<br>
+      <br>
+      <i>unsigned int Tier::set_target(const unsigned int target);</i> - Set the target frame and return it.<br>
+      <br>
+      <i>void Tier::step();</i> - Increase the target frame. Set it to 1 if the target is more than the number of frames.<br>
+      <br>
+      <i>Tier *Tier::get_handle();</i> - Return the handle to the tier object.<br>
+      <br>
+      <i>void Tier::clone(Tier *target);</i> - Create a copy of the sprite if the storage of the target sprite is not empty.<br>
+      <br>
+      <i>void Tier::clone(Tier &amp;target);</i> - Create a copy of the sprite if the storage of the target sprite is not empty.<br>
+      <i> <br>
+        void Tier::destroy();</i> - Destroy a sprite image and destroy the texture.<br>
+      <br>
+      <u>A sprite texture</u><br>
+      <br>
+      A sprite doesn't draw if the sprite texture doesn't exist. It will automatically be created when you load or clone a sprite.<br>
+    </big>
+    <h2><a id="mozTocId177040" class="mozTocH2"></a><big> Chapter 14. The static sprites</big></h2>
     <big> <u><br>
         A few words about the static sprite.</u><br>
       <br>
@@ -906,7 +938,7 @@
       <br>
       A sprite doesn't draw if the sprite texture doesn't exist. It will automatically be created when you load or clone a sprite.<br>
     </big>
-    <h2><a id="mozTocId780996" class="mozTocH2"></a><big> Chapter 14. The sprite sheet</big></h2>
+    <h2><a id="mozTocId780996" class="mozTocH2"></a><big> Chapter 15. The sprite sheet</big></h2>
     <big> <br>
       <u>Some words about the sprite sheet.</u><br>
       <br>
@@ -962,7 +994,7 @@
       <br>
       A sprite sheet doesn't draw if the sprite sheet texture doesn't exist. It will be automatically created when you load a sheet.<br>
     </big>
-    <h2><a id="mozTocId443802" class="mozTocH2"></a><big> Chapter 15. The text</big></h2>
+    <h2><a id="mozTocId443802" class="mozTocH2"></a><big> Chapter 16. The text</big></h2>
     <big> <u><br>
         How to print a text?</u><br>
       <br>
@@ -1044,7 +1076,7 @@
       <i><br>
         void Text::destroy_font(); -</i> Destroy a font image and the texture.<br>
     </big>
-    <h2><a id="mozTocId886167" class="mozTocH2"></a><big> Chapter 16. Loading an image</big></h2>
+    <h2><a id="mozTocId886167" class="mozTocH2"></a><big> Chapter 17. Loading an image</big></h2>
     <big> <br>
       <u>Load an image from a file.</u><br>
       <br>
@@ -1071,15 +1103,13 @@
       <br>
       <u>The supported format</u><br>
       <br>
-      All loading images must have the correct specifications. You can load an image from a 24-bit <a
-
-        href="https://en.wikipedia.org/wiki/Truevision_TGA">Truevision TGA</a> picture.<br>
+      All loading images must have the correct specifications. You can load an image from a 24-bit <a href="https://en.wikipedia.org/wiki/Truevision_TGA">Truevision TGA</a> picture.<br>
       <br>
       <u>The recommended software.</u><br>
       <br>
       You can use a wide range of graphics software to convert your images to the correct format. I recommend using GIMP to do it. It is a powerful image editor.<br>
     </big>
-    <h2><a id="mozTocId979441" class="mozTocH2"></a><big> Chapter 17. The camera</big></h2>
+    <h2><a id="mozTocId979441" class="mozTocH2"></a><big> Chapter 18. The camera</big></h2>
     <big><u><br>
         A few words about the camera.</u><br>
       <br>
@@ -2411,6 +2441,7 @@
       9.3.3: The source code synced with the Eugene Game Development Kit 9.9.8.<br>
       9.3.4: The source code synced with the Eugene Game Development Kit 10.1.2.<br>
       9.3.5: The source code synced with the Black Game Development Kit 7.9.1.<br>
+      9.3.6: The source code synced with the Black Game Development Kit 7.9.2.<br>
     </big>
   </body>
 </html>
