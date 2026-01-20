@@ -2430,6 +2430,16 @@ namespace SWGF
    return this->decrease_y(1);
   }
 
+  bool Camera::check_horizontal_border(const unsigned int x,const unsigned int width) const
+  {
+   return (x+width)>=this->get_highest_x();
+  }
+
+  bool Camera::check_vertical_border(const unsigned int y,const unsigned int height) const
+  {
+   return (y+height)>=this->get_highest_y();
+  }
+
   bool Camera::check_horizontal_border(const SWGF::BOX target) const
   {
    return (target.x+target.width)>=this->get_highest_x();
