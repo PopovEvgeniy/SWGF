@@ -89,7 +89,7 @@
   <li><a href="#mozTocId297282">Version history</a></li></ol></li></ol>
  <h1><a id="mozTocId780645" class="mozTocH1"></a><big>Part 1. Welcome</big></h1>
  <h2><a id="mozTocId197135" class="mozTocH2"></a><big>Chapter 1. The introduction</big></h2>
- <big><br>
+ <big>
   <u>The introduction.</u><br>
   <br>
   Hello! My name is Popov Evgeniy Alekseyevich. I am an individual programmer. I enjoy creating software. I also like old-school video games. Do you want to develop video games for Microsoft Windows? You need a good game engine to do it. I made my own engine. I hope that my C++ game engine will be useful for many programmers.
@@ -97,7 +97,6 @@
   <u><br>Features.</u><br>
   <br>
   Let me show you the engine features. Let's go.<br>
-  <br>
  </big>
  <ul>
   <li><big>Open-source code.</big></li>
@@ -115,8 +114,8 @@
   <br>
  </big>
  <ul>
-  <li><big> SWGF.h</big></li>
-  <li><big> SWGF.cpp</big></li>
+  <li><big>SWGF.h</big></li>
+  <li><big>SWGF.cpp</big></li>
  </ul>
  <big><br>
   Add it to your project.<br>
@@ -124,9 +123,8 @@
   Yes. This is really all you need to do.<br>
  </big>
  <h2><a id="mozTocId372945" class="mozTocH2"></a><big>Chapter 2. A special thanks</big></h2>
- <big><br>
+ <big>
   I want to say «Big thanks for the technical consultation» to these people:<br>
-  <br>
  </big>
  <ul>
  <li><a href="https://bsg.org.ua"><big>Dmitry Smagin</big></a></li>
@@ -177,7 +175,7 @@
   <br>
  </big>
  <h2><a id="mozTocId335235" class="mozTocH2"></a><big>Chapter 4. The system requirements</big></h2>
- <big><br>
+ <big>
   You can see the minimum system requirements below.<br>
   <br>
  </big>
@@ -207,13 +205,12 @@
  <big><br>
  </big>
  <h2><a id="mozTocId584722" class="mozTocH2"></a><big>Chapter 5. The troubleshooting guide</big></h2>
- <big><br>
+ <big>
   You need <a href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170">Visual C++ Redistributable</a> packages if your game code is compiled under Visual C++.<br>
  </big>
  <h2><a id="mozTocId410576" class="mozTocH2"></a><big>Chapter 6. The compilers</big></h2>
- <big><br>
+ <big>
   This engine was successfully tested with these compilers:<br>
-  <br>
  </big>
  <ul>
   <li><a href="https://jmeubank.github.io/tdm-gcc/"><big>TDM-GCC</big></a></li>
@@ -246,22 +243,20 @@
   <li><big>C++ Builder 13 Florence</big></li>
  </ul>
  <h2><a id="mozTocId819581" class="mozTocH2"></a><big>Chapter 7. The platform-specific notes</big></h2>
- <big><br><u>DirectX.</u><br>
+ <big><u>DirectX.</u><br>
   <br>
   You need to update <a href="https://www.microsoft.com/en-us/download/details.aspx?id=8109">DirectX End-User Runtime</a> before running your game.
   <br>
   <br><u>Windows XP support.</u><br>
   <br>
   You need one of the following compilers for <a href="https://en.wikipedia.org/wiki/Windows_XP">Windows XP</a> support:<br>
-  <br>
  </big>
  <ul>
-  <li><big> TDM-GCC</big></li>
-  <li><big> Mingw-w64</big></li>
-  <li><big> Visual C++ 2008</big></li>
+  <li><big>TDM-GCC</big></li>
+  <li><big>Mingw-w64</big></li>
+  <li><big>Visual C++ 2008</big></li>
  </ul>
- <big><u><br>
-  A note for the Visual C++ users.</u><br>
+ <big><u><br>A note for the Visual C++ users.</u><br>
   <br>
   Disable the precompiled headers before starting compilation. The old Visual C++ users can do it via the project creation wizard.<br>
   The Visual C++ 2017 or higher users must follow these steps:<br>
@@ -287,24 +282,23 @@
   See the documentation of the compiler for more information about linking.<br>
  </big>
  <h2><a id="mozTocId744597" class="mozTocH2"></a><big> Chapter 8. The engine namespace</big></h2>
- <big><br>
+ <big>
   <i>SWGF</i> is the main namespace. All the engine classes are declared in a few nested namespaces.<br>
  </big>
  <h2><a id="mozTocId520293" class="mozTocH2"></a><big> Chapter 9. The custom data types</big></h2>
- <big><br>
+ <big>
   Almost all custom data types are declared in the <i>SWGF</i> namespace.<br>
-  <br>
  </big>
  <h1><a id="mozTocId88198" class="mozTocH1"></a><big> Part 2. Basic things</big></h1>
  <h2><a id="mozTocId992847" class="mozTocH2"></a><big> Chapter 1. The coordinate system</big></h2>
- <big><br>
+ <big>
   The engine uses the standard coordinate system by default. The coordinates start at the top-left corner. Look at this picture to understand it.<br>
   <br>
   <img alt="" src="coordinate_system.png" height="111" width="107"><br>
   <br>
  </big>
  <h2><a id="mozTocId30775" class="mozTocH2"></a><big> Chapter 2. A game loop</big></h2>
- <big><br>
+ <big>
   What is the main point in your game? A game loop. You can see the structure of a typical game loop below.<br>
   <br>
   <img alt="" src="game_loop.png" height="354" width="379"><br>
@@ -312,11 +306,11 @@
  </big>
  <h1><a id="mozTocId344385" class="mozTocH1"></a><big> Part 3. Graphics</big></h1>
  <h2><a id="mozTocId869019" class="mozTocH2"></a><big> Chapter 1. The sub-namespace</big></h2>
- <big><br>
+ <big>
   All classes in this section are declared in the <i>Graphics</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId519243" class="mozTocH2"></a><big> Chapter 2. The base graphics subsystem</big></h2>
- <big><br><u>The introduction.</u><br>
+ <big><u>The introduction.</u><br>
   <br>
   The base graphics subsystem does render a game scene. This subsystem uses <a href="http://OpenGL.org">OpenGL</a> for rendering. All modern video cards support hardware acceleration. The software implementation will be activated if the acceleration is not available.
   <br>
@@ -375,7 +369,7 @@
   <i>Screen *Screen::get_handle(); -</i> Return the handle to the base graphics subsystem object.<br>
  </big>
  <h2><a id="mozTocId231340" class="mozTocH2"></a><big> Chapter 3. The picture subsystem.</big></h2>
- <big><u><br>An important subsystem.</u><br>
+ <big><u>An important subsystem.</u><br>
   <br>
   The picture subsystem implements image storage.
   <br>
@@ -398,7 +392,7 @@
   <i>size_t Picture::get_image_lenght() const; -</i> Return the image length in bytes.<br>
  </big>
  <h2><a id="mozTocId207975" class="mozTocH2"></a><big> Chapter 4. The animation subsystem.</big></h2>
- <big><br><u>An important subsystem.</u><br>
+ <big><u>An important subsystem.</u><br>
   <br>
   The animation subsystem lets you control the animation frames.
   <br>
@@ -419,7 +413,7 @@
   <i>bool Animation::check_frame(const unsigned int target) const; -</i> Return true if the target frame is valid.<br>
  </big>
  <h2><a id="mozTocId364918" class="mozTocH2"></a><big> Chapter 5. The vertex index</big></h2>
- <big><br>
+ <big>
   The vertex index looks like the predefined constants. You can see it below.<br>
   <br>
  </big>
@@ -852,10 +846,6 @@
   <br>
   <i>Ribbon *Ribbon::get_handle(); -</i> Return the handle to the ribbon object.<br>
   <br>
-  <i>void Ribbon::clone(Ribbon *target); -</i> Create a copy of the sprite if the storage of the target sprite is not empty.<br>
-  <br>
-  <i>void Ribbon::clone(Ribbon &amp;target); -</i> Create a copy of the sprite if the storage of the target sprite is not empty.<br>
-  <br>
   <i>void Ribbon::destroy(); -</i> Destroy a sprite image and destroy the texture.<br>
   <br>
   <u>A sprite texture</u><br>
@@ -883,10 +873,6 @@
   <br>
   <i>Tier *Tier::get_handle();</i> - Return the handle to the tier object.<br>
   <br>
-  <i>void Tier::clone(Tier *target);</i> - Create a copy of the sprite if the storage of the target sprite is not empty.<br>
-  <br>
-  <i>void Tier::clone(Tier &amp;target);</i> - Create a copy of the sprite if the storage of the target sprite is not empty.<br>
-  <br>
   <i>void Tier::destroy();</i> - Destroy a sprite image and destroy the texture.
   <br>
   <br><u>A sprite texture</u><br>
@@ -909,10 +895,6 @@
   <i>bool Cartoon::load(const char *name); -</i> Load a sprite from the target file and return true if it is loaded.<br>
   <br>
   <i>Cartoon *Cartoon::get_handle(); -</i> Return the handle to the sprite object.<br>
-  <br>
-  <i>void Cartoon::clone(Cartoon *target); -</i> Create a copy of the sprite if the storage of the target sprite is not empty.<br>
-  <br>
-  <i>void Cartoon::clone(Cartoon &amp;target); -</i> Create a copy of the sprite if the storage of the target sprite is not empty.<br>
   <br>
   <i>void Cartoon::destroy(); -</i> Destroy a sprite image and the texture.<br>
   <br>
@@ -943,7 +925,7 @@
   <br>
   <i>unsigned int Sheet::get_row(const unsigned int target) const; -</i> Return the row of the target frame.<br>
   <br>
-  <i>unsigned int Sheet::get_column(const unsigned int target) const; -</i> Return column of the target frame.<br>
+  <i>unsigned int Sheet::get_column(const unsigned int target) const; -</i> Return the column of the target frame.<br>
   <br>
   <i>unsigned int Sheet::calculate(const unsigned int row, const unsigned int column) const; -</i> Calculate the frame by row and column.<br>
   <br>
@@ -966,10 +948,6 @@
   <i>bool Sheet::load(const char *name, const unsigned int row_amount, const unsigned int column_amount); -</i> Load a sprite sheet from a target file and return true if it is loaded.<br>
   <br>
   <i>Sheet *Sheet::get_handle(); -</i> Return the handle to the sprite sheet.<br>
-  <br>
-  <i>void Sheet::clone(Sheet *target); -</i> Create a copy of the sprite sheet if the storage of the target sprite sheet is not empty.<br>
-  <br>
-  <i>void Sheet::clone(Sheet &amp;target); -</i> Create a copy of the sprite sheet if the storage of the target sprite sheet is not empty.<br>
   <br>
   <u>A sprite sheet texture.</u><br>
   <br>
@@ -1070,7 +1048,7 @@
   <br>
   <i>size_t Image::get_pixel_amount() const; -</i> Return the amount of the image pixels.<br>
   <br>  
-  <i>size_t Image::get_length() const; -</i> Return length of the image buffer in bytes.<br>
+  <i>size_t Image::get_length() const; -</i> Return the length of the image buffer in bytes.<br>
   <br>
   <i>Image *Image::get_handle(); -</i> Return the handle to the image loader.<br>
   <br>
@@ -1174,11 +1152,11 @@
  </big>
  <h1><a id="mozTocId365228" class="mozTocH1"></a><big> Part 4. The transformation</big></h1>
  <h2><a id="mozTocId199987" class="mozTocH2"></a><big> Chapter 1. The sub-namespace</big></h2>
- <big><br>
+ <big>
   All classes in this section are declared in the <i>Transformation</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId86382" class="mozTocH2"></a><big> Chapter 2. The Cartesian coordinates and the screen coordinates</big></h2>
- <big><br><u>The Cartesian coordinates.</u><br>
+ <big><u>The Cartesian coordinates.</u><br>
   <br>
   The Cartesian coordinates start at the center of the screen. Look at this picture to understand it.<br>
   <br>
@@ -1218,7 +1196,7 @@
   <i>int Coordinates::get_cartesian_y(const int y) const; -</i> Convert the screen y-coordinate to the Cartesian y-coordinate.<br>
  </big>
  <h2><a id="mozTocId217842" class="mozTocH2"></a><big> Chapter 3. The Cartesian coordinates and the isometric coordinates</big></h2>
- <big><br><u>A few words about the isometric games.</u><br>
+ <big><u>A few words about the isometric games.</u><br>
   <br>
   <a href="https://en.wikipedia.org/wiki/Isometric_projection"> Isometric projection</a> is a very popular way for pseudo-3D games. Many old-school games are isometric games.
   <br>
@@ -1235,7 +1213,7 @@
   <i>static int Isometric::get_cartesian_y(const int x, const int y); -</i> Convert the y-coordinate from the isometric system to the Cartesian system.<br>
  </big>
  <h2><a id="mozTocId114248" class="mozTocH2"></a><big> Chapter 4. An isometric level</big></h2>
- <big><br>
+ <big>
   The isometric level subsystem is intended to help you create an isometric level. Just use the <i>Level</i> class to do it. Let's look at the publicly available methods.<br>
   <br>
   <i>Level *Level::get_handle(); -</i> Return the handle to the isometric level subsystem.<br>
@@ -1254,17 +1232,17 @@
  </big>
  <h1><a id="mozTocId814741" class="mozTocH1"></a><big> Part 5. The common things</big></h1>
  <h2><a id="mozTocId390471" class="mozTocH2"></a><big> Chapter 1. The sub-namespace</big></h2>
- <big><br>
+ <big>
   All classes in this section are declared in the <i>Common</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId207557" class="mozTocH2"></a><big> Chapter 2. The abnormal program termination</big></h2>
- <big><br>
+ <big>
   You can use the <i>Halt</i> function to terminate a program. This function is declared in the <i>SWGF</i> namespace.<br>
   <br>
   <i>void SWGF::Halt(const char *message); -</i> Terminate the program. Write an error message to the log file if logging is enabled.<br>
  </big>
  <h2><a id="mozTocId265533" class="mozTocH2"></a><big> Chapter 3. The timers</big></h2>
- <big><br>
+ <big>
   A timer is a very useful thing. Just use the <i>Timer</i> class to work with the timer. Let's look at the publicly available methods.<br>
   <br>
   <i>Timer *Timer::get_handle(); -</i> Return the handle to the timer.<br>
@@ -1276,7 +1254,7 @@
   <i>bool Timer::check_timer(); -</i> Return true and reinitialize the start point if the interval between the stop and start points is larger than or equal to a specific number of seconds.<br>
  </big>
  <h2><a id="mozTocId738453" class="mozTocH2"></a><big> Chapter 4. The collision detector<br></big></h2>
- <big><br><u>An important thing for any game.</u><br>
+ <big><u>An important thing for any game.</u><br>
   <br>
   What is an important thing for a video game? A collision.
   <br>
@@ -1305,7 +1283,7 @@
   <i>bool Collision::check_collision(const SWGF::BOX first_target, const SWGF::BOX second_target); -</i> Set the targets and check the collision between them.<br>
  </big>
  <h2><a id="mozTocId499251" class="mozTocH2"></a><big> Chapter 5. The tilemaps</big></h2>
- <big><br><u>A few words about the tilemap.</u><br>
+ <big><u>A few words about the tilemap.</u><br>
   <br>
   The tilemap is a tile matrix. A tile is a small, non-transparent sprite. A tilemap is a very useful thing for the background.
   <br>
@@ -1347,11 +1325,11 @@
  </big>
  <h1><a id="mozTocId162787" class="mozTocH1"></a><big> Part 6. The other important things</big></h1>
  <h2><a id="mozTocId339092" class="mozTocH2"></a><big> Chapter 1. The sub-namespace</big></h2>
- <big><br>
+ <big>
   All classes in this section are declared in the <i>Misc</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId768106" class="mozTocH2"></a><big> Chapter 2. The memory</big></h2>
- <big><br>
+ <big>
   RAM is an important resource. Just use the <i>Memory</i> class to get the total memory size and the free memory size. Let's look at the publicly available methods.<br>
   <br>
   <i>unsigned long long int Memory::get_total_physical(); -</i> Return the total physical memory size in bytes.<br>
@@ -1369,7 +1347,7 @@
   <i>unsigned long int Memory::get_usage(); -</i> Return the percentage of the physical memory used.<br>
  </big>
  <h2><a id="mozTocId926537" class="mozTocH2"></a><big> Chapter 3. The audio</big></h2>
- <big><br><u>A few words about the audio subsystem.</u><br>
+ <big><u>A few words about the audio subsystem.</u><br>
   <br>
   This subsystem is intended for playing music and sounds. <a href="https://en.wikipedia.org/wiki/WAV">Waveform Audio File Format</a>, <a href="https://en.wikipedia.org/wiki/MP3">MPEG Audio Layer 3</a>, and <a href="https://en.wikipedia.org/wiki/Windows_Media_Audio">Windows Media Audio</a> are supported.
   <br>
@@ -1399,7 +1377,7 @@
  </big>
  <h1><a id="mozTocId163306" class="mozTocH1"></a><big> Part 7. Misc</big></h1>
  <h2><a id="mozTocId665019" class="mozTocH2"></a><big> Chapter 1. The Filesystem</big></h2>
- <big><br>
+ <big>
   This module is implemented as two simple functions. All these functions are declared in the <i>Filesystem</i> sub-namespace.<br>
   <br>
   <i>file_exist</i>: Check the target file to see if one exists.<br>
@@ -1409,7 +1387,7 @@
   All functions take the target file name as an argument and return false if the operation failed.<br>
  </big>
  <h2><a id="mozTocId952101" class="mozTocH2"></a><big> Chapter 2. A tool</big></h2>
- <big><br>
+ <big>
   This module is implemented as a few functions. All these functions are declared in the <i>Tools</i> sub-namespace.<br>
   <br>
   <i>void quit(); -</i> Exit from your program and return the user to the operating system.<br>
@@ -1425,7 +1403,7 @@
   <i>SWGF::BOX generate_box(const unsigned int x, const unsigned int y, const unsigned int width, const unsigned int height);</i> - Generate the collision-related information.<br>
  </big>
  <h2><a id="mozTocId296241" class="mozTocH2"></a><big> Chapter 3. The resource manager</big></h2>
- <big><br>
+ <big>
   A resource is an instance of a user-defined class or structure. The resource manager is implemented as a few template functions. All these functions are declared in the <i>Resource</i> sub-namespace.<br>
   <br>
   <i>create</i>: Create a resource. The first form of this function creates a single resource. It takes a handle to a resource handle as an argument. The second form creates an array of the resources. It takes a handle to a resource handle and a resource amount.<br>
@@ -1436,11 +1414,11 @@
  </big>
  <h1><a id="mozTocId5790" class="mozTocH1"></a><big> Part 8. The binary files</big></h1>
  <h2><a id="mozTocId405346" class="mozTocH2"></a><big> Chapter 1. The sub-namespace</big></h2>
- <big><br>
+ <big>
   All classes in this section are declared in the <i>File</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId852057" class="mozTocH2"></a><big> Chapter 2. The base binary file subsystem</big></h2>
- <big><br><u>Work with the binary files.</u><br>
+ <big><u>Work with the binary files.</u><br>
   <br>
   The <i>Binary_File</i> class provides simple access to the base binary subsystem. Don't use it directly. Let's look at the publicly available methods.<br>
   <br>
@@ -1461,7 +1439,7 @@
   The target file size limit is 2 gigabytes.<br>
  </big>
  <h2><a id="mozTocId651177" class="mozTocH2"></a><big> Chapter 3. The file reader</big></h2>
- <big><br>
+ <big>
   The file reader is intended to read data from the binary files. The <i>Input_File</i> class provides access to a file reader. It is derived from the <i>Binary_File</i> class. Let's look at the publicly available methods.<br>
   <br>
   <i>Input_File* Input_File::get_handle(); -</i> Return the handle to the file reader.<br>
@@ -1471,7 +1449,7 @@
   <i>void Input_File::read(void *buffer, const size_t length); -</i> Read data from the file.<br>
  </big>
  <h2><a id="mozTocId842586" class="mozTocH2"></a><big> Chapter 4. The file writer</big></h2>
- <big><br>
+ <big>
   The file writer is intended to write data to the binary files. The <i>Output_File</i> class provides access to a file writer. It is derived from the Binary_File class. Let's look at the publicly available methods.<br>
   <br>
   <i>Output_File* Output_File::get_handle(); -</i> Return the handle to the file writer.<br>
@@ -1483,15 +1461,14 @@
   <i>void Output_File::write(const void *buffer, const size_t length); -</i> Write data to the file.<br>
   <br>
   <i>void Output_File::flush(); -</i> Force writing the internal buffer data to the file.<br>
-  <br>
  </big>
  <h2><a id="mozTocId966389" class="mozTocH2"></a><big> Part 9. The input</big></h2>
  <h2><a id="mozTocId742013" class="mozTocH2"></a><big> Chapter 1. The sub-namespace</big></h2>
- <big><br>
+ <big>
   All classes in this section are declared in the <i>Input</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId896873" class="mozTocH2"></a><big> Chapter 2. The keyboard</big></h2>
- <big><br><u>The low-level input.</u><br>
+ <big><u>The low-level input.</u><br>
   <br>
   Any keyboard has a built-in chip. It generates a special code when the user presses or releases the key. This code is called a «scan code».
   <br>
@@ -1762,7 +1739,7 @@
  <big><br>
  </big>
  <h2><a id="mozTocId899047" class="mozTocH2"></a><big> Chapter 3. The mouse</big></h2>
- <big><u><br>A few words about mice.</u><br>
+ <big><u>A few words about mice.</u><br>
   <br>
   A mouse is very useful for interaction with a graphical user interface. But the mouse can also be used in video games.
   <br>
@@ -1814,7 +1791,7 @@
  <big><br>
  </big>
  <h2><a id="mozTocId875813" class="mozTocH2"></a><big> Chapter 4. The gamepad</big></h2>
- <big><u><br>The best friend of a retro gamer.</u><br>
+ <big><u>The best friend of a retro gamer.</u><br>
   <br>
   What is a good choice for a game control device when the user plays an arcade or an old-school video game? A gamepad. This engine provides simple access to it.<br>
   <u><br>The number of the connected gamepads.</u><br>
@@ -2026,15 +2003,14 @@
   <i>short int Gamepad::get_right_stick_horizontal_axis() const; -</i> Return the current value of the right stick horizontal axis.<br>
   <br>
   <i>short int Gamepad::get_right_stick_vertical_axis() const; -</i> Return the current value of the right stick vertical axis.<br>
-  <br>
  </big>
  <h1><a id="mozTocId122236" class="mozTocH1"></a><big> Part 10. The internal details of the engine subsystems</big></h1>
  <h2><a id="mozTocId734374" class="mozTocH2"></a><big> Chapter 1. A few words for a curious programmer</big></h2>
- <big><br>
+ <big>
   The engine subsystems have a different internal structure. It has been hidden from you, and you don't have access to it. Do you want to know about hidden things? Just read the next chapter.<br>
  </big>
  <h2><a id="mozTocId873220" class="mozTocH2"></a><big> Chapter 2. The internal classes</big></h2>
- <big><u><br>The internal classes.</u><br>
+ <big><u>The internal classes.</u><br>
   <br>
   Some classes are designed for internal use only. Don't touch them. What are these strange classes doing?
   <br>
@@ -2059,7 +2035,7 @@
   <i>Shape</i> is the base class of the <i>Rectangle</i> class.<br>
  </big>
  <h2><a id="mozTocId292100" class="mozTocH2"></a><big> Chapter 3. The base graphics subsystem</big></h2>
- <big><br><u>The visible object.</u><br>
+ <big><u>The visible object.</u><br>
   <br>
   Any visible object is a textured rectangle.
   <br>
@@ -2090,11 +2066,11 @@
   All these custom types are declared in the <i>Core</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId429186" class="mozTocH2"></a><big> Chapter 4. The gamepad</big></h2>
- <big><br>
+ <big>
   The gamepad subsystem is working over the <a href="https://docs.microsoft.com/en-us/windows/desktop/xinput/xinput-game-controller-apis-portal">XINPUT</a>.<br>
  </big>
  <h2><a id="mozTocId204021" class="mozTocH2"></a><big> Chapter 5. The input</big></h2>
- <big><u><br>The input backend.</u><br>
+ <big><u>The input backend.</u><br>
   <br>
   The input subsystem is the simple thing. It works over the standard Microsoft Windows API.
   <br>
@@ -2122,11 +2098,11 @@
  <big><br>
  </big>
  <h2><a id="mozTocId586939" class="mozTocH2"></a><big> Chapter 6. Audio</big></h2>
- <big><br>
+ <big>
   The audio subsystem is working over <a href="https://docs.microsoft.com/en-us/windows/desktop/DirectShow/directshow">DirectShow</a>. It is available as part of <a href="https://en.wikipedia.org/wiki/DirectX">DirectX</a>. DirectX is pre-installed by default under the modern versions of Windows.<br>
  </big>
  <h2><a id="mozTocId297282" class="mozTocH2"></a><big>Version history</big></h2>
- <big><br>
+ <big>
   0.1-6.3.6: The old branch.<br>
   6.3.7-6.5.1: The experimental branch.<br>
   6.5.2: The source code synced with the Eugene Game Development Kit 6.5.7.<br>
@@ -2409,6 +2385,7 @@
   9.4.3: The source code synced with the Eugene Game Development Kit 10.2.1.<br>
   9.4.4: The source code synced with the Eugene Game Development Kit 10.2.2.<br>
   9.4.5: The source code synced with the Eugene Game Development Kit 10.2.3.<br>
+  9.4.6: The source code synced with the Eugene Game Development Kit 10.2.4.<br>
  </big>
 </body>
 </html>
