@@ -4,7 +4,7 @@ int main()
 {
  char perfomance[8];
  bool limit;
- SWGF::Common::Timer timer;
+ SWGF::Common::Timer timer(1.0);
  SWGF::Input::Keyboard keyboard;
  SWGF::Input::Gamepad gamepad;
  SWGF::Input::Mouse mouse;
@@ -24,7 +24,6 @@ int main()
  text.load_font("font.tga");
  text.set_position(text.get_font_width(),text.get_font_height());
  mouse.hide();
- timer.set_timer(1);
  media.initialize();
  media.load("space.mp3");
  memset(perfomance,0,8);
