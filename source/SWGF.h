@@ -68,6 +68,7 @@ THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
 #include <string.h>
 #include <time.h>
 #include <limits.h>
+#include <locale.h>
 #include <cwchar>
 #include <new>
 #include <windows.h>
