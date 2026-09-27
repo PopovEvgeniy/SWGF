@@ -268,13 +268,13 @@
   <br>
  </big>
  <ul>
-  <li><big>user32.lib</big></li>
-  <li><big>kernel32.lib</big></li>
-  <li><big>gdi32.lib</big></li>
-  <li><big>opengl32.lib</big></li>
-  <li><big>ole32.lib</big></li>
-  <li><big>strmiids.lib</big></li>
-  <li><big>xinput.lib</big></li>
+  <li><big>libuser32.a</big></li>
+  <li><big>libkernel32.a</big></li>
+  <li><big>libgdi32.a</big></li>
+  <li><big>libopengl32.a</big></li>
+  <li><big>libole32.a</big></li>
+  <li><big>libstrmiids.a</big></li>
+  <li><big>libxinput.a</big></li>
  </ul>
  <big><br>
   See the documentation of the compiler for more information about linking.<br>
@@ -1342,7 +1342,7 @@
   <br>
   <i>unsigned long long int Memory::get_physical_usge(); -</i> Return the physical memory usage in bytes.<br>
   <br>
-  <i>unsigned long long int Memory::get_virtual_usge(); -</i> Return the virtual memory usage in bytes.<br>
+  <i>unsigned long long int Memory::get_virtual_usage(); -</i> Return the virtual memory usage in bytes.<br>
   <br>
   <i>unsigned long int Memory::get_usage(); -</i> Return the percentage of the physical memory used.<br>
  </big>
@@ -1446,7 +1446,7 @@
   <br>
   <i>void Input_File::open(const char *name); -</i> Open a file to read.<br>
   <br>
-  <i>void Input_File::read(void *buffer, const size_t length); -</i> Read data from the file.<br>
+  <i>size_t Input_File::read(void *buffer, const size_t length); -</i> Read data from the file and return the number of read bytes.<br>
  </big>
  <h2><a id="mozTocId842586" class="mozTocH2"></a><big> Chapter 4. The file writer</big></h2>
  <big>
@@ -1458,7 +1458,7 @@
   <br>
   <i>void Output_File::create_temp(); -</i> Create a temporary file. This file will be deleted when it is closed.<br>
   <br>
-  <i>void Output_File::write(const void *buffer, const size_t length); -</i> Write data to the file.<br>
+  <i>size_t Output_File::write(const void *buffer, const size_t length); -</i> Write data to the file and return the number of written bytes.<br>
   <br>
   <i>void Output_File::flush(); -</i> Force writing the internal buffer data to the file.<br>
  </big>
@@ -2399,6 +2399,8 @@
   9.5.5: The source code synced with the Eugene Game Development Kit 10.3.2.<br>
   9.5.5.1: The documentation has been updated.<br>
   9.5.6: The source code synced with the Eugene Game Development Kit 10.3.3.<br>
+  9.5.7: The source code synced with the Gray Game Development Kit 5.1.2.<br>
+  9.5.8-9.6: The small changes.<br>
  </big>
 </body>
 </html>
