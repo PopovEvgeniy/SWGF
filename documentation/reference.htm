@@ -385,7 +385,7 @@
   <br>
   <i>size_t Picture::get_pixel_amount() const; -</i> Return the amount of the image pixels.<br>
   <br>
-  <i>size_t Picture::get_image_lenght() const; -</i> Return the image length in bytes.<br>
+  <i>size_t Picture::get_image_length() const; -</i> Return the image length in bytes.<br>
   <br>
   <i>unsigned int *Picture::get_image(); -</i> Return the handle to the image storage.<br>
  </big>
@@ -476,13 +476,13 @@
   <br>
   <i>void Segment::complex_mirror();</i> - Set both the horizontal background mirroring mode and the vertical background mirroring mode.<br>
   <br>
-  <i>bool Segment::is_horizontally_mirrored const();</i> - Return true if the background is horizontally mirrored.<br>
+  <i>bool Segment::is_horizontally_mirrored() const;</i> - Return true if the background is horizontally mirrored.<br>
   <br>
-  <i>bool Segment::is_vertically_mirrored const();</i> - Return true if the background is vertically mirrored.<br>
+  <i>bool Segment::is_vertically_mirrored() const;</i> - Return true if the background is vertically mirrored.<br>
   <br>
-  <i>bool Segment::is_complex_mirrored const();</i> - Return true if the background is both horizontally and vertically mirrored.<br>
+  <i>bool Segment::is_complex_mirrored() const;</i> - Return true if the background is both horizontally and vertically mirrored.<br>
   <br>
-  <i>bool Segment::is_mirrored const();</i> - Return true if the background is mirrored in any way.<br>
+  <i>bool Segment::is_mirrored() const;</i> - Return true if the background is mirrored in any way.<br>
   <br>
   <i>unsigned int Segment::set_target(const unsigned int target);</i> - Set the target frame and return it.<br>
   <br>
@@ -548,13 +548,13 @@
   <br>
   <i>void Section::complex_mirror();</i> - Set both the horizontal background mirroring mode and the vertical background mirroring mode.<br>
   <br>
-  <i>bool Section::is_horizontally_mirrored const();</i> - Return true if the background is horizontally mirrored.<br>
+  <i>bool Section::is_horizontally_mirrored() const;</i> - Return true if the background is horizontally mirrored.<br>
   <br>
-  <i>bool Section::is_vertically_mirrored const();</i> - Return true if the background is vertically mirrored.<br>
+  <i>bool Section::is_vertically_mirrored() const;</i> - Return true if the background is vertically mirrored.<br>
   <br>
-  <i>bool Section::is_complex_mirrored const();</i> - Return true if the background is both horizontally and vertically mirrored.<br>
+  <i>bool Section::is_complex_mirrored() const;</i> - Return true if the background is both horizontally and vertically mirrored.<br>
   <br>
-  <i>bool Section::is_mirrored const();</i> - Return true if the background is mirrored in any way.<br>
+  <i>bool Section::is_mirrored() const;</i> - Return true if the background is mirrored in any way.<br>
   <br>
   <i>unsigned int Section::set_target(const unsigned int target);</i> - Set the target frame and return it.<br>
   <br>
@@ -621,13 +621,13 @@
   <br>
   <i>void Scene::complex_mirror(); -</i> Set both the horizontal background mirroring mode and the vertical background mirroring mode.<br>
   <br>
-  <i>bool Scene::is_horizontally_mirrored const(); -</i> Return true if the background is horizontally mirrored.<br>
+  <i>bool Scene::is_horizontally_mirrored() const; -</i> Return true if the background is horizontally mirrored.<br>
   <br>
-  <i>bool Scene::is_vertically_mirrored const(); -</i> Return true if the background is vertically mirrored.<br>
+  <i>bool Scene::is_vertically_mirrored() const; -</i> Return true if the background is vertically mirrored.<br>
   <br>
-  <i>bool Scene::is_complex_mirrored const(); -</i> Return true if the background is both horizontally and vertically mirrored.<br>
+  <i>bool Scene::is_complex_mirrored() const; -</i> Return true if the background is both horizontally and vertically mirrored.<br>
   <br>
-  <i>bool Scene::is_mirrored const(); -</i> Return true if the background is mirrored in any way.<br>
+  <i>bool Scene::is_mirrored() const; -</i> Return true if the background is mirrored in any way.<br>
   <br>
   <i>bool Scene::load(Image *background); -</i> Load a background from the buffer and return true if it is loaded.<br>
   <br>
@@ -684,11 +684,11 @@
   <br>
   <i>void Parallax::complex_mirror(); -</i> Set both the horizontal background mirroring mode and the vertical background mirroring mode.<br>
   <br>
-  <i>bool Parallax::is_horizontally_mirrored const(); -</i> Return true if the background is horizontally mirrored.<br>
+  <i>bool Parallax::is_horizontally_mirrored() const; -</i> Return true if the background is horizontally mirrored.<br>
   <br>
-  <i>bool Parallax::is_vertically_mirrored const(); -</i> Return true if the background is vertically mirrored.<br>
+  <i>bool Parallax::is_vertically_mirrored() const; -</i> Return true if the background is vertically mirrored.<br>
   <br>
-  <i>bool Parallax::is_complex_mirrored const(); -</i> Return true if the background is both horizontally and vertically mirrored.<br>
+  <i>bool Parallax::is_complex_mirrored() const; -</i> Return true if the background is both horizontally and vertically mirrored.<br>
   <br>
   <i>bool Parallax::is_mirrored() const; -</i> Return true if the background is mirrored in any way.<br>
   <br>
@@ -797,13 +797,13 @@
   <br>
   <i>void Billboard::complex_mirror(); -</i> Set both the horizontal sprite mirroring mode and the vertical sprite mirroring mode.<br>
   <br>
-  <i>bool Billboard::is_horizontally_mirrored const(); -</i> Return true if the sprite is horizontally mirrored.<br>
+  <i>bool Billboard::is_horizontally_mirrored() const; -</i> Return true if the sprite is horizontally mirrored.<br>
   <br>
-  <i>bool Billboard::is_vertically_mirrored const(); -</i> Return true if the sprite is vertically mirrored.<br>
+  <i>bool Billboard::is_vertically_mirrored() const; -</i> Return true if the sprite is vertically mirrored.<br>
   <br>
-  <i>bool Billboard::is_complex_mirrored const(); -</i> Return true if the sprite is both horizontally and vertically mirrored.<br>
+  <i>bool Billboard::is_complex_mirrored() const; -</i> Return true if the sprite is both horizontally and vertically mirrored.<br>
   <br>
-  <i>bool Billboard::is_mirrored const(); -</i> Return true if the sprite is mirrored in any way.<br>
+  <i>bool Billboard::is_mirrored() const; -</i> Return true if the sprite is mirrored in any way.<br>
   <br>
   <i>void Billboard::go_start(); -</i> Set the sprite position to the start position.<br>
   <br>
@@ -1964,7 +1964,7 @@
   <br>
   <i>bool Gamepad::check_button_press(const SWGF::GAMEPAD_BUTTONS button) const; -</i> Return true if the button was pressed.<br>
   <br>
-  <i>bool Gamepad::check_button_released(const SWGF::GAMEPAD_BUTTONS button) const; -</i> Return true if the button was released.<br>
+  <i>bool Gamepad::check_button_release(const SWGF::GAMEPAD_BUTTONS button) const; -</i> Return true if the button was released.<br>
   <br>
   <i>bool Gamepad::check_trigger_hold(const SWGF::GAMEPAD_TRIGGERS trigger) const; -</i> Return true if the specific trigger of the active gamepad is pressed or held.<br>
   <br>
@@ -2402,6 +2402,7 @@
   9.5.7: The source code synced with the Gray Game Development Kit 5.1.2.<br>
   9.5.8-9.6: The small changes.<br>
   9.6.1: The source code synced with the Neon Game Development Kit 9.1.4.<br>
+  9.6.2: The small changes.<br>
  </big>
 </body>
 </html>

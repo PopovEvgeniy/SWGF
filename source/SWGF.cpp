@@ -293,7 +293,7 @@ namespace SWGF
 
   }
 
-  void Engine::set_backgrond_color()
+  void Engine::set_background_color()
   {
    window_class.hbrBackground=CreateSolidBrush(RGB(0,0,0));
    if (window_class.hbrBackground==NULL)
@@ -360,7 +360,7 @@ namespace SWGF
   void Engine::prepare_engine()
   {
    this->get_instance();
-   this->set_backgrond_color();
+   this->set_background_color();
    this->load_icon();
    this->load_cursor();
    this->register_window_class();
@@ -1050,7 +1050,7 @@ namespace SWGF
    glPixelStorei(GL_PACK_SKIP_ROWS,0);
   }
 
-  void Render::set_perfomance_settings()
+  void Render::set_performance_settings()
   {
    glDisable(GL_TEXTURE_1D);
    glDisable(GL_BLEND);
@@ -1154,7 +1154,7 @@ namespace SWGF
    this->set_image_settings();
    this->set_perspective(width,height);
    this->set_render_hints();
-   this->set_perfomance_settings();
+   this->set_performance_settings();
    this->set_common_settings();
    this->set_matrix_settings();
    this->disable_depth_buffer();
@@ -1505,13 +1505,13 @@ namespace SWGF
 
   Keyboard::Keyboard()
   {
-   preversion=NULL;
+   previous=NULL;
   }
 
   Keyboard::~Keyboard()
   {
-   Resource::destroy_array(preversion);
-   preversion=NULL;
+   Resource::destroy_array(previous);
+   previous=NULL;
   }
 
   void Keyboard::prepare()
@@ -1519,7 +1519,7 @@ namespace SWGF
    size_t index=0;
    for (index=0;index<KEYBOARD;++index)
    {
-    preversion[index]=KEY_RELEASE;
+    previous[index]=KEY_RELEASE;
    }
 
   }
@@ -1527,19 +1527,19 @@ namespace SWGF
   bool Keyboard::check_state(const unsigned char code,const unsigned char state)
   {
    bool accept=false;
-   if (preversion!=NULL)
+   if (previous!=NULL)
    {
-    accept=(Keys[code]==state) && (preversion[code]!=state);
-    preversion[code]=Keys[code];
+    accept=(Keys[code]==state) && (previous[code]!=state);
+    previous[code]=Keys[code];
    }
    return accept;
   }
 
   void Keyboard::initialize()
   {
-   if (preversion==NULL)
+   if (previous==NULL)
    {
-    Resource::create(&preversion,KEYBOARD);
+    Resource::create(&previous,KEYBOARD);
     this->prepare();
    }
 
@@ -1547,9 +1547,9 @@ namespace SWGF
 
   bool Keyboard::check_hold(const unsigned char code)
   {
-   if (preversion!=NULL)
+   if (previous!=NULL)
    {
-    preversion[code]=Keys[code];
+    previous[code]=Keys[code];
    }
    return Keys[code]==KEY_PRESS;
   }
@@ -1566,14 +1566,14 @@ namespace SWGF
 
   bool Keyboard::is_ready() const
   {
-   return preversion!=NULL;
+   return previous!=NULL;
   }
 
   Mouse::Mouse()
   {
-   preversion[SWGF::MOUSE_LEFT]=KEY_RELEASE;
-   preversion[SWGF::MOUSE_RIGHT]=KEY_RELEASE;
-   preversion[SWGF::MOUSE_MIDDLE]=KEY_RELEASE;
+   previous[SWGF::MOUSE_LEFT]=KEY_RELEASE;
+   previous[SWGF::MOUSE_RIGHT]=KEY_RELEASE;
+   previous[SWGF::MOUSE_MIDDLE]=KEY_RELEASE;
    position.x=0;
    position.y=0;
   }
@@ -1596,8 +1596,8 @@ namespace SWGF
   bool Mouse::check_state(const SWGF::MOUSE_BUTTON button,const unsigned char state)
   {
    bool accept=false;
-   accept=(Buttons[button]==state) && (preversion[button]!=state);
-   preversion[button]=Buttons[button];
+   accept=(Buttons[button]==state) && (previous[button]!=state);
+   previous[button]=Buttons[button];
    return accept;
   }
 
@@ -1643,7 +1643,7 @@ namespace SWGF
 
   bool Mouse::check_hold(const SWGF::MOUSE_BUTTON button)
   {
-   preversion[button]=Buttons[button];
+   previous[button]=Buttons[button];
    return Buttons[button]==KEY_PRESS;
   }
 
@@ -1669,7 +1669,7 @@ namespace SWGF
    current.Gamepad.wButtons=0;
    vibration.wLeftMotorSpeed=0;
    vibration.wRightMotorSpeed=0;
-   preversion=current;
+   previous=current;
    active=0;
   }
 
@@ -1688,7 +1688,7 @@ namespace SWGF
    current.Gamepad.sThumbRX=0;
    current.Gamepad.sThumbRY=0;
    current.Gamepad.wButtons=0;
-   preversion=current;
+   previous=current;
   }
 
   bool Gamepad::read_state()
@@ -1701,9 +1701,9 @@ namespace SWGF
    return (current.Gamepad.wButtons&button)!=0;
   }
 
-  bool Gamepad::check_preversion_button(const SWGF::GAMEPAD_BUTTONS button) const
+  bool Gamepad::check_previous_button(const SWGF::GAMEPAD_BUTTONS button) const
   {
-   return (preversion.Gamepad.wButtons&button)!=0;
+   return (previous.Gamepad.wButtons&button)!=0;
   }
 
   bool Gamepad::check_current_trigger(const SWGF::GAMEPAD_TRIGGERS trigger) const
@@ -1720,16 +1720,16 @@ namespace SWGF
    return check;
   }
 
-  bool Gamepad::check_preversion_trigger(const SWGF::GAMEPAD_TRIGGERS trigger) const
+  bool Gamepad::check_previous_trigger(const SWGF::GAMEPAD_TRIGGERS trigger) const
   {
    bool check=false;
    if (trigger==SWGF::GAMEPAD_RIGHT_TRIGGER)
    {
-    check=preversion.Gamepad.bRightTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+    check=previous.Gamepad.bRightTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
    }
    else
    {
-    check=preversion.Gamepad.bLeftTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
+    check=previous.Gamepad.bLeftTrigger>=XINPUT_GAMEPAD_TRIGGER_THRESHOLD;
    }
    return check;
   }
@@ -1774,7 +1774,7 @@ namespace SWGF
 
   void Gamepad::update()
   {
-   preversion=current;
+   previous=current;
    if (this->read_state()==false)
    {
     this->clear_state();
@@ -1789,12 +1789,12 @@ namespace SWGF
 
   bool Gamepad::check_button_press(const SWGF::GAMEPAD_BUTTONS button) const
   {
-   return (this->check_current_button(button)==true) && (this->check_preversion_button(button)==false);
+   return (this->check_current_button(button)==true) && (this->check_previous_button(button)==false);
   }
 
   bool Gamepad::check_button_release(const SWGF::GAMEPAD_BUTTONS button) const
   {
-   return (this->check_current_button(button)==false) && (this->check_preversion_button(button)==true);
+   return (this->check_current_button(button)==false) && (this->check_previous_button(button)==true);
   }
 
   bool Gamepad::check_trigger_hold(const SWGF::GAMEPAD_TRIGGERS trigger) const
@@ -1804,12 +1804,12 @@ namespace SWGF
 
   bool Gamepad::check_trigger_press(const SWGF::GAMEPAD_TRIGGERS trigger) const
   {
-   return (this->check_current_trigger(trigger)==true) && (this->check_preversion_trigger(trigger)==false);
+   return (this->check_current_trigger(trigger)==true) && (this->check_previous_trigger(trigger)==false);
   }
 
   bool Gamepad::check_trigger_release(const SWGF::GAMEPAD_TRIGGERS trigger) const
   {
-   return (this->check_current_trigger(trigger)==false) && (this->check_preversion_trigger(trigger)==true);
+   return (this->check_current_trigger(trigger)==false) && (this->check_previous_trigger(trigger)==true);
   }
 
   unsigned char Gamepad::get_left_trigger() const
@@ -2287,7 +2287,7 @@ namespace SWGF
 
   }
 
-  void Camera::set_viewport_heigth(const unsigned int height)
+  void Camera::set_viewport_height(const unsigned int height)
   {
    if ((height>0) && (height<=screen_height))
    {
@@ -2415,7 +2415,7 @@ namespace SWGF
   void Camera::set_viewport(const unsigned int width,const unsigned int height)
   {
    this->set_viewport_width(width);
-   this->set_viewport_heigth(height);
+   this->set_viewport_height(height);
    this->calculate_limits();
   }
 
