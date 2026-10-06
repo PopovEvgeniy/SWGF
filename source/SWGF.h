@@ -237,7 +237,9 @@ typedef enum
    }
    catch (...)
    {
-    puts("Can't allocate memory");
+    fputc('\n',stderr);
+    fputs("Can't allocate memory",stderr);
+    fputc('\n',stderr);
     exit(EXIT_FAILURE);
    }
 
@@ -252,7 +254,9 @@ typedef enum
    }
    catch (...)
    {
-    puts("Can't allocate memory");
+    fputc('\n',stderr);
+    fputs("Can't allocate memory",stderr);
+    fputc('\n',stderr);
     exit(EXIT_FAILURE);
    }
 
