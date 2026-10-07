@@ -949,19 +949,6 @@ namespace SWGF
    glDrawArrays(GL_TRIANGLE_FAN,0,4);
   }
 
-  void Rectangle::set_face(const Core::MIRROR_KIND kind)
-  {
-   if ((kind==Core::MIRROR_BOTH)||(kind==Core::MIRROR_NONE))
-   {
-    glFrontFace(GL_CCW);
-   }
-   else
-   {
-    glFrontFace(GL_CW);
-   }
-
-  }
-
   void Rectangle::enable_transparent()
   {
    if (glIsEnabled(GL_ALPHA_TEST)==GL_FALSE)
@@ -1006,7 +993,6 @@ namespace SWGF
    if (texture!=0)
    {
     this->set_data(kind);
-    this->set_face(kind);
     this->draw_rectangle();
    }
 
@@ -1118,7 +1104,7 @@ namespace SWGF
   {
    glDrawBuffer(GL_BACK);
    glFrontFace(GL_CCW);
-   glPolygonMode(GL_FRONT,GL_FILL);
+   glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
    glShadeModel(GL_FLAT);
    glAlphaFunc(GL_GREATER,0.6f);
    glClearColor(0.0,0.0,0.0,0.0);

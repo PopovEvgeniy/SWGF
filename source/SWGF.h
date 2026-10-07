@@ -406,7 +406,6 @@ typedef enum
    void create_texture(const unsigned int *buffer);
    void check_texture();
    void draw_rectangle();
-   void set_face(const Core::MIRROR_KIND kind);
    public:
    Rectangle();
    ~Rectangle();
