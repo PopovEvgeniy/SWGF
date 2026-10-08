@@ -411,7 +411,7 @@ namespace SWGF
    settings.dwDamageMask=0;
    settings.dwLayerMask=0;
    settings.dwVisibleMask=0;
-   settings.cColorBits=0;
+   settings.cColorBits=24;
    settings.cDepthBits=16;
    settings.nSize=sizeof(PIXELFORMATDESCRIPTOR);
    settings.nVersion=1;
@@ -436,18 +436,13 @@ namespace SWGF
    int format=0;
    if (device!=NULL)
    {
-    settings.cColorBits=GetDeviceCaps(device,BITSPIXEL);
-    if (settings.cColorBits>24)
-    {
-     settings.cColorBits=24;
-    }
     format=ChoosePixelFormat(device,&settings);
    }
    if (format==0)
    {
     SWGF::Halt("Invalid pixel format");
    }
-   DescribePixelFormat(device,format,settings.nSize,&settings);
+   DescribePixelFormat(device,format,sizeof(PIXELFORMATDESCRIPTOR),&settings);
    if (SetPixelFormat(device,format,&settings)==FALSE)
    {
     SWGF::Halt("Can't set the pixel format");
@@ -628,28 +623,28 @@ namespace SWGF
   unsigned int alpha=0;
   unsigned int x_difference=0;
   unsigned int y_difference=0;
-  unsigned int x_weigh=0;
-  unsigned int y_weigh=0;
+  unsigned int x_weight=0;
+  unsigned int y_weight=0;
   for (y=0;y<target_height;++y)
   {
    source_y=this->get_source_y(y);
    next_y=this->get_next_y(source_y);
    y_difference=this->get_y_difference(y);
-   y_weigh=UCHAR_MAX-y_difference;
+   y_weight=UCHAR_MAX-y_difference;
    for (x=0;x<target_width;++x)
    {
     source_x=this->get_source_x(x);
     next_x=this->get_next_x(source_x);
     x_difference=this->get_x_difference(x);
-    x_weigh=UCHAR_MAX-x_difference;
+    x_weight=UCHAR_MAX-x_difference;
     first=target[Core::get_offset(source_x,source_y,source_width)];
     second=target[Core::get_offset(next_x,source_y,source_width)];
     third=target[Core::get_offset(source_x,next_y,source_width)];
     last=target[Core::get_offset(next_x,next_y,source_width)];
-    red=(get_pixel_component(first,Core::RED_COMPONENT)*x_weigh*y_weigh+get_pixel_component(second,Core::RED_COMPONENT)*x_difference*y_weigh+get_pixel_component(third,Core::RED_COMPONENT)*y_difference*x_weigh+get_pixel_component(last,Core::RED_COMPONENT)*x_difference*y_difference)/normalization;
-    green=(get_pixel_component(first,Core::GREEN_COMPONENT)*x_weigh*y_weigh+get_pixel_component(second,Core::GREEN_COMPONENT)*x_difference*y_weigh+get_pixel_component(third,Core::GREEN_COMPONENT)*y_difference*x_weigh+get_pixel_component(last,Core::GREEN_COMPONENT)*x_difference*y_difference)/normalization;
-    blue=(get_pixel_component(first,Core::BLUE_COMPONENT)*x_weigh*y_weigh+get_pixel_component(second,Core::BLUE_COMPONENT)*x_difference*y_weigh+get_pixel_component(third,Core::BLUE_COMPONENT)*y_difference*x_weigh+get_pixel_component(last,Core::BLUE_COMPONENT)*x_difference*y_difference)/normalization;
-    alpha=(get_pixel_component(first,Core::ALPHA_COMPONENT)*x_weigh*y_weigh+get_pixel_component(second,Core::ALPHA_COMPONENT)*x_difference*y_weigh+get_pixel_component(third,Core::ALPHA_COMPONENT)*y_difference*x_weigh+get_pixel_component(last,Core::ALPHA_COMPONENT)*x_difference*y_difference)/normalization;
+    red=(get_pixel_component(first,Core::RED_COMPONENT)*x_weight*y_weight+get_pixel_component(second,Core::RED_COMPONENT)*x_difference*y_weight+get_pixel_component(third,Core::RED_COMPONENT)*y_difference*x_weight+get_pixel_component(last,Core::RED_COMPONENT)*x_difference*y_difference)/normalization;
+    green=(get_pixel_component(first,Core::GREEN_COMPONENT)*x_weight*y_weight+get_pixel_component(second,Core::GREEN_COMPONENT)*x_difference*y_weight+get_pixel_component(third,Core::GREEN_COMPONENT)*y_difference*x_weight+get_pixel_component(last,Core::GREEN_COMPONENT)*x_difference*y_difference)/normalization;
+    blue=(get_pixel_component(first,Core::BLUE_COMPONENT)*x_weight*y_weight+get_pixel_component(second,Core::BLUE_COMPONENT)*x_difference*y_weight+get_pixel_component(third,Core::BLUE_COMPONENT)*y_difference*x_weight+get_pixel_component(last,Core::BLUE_COMPONENT)*x_difference*y_difference)/normalization;
+    alpha=(get_pixel_component(first,Core::ALPHA_COMPONENT)*x_weight*y_weight+get_pixel_component(second,Core::ALPHA_COMPONENT)*x_difference*y_weight+get_pixel_component(third,Core::ALPHA_COMPONENT)*y_difference*x_weight+get_pixel_component(last,Core::ALPHA_COMPONENT)*x_difference*y_difference)/normalization;
     image[index]=Core::make_pixel(red,green,blue,alpha);
     ++index;
    }
