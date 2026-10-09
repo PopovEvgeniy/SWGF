@@ -4234,8 +4234,12 @@ namespace SWGF
 
   size_t Text::print(const char *target)
   {
-   size_t index,length;
-   length=strlen(target);
+   size_t index=0;
+   size_t length=0;
+   if (target!=NULL)
+   {
+    length=strlen(target);
+   }
    this->restore_position();
    for (index=0;index<length;++index)
    {
@@ -4643,20 +4647,20 @@ namespace SWGF
    return remove(name)==0;
   }
 
-  bool file_exist(const char *name)
+  bool file_exists(const char *name)
   {
    FILE *target=NULL;
-   bool exist=false;
+   bool exists=false;
    if (name!=NULL)
    {
     target=fopen(name,"rb");
    }
    if (target!=NULL)
    {
-    exist=true;
+    exists=true;
     fclose(target);
    }
-   return exist;
+   return exists;
   }
 
  }

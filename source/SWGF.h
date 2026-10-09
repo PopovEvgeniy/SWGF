@@ -1215,7 +1215,7 @@ typedef enum
  namespace Filesystem
  {
   bool delete_file(const char *name);
-  bool file_exist(const char *name);
+  bool file_exists(const char *name);
  }
 
  namespace Tools
