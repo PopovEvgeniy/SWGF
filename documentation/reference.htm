@@ -11,10 +11,10 @@
 <li><a href="#mozTocId780645">Part 1. Welcome</a>
 <ol>
 <li><a href="#mozTocId197135">Chapter 1. The introduction</a></li>
-<li><a href="#mozTocId372945">Chapter 2. A special thanks</a></li>
+<li><a href="#mozTocId372945">Chapter 2. Special thanks</a></li>
 <li><a href="#mozTocId70667">Chapter 3. The license</a></li>
 <li><a href="#mozTocId335235">Chapter 4. The system requirements</a></li>
-<li><a href="#mozTocId584722">Chapter 5. The troubleshooting guide</a></li>
+<li><a href="#mozTocId584722">Chapter 5. Troubleshooting.</a></li>
 <li><a href="#mozTocId410576">Chapter 6. The user compilers</a></li>
 <li><a href="#mozTocId819581">Chapter 7. The platform-specific notes</a></li>
 <li><a href="#mozTocId744597">Chapter 8. The engine namespace</a></li>
@@ -53,7 +53,7 @@
 <li><a href="#mozTocId814741">Part 5. The common things</a>
 <ol>
 <li><a href="#mozTocId390471">Chapter 1. The sub-namespace</a></li>
-<li><a href="#mozTocId207557">Chapter 2. The abnormal program termination</a></li>
+<li><a href="#mozTocId207557">Chapter 2. Terminating the application</a></li>
 <li><a href="#mozTocId265533">Chapter 3. The timers</a></li>
 <li><a href="#mozTocId738453">Chapter 4. The collision detector</a></li>
 <li><a href="#mozTocId762349">Chapter 5. Tilemaps</a></li></ol></li>
@@ -73,7 +73,7 @@
 <li><a href="#mozTocId852057">Chapter 2. The base binary file subsystem</a></li>
 <li><a href="#mozTocId651177">Chapter 3. The file reader</a></li>
 <li><a href="#mozTocId842586">Chapter 4. The file writer</a></li>
-<li><a href="#mozTocId966389">Part 9. The user input</a></li>
+<li><a href="#mozTocId966389">Part 9. User input.</a></li>
 <li><a href="#mozTocId742013">Chapter 1. The sub-namespace</a></li>
 <li><a href="#mozTocId896873">Chapter 2. Keyboard</a></li>
 <li><a href="#mozTocId899047">Chapter 3. Mouse</a></li>
@@ -84,15 +84,15 @@
 <li><a href="#mozTocId873220">Chapter 2. The internal classes</a></li>
 <li><a href="#mozTocId292100">Chapter 3. The base graphics subsystem</a></li>
 <li><a href="#mozTocId81767">Chapter 4. Gamepad</a></li>
-<li><a href="#mozTocId204021">Chapter 5. The user input</a></li>
+<li><a href="#mozTocId204021">Chapter 5. User input.</a></li>
 <li><a href="#mozTocId586939">Chapter 6. The audio</a></li>
 <li><a href="#mozTocId297282">Version history</a></li></ol></li></ol>
  <h1><a id="mozTocId780645" class="mozTocH1"></a><big>Part 1. Welcome</big></h1>
  <h2><a id="mozTocId197135" class="mozTocH2"></a><big>Chapter 1. The introduction</big></h2>
  <big>
-  <u>The introduction.</u><br>
+  <u>About the engine.</u><br>
   <br>
-  Hello! My name is Popov Evgeniy Alekseyevich. I am an individual programmer. I enjoy creating software. I also like old-school video games. Do you want to develop video games for Microsoft Windows? You need a good game engine to do it. I made my own engine. I hope that my C++ game engine will be useful for many programmers.
+  Hello! My name is Popov Evgeniy Alekseyevich. I am an individual programmer. I enjoy creating software. I also like old-school video games. Do you want to develop video games for Microsoft Windows? You need a good game engine to do so. I made my own engine. I hope that my C++ game engine will be useful for many programmers.
   <br>
   <u><br>Features.</u><br>
   <br>
@@ -101,7 +101,7 @@
  <ul>
   <li><big>Open-source code.</big></li>
   <li><big>Very fast.</big></li>
-  <li><big>The easy-to-use object-oriented design.</big></li>
+  <li><big>An easy-to-use object-oriented design.</big></li>
   <li><big>The minimum number of external dependencies: <a href="https://learn.microsoft.com/en-us/windows/win32/directx">DirectX</a>, <a href="https://OpenGL.org">OpenGL</a>, and the standard <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">Windows API</a> libraries.</big></li>
   <li><big>You don't need to link a main program with the engine binary file. The engine is just the source code files.</big></li>
  </ul>
@@ -120,7 +120,7 @@
   Add this directive to your code: <i>#include "SWGF.h"</i><br>
   Yes. This is really all you need to do.<br>
  </big>
- <h2><a id="mozTocId372945" class="mozTocH2"></a><big>Chapter 2. A special thanks</big></h2>
+ <h2><a id="mozTocId372945" class="mozTocH2"></a><big>Chapter 2. Special thanks</big></h2>
  <big>
   I want to say «Big thanks for the technical consultation» to these people:<br>
  </big>
@@ -202,7 +202,7 @@
  </table>
  <big><br>
  </big>
- <h2><a id="mozTocId584722" class="mozTocH2"></a><big>Chapter 5. The troubleshooting guide</big></h2>
+ <h2><a id="mozTocId584722" class="mozTocH2"></a><big>Chapter 5. Troubleshooting.</big></h2>
  <big>
   You need <a href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170">Visual C++ Redistributable</a> packages if your game code is compiled under Visual C++.<br>
  </big>
@@ -308,9 +308,9 @@
   All classes in this section are declared in the <i>Graphics</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId519243" class="mozTocH2"></a><big> Chapter 2. The base graphics subsystem</big></h2>
- <big><u>The introduction.</u><br>
+ <big><u>About the engine.</u><br>
   <br>
-  The base graphics subsystem does render a game scene. This subsystem uses <a href="http://OpenGL.org">OpenGL</a> for rendering. All modern video cards support hardware acceleration. The software implementation will be activated if the acceleration is not available.
+  The base graphics subsystem renders a game scene. This subsystem uses <a href="http://OpenGL.org">OpenGL</a> for rendering. All modern video cards support hardware acceleration. The software implementation will be activated if the acceleration is not available.
   <br>
   <br><u>The rendering performance.</u><br>
   <br>
@@ -330,13 +330,13 @@
   <br>
   <i>void Screen::initialize(const unsigned int width, const unsigned int height); -</i> Initialize the base graphic subsystem with the custom screen resolution.<br>
   <br>
-  <i>bool Screen::sync(); -</i> Show the current content of the back buffer on the screen. Return false if a game is terminated. This method uses the FPS limits and waits between frames.<br>
+  <i>bool Screen::sync(); -</i> Show the current content of the back buffer on the screen. Return false if the game is terminated. This method uses the FPS limits and waits between frames.<br>
   <br>
-  <i>bool Screen::update(); -</i> Show the current content of the back buffer on the screen. Return false if a game is terminated. This method ignores the FPS limit and needs high processor usage.<br>
+  <i>bool Screen::update(); -</i> Show the current content of the back buffer on the screen. Return false if the game is terminated. This method ignores the FPS limit and needs high processor usage.<br>
   <br>
-  <i>bool Screen::sync(const bool limit); -</i> Show the current content of the back buffer on the screen. Return false if a game is terminated.<br>
+  <i>bool Screen::sync(const bool limit); -</i> Show the current content of the back buffer on the screen. Return false if the game is terminated.<br>
   <br>
-  <i>bool Screen::is_ready(); -</i> Return true if the subsystem has already been initialized.<br>
+  <i>bool Screen::is_ready(); -</i> Return true if the subsystem is already initialized.<br>
   <br>
   <i>bool Screen::is_accelerated() const; -</i> Return true if the render is hardware-accelerated.<br>
   <br>
@@ -952,11 +952,11 @@
   A sprite sheet doesn't draw if the sprite sheet texture doesn't exist. It will be automatically created when you load a sheet.<br>
  </big>
  <h2><a id="mozTocId688108" class="mozTocH2"></a><big> Chapter 17. The text</big></h2>
- <big><u>How to print a text?</u><br>
+ <big><u>How to print text?</u><br>
   <br>
   Just use the text subsystem to print the text. This subsystem needs a font for text printing. You must load a font before starting to print the text. The font is just a sprite sheet with 16 rows and 16 columns.
   <br>
-  <u><br>The valid characters.</u><br>
+  <u><br>The supported characters.</u><br>
   <br>
   Only 8-bit characters are supported.
   <br>
@@ -1052,7 +1052,7 @@
   <br>
   <i>void Image::destroy_image(); -</i> Destroy the current image and free the image buffer.
   <br>
-  <u><br>An important remark.</u><br>
+  <u><br>An important note.</u><br>
   <br>
   A new image will replace the current image if the current image already exists. An incorrect image will be ignored and won't load.<br>
   The source image will be converted to <a href="https://en.wikipedia.org/wiki/RGBA">RGBA</a> format. The pixels equal to the top-left pixel will be marked as transparent.
@@ -1144,7 +1144,7 @@
   <br>
   <i>void Camera::reset(); -</i> Reset the camera settings.
   <br>
-  <br><u>An important remark.</u><br>
+  <br><u>An important note.</u><br>
   <br>
   Always set the viewport size after initializing the camera. Always update the camera before drawing.<br>
  </big>
@@ -1159,7 +1159,7 @@
   The Cartesian coordinates start at the center of the screen. Look at this picture to understand it.<br>
   <br>
   <img alt="" src="cartesian_system.png" height="111" width="107"><br>
-  <br><u>The coordinates conversion.</u><br>
+  <br><u>Coordinate conversion.</u><br>
   <br>
   You can convert the Cartesian coordinates to the screen coordinates. You can also convert the screen coordinates to the Cartesian coordinates.<br>
   <br>
@@ -1198,7 +1198,7 @@
   <br>
   <a href="https://en.wikipedia.org/wiki/Isometric_projection"> Isometric projection</a> is a very popular way for pseudo-3D games. Many old-school games are isometric games.
   <br>
-  <u><br>The coordinates conversion.</u><br>
+  <u><br>Coordinate conversion.</u><br>
   <br>
   You can convert the Cartesian coordinates to the isometric coordinates. You can also convert the isometric coordinates to the Cartesian coordinates. Just use the <i>Isometric</i> class to do it. Let's look at the publicly available methods.<br>
   <br>
@@ -1233,7 +1233,7 @@
  <big>
   All classes in this section are declared in the <i>Common</i> sub-namespace.<br>
  </big>
- <h2><a id="mozTocId207557" class="mozTocH2"></a><big> Chapter 2. The abnormal program termination</big></h2>
+ <h2><a id="mozTocId207557" class="mozTocH2"></a><big> Chapter 2. Terminating the application</big></h2>
  <big>
   You can use the <i>Halt</i> function to terminate a program. This function is declared in the <i>SWGF</i> namespace.<br>
   <br>
@@ -1351,7 +1351,7 @@
   <br>
   This subsystem is intended for playing music and sounds. <a href="https://en.wikipedia.org/wiki/WAV">Waveform Audio File Format</a>, <a href="https://en.wikipedia.org/wiki/MP3">MPEG Audio Layer 3</a>, and <a href="https://en.wikipedia.org/wiki/Windows_Media_Audio">Windows Media Audio</a> are supported.
   <br>
-  <br><u>The additional formats.</u><br>
+  <br><u>Additional formats.</u><br>
   <br>
   You can use an additional format if you install third-party codecs.
   <br>
@@ -1462,15 +1462,15 @@
   <br>
   <i>void Output_File::flush(); -</i> Force writing the internal buffer data to the file.<br>
  </big>
- <h2><a id="mozTocId966389" class="mozTocH2"></a><big> Part 9. The user input</big></h2>
+ <h2><a id="mozTocId966389" class="mozTocH2"></a><big> Part 9. User input.</big></h2>
  <h2><a id="mozTocId742013" class="mozTocH2"></a><big> Chapter 1. The sub-namespace</big></h2>
  <big>
   All classes in this section are declared in the <i>Input</i> sub-namespace.<br>
  </big>
  <h2><a id="mozTocId896873" class="mozTocH2"></a><big> Chapter 2. Keyboard</big></h2>
- <big><u>The low-level input.</u><br>
+ <big><u>Low-level input.</u><br>
   <br>
-  Any keyboard has a built-in chip. It generates a special code when the user presses or releases the key. This code is called a «scan code».
+  Any keyboard contains a built-in controller. It generates a special code when the user presses or releases the key. This code is called a «scan code».
   <br>
   <br><u>Working with the keyboard.</u><br>
   <br>
@@ -1484,7 +1484,7 @@
   <br>
   <i>bool Keyboard::check_release(const unsigned char code); -</i> Return true if a key with a specific scan code was released.<br>
   <br>
-  <i>bool Keyboard::is_ready() const; -</i> Return true if the subsystem has already been initialized.<br>
+  <i>bool Keyboard::is_ready() const; -</i> Return true if the subsystem is already initialized.<br>
   <br>
   <u>The list of the supported scan codes.</u><br>
   <br>
@@ -2012,7 +2012,7 @@
  <h2><a id="mozTocId873220" class="mozTocH2"></a><big> Chapter 2. The internal classes</big></h2>
  <big><u>The internal classes.</u><br>
   <br>
-  Some classes are designed for internal use only. Don't touch them. What are these strange classes doing?
+  Some classes are designed for internal use only. Don't touch them. What do these strange classes do?
   <br>
   <br><u>Microsoft Windows-specific classes.</u><br>
   <br>
@@ -2039,7 +2039,7 @@
   <br>
   Any visible object is a textured rectangle.
   <br>
-  <u><br>The textures.</u><br>
+  <u><br>Textures.</u><br>
   <br>
   A texture width must be a power of two. A texture height also must be a power of two. Any image will be automatically resized before uploading.<br>
   <br>
@@ -2069,7 +2069,7 @@
  <big>
   The gamepad subsystem is working over <a href="https://docs.microsoft.com/en-us/windows/desktop/xinput/xinput-game-controller-apis-portal">XINPUT</a>.<br>
  </big>
- <h2><a id="mozTocId204021" class="mozTocH2"></a><big> Chapter 5. The user input</big></h2>
+ <h2><a id="mozTocId204021" class="mozTocH2"></a><big> Chapter 5. User input.</big></h2>
  <big><u>The input backend.</u><br>
   <br>
   The input subsystem is the simple thing. It works over the standard Microsoft Windows API.
@@ -2409,6 +2409,7 @@
   9.6.6: The source code synced with the Neon Game Development Kit 9.1.9.<br>
   9.6.7: The source code synced with the Neon Game Development Kit 9.2.<br>
   9.6.8: The source code synced with the Eugene Game Development Kit 10.6.<br>
+  9.6.9: The source code synced with the Eugene Game Development Kit 10.6.1.<br>
  </big>
 </body>
 </html>
