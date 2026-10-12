@@ -16,7 +16,7 @@
 <li><a href="#mozTocId335235">Chapter 4. The system requirements</a></li>
 <li><a href="#mozTocId584722">Chapter 5. Troubleshooting.</a></li>
 <li><a href="#mozTocId410576">Chapter 6. The user compilers</a></li>
-<li><a href="#mozTocId819581">Chapter 7. The platform-specific notes</a></li>
+<li><a href="#mozTocId819581">Chapter 7. The platform-specific note</a></li>
 <li><a href="#mozTocId744597">Chapter 8. The engine namespace</a></li>
 <li><a href="#mozTocId520293">Chapter 9. The custom data types</a></li></ol></li>
 <li><a href="#mozTocId88198">Part 2. Basic things</a>
@@ -87,7 +87,7 @@
 <li><a href="#mozTocId204021">Chapter 5. User input.</a></li>
 <li><a href="#mozTocId586939">Chapter 6. The audio</a></li>
 <li><a href="#mozTocId297282">Version history</a></li></ol></li></ol>
- <h1><a id="mozTocId780645" class="mozTocH1"></a><big>Part 1. Welcome</big></h1>
+ <h1><a id="mozTocId780645" class="mozTocH1"></a><big>Part 1. Welcome.</big></h1>
  <h2><a id="mozTocId197135" class="mozTocH2"></a><big>Chapter 1. About the engine</big></h2>
  <big>
   <u>About the engine.</u><br>
@@ -120,7 +120,7 @@
   Add this directive to your code: <i>#include "SWGF.h"</i><br>
   Yes. This is really all you need to do.<br>
  </big>
- <h2><a id="mozTocId372945" class="mozTocH2"></a><big>Chapter 2. Special thanks</big></h2>
+ <h2><a id="mozTocId372945" class="mozTocH2"></a><big>Chapter 2. Special thanks.</big></h2>
  <big>
   I want to say «Big thanks for the technical consultation» to these people:<br>
  </big>
@@ -145,7 +145,7 @@
   This software is provided 'as-is', without any express or implied<br>
   warranty. In no event will the authors be held liable for any damages<br>
   arising from the use of this software.<br>
-  Permission is granted to anyone to use this software for any purpose,<br>
+  Permission is granted to anyone to use this software for any purpose, <br>
   including commercial applications, and to alter it and redistribute it<br>
   freely, subject to the following restrictions:<br>
   1. The origin of this software must not be misrepresented; you must not<br>
@@ -163,7 +163,7 @@
   Permission is hereby granted, free of charge, to any person obtaining a<br>
   copy of this software and/or associated documentation files (the<br>
   "Materials"), to deal in the Materials without restriction, including<br>
-  without limitation the rights to use, copy, modify, merge, publish,<br>
+  without limitation the rights to use, copy, modify, merge, publish, <br>
   distribute, sublicense, and/or sell copies of the Materials, and to<br>
   permit persons to whom the Materials are furnished to do so, subject to<br>
   the following conditions:<br>
@@ -240,7 +240,7 @@
   <li><big>C++ Builder 12 Athens</big></li>
   <li><big>C++ Builder 13 Florence</big></li>
  </ul>
- <h2><a id="mozTocId819581" class="mozTocH2"></a><big>Chapter 7. The platform-specific notes</big></h2>
+ <h2><a id="mozTocId819581" class="mozTocH2"></a><big>Chapter 7. The platform-specific note</big></h2>
  <big><u>DirectX.</u><br>
   <br>
   You need to update the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=8109">DirectX End-User Runtime</a> before running your game.
@@ -297,7 +297,7 @@
  </big>
  <h2><a id="mozTocId30775" class="mozTocH2"></a><big> Chapter 2. A game loop</big></h2>
  <big>
-  What is the main point in your game? A game loop. You can see the structure of a typical game loop below.<br>
+  What is the main point of your game? A game loop. You can see the structure of a typical game loop below.<br>
   <br>
   <img alt="" src="game_loop.png" height="354" width="379"><br>
   <br>
@@ -322,11 +322,11 @@
   <br>
   <br><u>Work with the base graphics subsystem.</u><br>
   <br>
-  The <i>Screen</i> class provides access to the base graphic subsystem. Let's look at the publicly available methods.<br>
+  The <i>Screen</i> class provides access to the base graphics subsystem. Let's look at the publicly available methods.<br>
   <br>
   <i>void Screen::clear_screen(); -</i> Clear the screen. Fill it with black color.<br>
   <br>
-  <i>void Screen::initialize(); -</i> Initialize the base graphic subsystem with the default screen resolution.<br>
+  <i>void Screen::initialize(); -</i> Initialize the base graphics subsystem with the default screen resolution.<br>
   <br>
   <i>void Screen::initialize(const unsigned int width, const unsigned int height); -</i> Initialize the base graphic subsystem with the custom screen resolution.<br>
   <br>
@@ -448,7 +448,7 @@
  </big>
  <h2><a id="mozTocId157804" class="mozTocH2"></a><big> Chapter 6. The background</big></h2>
  <big>
-  A background is a big image with a few frames. Any game has a background. The background will be stretched to the screen resolution before rendering the game scene. The background transparency is always disabled.<br>
+  A background is a big image with a few frames. Any game has a background. The background will be scaled to fit the screen resolution. The background transparency is always disabled.<br>
   <br>
   The horizontal animated backgrounds look like the horizontal photo ribbons. The vertical animated backgrounds look like the vertical photo ribbons.</big><br>
  <h2><a id="mozTocId765577" class="mozTocH2"></a><big>Chapter 7. The segment</big></h2>
@@ -658,7 +658,7 @@
  <h2><a id="mozTocId175778" class="mozTocH2"></a><big> Chapter 10. The parallax background<br></big></h2>
  <big><u>A few words about the parallax background.</u><br>
   <br>
-  The parallax background is a background with scrolling support.
+  A parallax background is a background that supports offset scrolling.
   <br>
   <br><u>The speed.</u><br>
   <br>
@@ -826,7 +826,7 @@
  <h2><a id="mozTocId806042" class="mozTocH2"></a><big>Chapter 13. The ribbons<br></big></h2>
  <big><u>A few words about the ribbons.</u><br>
   <br>
-  The ribbons are horizontal strips.
+  The ribbons are horizontal sprite strips.
   <br>
   <br><u>Work with the ribbons.</u><br>
   <br>
@@ -853,7 +853,7 @@
  <h2><a id="mozTocId931590" class="mozTocH2"></a><big>Chapter 14. The tier</big></h2>
  <big><u>A few words about the tier.</u><br>
   <br>
-  The tier is a vertical strip.
+  The tier is a vertical sprite strip.
   <br>
   <u><br>Work with the tier.</u><br>
   <br>
@@ -1672,7 +1672,7 @@
   <tr>
    <td><big>U</big></td>
    <td><big>22</big></td>
-   <td><big>&lt; or ,</big></td>
+   <td><big>&lt; or , </big></td>
    <td><big>51</big></td>
    <td><big>Gray +</big></td>
    <td><big>78</big></td>
@@ -2072,7 +2072,7 @@
  <h2><a id="mozTocId204021" class="mozTocH2"></a><big> Chapter 5. User input.</big></h2>
  <big><u>The input backend.</u><br>
   <br>
-  The input subsystem is the simple thing. It works over the standard Microsoft Windows API.
+  The input subsystem is a simple thing. It works over the standard Microsoft Windows API.
   <br>
   <br><u>The internal key state.</u><br>
   <br>
@@ -2411,6 +2411,7 @@
   9.6.8: The source code synced with the Eugene Game Development Kit 10.6.<br>
   9.6.9: The source code synced with the Eugene Game Development Kit 10.6.1.<br>
   9.7: The source code synced with the Eugene Game Development Kit 10.6.2.<br>
+  9.7.1: The source code synced with the Eugene Game Development Kit 10.6.3.<br>
  </big>
 </body>
 </html>
