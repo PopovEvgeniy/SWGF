@@ -415,7 +415,7 @@ namespace SWGF
    settings.cDepthBits=16;
    settings.nSize=sizeof(PIXELFORMATDESCRIPTOR);
    settings.nVersion=1;
-   settings.dwFlags=PFD_DRAW_TO_WINDOW|PFD_SUPPORT_OPENGL|PFD_DOUBLEBUFFER|PFD_STEREO_DONTCARE;
+   settings.dwFlags=PFD_DRAW_TO_WINDOW|PFD_SUPPORT_OPENGL|PFD_DOUBLEBUFFER;
    settings.iPixelType=PFD_TYPE_RGBA;
    settings.iLayerType=PFD_MAIN_PLANE;
   }
