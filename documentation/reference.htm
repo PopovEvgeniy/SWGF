@@ -330,11 +330,11 @@
   <br>
   <i>void Screen::initialize(const unsigned int width, const unsigned int height); -</i> Initialize the base graphic subsystem with the custom screen resolution.<br>
   <br>
-  <i>bool Screen::sync(); -</i> Show the current content of the back buffer on the screen. Return false if the game is terminated. This method uses the FPS limits and waits between frames.<br>
+  <i>bool Screen::sync(); -</i> Show the game scene. Return false if the game is terminated. This method uses the FPS limits and waits between frames.<br>
   <br>
-  <i>bool Screen::update(); -</i> Show the current content of the back buffer on the screen. Return false if the game is terminated. This method ignores the FPS limit and needs high processor usage.<br>
+  <i>bool Screen::update(); -</i> Show the game scene. Return false if the game is terminated. This method ignores the FPS limit and needs high processor usage.<br>
   <br>
-  <i>bool Screen::sync(const bool limit); -</i> Show the current content of the back buffer on the screen. Return false if the game is terminated.<br>
+  <i>bool Screen::sync(const bool limit); -</i> Show the game scene. Return false if the game is terminated.<br>
   <br>
   <i>bool Screen::is_ready(); -</i> Return true if the subsystem is already initialized.<br>
   <br>
@@ -1019,9 +1019,9 @@
   <br>
   <i>bool Text::load_font(const char *name); -</i> Load a font from the target file and return true if it is loaded.<br>
   <br>
-  <i>void Text::print(const char target); -</i> Print a single character at the current position.<br>
+  <i>void Text::print(const char target); -</i> Print a single glyph at the current position.<br>
   <br>
-  <i>void Text::print(const unsigned int x, const unsigned int y, const char target); -</i> Print a single character at the specific position.<br>
+  <i>void Text::print(const unsigned int x, const unsigned int y, const char target); -</i> Print a single glyph at the specific position.<br>
   <br>
   <i>size_t Text::print(const char *target); -</i> Print text at the current position and return the text length.<br>
   <br>
@@ -2067,12 +2067,12 @@
  </big>
  <h2><a id="mozTocId81767" class="mozTocH2"></a><big> Chapter 4. Gamepad</big></h2>
  <big>
-  The gamepad subsystem is working over <a href="https://docs.microsoft.com/en-us/windows/desktop/xinput/xinput-game-controller-apis-portal">XINPUT</a>.<br>
+  The gamepad subsystem works on the <a href="https://docs.microsoft.com/en-us/windows/desktop/xinput/xinput-game-controller-apis-portal">XINPUT</a>.<br>
  </big>
  <h2><a id="mozTocId204021" class="mozTocH2"></a><big> Chapter 5. User input</big></h2>
  <big><u>The input backend.</u><br>
   <br>
-  The input subsystem is a simple thing. It works over the standard Microsoft Windows API.
+  The input subsystem is a simple thing. It works on the standard Microsoft Windows API.
   <br>
   <br><u>The internal key state.</u><br>
   <br>
@@ -2099,7 +2099,7 @@
  </big>
  <h2><a id="mozTocId586939" class="mozTocH2"></a><big> Chapter 6. Audio</big></h2>
  <big>
-  The audio subsystem is working over <a href="https://docs.microsoft.com/en-us/windows/desktop/DirectShow/directshow">DirectShow</a>. It is available as part of <a href="https://en.wikipedia.org/wiki/DirectX">DirectX</a>. DirectX is pre-installed by default under the modern versions of Windows.<br>
+  The audio subsystem works on the <a href="https://docs.microsoft.com/en-us/windows/desktop/DirectShow/directshow">DirectShow</a>. It is available as part of <a href="https://en.wikipedia.org/wiki/DirectX">DirectX</a>. DirectX is pre-installed by default under the modern versions of Windows.<br>
  </big>
  <h2><a id="mozTocId297282" class="mozTocH2"></a><big>Version history</big></h2>
  <big>
@@ -2414,6 +2414,7 @@
   9.7.1: The source code synced with the Eugene Game Development Kit 10.6.3.<br>
   9.7.2: The source code synced with the Eugene Game Development Kit 10.6.4.<br>
   9.7.3: The source code synced with the Eugene Game Development Kit 10.6.5.<br>
+  9.7.4: The source code synced with the Eugene Game Development Kit 10.6.6.<br>
  </big>
 </body>
 </html>
