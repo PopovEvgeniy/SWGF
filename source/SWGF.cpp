@@ -2825,7 +2825,7 @@ namespace SWGF
    frames=1;
   }
 
-  void Animation::increase_frame()
+  unsigned int Animation::increase_frame()
   {
    if (frame<frames)
    {
@@ -2835,16 +2835,16 @@ namespace SWGF
    {
     frame=0;
    }
-
+   return frame;
   }
 
-  void Animation::set_frame(const unsigned int target)
+  unsigned int Animation::set_frame(const unsigned int target)
   {
    if (target<frames)
    {
     frame=target;
    }
-
+   return frame;
   }
 
   void Animation::set_frames(const unsigned int amount)
