@@ -3195,8 +3195,7 @@ namespace SWGF
    if (this->is_storage_empty()==false)
    {
     this->prepare(this->get_image_width(),this->get_image_height(),this->get_image());
-    this->set_frames(frames);
-    this->set_size(this->get_image_width()/this->get_frames(),this->get_image_height());
+    this->set_size(this->get_image_width()/this->set_frames(frames),this->get_image_height());
     this->set_sprite_frame();
    }
    return this->is_load();
