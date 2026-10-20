@@ -38,7 +38,7 @@
      <li><a href="#mozTocId157804">Chapter 6. Background</a></li>
      <li><a href="#mozTocId765577">Chapter 7. Segment</a></li>
      <li><a href="#mozTocId197001">Chapter 8. Section</a></li>
-     <li><a href="#mozTocId16212">Chapter 9. Static background</a></li>
+     <li><a href="#mozTocId735231">Chapter 9. Static Background</a></li>
      <li><a href="#mozTocId175778">Chapter 10. Parallax Background</a></li>
      <li><a href="#mozTocId930591">Chapter 11. Base sprite subsystem</a></li>
      <li><a href="#mozTocId876314">Chapter 12. Animated sprites</a></li>
@@ -111,7 +111,11 @@
   <h2><a id="mozTocId197135" class="mozTocH2"></a><big>Chapter 1. About the engine</big></h2>
   <big> <u>About the engine.</u><br>
    <br>
-   Hello! My name is Popov Evgeniy Alekseyevich. I am a solo programmer. I enjoy creating software. I also like old-school video games. Do you want to develop video games for Microsoft Windows? You need a good game engine to do so. I made my own engine. I hope that my C++ game engine will be useful for many programmers. <br>
+   Hello! My name is Popov Evgeniy Alekseyevich. I am a solo programmer. I
+   enjoy creating software. I also like old-school video games. Do you
+   want to develop video games for Microsoft Windows? You need a good game
+   engine to do so. I made my own engine. I hope that my C++ game engine
+   will be useful for many programmers. <br>
    <u><br>
     Features.</u><br>
    <br>
@@ -141,7 +145,7 @@
    Yes. This is really all you need to do.<br>
   </big>
   <h2><a id="mozTocId478794" class="mozTocH2"></a><big>Chapter 2. Special thanks</big></h2>
-  <big> I want to say «Big thanks for the technical consultation» to these people:<br>
+  <big>Special thanks for the technical consultation go to these people:<br>
   </big>
   <ul>
    <li><a href="https://bsg.org.ua"><big>Dmitry Smagin</big></a></li>
@@ -188,7 +192,13 @@
    the following conditions:<br>
    The above copyright notice and this permission notice shall be included<br>
    in all copies or substantial portions of the Materials.<br>
-   THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.<br>
+   THE MATERIALS ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+   CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+   TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+   MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.<br>
    <br>
   </big>
   <h2><a id="mozTocId335235" class="mozTocH2"></a><big>Chapter 4. System requirements</big></h2>
@@ -273,7 +283,8 @@
   <big><u><br>
     A note for the Visual C++ users.</u><br>
    <br>
-   Disable the precompiled headers before starting compilation. The old Visual C++ users can do it via the project creation wizard.<br>
+   Disable the precompiled headers before starting compilation. The old
+   Visual C++ users can do it via the project creation wizard.<br>
    The Visual C++ 2017 or higher users must follow these steps:<br>
    <br>
    Go to «Project Properties - C/C++ - Precompiled Headers»<br>
@@ -304,7 +315,10 @@
   </big>
   <h1><a id="mozTocId88198" class="mozTocH1"></a><big> Part 2. Basic things</big></h1>
   <h2><a id="mozTocId992847" class="mozTocH2"></a><big> Chapter 1. Coordinate system</big></h2>
-  <big> The engine uses the standard coordinate system by default. The coordinates start at the top-left corner. Look at this picture to understand it.<br>
+  <big>
+   The engine uses the standard coordinate system by default. The
+   coordinates start at the top-left corner. Look at this picture to
+   understand it.<br>
    <br>
    <img alt="" src="coordinate_system.png" height="111" width="107"><br>
    <br>
@@ -324,15 +338,22 @@
    <br>
    The base graphics subsystem renders a game scene. This subsystem uses <a
 
-    href="http://OpenGL.org">OpenGL</a> for rendering. All modern video cards support hardware acceleration. The software implementation will activate if the acceleration is not available. <br>
+    href="http://OpenGL.org">OpenGL</a>
+   for rendering. All modern video cards support hardware acceleration.
+   The software implementation will be activated if hardware acceleration
+   is not available. <br>
    <br>
    <u>The rendering performance.</u><br>
    <br>
-   Always use the latest video card drivers. It may improve the rendering performance. You can also try to change the screen resolution if you have low rendering performance. <br>
+   Always use the latest video card drivers. It may improve the rendering
+   performance. You can also try to change the screen resolution if you
+   have low rendering performance. <br>
    <br>
    <u>The FPS limitation.</u><br>
    <br>
-   FPS is an important thing. A high FPS is needed for a smoot animation, but it also needs high processor usage. The FPS limit is 60 by default. <br>
+   FPS is an important thing. A high FPS is needed for a smoot animation,
+   but it also needs high processor usage. The FPS limit is 60 by default.
+   <br>
    <br>
    <u>Working with the base graphics subsystem.</u><br>
    <br>
@@ -420,7 +441,7 @@
    <br>
    <i>unsigned int Animation::get_frame() const; -</i> Return the current frame.<br>
    <br>
-   <i>bool Animation::is_last_frame() const; -</i> Return true if the current frame is the last frame one.<br>
+   <i>bool Animation::is_last_frame() const; -</i> Return true if the current frame is the last one.<br>
    <br>
    <i>bool Animation::check_frame(const unsigned int target) const; -</i> Return true if the target frame is valid.<br>
   </big>
@@ -460,9 +481,14 @@
   <big><br>
   </big>
   <h2><a id="mozTocId157804" class="mozTocH2"></a><big> Chapter 6. Background</big></h2>
-  <big> A background is a big image with a few frames. Any game has a background. The background will be scaled to fit the screen. The background transparency is always disabled.<br>
+  <big>
+   A background is a big image with a few frames. Any game has a
+   background. The background will be scaled to fit the screen. The
+   background transparency is always disabled.<br>
    <br>
-   The horizontal animated backgrounds look like the horizontal photo ribbons. The vertical animated backgrounds look like the vertical photo ribbons.</big><br>
+   The horizontal
+   animated backgrounds look like horizontal photo ribbons. The vertical
+   animated backgrounds look like vertical photo ribbons.</big><br>
   <h2><a id="mozTocId765577" class="mozTocH2"></a><big>Chapter 7. Segment</big></h2>
   <big><u>A few words about the segment.</u><br>
    <br>
@@ -498,7 +524,7 @@
    <br>
    <i>unsigned int Segment::set_target(const unsigned int target);</i> - Set the target frame and return it.<br>
    <br>
-   <i>void Segment::step();</i> - Go to the next frame or jump to the start if the current frame is the last.<br>
+   <i>void Segment::step();</i> - Go to the next frame or jump to the start if the current frame is the last one.<br>
    <br>
    <i>bool Segment::load(Image *background, const unsigned int frames);</i> - Load a background from the buffer and return true if it is loaded.<br>
    <br>
@@ -514,9 +540,9 @@
    <br>
    <i>void Segment::destroy();</i> - Completely destroy the background.<br>
    <br>
-   <i>bool Segment::is_load() const;</i> - Return true if a background has already been loaded.<br>
+   <i>bool Segment::is_loaded() const;</i> - Return true if a background has already been loaded.<br>
    <br>
-   <i>bool Segment::is_last_frame() const;</i> - Return true if the current frame is the last frame one.<br>
+   <i>bool Segment::is_last_frame() const;</i> - Return true if the current frame is the last one.<br>
    <br>
    <i>bool Segment::check_frame(const unsigned int target) const;</i> - Return true if the target frame is valid.<br>
    <br>
@@ -530,7 +556,7 @@
    <br>
    <u>A background texture.</u><br>
    <br>
-   The background isn't drawn if the background texture doesn't exist. It will create when you load an image. <br>
+   The background isn't drawn if the background texture doesn't exist. It will be created when you load an image. <br>
    <u><br>
     An important notice.</u><br>
    <br>
@@ -586,9 +612,9 @@
    <br>
    <i>void Section::destroy();</i> - Completely destroy the background.<br>
    <br>
-   <i>bool Section::is_load() const;</i> - Return true if a background has already been loaded.<br>
+   <i>bool Section::is_loaded() const;</i> - Return true if a background has already been loaded.<br>
    <br>
-   <i>bool Section::is_last_frame() const;</i> - Return true if the current frame is the last frame one.<br>
+   <i>bool Section::is_last_frame() const;</i> - Return true if the current frame is the last one.<br>
    <br>
    <i>bool Section::check_frame(const unsigned int target) const;</i> - Return true if the target frame is valid.<br>
    <br>
@@ -602,13 +628,13 @@
    <br>
    <u>A background texture.</u><br>
    <br>
-   The background isn't drawn if the background texture doesn't exist. It will create when you load an image. <br>
+   The background isn't drawn if the background texture doesn't exist. It will be created when you load an image. <br>
    <u><br>
     An important notice.</u><br>
    <br>
    Always call the <i>prepare</i> method after the background has been loaded.<br>
   </big>
-  <h2><a id="mozTocId16212" class="mozTocH2"></a><big> Chapter 9. Static background</big></h2>
+  <h2><a id="mozTocId735231" class="mozTocH2"></a><big> Chapter 9. Static Background</big></h2>
   <big><u>A few words about the static background.</u><br>
    <br>
    The static background is a simple kind of background. It contains only one frame. <br>
@@ -651,9 +677,9 @@
    <br>
    <i>void Scene::destroy_image(); -</i> Destroy the background image.<br>
    <br>
-   <i>void Scene::destroy(); -</i> Destroy the background image and destroy the texture.<br>
+   <i>void Scene::destroy(); -</i> Completely destroy the background image.<br>
    <br>
-   <i>bool Scene::is_load() const; -</i> Return true if a static background has already been loaded.<br>
+   <i>bool Scene::is_loaded() const; -</i> Return true if a static background has already been loaded.<br>
    <br>
    <i>unsigned int Scene::get_width() const; -</i> Return the width of the background.<br>
    <br>
@@ -661,7 +687,7 @@
    <u><br>
     A background texture.</u><br>
    <br>
-   The background isn't drawn if the background texture doesn't exist. It will create when you load an image. <br>
+   The background isn't drawn if the background texture doesn't exist. It will be created when you load an image. <br>
    <u><br>
     An important notice.</u><br>
    <br>
@@ -725,9 +751,9 @@
    <br>
    <i>void Parallax::destroy_image(); -</i> Destroy the background image.<br>
    <br>
-   <i>void Parallax::destroy(); -</i> Destroy the background image and destroy the texture.<br>
+   <i>void Parallax::destroy(); -</i> Completely destroy the background image.<br>
    <br>
-   <i>bool Parallax::is_load() const; -</i> Return true if a parallax background has already been loaded.<br>
+   <i>bool Parallax::is_loaded() const; -</i> Return true if a parallax background has already been loaded.<br>
    <br>
    <i>unsigned int Parallax::get_width() const; -</i> Return the width of the background.<br>
    <br>
@@ -735,7 +761,7 @@
    <br>
    <u>A background texture.</u><br>
    <br>
-   The background isn't drawn if the background texture doesn't exist. It will create when you load an image. <br>
+   The background isn't drawn if the background texture doesn't exist. It will be created when you load an image. <br>
    <br>
    <u>An important notice</u><br>
    <br>
@@ -798,7 +824,7 @@
    <br>
    <i>unsigned int Billboard::get_height() const; -</i> Return the height of the sprite.<br>
    <br>
-   <i>bool Billboard::is_load() const; -</i> Return true if the sprite has already been loaded.<br>
+   <i>bool Billboard::is_loaded() const; -</i> Return true if the sprite has already been loaded.<br>
    <br>
    <i>SWGF::BOX Billboard::get_box() const; -</i> Return the collision-related information.<br>
    <br>
@@ -833,7 +859,9 @@
    <i>void Billboard::draw(const bool transparency, const unsigned int x, const unsigned int y); -</i> Set the transparent mode and draw a sprite at the target position.<br>
   </big>
   <h2><a id="mozTocId876314" class="mozTocH2"></a><big> Chapter 12. Animated sprites</big></h2>
-  <big> There are two kinds of animated sprites: the horizontal strips and the vertical strips. Each sprite is a small image with a few frames.<br>
+  <big>
+   There are two kinds of animated sprites: the horizontal strips and the
+   vertical strips. Each sprite is a small image with a few frames.<br>
    The horizontal strip looks like the horizontal photo ribbon. The vertical strip looks like the vertical photo ribbon.</big><br>
   <h2><a id="mozTocId806042" class="mozTocH2"></a><big>Chapter 13. Ribbons<br>
    </big></h2>
@@ -853,15 +881,15 @@
    <br>
    <i>unsigned int Ribbon::set_target(const unsigned int target); -</i> Set the target frame and return it.<br>
    <br>
-   <i>void Ribbon::step(); -</i> Go to the next frame or jump to the start if the current frame is the last.<br>
+   <i>void Ribbon::step(); -</i> Go to the next frame or jump to the start if the current frame is the last one.<br>
    <br>
    <i>Ribbon *Ribbon::get_pointer(); -</i> Return a pointer to the ribbon object.<br>
    <br>
-   <i>void Ribbon::destroy(); -</i> Destroy the sprite image and destroy the texture.<br>
+   <i>void Ribbon::destroy(); -</i> Completely destroy the sprite image.<br>
    <br>
    <u>A sprite texture</u><br>
    <br>
-   A sprite isn't drawn if the sprite texture doesn't exist. It will create when you load a sprite.<br>
+   A sprite isn't drawn if the sprite texture doesn't exist. It will be created when you load a sprite.<br>
   </big>
   <h2><a id="mozTocId931590" class="mozTocH2"></a><big>Chapter 14. Tier</big></h2>
   <big><u>A few words about the tier.</u><br>
@@ -880,15 +908,15 @@
    <br>
    <i>unsigned int Tier::set_target(const unsigned int target);</i> - Set the target frame and return it.<br>
    <br>
-   <i>void Tier::step();</i> - Go to the next frame or jump to the start if the current frame is the last.<br>
+   <i>void Tier::step();</i> - Go to the next frame or jump to the start if the current frame is the last one.<br>
    <br>
    <i>Tier *Tier::get_pointer();</i> - Return a pointer to the tier object.<br>
    <br>
-   <i>void Tier::destroy();</i> - Destroy the sprite image and destroy the texture. <br>
+   <i>void Tier::destroy();</i> - Completely destroy the sprite image. <br>
    <br>
    <u>A sprite texture</u><br>
    <br>
-   A sprite isn't drawn if the sprite texture doesn't exist. It will create when you load a sprite.<br>
+   A sprite isn't drawn if the sprite texture doesn't exist. It will be created when you load a sprite.<br>
   </big>
   <h2><a id="mozTocId102783" class="mozTocH2"></a><big> Chapter 15. Static sprites</big></h2>
   <big><u>A few words about the static sprite.</u><br>
@@ -897,7 +925,9 @@
    <br>
    <u>Working with the static sprites.</u><br>
    <br>
-   Use the <i>Cartoon</i> class to work with a static sprite. It is derived from two classes: billboard and picture. Let's look at the publicly available methods.<br>
+   Use the <i>Cartoon</i>
+   class to work with a static sprite. It is derived from two classes:
+   billboard and picture. Let's look at the publicly available methods.<br>
    <br>
    <i>bool Cartoon::load(Image *buffer); -</i> Load a sprite from the buffer and return true if it is loaded.<br>
    <br>
@@ -907,16 +937,18 @@
    <br>
    <i>Cartoon *Cartoon::get_pointer(); -</i> Return a pointer to the sprite object.<br>
    <br>
-   <i>void Cartoon::destroy(); -</i> Destroy the sprite image and the texture.<br>
+   <i>void Cartoon::destroy(); -</i> Completely destroy the sprite image.<br>
    <br>
    <u>A sprite texture.</u> <br>
    <br>
-   A sprite isn't drawn if the sprite texture doesn't exist. It will create when you load a sprite.<br>
+   A sprite isn't drawn if the sprite texture doesn't exist. It will be created when you load a sprite.<br>
   </big>
   <h2><a id="mozTocId543384" class="mozTocH2"></a><big> Chapter 16. Sprite sheet</big></h2>
   <big><u>Some words about the sprite sheet.</u><br>
    <br>
-   A sprite sheet is a special kind of animated sprite. Each frame has a fixed size. The sheet is a matrix of frames. Look at this picture to understand it.<br>
+   A sprite sheet is a special kind of animated sprite. Each frame has a
+   fixed size. The sheet is a matrix of frames. Look at this picture to
+   understand it.<br>
    <br>
    <img alt="" src="sheet.png" height="249" width="380"><br>
    <br>
@@ -944,13 +976,13 @@
    <br>
    <i>unsigned int Sheet::get_columns() const; -</i> Return the number of columns.<br>
    <br>
-   <i>void Sheet::destroy(); -</i> Destroy the sprite sheet image and the texture.<br>
+   <i>void Sheet::destroy(); -</i> Completely destroy the sprite sheet image.<br>
    <br>
    <i>void Sheet::select(const unsigned int row, const unsigned int column); -</i> Select the target frame by row and column.<br>
    <br>
    <i>unsigned int Sheet::set_target(const unsigned int target); -</i> Set the target frame and return it.<br>
    <br>
-   <i>void Sheet::step(); -</i> Go to the next frame or jump to the start if the current frame is the last.<br>
+   <i>void Sheet::step(); -</i> Go to the next frame or jump to the start if the current frame is the last one.<br>
    <br>
    <i>bool Sheet::load(Image *sheet, const unsigned int row_amount, const unsigned int column_amount); -</i> Load a sprite sheet from the buffer and return true if it is loaded.<br>
    <br>
@@ -962,12 +994,14 @@
    <br>
    <u>A sprite sheet texture.</u><br>
    <br>
-   A sprite sheet isn't drawn if the sprite sheet texture doesn't exist. It will create when you load a sheet.<br>
+   A sprite sheet isn't drawn if the sprite sheet texture doesn't exist. It will be created when you load a sheet.<br>
   </big>
   <h2><a id="mozTocId688108" class="mozTocH2"></a><big> Chapter 17. Text</big></h2>
   <big><u>How to print text?</u><br>
    <br>
-   Use the text subsystem to print the text. This subsystem needs a font for text printing. You must load a font before starting to print the text. The font is just a sprite sheet with 16 rows and 16 columns. <br>
+   Use the text subsystem to print the text. This subsystem needs a font
+   for text printing. You must load a font before starting to print the
+   text. The font is just a sprite sheet with 16 rows and 16 columns. <br>
    <u><br>
     The supported characters.</u><br>
    <br>
@@ -1043,7 +1077,7 @@
    <br>
    <i>void Text::destroy_image(); -</i> Destroy a font image.<br>
    <br>
-   <i>void Text::destroy_font(); -</i> Destroy a font image and the texture.<br>
+   <i>void Text::destroy_font(); -</i> Completely destroy a font image.<br>
   </big>
   <h2><a id="mozTocId955496" class="mozTocH2"></a><big> Chapter 18. Loading an image</big></h2>
   <big><u>Load an image from a file.</u><br>
@@ -1068,18 +1102,21 @@
    <u><br>
     An important note.</u><br>
    <br>
-   A new image will replace the current image if the current image already exists. An incorrect image will be ignored and will fail to load.<br>
+   A new image will replace the current image if the current image already
+   exists. An incorrect image will be ignored and will fail to load.<br>
    The source image will be converted to the <a href="https://en.wikipedia.org/wiki/RGBA">RGBA</a> format. The pixels matching the top-left pixel will be marked as transparent. <br>
    <br>
    <u>The supported format</u><br>
    <br>
-   All loading images must have the correct specifications. You can load an image from a 24-bit <a
+   All loaded images must comply with the correct specifications. You can load an image from a 24-bit <a
 
     href="https://en.wikipedia.org/wiki/Truevision_TGA">Truevision TGA</a> picture. <br>
    <br>
    <u>The recommended software.</u><br>
    <br>
-   You can use a wide range of graphics software to convert your images to the correct format. I recommend using GIMP to do it. It is a powerful image editor.<br>
+   You can use a wide range of graphics software to convert your images to
+   the correct format. I recommend using GIMP to do it. It is a powerful
+   image editor.<br>
   </big>
   <h2><a id="mozTocId447036" class="mozTocH2"></a><big> Chapter 19. Camera</big></h2>
   <big><u>A few words about the camera.</u><br>
@@ -1177,7 +1214,9 @@
    <br>
    <u>Coordinate conversion.</u><br>
    <br>
-   You can convert the Cartesian coordinates to the screen coordinates. You can also convert the screen coordinates to the Cartesian coordinates.<br>
+   You can convert the Cartesian coordinates to the screen coordinates.
+   You can also convert the screen coordinates to the Cartesian
+   coordinates.<br>
    <br>
    Use the <i>Coordinates</i> class to do it. Let's look at the publicly available methods.<br>
    <br>
@@ -1216,7 +1255,9 @@
    <u><br>
     Coordinate conversion.</u><br>
    <br>
-   You can convert the Cartesian coordinates to the isometric coordinates. You can also convert the isometric coordinates to the Cartesian coordinates. Use the <i>Isometric</i> class to do it. Let's look at the publicly available methods.<br>
+   You can convert the Cartesian coordinates to the isometric coordinates.
+   You can also convert the isometric coordinates to the Cartesian
+   coordinates. Use the <i>Isometric</i> class to do it. Let's look at the publicly available methods.<br>
    <br>
    <i>static int Isometric::get_isometric_x(const int x, const int y); -</i> Convert the x-coordinate from the Cartesian system to the isometric system.<br>
    <br>
@@ -1263,7 +1304,10 @@
    <br>
    <i>double Timer::get_interval() const; -</i> Return the current timer interval.<br>
    <br>
-   <i>bool Timer::check_timer(); -</i> Return true and reinitialize the start point if the interval between the stop and start points is greater than or equal to a specified number of seconds.<br>
+   <i>bool Timer::check_timer(); -</i>
+   Return true and reinitialize the start point if the interval between
+   the stop and start points is greater than or equal to the specified
+   number of seconds.<br>
   </big>
   <h2><a id="mozTocId738453" class="mozTocH2"></a><big> Chapter 4. Collision detection<br>
    </big></h2>
@@ -1273,7 +1317,9 @@
    <br>
    <u>The collision details.</u><br>
    <br>
-   The detector uses the bounding box collision method to detect a collision. The collision-related information is stored in a custom data type.<br>
+   The detector uses the bounding box collision method to detect a
+   collision. The collision-related information is stored in a custom data
+   type.<br>
    <br>
    <i>typedef struct<br>
     {<br>
@@ -1285,7 +1331,9 @@
    <br>
    <u>Working with the collision detector.</u><br>
    <br>
-   The <i>Collision</i> class provides easy access to the collision detectors. It is a simple class with a few methods. Let's look at the publicly available methods.<br>
+   The <i>Collision</i>
+   class provides easy access to the collision detectors. It is a simple
+   class with a few methods. Let's look at the publicly available methods.<br>
    <br>
    <i>Collision *Collision::get_pointer(); -</i> Return a pointer to the collision detector.<br>
    <br>
@@ -1298,8 +1346,7 @@
   <h2><a id="mozTocId762349" class="mozTocH2"></a><big> Chapter 5. Tilemaps</big></h2>
   <big><u>A few words about the tilemap.</u><br>
    <br>
-   The tilemap is a tile matrix. A tile is a small, non-transparent
-   sprite. A tilemap is a very useful thing for the background. <br>
+   The tilemap is a tile matrix. A tile is a small, non-transparent sprite. A tilemap is a very useful thing for the background. <br>
    <br>
    <u>The rows and columns.</u><br>
    <br>
@@ -1307,7 +1354,9 @@
    <u><br>
     Working with the tilemap.</u><br>
    <br>
-   The <i>Tilemap</i> class provides easy access to the tilemap. It is a simple class with a few methods. Let's look at the publicly available methods.<br>
+   The <i>Tilemap</i>
+   class provides easy access to the tilemap. It is a simple class with a
+   few methods. Let's look at the publicly available methods.<br>
    <br>
    <i>Tilemap *Tilemap::get_pointer(); -</i> Return a pointer to the tilemap subsystem.<br>
    <br>
@@ -1325,9 +1374,9 @@
    <br>
    <i>unsigned int Tilemap::get_column(const unsigned int y) const; -</i> Return the column from the y-coordinate.<br>
    <br>
-   <i>unsigned int Tilemap::get_row_amount(const unsigned int viewport_width) const; -</i> Return the maximum number of the visible rows.<br>
+   <i>unsigned int Tilemap::get_row_amount(const unsigned int viewport_width) const; -</i> Return the maximum number of visible rows.<br>
    <br>
-   <i>unsigned int Tilemap::get_column_amount(const unsigned int viewport_width) const; -</i> Return the maximum number of the visible columns.<br>
+   <i>unsigned int Tilemap::get_column_amount(const unsigned int viewport_width) const; -</i> Return the maximum number of visible columns.<br>
    <br>
    <i>unsigned int Tilemap::get_tile_amount(const unsigned int viewport_width, const unsigned int viewport_height) const; -</i> Return the maximum number of the visible tiles.<br>
    <br>
@@ -1365,11 +1414,7 @@
   <h2><a id="mozTocId926537" class="mozTocH2"></a><big> Chapter 3. Audio</big></h2>
   <big><u>A few words about the audio subsystem.</u><br>
    <br>
-   This subsystem is intended for playing music and sounds. <a href="https://en.wikipedia.org/wiki/WAV">Waveform Audio File Format</a>, <a
-
-    href="https://en.wikipedia.org/wiki/MP3">MPEG Audio Layer 3</a>, and <a
-
-    href="https://en.wikipedia.org/wiki/Windows_Media_Audio">Windows Media Audio</a> are supported. <br>
+   This subsystem is intended for playing music and sounds. <a href="https://en.wikipedia.org/wiki/WAV">Waveform Audio File Format</a>, <a href="https://en.wikipedia.org/wiki/MP3">MPEG Audio Layer 3</a>, and <a href="https://en.wikipedia.org/wiki/Windows_Media_Audio">Windows Media Audio</a> are supported. <br>
    <br>
    <u>Additional formats.</u><br>
    <br>
@@ -1389,7 +1434,7 @@
    <br>
    <i>void Audio::play_loop(); -</i> Check the playback status and restarting playback if needed.<br>
    <br>
-   void Audio::play(const bool loop); - Play a sound. You can set loop mode if you want.<br>
+   <i>void Audio::play(const bool loop); -</i> Play a sound. You can set the loop mode if you want.<br>
    <br>
    <i>void Audio::stop(); -</i> Stop playing the content of the target file.<br>
    <br>
@@ -1421,9 +1466,16 @@
    <i>SWGF::BOX generate_box(const unsigned int x, const unsigned int y, const unsigned int width, const unsigned int height);</i> - Generate the collision-related information.<br>
   </big>
   <h2><a id="mozTocId296241" class="mozTocH2"></a><big> Chapter 3. Resource management</big></h2>
-  <big> A resource is an instance of a user-defined class or structure. The resource manager is implemented as a few template functions. All these functions are declared in the <i>Resource</i> sub-namespace.<br>
+  <big>
+   A resource is an instance of a user-defined class or structure. The
+   resource manager is implemented as a few template functions. All these
+   functions are declared in the <i>Resource</i> sub-namespace.<br>
    <br>
-   <i>create</i>: Create a resource. The first form of this function creates a single resource. It takes a pointer to a resource pointer as an argument. The second form creates an array of the resources. It takes a pointer to a resource pointer and a resource amount.<br>
+   <i>create</i>:
+   Create a resource. The first form of this function creates a single
+   resource. It takes a pointer to a resource pointer as an argument. The
+   second form creates an array of the resources. It takes a pointer to a
+   resource pointer and a resource amount.<br>
    <br>
    <i>destroy</i>: Delete a resource if it already exists. This function takes a resource pointer as an argument.<br>
    <br>
@@ -1483,7 +1535,9 @@
   <h2><a id="mozTocId896873" class="mozTocH2"></a><big> Chapter 2. Keyboard</big></h2>
   <big><u>Low-level input.</u><br>
    <br>
-   Any keyboard contains a built-in controller. It generates a special code when the user presses or releases the key. This code is called a «scan code». <br>
+   Any keyboard contains a built-in controller. It generates a special
+   code when the user presses or releases the key. This code is called a
+   «scan code». <br>
    <br>
    <u>Working with the keyboard.</u><br>
    <br>
@@ -1806,11 +1860,15 @@
   <h2><a id="mozTocId868432" class="mozTocH2"></a><big> Chapter 4. Gamepad</big></h2>
   <big><u>The best friend of a retro gamer.</u><br>
    <br>
-   What is a good choice for a game control device when the user plays an arcade game or an old-school video game? A gamepad. This engine provides simple access to it.<br>
+   What is a good choice for a game control device when the user plays an
+   arcade game or an old-school video game? A gamepad. This engine
+   provides simple access to it.<br>
    <u><br>
     The number of the connected gamepads.</u><br>
    <br>
-   You can connect several gamepads. Any connected gamepad has an internal index. The first gamepad index is 0. The maximum number of connected gamepads is 4. The first gamepad is selected by default. <br>
+   You can connect several gamepads. Any connected gamepad has an internal
+   index. The first gamepad index is 0. The maximum number of connected
+   gamepads is 4. The first gamepad is selected by default. <br>
    <br>
    <u>The button codes</u><br>
    <br>
@@ -1961,7 +2019,8 @@
     </tr>
    </tbody>
   </table>
-  <big><u><br>Working with the gamepad.</u><br>
+  <big><u><br>
+    Working with the gamepad.</u><br>
    <br>
    Use the <i>Gamepad</i> class to work with a gamepad. Let's look at the publicly available methods.<br>
    <br>
@@ -2021,7 +2080,10 @@
   </big>
   <h1><a id="mozTocId122236" class="mozTocH1"></a><big> Part 10. Internal details of the engine subsystems</big></h1>
   <h2><a id="mozTocId734374" class="mozTocH2"></a><big> Chapter 1. Few words for a curious programmer</big></h2>
-  <big>Each subsystem has its own internal structure. This structure is hidden from you, and you don't have access to it. Do you want to know about hidden things? Just read the next chapter.<br>
+  <big>Each
+   subsystem has its own internal structure. This structure is hidden from
+   you, and you don't have access to it. Do you want to know about hidden
+   things? Just read the next chapter.<br>
   </big>
   <h2><a id="mozTocId873220" class="mozTocH2"></a><big> Chapter 2. Internal classes</big></h2>
   <big><u>The internal classes.</u><br>
@@ -2055,7 +2117,8 @@
    <u><br>
     Textures.</u><br>
    <br>
-   A texture width must be a power of two. A texture height must also be a power of two. Any image will be automatically resized before uploading.<br>
+   The texture width must be a power of two. The texture height must also
+   be a power of two. Any image will be resized before uploading.<br>
    <br>
    <u>The vertex array and texture coordinate array.</u><br>
    <br>
@@ -2116,16 +2179,16 @@
   <big> 0.1-6.3.6: The old branch.<br>
    6.3.7-6.5.1: The experimental branch.<br>
    6.5.2: The changes have been merged with the Eugene Game Development Kit 6.5.7.<br>
-   6.5.3: A small changes.<br>
+   6.5.3: The small changes.<br>
    6.5.4: The gamepad subsystem has been ported from Black the Game Development Kit 4.1.4.<br>
    6.5.5-6.6.6: The gamepad subsystem has been improved.<br>
    6.6.6.1: The documentation has been updated.<br>
-   6.6.7: A small changes.<br>
+   6.6.7: The small changes.<br>
    6.6.8-6.7: The gamepad subsystem has been improved.<br>
    6.7.1: The changes have been merged with the Eugene Game Development Kit 6.6.1.<br>
    6.7.2: The synchronization timer has been ported from Gray Game Development Kit 2.3.5.<br>
    6.7.3: Windows XP support has been removed.<br>
-   6.7.4-6.7.5: A small changes.<br>
+   6.7.4-6.7.5: The small changes.<br>
    6.7.6: The changes have been merged with the Eugene Game Development Kit 6.6.6.<br>
    6.7.7: The changes have been merged with the Eugene Game Development Kit 6.7.<br>
    6.7.8: The changes have been merged with the Eugene Game Development Kit 6.7.1.<br>
@@ -2150,9 +2213,9 @@
    6.9.8: The changes have been merged with the Neon Game Development Kit 6.3.7.<br>
    6.9.9: The changes have been merged with the Eugene Game Development Kit 7.0.1.<br>
    7.0: The changes have been merged with the Eugene Game Development Kit 7.0.2.<br>
-   7.0.1-7.0.2: A small changes.<br>
+   7.0.1-7.0.2: The small changes.<br>
    7.0.3: The image resizer has been improved.<br>
-   7.0.4-7.0.7: A small changes.<br>
+   7.0.4-7.0.7: The small changes.<br>
    7.0.8: The changes have been merged with the Eugene Game Development Kit 7.1.8.<br>
    7.0.9: The changes have been merged with the Eugene Game Development Kit 7.1.9.<br>
    7.1: The changes have been merged with the Eugene Game Development Kit 7.2.<br>
@@ -2171,9 +2234,9 @@
    7.2.4: The changes have been merged with the Eugene Game Development Kit 7.3.3.<br>
    7.2.5: The changes have been merged with the Eugene Game Development Kit 7.3.4.<br>
    7.2.6: The changes have been merged with the Eugene Game Development Kit 7.3.5.<br>
-   7.2.7-7.2.8: A small changes.<br>
+   7.2.7-7.2.8: The small changes.<br>
    7.2.9-7.3: The image resizer has been improved.<br>
-   7.3.1: A small changes.<br>
+   7.3.1: The small changes.<br>
    7.3.2-7.3.5: The image resizer has been improved.<br>
    7.3.6: The changes have been merged with the Eugene Game Development Kit 7.3.7.<br>
    7.3.7: The changes have been merged with the Eugene Game Development Kit 7.4.4.<br>
@@ -2307,7 +2370,7 @@
    8.6.3: The changes have been merged with the Eugene Game Development Kit 9.2.3.<br>
    8.6.4: The changes have been merged with the Eugene Game Development Kit 9.2.4.<br>
    8.6.4.1-8.6.4.5: The documentation has been updated.<br>
-   8.6.5: A small changes.<br>
+   8.6.5: The small changes.<br>
    8.6.6: The changes have been merged with the Eugene Game Development Kit 9.2.6.<br>
    8.6.7: The changes have been merged with the Eugene Game Development Kit 9.2.7.<br>
    8.6.7.1-8.6.7.2: The documentation has been updated.<br>
@@ -2410,9 +2473,9 @@
    9.5.5.1: The documentation has been updated.<br>
    9.5.6: The changes have been merged with the Eugene Game Development Kit 10.3.3.<br>
    9.5.7: The changes have been merged with the Gray Game Development Kit 5.1.2.<br>
-   9.5.8-9.6: A small changes.<br>
+   9.5.8-9.6: The small changes.<br>
    9.6.1: The changes have been merged with the Neon Game Development Kit 9.1.4.<br>
-   9.6.2: A small changes.<br>
+   9.6.2: The small changes.<br>
    9.6.3: The changes have been merged with the Neon Game Development Kit 9.1.6.<br>
    9.6.4: The changes have been merged with the Eugene Game Development Kit 10.5.6.<br>
    9.6.5: The changes have been merged with the Neon Game Development Kit 9.1.8.<br>
@@ -2429,7 +2492,9 @@
    9.7.6: The changes have been merged with the Eugene Game Development Kit 10.6.8.<br>
    9.7.7: The changes have been merged with the Eugene Game Development Kit 10.6.9.<br>
    9.7.8: The changes have been merged with the Eugene Game Development Kit 10.7.<br>
+   9.7.8: The changes have been merged with the Eugene Game Development Kit 10.7.<br>
    9.7.8.1-9.7.8.2: The documentation has been updated.<br>
+   9.7.9: The changes have been merged with the Eugene Game Development Kit 10.7.1.<br>
   </big>
  </body>
 </html>
