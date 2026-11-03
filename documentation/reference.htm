@@ -88,7 +88,10 @@
      <li><a href="#mozTocId852057">Chapter 2. Base binary file subsystem</a></li>
      <li><a href="#mozTocId651177">Chapter 3. File reading</a></li>
      <li><a href="#mozTocId842586">Chapter 4. File writing</a></li>
-     <li><a href="#mozTocId966389">Part 9. User input</a></li>
+    </ol>
+   </li>
+   <li><a href="#mozTocId37254">Part 9. User input</a>
+    <ol>
      <li><a href="#mozTocId742013">Chapter 1. Sub-namespace</a></li>
      <li><a href="#mozTocId896873">Chapter 2. Keyboard</a></li>
      <li><a href="#mozTocId899047">Chapter 3. Mouse</a></li>
@@ -121,7 +124,9 @@
    <li><big>Open-source code.</big></li>
    <li><big>Very fast.</big></li>
    <li><big>An easy-to-use object-oriented design.</big></li>
-   <li><big>A minimum set of external dependencies: <a href="https://learn.microsoft.com/en-us/windows/win32/directx">DirectX</a>, <a href="https://OpenGL.org">OpenGL</a>, and the standard <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">Windows API</a> libraries.</big></li>
+   <li><big>A minimum set of external dependencies: <a href="https://learn.microsoft.com/en-us/windows/win32/directx">DirectX</a>, <a
+
+      href="https://OpenGL.org">OpenGL</a>, and the standard <a href="https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list">Windows API</a> libraries.</big></li>
    <li><big>You don't need to link a main program with the engine binary file. The engine is just the source code files.</big></li>
   </ul>
   <big><br>
@@ -139,7 +144,7 @@
    Yes. This is really all you need to do.<br>
   </big>
   <h2><a id="mozTocId478794" class="mozTocH2"></a><big>Chapter 2. Special thanks</big></h2>
-  <big>Special thanks for technical consultation go to these people:<br>
+  <big>Special thanks for technical consultation to these people:<br>
   </big>
   <ul>
    <li><a href="https://bsg.org.ua"><big>Dmitry Smagin</big></a></li>
@@ -320,9 +325,7 @@
   <h2><a id="mozTocId519243" class="mozTocH2"></a><big>Chapter 2. Base graphics subsystem</big></h2>
   <big><u>About the base graphics subsystem.</u><br>
    <br>
-   The base graphics subsystem renders a game scene. This subsystem uses <a
-
-    href="http://OpenGL.org">OpenGL</a> for rendering. Most modern video cards support hardware acceleration. The software implementation will be activated if hardware acceleration is not available.<br>
+   The base graphics subsystem renders a game scene. This subsystem uses <a href="http://OpenGL.org">OpenGL</a> for rendering. Most modern video cards support hardware acceleration. The software implementation will be activated if hardware acceleration is not available.<br>
    <br>
    <u>The rendering performance.</u><br>
    <br>
@@ -1402,7 +1405,7 @@
    <br>
    <i>unsigned int get_random(const unsigned int number); -</i> Return a random value between zero and the given number.<br>
    <br>
-   <i>unsigned int get_texture_size(); -</i> Return the maximum texture dimension(width or height).<br>
+   <i>unsigned int get_texture_size(); -</i> Return the maximum texture dimension (width or height).<br>
    <br>
    <i>SWGF::BOX generate_box(const unsigned int x, const unsigned int y, const unsigned int width, const unsigned int height);</i> - Generate the collision-related information.<br>
   </big>
@@ -1462,7 +1465,7 @@
    <br>
    <i>void Output_File::flush(); -</i> Flush data to the file.<br>
   </big>
-  <h2><a id="mozTocId966389" class="mozTocH2"></a><big>Part 9. User input</big></h2>
+  <h1><a id="mozTocId37254" class="mozTocH1"></a><big>Part 9. User input</big></h1>
   <h2><a id="mozTocId742013" class="mozTocH2"></a><big>Chapter 1. Sub-namespace</big></h2>
   <big>All classes in this section are declared in the <i>Input</i> sub-namespace.<br>
   </big>
@@ -1895,7 +1898,6 @@
    <br>
   </big>
   <table style="text-align: left;" cellspacing="2" cellpadding="2" border="1"
-
    height="91" width="391">
    <tbody>
     <tr>
@@ -2423,6 +2425,7 @@
    9.8.1: The changes have been merged with the Eugene Game Development Kit 10.7.3.<br>
    9.8.2: The changes have been merged with the Eugene Game Development Kit 10.7.4.<br>
    9.8.3: The changes have been merged with the Eugene Game Development Kit 10.7.5.<br>
+   9.8.4: The changes have been merged with the Eugene Game Development Kit 10.7.6.<br>
   </big>
  </body>
 </html>
